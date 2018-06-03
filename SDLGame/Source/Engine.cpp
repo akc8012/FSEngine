@@ -40,7 +40,7 @@ SDL_Renderer* Engine::createRenderer()
 	if (renderer == NULL)
 		throw (string)"Renderer could not be created! SDL Error: %s\n" + SDL_GetError();
 
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x7F, 0xFF, 0xFF);
 	return renderer;
 }
 
@@ -50,7 +50,7 @@ void Engine::loadMedia()
 	if (!(IMG_Init(imgFlags) & imgFlags))
 		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
 
-	texture = loadTexture("Resource/Image/loaded.png");
+	//texture = loadTexture("Resource/Image/loaded.png");
 }
 
 SDL_Texture* Engine::loadTexture(const char* path)
@@ -69,20 +69,43 @@ SDL_Texture* Engine::loadTexture(const char* path)
 
 void Engine::run()
 {
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
+	update();
+	draw();
+}
+
+void Engine::update()
+{
+	const int SPEED = 3;
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	if (currentKeyStates[SDL_SCANCODE_UP])
+		rectY -= SPEED;
+	if (currentKeyStates[SDL_SCANCODE_DOWN])
+		rectY += SPEED;
+	if (currentKeyStates[SDL_SCANCODE_LEFT])
+		rectX -= SPEED;
+	if (currentKeyStates[SDL_SCANCODE_RIGHT])
+		rectX += SPEED;
 }
 
 void Engine::handleInput(SDL_Event& event)
 {
 	switch (event.key.keysym.sym)
 	{
-		case SDLK_UP: cout << "UP" << endl; break;
-		case SDLK_DOWN: cout << "DOWN" << endl; break;
-		case SDLK_LEFT: cout << "LEFT" << endl; break;
-		case SDLK_RIGHT: cout << "RIGHT" << endl; break;
+
 	}
+}
+
+void Engine::draw()
+{
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x7F, 0xFF, 0xFF);
+	SDL_RenderClear(renderer);
+	//SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+	SDL_Rect rect = { rectX, rectY, 40, 40 };
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xA5, 0x00, 0xFF);
+	SDL_RenderFillRect(renderer, &rect);
+
+	SDL_RenderPresent(renderer);
 }
 
 void Engine::quit()
