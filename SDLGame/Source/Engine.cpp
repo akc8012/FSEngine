@@ -11,7 +11,8 @@ bool Engine::init()
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
 		window = createWindow();
-		screenSurface = SDL_GetWindowSurface(window);
+		renderer = createRenderer();
+
 		loadMedia();
 	}
 	catch (string msg)
@@ -33,33 +34,44 @@ SDL_Window* Engine::createWindow()
 	return window;
 }
 
+SDL_Renderer* Engine::createRenderer()
+{
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if (renderer == NULL)
+		throw (string)"Renderer could not be created! SDL Error: %s\n" + SDL_GetError();
+
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	return renderer;
+}
+
 void Engine::loadMedia()
 {
 	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
 		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
 
-	helloWorldSurface = loadSurface("Resource/Image/loaded.png");
+	texture = loadTexture("Resource/Image/loaded.png");
 }
 
-SDL_Surface* Engine::loadSurface(const char* path)
+SDL_Texture* Engine::loadTexture(const char* path)
 {
 	SDL_Surface* loadedSurface = IMG_Load(path);
 	if (loadedSurface == NULL)
 		throw (string)"Unable to load image! SDL_Error: " + IMG_GetError();
 
-	SDL_Surface* finalSurface = SDL_ConvertSurface(loadedSurface, screenSurface->format, NULL);
-	if (finalSurface == NULL)
+	SDL_Texture* newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+	if (newTexture == NULL)
 		throw (string)"Unable to convert surface! SDL_Error: " + SDL_GetError();
 
 	SDL_FreeSurface(loadedSurface);
-	return finalSurface;
+	return newTexture;
 }
 
 void Engine::run()
 {
-	SDL_BlitSurface(helloWorldSurface, NULL, screenSurface, NULL);
-	SDL_UpdateWindowSurface(window);
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	SDL_RenderPresent(renderer);
 }
 
 void Engine::handleInput(SDL_Event& event)
@@ -75,12 +87,13 @@ void Engine::handleInput(SDL_Event& event)
 
 void Engine::quit()
 {
-	SDL_FreeSurface(helloWorldSurface);
-	helloWorldSurface = NULL;
+	SDL_DestroyTexture(texture);
+	texture = NULL;
 
 	SDL_DestroyWindow(window);
 	window = NULL;
-	screenSurface = NULL;
+	renderer = NULL;
 
+	IMG_Quit();
 	SDL_Quit();
 }

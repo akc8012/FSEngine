@@ -11,12 +11,13 @@ private:
 	const int SCREEN_HEIGHT = 480;
 
 	SDL_Window* window = NULL;
-	SDL_Surface* screenSurface = NULL;
-	SDL_Surface* helloWorldSurface = NULL;
+	SDL_Renderer* renderer;
+	SDL_Texture* texture = NULL;
 
 	SDL_Window* createWindow();
+	SDL_Renderer* createRenderer();
 	void loadMedia();
-	SDL_Surface* loadSurface(const char* path);
+	SDL_Texture* loadTexture(const char* path);
 
 public:
 	bool init();
