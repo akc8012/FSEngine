@@ -7,4 +7,7 @@
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Image\hello_world.bmp" />
+  </ItemGroup>
 </Project>

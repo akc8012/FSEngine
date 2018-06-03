@@ -10,6 +10,7 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
+	engine->run();
 	engine->quit();
 
 	delete engine;
