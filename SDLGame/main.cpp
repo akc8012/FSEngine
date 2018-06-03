@@ -4,7 +4,12 @@ int main(int argc, char* args[])
 {
 	Engine* engine = new Engine();
 
-	engine->init();
+	if (!engine->init())
+	{
+		delete engine;
+		return -1;
+	}
+
 	engine->quit();
 
 	delete engine;

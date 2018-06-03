@@ -12,10 +12,12 @@ bool Engine::init()
 	catch (string msg)
 	{
 		cout << msg << endl;
+		cin.get();
+		return false;
 	}
 
 	SDL_UpdateWindowSurface(window);
-	SDL_Delay(2000);
+	SDL_Delay(2 * 1000);
 
 	return true;
 }
