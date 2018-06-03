@@ -46,6 +46,17 @@ void Engine::run()
 	SDL_UpdateWindowSurface(window);
 }
 
+void Engine::handleInput(SDL_Event& event)
+{
+	switch (event.key.keysym.sym)
+	{
+		case SDLK_UP: cout << "UP" << endl; break;
+		case SDLK_DOWN: cout << "DOWN" << endl; break;
+		case SDLK_LEFT: cout << "LEFT" << endl; break;
+		case SDLK_RIGHT: cout << "RIGHT" << endl; break;
+	}
+}
+
 void Engine::quit()
 {
 	SDL_FreeSurface(helloWorldSurface);

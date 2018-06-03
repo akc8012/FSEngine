@@ -16,6 +16,7 @@ private:
 
 public:
 	bool init();
+	void handleInput(SDL_Event& event);
 	void run();
 	void quit();
 };
