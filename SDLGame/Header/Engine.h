@@ -13,6 +13,7 @@ private:
 
 	SDL_Window* createWindow();
 	void loadMedia();
+	SDL_Surface* loadSurface(const char* path);
 
 public:
 	bool init();

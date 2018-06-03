@@ -11,6 +11,7 @@ bool Engine::init()
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
 		window = createWindow();
+		screenSurface = SDL_GetWindowSurface(window);
 		loadMedia();
 	}
 	catch (string msg)
@@ -20,7 +21,6 @@ bool Engine::init()
 		return false;
 	}
 
-	screenSurface = SDL_GetWindowSurface(window);
 	return true;
 }
 
@@ -35,9 +35,21 @@ SDL_Window* Engine::createWindow()
 
 void Engine::loadMedia()
 {
-	helloWorldSurface = SDL_LoadBMP("Resource/Image/hello_world.bmp");
-	if (helloWorldSurface == NULL)
+	helloWorldSurface = loadSurface("Resource/Image/hello_world.bmp");
+}
+
+SDL_Surface* Engine::loadSurface(const char* path)
+{
+	SDL_Surface* loadedSurface = SDL_LoadBMP(path);
+	if (loadedSurface == NULL)
 		throw (string)"Unable to load image! SDL_Error: " + SDL_GetError();
+
+	SDL_Surface* finalSurface = SDL_ConvertSurface(loadedSurface, screenSurface->format, NULL);
+	if (finalSurface == NULL)
+		throw (string)"Unable to convert surface! SDL_Error: " + SDL_GetError();
+
+	SDL_FreeSurface(loadedSurface);
+	return finalSurface;
 }
 
 void Engine::run()
