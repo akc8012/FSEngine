@@ -10,9 +10,21 @@ int main(int argc, char* args[])
 		return -1;
 	}
 
-	engine->run();
-	engine->quit();
+	bool quit = false;
+	while (!quit)
+	{
+		SDL_Event event;
+		while (SDL_PollEvent(&event) != 0)
+		{
+			if (event.type == SDL_QUIT)
+				quit = true;
+		}
 
+		engine->run();
+	}
+
+	engine->quit();
 	delete engine;
+
 	return 0;
 }

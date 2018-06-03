@@ -44,7 +44,6 @@ void Engine::run()
 {
 	SDL_BlitSurface(helloWorldSurface, NULL, screenSurface, NULL);
 	SDL_UpdateWindowSurface(window);
-	SDL_Delay(2 * 1000);
 }
 
 void Engine::quit()
