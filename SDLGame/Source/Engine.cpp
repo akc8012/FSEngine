@@ -89,10 +89,10 @@ void Engine::update()
 
 void Engine::handleInput(SDL_Event& event)
 {
-	switch (event.key.keysym.sym)
+	/*switch (event.key.keysym.sym)
 	{
 
-	}
+	}*/
 }
 
 void Engine::draw()
