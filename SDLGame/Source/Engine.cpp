@@ -20,7 +20,7 @@ bool Engine::init()
 		return false;
 	}
 
-	surface = SDL_GetWindowSurface(window);
+	screenSurface = SDL_GetWindowSurface(window);
 	return true;
 }
 
@@ -42,13 +42,19 @@ void Engine::loadMedia()
 
 void Engine::run()
 {
-	SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0x00, 0x7F, 0xFF));
+	SDL_BlitSurface(helloWorldSurface, NULL, screenSurface, NULL);
 	SDL_UpdateWindowSurface(window);
 	SDL_Delay(2 * 1000);
 }
 
 void Engine::quit()
 {
+	SDL_FreeSurface(helloWorldSurface);
+	helloWorldSurface = NULL;
+
 	SDL_DestroyWindow(window);
+	window = NULL;
+	screenSurface = NULL;
+
 	SDL_Quit();
 }

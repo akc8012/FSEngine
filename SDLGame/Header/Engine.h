@@ -8,7 +8,7 @@ private:
 	const int SCREEN_HEIGHT = 480;
 
 	SDL_Window* window = NULL;
-	SDL_Surface* surface = NULL;
+	SDL_Surface* screenSurface = NULL;
 	SDL_Surface* helloWorldSurface = NULL;
 
 	SDL_Window* createWindow();
