@@ -37,7 +37,7 @@ void Engine::loadMedia()
 {
 	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 	if (!(IMG_Init(imgFlags) & imgFlags))
-		throw (string)"SDL_image could not initialize! SDL_image Error: %s\n" + IMG_GetError();
+		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
 
 	helloWorldSurface = loadSurface("Resource/Image/loaded.png");
 }
