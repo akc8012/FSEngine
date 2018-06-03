@@ -9,5 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\hello_world.bmp" />
+    <Image Include="Resource\Image\loaded.png" />
+    <Image Include="Resource\Image\loaded.jpg" />
   </ItemGroup>
 </Project>

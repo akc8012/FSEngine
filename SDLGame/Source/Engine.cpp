@@ -35,14 +35,18 @@ SDL_Window* Engine::createWindow()
 
 void Engine::loadMedia()
 {
-	helloWorldSurface = loadSurface("Resource/Image/hello_world.bmp");
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+		throw (string)"SDL_image could not initialize! SDL_image Error: %s\n" + IMG_GetError();
+
+	helloWorldSurface = loadSurface("Resource/Image/loaded.png");
 }
 
 SDL_Surface* Engine::loadSurface(const char* path)
 {
-	SDL_Surface* loadedSurface = SDL_LoadBMP(path);
+	SDL_Surface* loadedSurface = IMG_Load(path);
 	if (loadedSurface == NULL)
-		throw (string)"Unable to load image! SDL_Error: " + SDL_GetError();
+		throw (string)"Unable to load image! SDL_Error: " + IMG_GetError();
 
 	SDL_Surface* finalSurface = SDL_ConvertSurface(loadedSurface, screenSurface->format, NULL);
 	if (finalSurface == NULL)

@@ -74,8 +74,8 @@
     <LibraryPath>C:\sdl2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\sdl2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\sdl2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\sdl2\image\include;C:\sdl2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sdl2\image\lib\x64;C:\sdl2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,7 +97,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -138,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\hello_world.bmp" />
+    <Image Include="Resource\Image\loaded.jpg" />
+    <Image Include="Resource\Image\loaded.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
