@@ -10,13 +10,12 @@ private:
 	SDL_GLContext context;
 
 	unsigned int programId = 0;
-	int vertexPos2DLocation = -1;
+	int vertexPosId = -1;
 	unsigned int vbo = 0;
 	unsigned int ebo = 0;
 
 	GLuint createProgram();
-	void createVertexShader(unsigned int programId);
-	void createFragmentShader(unsigned int programId);
+	unsigned int createShader(unsigned int type, const char* source);
 	void setBuffers();
 
 public:

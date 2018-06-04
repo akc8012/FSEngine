@@ -28,11 +28,32 @@ GLuint Renderer::createProgram()
 {
 	programId = glCreateProgram();
 
-	createVertexShader(programId);
-	createFragmentShader(programId);
-	glLinkProgram(programId);
+	const char* vertexShaderSource = {
+		"#version 140\n"
+		"in vec2 vertexPos;"
+		"void main()\n"
+		"{\n"
+		"	gl_Position = vec4(vertexPos.x, vertexPos.y, 0, 1.0);\n"
+		"}\n"
+	};
+
+	const char* fragmentShaderSource = {
+		"#version 140\n"
+		"out vec4 FragColor;\n"
+		"void main()\n"
+		"{\n"
+		"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+		"}\n"
+	};
+
+	unsigned int vertexShaderId = createShader(GL_VERTEX_SHADER, vertexShaderSource);
+	unsigned int fragmentShaderId = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+
+	glAttachShader(programId, vertexShaderId);
+	glAttachShader(programId, fragmentShaderId);
 
 	int success;
+	glLinkProgram(programId);
 	glGetProgramiv(programId, GL_LINK_STATUS, &success);
 	if (!success)
 		throw (string)"Error linking program " + to_string(programId);
@@ -40,47 +61,25 @@ GLuint Renderer::createProgram()
 	return programId;
 }
 
-void Renderer::createVertexShader(unsigned int programId)
+unsigned int Renderer::createShader(unsigned int type, const char* source)
 {
-	unsigned int vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-	const char* vertexShaderSource[] =
-	{
-		"#version 140\nin vec2 LVertexPos2D; void main() { gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 ); }"
-	};
-	glShaderSource(vertexShaderId, 1, vertexShaderSource, NULL);
-	glCompileShader(vertexShaderId);
+	unsigned int shaderId = glCreateShader(type);
+	glShaderSource(shaderId, 1, &source, NULL);
 
 	int success;
-	glGetShaderiv(vertexShaderId, GL_COMPILE_STATUS, &success);
+	glCompileShader(shaderId);
+	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
-		throw (string)"Unable to compile vertex shader " + to_string(vertexShaderId);
+		throw (string)"Unable to compile shader " + to_string(shaderId);
 
-	glAttachShader(programId, vertexShaderId);
-}
-
-void Renderer::createFragmentShader(unsigned int programId)
-{
-	unsigned int fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-	const char* fragmentShaderSource[] =
-	{
-		"#version 140\nout vec4 LFragment; void main() { LFragment = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
-	};
-	glShaderSource(fragmentShaderId, 1, fragmentShaderSource, NULL);
-	glCompileShader(fragmentShaderId);
-
-	int success;
-	glGetShaderiv(fragmentShaderId, GL_COMPILE_STATUS, &success);
-	if (!success)
-		throw (string)"Unable to compile fragment shader " + to_string(fragmentShaderId);
-
-	glAttachShader(programId, fragmentShaderId);
+	return shaderId;
 }
 
 void Renderer::setBuffers()
 {
-	vertexPos2DLocation = glGetAttribLocation(programId, "LVertexPos2D");
-	if (vertexPos2DLocation == -1)
-		throw (string)"LVertexPos2D is not a valid glsl program variable!";
+	vertexPosId = glGetAttribLocation(programId, "vertexPos");
+	if (vertexPosId == -1)
+		throw (string)"vertexPos is not a valid glsl program variable!";
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 
@@ -111,18 +110,18 @@ void Renderer::render(SDL_Window* window)
 	glUseProgram(programId);
 
 	//Enable vertex position
-	glEnableVertexAttribArray(vertexPos2DLocation);
+	glEnableVertexAttribArray(vertexPosId);
 
 	//Set vertex data
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(vertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL);
+	glVertexAttribPointer(vertexPosId, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), NULL);
 
 	//Set index data and render
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
 
 	//Disable vertex position
-	glDisableVertexAttribArray(vertexPos2DLocation);
+	glDisableVertexAttribArray(vertexPosId);
 
 	//Unbind program
 	glUseProgram(NULL);
