@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
-#include "OpenGL.h"
+#include "Renderer.h"
 
 class Engine
 {
@@ -15,7 +15,7 @@ private:
 
 	SDL_Window* window = NULL;
 	SDL_Texture* texture = NULL;
-	OpenGL* opengl = NULL;
+	Renderer* renderer = NULL;
 
 	SDL_Window* createWindow();
 	//SDL_Texture* loadTexture(const char* path);

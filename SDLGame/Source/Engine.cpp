@@ -11,7 +11,7 @@ bool Engine::init()
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
 		window = createWindow();
-		opengl = new OpenGL(window);
+		renderer = new Renderer(window);
 
 		loadMedia();
 	}
@@ -79,7 +79,7 @@ void Engine::update()
 
 void Engine::draw()
 {
-	opengl->render(window);
+	renderer->render(window);
 }
 
 Engine::~Engine()
@@ -90,8 +90,8 @@ Engine::~Engine()
 	SDL_DestroyWindow(window);
 	window = NULL;
 
-	delete opengl;
-	opengl = NULL;
+	delete renderer;
+	renderer = NULL;
 
 	IMG_Quit();
 	SDL_Quit();
