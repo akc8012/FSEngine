@@ -3,9 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-#include <GL\GLU.h>
+#include "OpenGL.h"
 
 class Engine
 {
@@ -16,20 +14,19 @@ private:
 	int rectX = 30, rectY = 30;
 
 	SDL_Window* window = NULL;
-	SDL_Renderer* renderer;
 	SDL_Texture* texture = NULL;
+	OpenGL* opengl = NULL;
 
 	SDL_Window* createWindow();
-	SDL_Renderer* createRenderer();
-	SDL_Texture* loadTexture(const char* path);
+	//SDL_Texture* loadTexture(const char* path);
 
 	void loadMedia();
 	void update();
 	void draw();
 
 public:
+	~Engine();
+
 	bool init();
-	void handleInput(SDL_Event& event);
 	void run();
-	void quit();
 };

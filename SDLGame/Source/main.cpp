@@ -3,7 +3,6 @@
 int main(int argc, char* args[])
 {
 	Engine* engine = new Engine();
-
 	if (!engine->init())
 	{
 		delete engine;
@@ -18,16 +17,13 @@ int main(int argc, char* args[])
 		{
 			if (event.type == SDL_QUIT)
 				quit = true;
-
-			if (event.type == SDL_KEYDOWN)
-				engine->handleInput(event);
 		}
 
 		engine->run();
 	}
 
-	engine->quit();
 	delete engine;
+	engine = NULL;
 
 	return 0;
 }
