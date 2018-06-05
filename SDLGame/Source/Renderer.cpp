@@ -20,14 +20,38 @@ Renderer::Renderer(SDL_Window* window)
 	if (SDL_GL_SetSwapInterval(1) < 0)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
-	programId = createProgram();
+	shaderProgramId = createShaderProgram();
 	setBuffers();
 }
 
-GLuint Renderer::createProgram()
+unsigned int Renderer::createShaderProgram()
 {
-	programId = glCreateProgram();
+	shaderProgramId = glCreateProgram();
 
+	unsigned int vertexShaderId = createVertexShader();
+	glAttachShader(shaderProgramId, vertexShaderId);
+
+	unsigned int fragmentShaderId = createFragmentShader();
+	glAttachShader(shaderProgramId, fragmentShaderId);
+
+	int success;
+	glLinkProgram(shaderProgramId);
+	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		char infoLog[512];
+		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
+		throw (string)"Error linking program: " + infoLog;
+	}
+
+	glDeleteShader(vertexShaderId);
+	glDeleteShader(fragmentShaderId);
+
+	return shaderProgramId;
+}
+
+unsigned int Renderer::createVertexShader()
+{
 	const char* vertexShaderSource = {
 		"#version 140\n"
 		"in vec3 vertexPos;"
@@ -37,6 +61,11 @@ GLuint Renderer::createProgram()
 		"}\n"
 	};
 
+	return createShader(GL_VERTEX_SHADER, vertexShaderSource);
+}
+
+unsigned int Renderer::createFragmentShader()
+{
 	const char* fragmentShaderSource = {
 		"#version 140\n"
 		"out vec4 FragColor;\n"
@@ -46,19 +75,7 @@ GLuint Renderer::createProgram()
 		"}\n"
 	};
 
-	unsigned int vertexShaderId = createShader(GL_VERTEX_SHADER, vertexShaderSource);
-	unsigned int fragmentShaderId = createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-
-	glAttachShader(programId, vertexShaderId);
-	glAttachShader(programId, fragmentShaderId);
-
-	int success;
-	glLinkProgram(programId);
-	glGetProgramiv(programId, GL_LINK_STATUS, &success);
-	if (!success)
-		throw (string)"Error linking program " + to_string(programId);
-
-	return programId;
+	return createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 }
 
 unsigned int Renderer::createShader(unsigned int type, const char* source)
@@ -70,14 +87,18 @@ unsigned int Renderer::createShader(unsigned int type, const char* source)
 	glCompileShader(shaderId);
 	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
 	if (!success)
-		throw (string)"Unable to compile shader " + to_string(shaderId);
+	{
+		char infoLog[512];
+		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
+		throw (string)"Unable to compile shader: " + infoLog;
+	}
 
 	return shaderId;
 }
 
 void Renderer::setBuffers()
 {
-	vertexPosId = glGetAttribLocation(programId, "vertexPos");
+	vertexPosId = glGetAttribLocation(shaderProgramId, "vertexPos");
 	if (vertexPosId == -1)
 		throw (string)"vertexPos is not a valid glsl program variable!";
 
@@ -87,18 +108,17 @@ void Renderer::setBuffers()
 	{
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
-		0.5f,  0.5f, 0.0f,
-		-0.5f,  0.5f, 0.0f
+		0.0f,  0.5f, 0.0f
 	};
-	unsigned int indexData[] = { 0, 1, 2, 3 };
+	unsigned int indexData[] = { 0, 1, 2 };
 
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 3 * 4 * sizeof(float), vertices, GL_STATIC_DRAW);
+	glGenBuffers(1, &vertexBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(unsigned int), indexData, GL_STATIC_DRAW);
+	glGenBuffers(1, &elementBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(unsigned int), indexData, GL_STATIC_DRAW);
 }
 
 void Renderer::render(SDL_Window* window)
@@ -107,18 +127,18 @@ void Renderer::render(SDL_Window* window)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//Bind program
-	glUseProgram(programId);
+	glUseProgram(shaderProgramId);
 
 	//Enable vertex position
 	glEnableVertexAttribArray(vertexPosId);
 
 	//Set vertex data
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glVertexAttribPointer(vertexPosId, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
 
 	//Set index data and render
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
+	glDrawElements(GL_TRIANGLE_FAN, 3, GL_UNSIGNED_INT, NULL);
 
 	//Disable vertex position
 	glDisableVertexAttribArray(vertexPosId);
@@ -132,5 +152,5 @@ void Renderer::render(SDL_Window* window)
 
 Renderer::~Renderer()
 {
-	glDeleteProgram(programId);
+	glDeleteProgram(shaderProgramId);
 }

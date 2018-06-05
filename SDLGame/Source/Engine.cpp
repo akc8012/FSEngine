@@ -22,6 +22,7 @@ bool Engine::init()
 		return false;
 	}
 
+	cout << "Success" << endl;
 	return true;
 }
 

@@ -9,13 +9,18 @@ class Renderer
 private:
 	SDL_GLContext context;
 
-	unsigned int programId = 0;
-	int vertexPosId = -1;
-	unsigned int vbo = 0;
-	unsigned int ebo = 0;
+	unsigned int shaderProgramId = 0;
+	unsigned int vertexBufferId = 0;
+	unsigned int elementBufferId = 0;
 
-	GLuint createProgram();
+	int vertexPosId = -1;
+
+	unsigned int createShaderProgram();
+
+	unsigned int createVertexShader();
+	unsigned int createFragmentShader();
 	unsigned int createShader(unsigned int type, const char* source);
+
 	void setBuffers();
 
 public:
