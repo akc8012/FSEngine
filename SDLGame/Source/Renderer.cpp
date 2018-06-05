@@ -30,10 +30,10 @@ GLuint Renderer::createProgram()
 
 	const char* vertexShaderSource = {
 		"#version 140\n"
-		"in vec2 vertexPos;"
+		"in vec3 vertexPos;"
 		"void main()\n"
 		"{\n"
-		"	gl_Position = vec4(vertexPos.x, vertexPos.y, 0, 1.0);\n"
+		"	gl_Position = vec4(vertexPos.x, vertexPos.y, vertexPos.z, 1.0);\n"
 		"}\n"
 	};
 
@@ -81,20 +81,20 @@ void Renderer::setBuffers()
 	if (vertexPosId == -1)
 		throw (string)"vertexPos is not a valid glsl program variable!";
 
-	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClearColor(0, 0.5f, 1, 1);
 
-	float vertexData[] =
+	float vertices[] =
 	{
-		-0.5f, -0.5f,
-		0.5f, -0.5f,
-		0.5f,  0.5f,
-		-0.5f,  0.5f
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.5f,  0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f
 	};
 	unsigned int indexData[] = { 0, 1, 2, 3 };
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 2 * 4 * sizeof(float), vertexData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 3 * 4 * sizeof(float), vertices, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -114,7 +114,7 @@ void Renderer::render(SDL_Window* window)
 
 	//Set vertex data
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(vertexPosId, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), NULL);
+	glVertexAttribPointer(vertexPosId, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
 
 	//Set index data and render
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
