@@ -5,7 +5,7 @@ using namespace std;
 Renderer::Renderer(SDL_Window* window)
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	context = SDL_GL_CreateContext(window);
@@ -13,7 +13,7 @@ Renderer::Renderer(SDL_Window* window)
 		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 
 	glewExperimental = GL_TRUE;
-	unsigned int glewError = glewInit();
+	uint glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 
@@ -21,17 +21,17 @@ Renderer::Renderer(SDL_Window* window)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
 	shaderProgramId = createShaderProgram();
-	setBuffers();
+	vertexArrayId = createVertexArray();
 }
 
-unsigned int Renderer::createShaderProgram()
+uint Renderer::createShaderProgram()
 {
 	shaderProgramId = glCreateProgram();
 
-	unsigned int vertexShaderId = createVertexShader();
+	uint vertexShaderId = createVertexShader();
 	glAttachShader(shaderProgramId, vertexShaderId);
 
-	unsigned int fragmentShaderId = createFragmentShader();
+	uint fragmentShaderId = createFragmentShader();
 	glAttachShader(shaderProgramId, fragmentShaderId);
 
 	int success;
@@ -50,11 +50,11 @@ unsigned int Renderer::createShaderProgram()
 	return shaderProgramId;
 }
 
-unsigned int Renderer::createVertexShader()
+uint Renderer::createVertexShader()
 {
 	const char* vertexShaderSource = {
-		"#version 140\n"
-		"in vec3 vertexPos;"
+		"#version 330 core\n"
+		"layout (location = 0) in vec3 vertexPos;\n"
 		"void main()\n"
 		"{\n"
 		"	gl_Position = vec4(vertexPos.x, vertexPos.y, vertexPos.z, 1.0);\n"
@@ -64,10 +64,10 @@ unsigned int Renderer::createVertexShader()
 	return createShader(GL_VERTEX_SHADER, vertexShaderSource);
 }
 
-unsigned int Renderer::createFragmentShader()
+uint Renderer::createFragmentShader()
 {
 	const char* fragmentShaderSource = {
-		"#version 140\n"
+		"#version 330 core\n"
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
@@ -78,9 +78,9 @@ unsigned int Renderer::createFragmentShader()
 	return createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 }
 
-unsigned int Renderer::createShader(unsigned int type, const char* source)
+uint Renderer::createShader(uint type, const char* source)
 {
-	unsigned int shaderId = glCreateShader(type);
+	uint shaderId = glCreateShader(type);
 	glShaderSource(shaderId, 1, &source, NULL);
 
 	int success;
@@ -96,61 +96,60 @@ unsigned int Renderer::createShader(unsigned int type, const char* source)
 	return shaderId;
 }
 
-void Renderer::setBuffers()
+uint Renderer::createVertexArray()
 {
-	vertexPosId = glGetAttribLocation(shaderProgramId, "vertexPos");
-	if (vertexPosId == -1)
-		throw (string)"vertexPos is not a valid glsl program variable!";
+	glGenVertexArrays(1, &vertexArrayId);
 
-	glClearColor(0, 0.5f, 1, 1);
+	uint vertexBufferId;
+	glGenBuffers(1, &vertexBufferId);
 
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
+	glBindVertexArray(vertexArrayId);
+	sendVertices();
+
+	unbindVertexObjects(vertexBufferId);
+
+	return vertexArrayId;
+}
+
+void Renderer::unbindVertexObjects(uint vertexBufferId)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	
+	glDeleteBuffers(1, &vertexBufferId);
+}
+
+void Renderer::sendVertices()
+{
 	float vertices[] =
 	{
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
 		0.0f,  0.5f, 0.0f
 	};
-	unsigned int indexData[] = { 0, 1, 2 };
 
-	glGenBuffers(1, &vertexBufferId);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glGenBuffers(1, &elementBufferId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(unsigned int), indexData, GL_STATIC_DRAW);
+	uint length = 3;
+	glVertexAttribPointer(0, length, GL_FLOAT, false, length * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 }
 
 void Renderer::render(SDL_Window* window)
 {
-	//Clear color buffer
+	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//Bind program
 	glUseProgram(shaderProgramId);
+	glBindVertexArray(vertexArrayId);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 
-	//Enable vertex position
-	glEnableVertexAttribArray(vertexPosId);
-
-	//Set vertex data
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-	glVertexAttribPointer(vertexPosId, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
-
-	//Set index data and render
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
-	glDrawElements(GL_TRIANGLE_FAN, 3, GL_UNSIGNED_INT, NULL);
-
-	//Disable vertex position
-	glDisableVertexAttribArray(vertexPosId);
-
-	//Unbind program
-	glUseProgram(NULL);
-
-	//Update screen
 	SDL_GL_SwapWindow(window);
 }
 
 Renderer::~Renderer()
 {
+	glDeleteVertexArrays(1, &vertexArrayId);
 	glDeleteProgram(shaderProgramId);
 }

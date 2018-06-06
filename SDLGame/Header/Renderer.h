@@ -4,24 +4,24 @@
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 
+#define uint unsigned int
+
 class Renderer
 {
 private:
 	SDL_GLContext context;
 
-	unsigned int shaderProgramId = 0;
-	unsigned int vertexBufferId = 0;
-	unsigned int elementBufferId = 0;
+	uint shaderProgramId = 0;
+	uint vertexArrayId = 0;
 
-	int vertexPosId = -1;
+	uint createShaderProgram();
+	uint createVertexShader();
+	uint createFragmentShader();
+	uint createShader(uint type, const char* source);
 
-	unsigned int createShaderProgram();
-
-	unsigned int createVertexShader();
-	unsigned int createFragmentShader();
-	unsigned int createShader(unsigned int type, const char* source);
-
-	void setBuffers();
+	uint createVertexArray();
+	void unbindVertexObjects(uint vertexBufferId);
+	void sendVertices();
 
 public:
 	Renderer(SDL_Window* window);
