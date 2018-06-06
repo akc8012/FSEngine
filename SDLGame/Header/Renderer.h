@@ -20,8 +20,10 @@ private:
 	uint createShader(uint type, const char* source);
 
 	uint createVertexArray();
-	void unbindVertexObjects(uint vertexBufferId);
-	void sendVertices();
+	void sendVertices(uint vertexBufferId);
+	void sendIndices(uint elementBufferId);
+	void sendVertexAttributes(uint length);
+	void unbindVertexObjects();
 
 public:
 	Renderer(SDL_Window* window);
