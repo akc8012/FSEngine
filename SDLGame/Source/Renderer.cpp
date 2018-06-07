@@ -1,4 +1,7 @@
 #include "../Header/Renderer.h"
+#include <GL\glew.h>
+#include <SDL_opengl.h>
+#include <GL\GLU.h>
 #include <string>
 using namespace std;
 

@@ -1,9 +1,6 @@
 #pragma once
-#include <SDL.h>
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-#include <GL\GLU.h>
 #include "ShaderProgram.h"
+#include <SDL.h>
 
 #define uint unsigned int
 

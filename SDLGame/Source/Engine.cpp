@@ -1,6 +1,7 @@
 #include "../Header/Engine.h"
 #include <iostream>
 #include <string>
+#include <SDL_image.h>
 using namespace std;
 
 bool Engine::init()
