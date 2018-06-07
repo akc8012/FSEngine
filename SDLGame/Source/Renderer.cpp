@@ -100,4 +100,5 @@ Renderer::~Renderer()
 {
 	glDeleteVertexArrays(1, &vertexArrayId);
 	delete shaderProgram;
+	SDL_GL_DeleteContext(context);
 }
