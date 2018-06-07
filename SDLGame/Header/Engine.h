@@ -1,6 +1,6 @@
 #pragma once
-#include <SDL.h>
 #include "Renderer.h"
+#include <SDL.h>
 
 class Engine
 {
