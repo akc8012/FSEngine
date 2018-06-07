@@ -20,80 +20,8 @@ Renderer::Renderer(SDL_Window* window)
 	if (SDL_GL_SetSwapInterval(1) < 0)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
-	shaderProgramId = createShaderProgram();
+	shaderProgram = new ShaderProgram();
 	vertexArrayId = createVertexArray();
-}
-
-uint Renderer::createShaderProgram()
-{
-	shaderProgramId = glCreateProgram();
-
-	uint vertexShaderId = createVertexShader();
-	glAttachShader(shaderProgramId, vertexShaderId);
-
-	uint fragmentShaderId = createFragmentShader();
-	glAttachShader(shaderProgramId, fragmentShaderId);
-
-	int success;
-	glLinkProgram(shaderProgramId);
-	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		char infoLog[512];
-		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
-		throw (string)"Error linking program: " + infoLog;
-	}
-
-	glDeleteShader(vertexShaderId);
-	glDeleteShader(fragmentShaderId);
-
-	return shaderProgramId;
-}
-
-uint Renderer::createVertexShader()
-{
-	const char* vertexShaderSource = {
-		"#version 330 core\n"
-		"layout (location = 0) in vec3 vertexPos;\n"
-		"void main()\n"
-		"{\n"
-		"	gl_Position = vec4(vertexPos.x, vertexPos.y, vertexPos.z, 1.0);\n"
-		"}\n"
-	};
-
-	return createShader(GL_VERTEX_SHADER, vertexShaderSource);
-}
-
-uint Renderer::createFragmentShader()
-{
-	const char* fragmentShaderSource = {
-		"#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-		"}\n"
-	};
-
-	return createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-}
-
-uint Renderer::createShader(uint type, const char* source)
-{
-	uint shaderId = glCreateShader(type);
-	glShaderSource(shaderId, 1, &source, NULL);
-
-	int success;
-	glCompileShader(shaderId);
-	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		char infoLog[512];
-		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		throw (string)"Unable to compile shader: " + infoLog;
-	}
-
-	return shaderId;
 }
 
 uint Renderer::createVertexArray()
@@ -158,7 +86,7 @@ void Renderer::render(SDL_Window* window)
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glUseProgram(shaderProgramId);
+	glUseProgram(shaderProgram->getShaderProgramId());
 	glBindVertexArray(vertexArrayId);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -168,5 +96,5 @@ void Renderer::render(SDL_Window* window)
 Renderer::~Renderer()
 {
 	glDeleteVertexArrays(1, &vertexArrayId);
-	glDeleteProgram(shaderProgramId);
+	delete shaderProgram;
 }

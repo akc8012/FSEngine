@@ -3,6 +3,7 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
+#include "ShaderProgram.h"
 
 #define uint unsigned int
 
@@ -10,14 +11,8 @@ class Renderer
 {
 private:
 	SDL_GLContext context;
-
-	uint shaderProgramId = 0;
+	ShaderProgram* shaderProgram = NULL;
 	uint vertexArrayId = 0;
-
-	uint createShaderProgram();
-	uint createVertexShader();
-	uint createFragmentShader();
-	uint createShader(uint type, const char* source);
 
 	uint createVertexArray();
 	void sendVertices(uint vertexBufferId);

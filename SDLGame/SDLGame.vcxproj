@@ -133,10 +133,12 @@
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
+    <ClCompile Include="Source\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Renderer.h" />
+    <ClInclude Include="Header\ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\hello_world.bmp" />
