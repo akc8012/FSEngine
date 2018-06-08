@@ -11,7 +11,6 @@ private:
 	int rectX = 30, rectY = 30;
 
 	SDL_Window* window = NULL;
-	SDL_Texture* texture = NULL;
 	Renderer* renderer = NULL;
 
 	SDL_Window* createWindow();

@@ -72,9 +72,6 @@ void Engine::draw()
 
 Engine::~Engine()
 {
-	SDL_DestroyTexture(texture);
-	texture = NULL;
-
 	SDL_DestroyWindow(window);
 	window = NULL;
 
