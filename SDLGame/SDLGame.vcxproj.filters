@@ -16,4 +16,8 @@
     <Image Include="Resource\Image\loaded.png" />
     <Image Include="Resource\Image\loaded.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Shader\VertexShader.shader" />
+    <None Include="Resource\Shader\FragmentShader.shader" />
+  </ItemGroup>
 </Project>

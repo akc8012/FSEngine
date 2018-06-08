@@ -5,6 +5,9 @@
 #include <GL\GLU.h>
 
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 using namespace std;
 
 ShaderProgram::ShaderProgram()
@@ -42,7 +45,7 @@ uint ShaderProgram::createVertexShader()
 		"}\n"
 	};
 
-	return createShader(GL_VERTEX_SHADER, vertexShaderSource);
+	return createShader(GL_VERTEX_SHADER, readShaderSourceFromFile("Resource/Shader/VertexShader.shader").c_str());
 }
 
 uint ShaderProgram::createFragmentShader()
@@ -52,11 +55,11 @@ uint ShaderProgram::createFragmentShader()
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
-		"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+		"	FragColor = vec4(0.0f, 1.0f, 0.3f, 1.0f);\n"
 		"}\n"
 	};
 
-	return createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+	return createShader(GL_FRAGMENT_SHADER, readShaderSourceFromFile("Resource/Shader/FragmentShader.shader").c_str());
 }
 
 uint ShaderProgram::createShader(uint type, const char* source)
@@ -75,6 +78,27 @@ uint ShaderProgram::createShader(uint type, const char* source)
 	}
 
 	return shaderId;
+}
+
+string ShaderProgram::readShaderSourceFromFile(const char* filePath)
+{
+	ifstream file;
+	file.exceptions(ifstream::failbit | ifstream::badbit);
+
+	try
+	{
+		file.open(filePath);
+	}
+	catch (ifstream::failure e)
+	{
+		throw("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
+	}
+
+	stringstream stream;
+	stream << file.rdbuf();
+	
+	file.close();
+	return stream.str();
 }
 
 uint ShaderProgram::getShaderProgramId()
