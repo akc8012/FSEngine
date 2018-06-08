@@ -45,20 +45,6 @@ void Engine::loadMedia()
 	//texture = loadTexture("Resource/Image/loaded.png");
 }
 
-/*SDL_Texture* Engine::loadTexture(const char* path)
-{
-	SDL_Surface* loadedSurface = IMG_Load(path);
-	if (loadedSurface == NULL)
-		throw (string)"Unable to load image! SDL_Error: " + IMG_GetError();
-
-	SDL_Texture* newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-	if (newTexture == NULL)
-		throw (string)"Unable to convert surface! SDL_Error: " + SDL_GetError();
-
-	SDL_FreeSurface(loadedSurface);
-	return newTexture;
-}*/
-
 void Engine::run()
 {
 	update();

@@ -15,7 +15,6 @@ private:
 	Renderer* renderer = NULL;
 
 	SDL_Window* createWindow();
-	//SDL_Texture* loadTexture(const char* path);
 
 	void loadMedia();
 	void update();
