@@ -1,6 +1,7 @@
 #include "../Header/Engine.h"
 #include <iostream>
 #include <string>
+#include <SDL_image.h>
 using namespace std;
 
 bool Engine::init()
@@ -11,7 +12,7 @@ bool Engine::init()
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
 		window = createWindow();
-		renderer = createRenderer();
+		renderer = new Renderer(window);
 
 		loadMedia();
 	}
@@ -22,26 +23,17 @@ bool Engine::init()
 		return false;
 	}
 
+	cout << "Success" << endl;
 	return true;
 }
 
 SDL_Window* Engine::createWindow()
 {
-	window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created! SDL_Error: " + SDL_GetError();
 
 	return window;
-}
-
-SDL_Renderer* Engine::createRenderer()
-{
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == NULL)
-		throw (string)"Renderer could not be created! SDL Error: %s\n" + SDL_GetError();
-
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x7F, 0xFF, 0xFF);
-	return renderer;
 }
 
 void Engine::loadMedia()
@@ -51,20 +43,6 @@ void Engine::loadMedia()
 		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
 
 	//texture = loadTexture("Resource/Image/loaded.png");
-}
-
-SDL_Texture* Engine::loadTexture(const char* path)
-{
-	SDL_Surface* loadedSurface = IMG_Load(path);
-	if (loadedSurface == NULL)
-		throw (string)"Unable to load image! SDL_Error: " + IMG_GetError();
-
-	SDL_Texture* newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-	if (newTexture == NULL)
-		throw (string)"Unable to convert surface! SDL_Error: " + SDL_GetError();
-
-	SDL_FreeSurface(loadedSurface);
-	return newTexture;
 }
 
 void Engine::run()
@@ -87,34 +65,20 @@ void Engine::update()
 		rectX += SPEED;
 }
 
-void Engine::handleInput(SDL_Event& event)
-{
-	/*switch (event.key.keysym.sym)
-	{
-
-	}*/
-}
-
 void Engine::draw()
 {
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x7F, 0xFF, 0xFF);
-	SDL_RenderClear(renderer);
-	//SDL_RenderCopy(renderer, texture, NULL, NULL);
-
-	SDL_Rect rect = { rectX, rectY, 40, 40 };
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xA5, 0x00, 0xFF);
-	SDL_RenderFillRect(renderer, &rect);
-
-	SDL_RenderPresent(renderer);
+	renderer->render(window);
 }
 
-void Engine::quit()
+Engine::~Engine()
 {
 	SDL_DestroyTexture(texture);
 	texture = NULL;
 
 	SDL_DestroyWindow(window);
 	window = NULL;
+
+	delete renderer;
 	renderer = NULL;
 
 	IMG_Quit();
