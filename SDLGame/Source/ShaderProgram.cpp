@@ -6,8 +6,9 @@
 #include <GL\GLU.h>
 using namespace std;
 
-ShaderProgram::ShaderProgram()
+void ShaderProgram::createShaderProgram()
 {
+	glDeleteProgram(shaderProgramId);
 	shaderProgramId = glCreateProgram();
 
 	uint vertexShaderId = createVertexShader();

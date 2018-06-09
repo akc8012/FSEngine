@@ -12,8 +12,8 @@ private:
 	uint createShader(uint type, const char* source);
 
 public:
-	ShaderProgram();
 	~ShaderProgram();
 
+	void createShaderProgram();
 	uint getShaderProgramId();
 };

@@ -22,4 +22,5 @@ public:
 	~Renderer();
 
 	void render(SDL_Window* window);
+	void rebuildShaderProgram();
 };

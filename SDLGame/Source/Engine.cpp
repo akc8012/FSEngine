@@ -1,7 +1,6 @@
 #include "../Header/Engine.h"
 #include <iostream>
 #include <string>
-#include <SDL_image.h>
 using namespace std;
 
 bool Engine::init()
@@ -13,12 +12,10 @@ bool Engine::init()
 
 		window = createWindow();
 		renderer = new Renderer(window);
-
-		loadMedia();
 	}
-	catch (string msg)
+	catch (string message)
 	{
-		cout << msg << endl;
+		cout << message << endl;
 		cin.get();
 		return false;
 	}
@@ -36,38 +33,30 @@ SDL_Window* Engine::createWindow()
 	return window;
 }
 
-void Engine::loadMedia()
+void Engine::handleKeydown(SDL_Keycode keycode)
 {
-	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-	if (!(IMG_Init(imgFlags) & imgFlags))
-		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
-
-	//texture = loadTexture("Resource/Image/loaded.png");
+	if (keycode == SDLK_s)
+	{
+		try
+		{
+			renderer->rebuildShaderProgram();
+		}
+		catch (string message)
+		{
+			cout << message << endl;
+		}
+	}
 }
 
 void Engine::run()
 {
 	update();
-	draw();
+	renderer->render(window);
 }
 
 void Engine::update()
 {
-	const int SPEED = 3;
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-	if (currentKeyStates[SDL_SCANCODE_UP])
-		rectY -= SPEED;
-	if (currentKeyStates[SDL_SCANCODE_DOWN])
-		rectY += SPEED;
-	if (currentKeyStates[SDL_SCANCODE_LEFT])
-		rectX -= SPEED;
-	if (currentKeyStates[SDL_SCANCODE_RIGHT])
-		rectX += SPEED;
-}
 
-void Engine::draw()
-{
-	renderer->render(window);
 }
 
 Engine::~Engine()
@@ -78,6 +67,5 @@ Engine::~Engine()
 	delete renderer;
 	renderer = NULL;
 
-	IMG_Quit();
 	SDL_Quit();
 }

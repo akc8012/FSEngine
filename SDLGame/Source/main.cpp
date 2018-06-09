@@ -17,6 +17,9 @@ int main(int argc, char* args[])
 		{
 			if (event.type == SDL_QUIT)
 				quit = true;
+
+			if (event.type == SDL_KEYDOWN)
+				engine->handleKeydown(event.key.keysym.sym);
 		}
 
 		engine->run();

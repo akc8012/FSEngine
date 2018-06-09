@@ -24,6 +24,8 @@ Renderer::Renderer(SDL_Window* window)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
 	shaderProgram = new ShaderProgram();
+	shaderProgram->createShaderProgram();
+
 	vertexArrayId = createVertexArray();
 }
 
@@ -94,6 +96,11 @@ void Renderer::render(SDL_Window* window)
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	SDL_GL_SwapWindow(window);
+}
+
+void Renderer::rebuildShaderProgram()
+{
+	shaderProgram->createShaderProgram();
 }
 
 Renderer::~Renderer()
