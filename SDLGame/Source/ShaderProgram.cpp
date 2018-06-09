@@ -6,6 +6,11 @@
 #include <GL\GLU.h>
 using namespace std;
 
+ShaderProgram::ShaderProgram()
+{
+	createShaderProgram();
+}
+
 void ShaderProgram::createShaderProgram()
 {
 	glDeleteProgram(shaderProgramId);

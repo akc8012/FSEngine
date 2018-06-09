@@ -13,9 +13,9 @@ bool Engine::init()
 		window = createWindow();
 		renderer = new Renderer(window);
 	}
-	catch (string message)
+	catch (string errorMessage)
 	{
-		cout << message << endl;
+		cout << errorMessage << endl;
 		cin.get();
 		return false;
 	}
@@ -26,7 +26,12 @@ bool Engine::init()
 
 SDL_Window* Engine::createWindow()
 {
-	window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	if (window != NULL)
+		SDL_DestroyWindow(window);
+
+	int ScreenWidth = 480;
+	int ScreenHeight = 320;
+	window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created! SDL_Error: " + SDL_GetError();
 
@@ -44,6 +49,38 @@ void Engine::handleKeydown(SDL_Keycode keycode)
 		catch (string message)
 		{
 			cout << message << endl;
+		}
+	}
+
+
+	switch (keycode)
+	{
+		case SDLK_s:
+		{
+			try
+			{
+				renderer->rebuildShaderProgram();
+				cout << "Rebuilt shader program" << endl;
+			}
+			catch (string errorMessage)
+			{
+				cout << errorMessage << endl;
+			}
+			break;
+		}
+		case SDLK_w:
+		{
+			try
+			{
+				window = createWindow();
+				renderer = new Renderer(window);
+				cout << "Recreated window" << endl;
+			}
+			catch (string errorMessage)
+			{
+				cout << errorMessage << endl;
+			}
+			break;
 		}
 	}
 }

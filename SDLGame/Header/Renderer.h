@@ -11,10 +11,13 @@ private:
 	ShaderProgram* shaderProgram = NULL;
 	uint vertexArrayId = 0;
 
+	SDL_GLContext createContext(SDL_Window* window);
 	uint createVertexArray();
+
 	void sendVertices(uint vertexBufferId);
 	void sendIndices(uint elementBufferId);
 	void sendVertexAttributes(uint length);
+
 	void unbindVertexObjects();
 
 public:

@@ -11,9 +11,7 @@ Renderer::Renderer(SDL_Window* window)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	context = SDL_GL_CreateContext(window);
-	if (context == NULL)
-		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
+	context = createContext(window);
 
 	glewExperimental = GL_TRUE;
 	uint glewError = glewInit();
@@ -24,9 +22,17 @@ Renderer::Renderer(SDL_Window* window)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
 	shaderProgram = new ShaderProgram();
-	shaderProgram->createShaderProgram();
-
 	vertexArrayId = createVertexArray();
+}
+
+SDL_GLContext Renderer::createContext(SDL_Window* window)
+{
+	SDL_GL_DeleteContext(context);
+	context = SDL_GL_CreateContext(window);
+	if (context == NULL)
+		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
+
+	return context;
 }
 
 uint Renderer::createVertexArray()
