@@ -41,7 +41,7 @@ uint ShaderProgram::createVertexShader()
 		"}\n"
 	};
 
-	return createShader(GL_VERTEX_SHADER, AndUtility::tryLoadTextFromFile("Resource/Shader/VertexShader.shader").c_str());
+	return createShader(GL_VERTEX_SHADER, AndUtility::loadTextFromFile("Resource/Shader/VertexShader.shader").c_str());
 }
 
 uint ShaderProgram::createFragmentShader()
@@ -55,7 +55,7 @@ uint ShaderProgram::createFragmentShader()
 		"}\n"
 	};
 
-	return createShader(GL_FRAGMENT_SHADER, AndUtility::tryLoadTextFromFile("Resource/Shader/FragmentShader.shader").c_str());
+	return createShader(GL_FRAGMENT_SHADER, AndUtility::loadTextFromFile("Resource/Shader/FragmentShader.shader").c_str());
 }
 
 uint ShaderProgram::createShader(uint type, const char* source)
