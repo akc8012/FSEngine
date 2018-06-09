@@ -1,11 +1,9 @@
 #include "../Header/ShaderProgram.h"
+#include "../Header/AndUtility.h"
 #include <SDL.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 using namespace std;
 
 ShaderProgram::ShaderProgram()
@@ -43,7 +41,7 @@ uint ShaderProgram::createVertexShader()
 		"}\n"
 	};
 
-	return createShader(GL_VERTEX_SHADER, readShaderSourceFromFile("Resource/Shader/VertexShader.shader").c_str());
+	return createShader(GL_VERTEX_SHADER, AndUtility::tryLoadTextFromFile("Resource/Shader/VertexShader.shader").c_str());
 }
 
 uint ShaderProgram::createFragmentShader()
@@ -57,7 +55,7 @@ uint ShaderProgram::createFragmentShader()
 		"}\n"
 	};
 
-	return createShader(GL_FRAGMENT_SHADER, readShaderSourceFromFile("Resource/Shader/FragmentShader.shader").c_str());
+	return createShader(GL_FRAGMENT_SHADER, AndUtility::tryLoadTextFromFile("Resource/Shader/FragmentShader.shader").c_str());
 }
 
 uint ShaderProgram::createShader(uint type, const char* source)
@@ -76,15 +74,6 @@ uint ShaderProgram::createShader(uint type, const char* source)
 	}
 
 	return shaderId;
-}
-
-string ShaderProgram::readShaderSourceFromFile(const char* filepath)
-{
-	ifstream inputStream(filepath, ios::in | ios::binary);
-	if (!inputStream)
-		throw (string)"Unable to read file at path: " + filepath;
-
-	return string((istreambuf_iterator<char>(inputStream)), istreambuf_iterator<char>());
 }
 
 uint ShaderProgram::getShaderProgramId()

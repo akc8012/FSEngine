@@ -5,11 +5,13 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\AndUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
+    <ClInclude Include="Header\AndUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\hello_world.bmp" />
