@@ -3,8 +3,6 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
-
-#include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -74,7 +72,7 @@ uint ShaderProgram::createShader(uint type, const char* source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		throw (string)"Unable to compile shader: " + infoLog;
+		throw (string)"Unable to compile " + (type == GL_VERTEX_SHADER ? "GL_VERTEX_SHADER" : "GL_FRAGMENT_SHADER") + infoLog;
 	}
 
 	return shaderId;
