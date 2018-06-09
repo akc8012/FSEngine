@@ -46,7 +46,9 @@ uint Renderer::createVertexArray()
 
 	sendVertices(vertexBufferId);
 	sendIndices(elementBufferId);
-	sendVertexAttributes(3);
+
+	int length = 3;
+	sendVertexAttributes(length);
 
 	unbindVertexObjects();
 	glDeleteBuffers(1, &elementBufferId);

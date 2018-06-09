@@ -73,6 +73,7 @@ void Engine::handleKeydown(SDL_Keycode keycode)
 			try
 			{
 				window = createWindow();
+				delete renderer;
 				renderer = new Renderer(window);
 				cout << "Recreated window" << endl;
 			}
