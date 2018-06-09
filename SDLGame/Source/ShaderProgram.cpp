@@ -1,10 +1,9 @@
 #include "../Header/ShaderProgram.h"
+#include "../Header/AndUtility.h"
 #include <SDL.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
-
-#include <string>
 using namespace std;
 
 ShaderProgram::ShaderProgram()
@@ -42,7 +41,7 @@ uint ShaderProgram::createVertexShader()
 		"}\n"
 	};
 
-	return createShader(GL_VERTEX_SHADER, vertexShaderSource);
+	return createShader(GL_VERTEX_SHADER, AndUtility::loadTextFromFile("Resource/Shader/VertexShader.shader").c_str());
 }
 
 uint ShaderProgram::createFragmentShader()
@@ -52,11 +51,11 @@ uint ShaderProgram::createFragmentShader()
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
-		"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+		"	FragColor = vec4(0.0f, 1.0f, 0.3f, 1.0f);\n"
 		"}\n"
 	};
 
-	return createShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+	return createShader(GL_FRAGMENT_SHADER, AndUtility::loadTextFromFile("Resource/Shader/FragmentShader.shader").c_str());
 }
 
 uint ShaderProgram::createShader(uint type, const char* source)
@@ -71,7 +70,7 @@ uint ShaderProgram::createShader(uint type, const char* source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		throw (string)"Unable to compile shader: " + infoLog;
+		throw (string)"Unable to compile " + (type == GL_VERTEX_SHADER ? "GL_VERTEX_SHADER" : "GL_FRAGMENT_SHADER") + infoLog;
 	}
 
 	return shaderId;

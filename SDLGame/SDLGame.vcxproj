@@ -130,12 +130,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AndUtility.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\AndUtility.h" />
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
@@ -144,6 +146,10 @@
     <Image Include="Resource\Image\hello_world.bmp" />
     <Image Include="Resource\Image\loaded.jpg" />
     <Image Include="Resource\Image\loaded.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\Shader\FragmentShader.shader" />
+    <None Include="Resource\Shader\VertexShader.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
