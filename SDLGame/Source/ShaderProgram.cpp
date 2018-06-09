@@ -80,25 +80,13 @@ uint ShaderProgram::createShader(uint type, const char* source)
 	return shaderId;
 }
 
-string ShaderProgram::readShaderSourceFromFile(const char* filePath)
+string ShaderProgram::readShaderSourceFromFile(const char* filepath)
 {
-	ifstream file;
-	file.exceptions(ifstream::failbit | ifstream::badbit);
+	ifstream inputStream(filepath, ios::in | ios::binary);
+	if (!inputStream)
+		throw (string)"Unable to read file at path: " + filepath;
 
-	try
-	{
-		file.open(filePath);
-	}
-	catch (ifstream::failure e)
-	{
-		throw("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
-	}
-
-	stringstream stream;
-	stream << file.rdbuf();
-	
-	file.close();
-	return stream.str();
+	return string((istreambuf_iterator<char>(inputStream)), istreambuf_iterator<char>());
 }
 
 uint ShaderProgram::getShaderProgramId()
