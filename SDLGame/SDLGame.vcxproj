@@ -77,6 +77,10 @@
     <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\sdl2\lib\x64;C:\sdl2\image\lib\x64;C:\sdl2\mixer\lib\x64;C:\sdl2\ttf\lib\x64;C:\opengl\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sdl2\lib\x64;C:\sdl2\image\lib\x64;C:\sdl2\mixer\lib\x64;C:\sdl2\ttf\lib\x64;C:\opengl\lib\Release\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -127,6 +131,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;OpenGL32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
