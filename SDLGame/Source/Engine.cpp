@@ -95,6 +95,7 @@ void Engine::handleWindowEvent(SDL_WindowEvent windowEvent)
 	{
 		try
 		{
+			//to-do: fix memory leak
 			delete renderer;
 			renderer = new Renderer(window);
 		}
@@ -116,6 +117,7 @@ void Engine::update()
 
 }
 
+//to-do: fix hanging here
 Engine::~Engine()
 {
 	SDL_DestroyWindow(window);

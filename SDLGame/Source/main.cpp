@@ -45,7 +45,5 @@ int main(int argc, char* args[])
 	delete engine;
 	engine = NULL;
 
-	printf("BUH BYE");
-
 	return 0;
 }
