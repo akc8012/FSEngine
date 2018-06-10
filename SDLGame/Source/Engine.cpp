@@ -42,7 +42,6 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 	switch (keyboardEvent.keysym.sym)
 	{
 		case SDLK_s:
-		{
 			try
 			{
 				renderer->rebuildShaderProgram();
@@ -52,10 +51,9 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 			{
 				cout << errorMessage << endl;
 			}
-			break;
-		}
+		break;
+		
 		case SDLK_w:
-		{
 			try
 			{
 				window = createWindow();
@@ -67,8 +65,7 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 			{
 				cout << errorMessage << endl;
 			}
-			break;
-		}
+		break;
 	}
 }
 

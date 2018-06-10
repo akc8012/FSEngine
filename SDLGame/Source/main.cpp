@@ -17,9 +17,20 @@ int main(int argc, char* args[])
 		{
 			switch (sdlEvent.type)
 			{
-				case SDL_QUIT: quit = true; break;
-				case SDL_KEYDOWN: engine->handleKeyboardEvent(sdlEvent.key); break;
-				case SDL_WINDOWEVENT: engine->handleWindowEvent(sdlEvent.window); break;
+				case SDL_QUIT:
+					quit = true;
+				break;
+
+				case SDL_KEYDOWN:
+					engine->handleKeyboardEvent(sdlEvent.key);
+
+					if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
+						quit = true;
+				break;
+
+				case SDL_WINDOWEVENT:
+					engine->handleWindowEvent(sdlEvent.window);
+				break;
 			}
 		}
 
