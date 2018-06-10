@@ -33,7 +33,7 @@ SDL_Window* Engine::createWindow(int width, int height)
 	if (window != NULL)
 		SDL_DestroyWindow(window);
 
-	window = SDL_CreateWindow("FS Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created: " + SDL_GetError();
 
