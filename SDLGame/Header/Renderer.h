@@ -35,8 +35,6 @@ private:
 	void sendTextureAttribute();
 	void sendVertexAttribute(const VertexAttribute& attribute);
 
-	void unbindVertexObjects();
-
 public:
 	Renderer(SDL_Window* window);
 	~Renderer();

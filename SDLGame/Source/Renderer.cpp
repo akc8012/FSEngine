@@ -18,7 +18,7 @@ Renderer::Renderer(SDL_Window* window)
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 
-	if (SDL_GL_SetSwapInterval(1) < 0)
+	if (SDL_GL_SetSwapInterval(1) == -1)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
 	shaderProgram = new ShaderProgram();
@@ -40,19 +40,21 @@ SDL_GLContext Renderer::createContext(SDL_Window* window)
 uint Renderer::createVertexArray()
 {
 	uint vertexBufferId, elementBufferId;
-	//to-do: clarify all this stuff
-	glGenVertexArrays(1, &vertexArrayId);
-	glGenBuffers(1, &vertexBufferId);
-	glGenBuffers(1, &elementBufferId);
+	const int Amount = 1;
+	glGenVertexArrays(Amount, &vertexArrayId);
+	glGenBuffers(Amount, &vertexBufferId);
+	glGenBuffers(Amount, &elementBufferId);
 
 	glBindVertexArray(vertexArrayId);
 
 	sendVertices(vertexBufferId);
 	sendIndices(elementBufferId);
 
-	unbindVertexObjects();
-	glDeleteBuffers(1, &elementBufferId);
-	glDeleteBuffers(1, &vertexBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, NULL);
+	glBindVertexArray(NULL);
+
+	glDeleteBuffers(Amount, &elementBufferId);
+	glDeleteBuffers(Amount, &vertexBufferId);
 
 	return vertexArrayId;
 }
@@ -129,12 +131,6 @@ void Renderer::sendIndices(uint elementBufferId)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
-void Renderer::unbindVertexObjects()
-{
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-}
-
 void Renderer::render(SDL_Window* window)
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
@@ -158,7 +154,9 @@ void Renderer::rebuildShaderProgram()
 Renderer::~Renderer()
 {
 	delete brickTexture;
-	glDeleteVertexArrays(1, &vertexArrayId);
 	delete shaderProgram;
+
+	const int Amount = 1;
+	glDeleteVertexArrays(Amount, &vertexArrayId);
 	SDL_GL_DeleteContext(context);
 }

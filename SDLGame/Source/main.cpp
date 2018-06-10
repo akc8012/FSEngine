@@ -43,7 +43,5 @@ int main(int argc, char* args[])
 	runGameLoop(engine);
 
 	delete engine;
-	engine = NULL;
-
 	return 0;
 }
