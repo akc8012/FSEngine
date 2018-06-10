@@ -4,6 +4,7 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
+#include <iostream>
 using namespace std;
 
 ShaderProgram::ShaderProgram()
@@ -38,33 +39,45 @@ void ShaderProgram::createShaderProgram()
 
 uint ShaderProgram::createVertexShader()
 {
-	const char* vertexShaderSource = {
+	char vertexShaderFallbackSource[] = {
 		"#version 330 core\n"
-		"layout (location = 0) in vec3 vertexPos;\n"
+		"layout (location = 0) in vec3 vertexPosition;\n"
 		"void main()\n"
 		"{\n"
-		"	gl_Position = vec4(vertexPos.x, vertexPos.y, vertexPos.z, 1.0);\n"
+		"	gl_Position = vec4(vertexPosition, 1.0);\n"
 		"}\n"
 	};
 
-	return createShader(GL_VERTEX_SHADER, AndUtility::loadTextFromFile("Resource/Shader/VertexShader.shader").c_str());
+	return createShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.shader", vertexShaderFallbackSource);
 }
 
 uint ShaderProgram::createFragmentShader()
 {
-	const char* fragmentShaderSource = {
+	char fragmentShaderFallbackSource[] = {
 		"#version 330 core\n"
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
-		"	FragColor = vec4(0.0f, 1.0f, 0.3f, 1.0f);\n"
+		"	FragColor = vec4(1.0f, 0.0f, 1.0f, 1.0f);\n"
 		"}\n"
 	};
 
-	return createShader(GL_FRAGMENT_SHADER, AndUtility::loadTextFromFile("Resource/Shader/FragmentShader.shader").c_str());
+	return createShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentShader.shader", fragmentShaderFallbackSource);
 }
 
-uint ShaderProgram::createShader(uint type, const char* source)
+uint ShaderProgram::createShaderFromFilepath(uint type, const char* filepath, const char* fallbackSource)
+{
+	int shaderId = tryCompileShaderSource(type, AndUtility::loadTextFromFile(filepath).c_str());
+	if (shaderId == -1)
+	{
+		shaderId = tryCompileShaderSource(type, fallbackSource);
+		cout << "Using fallback " << getShaderTypeText(type) << " shader" << endl;
+	}
+
+	return shaderId;
+}
+
+int ShaderProgram::tryCompileShaderSource(uint type, const char* source)
 {
 	uint shaderId = glCreateShader(type);
 	glShaderSource(shaderId, 1, &source, NULL);
@@ -76,10 +89,16 @@ uint ShaderProgram::createShader(uint type, const char* source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		throw (string)"Unable to compile " + (type == GL_VERTEX_SHADER ? "GL_VERTEX_SHADER" : "GL_FRAGMENT_SHADER") + infoLog;
+		cout << (string)"Warning: Unable to compile " << getShaderTypeText(type) << " " << infoLog;
+		return -1;
 	}
 
 	return shaderId;
+}
+
+string ShaderProgram::getShaderTypeText(uint type)
+{
+	return type == GL_VERTEX_SHADER ? (string)"vertex" : (string)"fragment";
 }
 
 uint ShaderProgram::getShaderProgramId()

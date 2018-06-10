@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 
 #define uint unsigned int
 
@@ -9,7 +11,11 @@ private:
 
 	uint createVertexShader();
 	uint createFragmentShader();
-	uint createShader(uint type, const char* source);
+
+	uint createShaderFromFilepath(uint type, const char* filepath, const char* fallbackSource);
+	int tryCompileShaderSource(uint type, const char* filepath);
+	
+	static string getShaderTypeText(uint type);
 
 public:
 	ShaderProgram();

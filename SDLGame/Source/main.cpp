@@ -12,14 +12,14 @@ int main(int argc, char* args[])
 	bool quit = false;
 	while (!quit)
 	{
-		SDL_Event event;
-		while (SDL_PollEvent(&event) != 0)
+		SDL_Event sdlEvent;
+		while (SDL_PollEvent(&sdlEvent) != 0)
 		{
-			if (event.type == SDL_QUIT)
+			if (sdlEvent.type == SDL_QUIT)
 				quit = true;
 
-			if (event.type == SDL_KEYDOWN)
-				engine->handleKeydown(event.key.keysym.sym);
+			if (sdlEvent.type == SDL_KEYDOWN)
+				engine->handleKeydown(sdlEvent.key.keysym.sym);
 		}
 
 		engine->run();
