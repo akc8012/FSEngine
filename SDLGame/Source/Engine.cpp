@@ -1,4 +1,5 @@
 #include "../Header/Engine.h"
+#include <SDL_image.h>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -9,6 +10,9 @@ bool Engine::init()
 	{
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
+
+		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+			throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
 
 		window = createWindow();
 		renderer = new Renderer(window);
@@ -29,8 +33,7 @@ SDL_Window* Engine::createWindow(int width, int height)
 	if (window != NULL)
 		SDL_DestroyWindow(window);
 
-	const int PositionX = 1420, PositionY = 700;
-	window = SDL_CreateWindow("SDL Tutorial", PositionX, PositionY, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("FS Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created: " + SDL_GetError();
 
@@ -126,5 +129,6 @@ Engine::~Engine()
 	delete renderer;
 	renderer = NULL;
 
+	IMG_Quit();
 	SDL_Quit();
 }
