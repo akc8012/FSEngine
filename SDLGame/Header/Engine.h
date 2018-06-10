@@ -8,7 +8,7 @@ private:
 	SDL_Window* window = NULL;
 	Renderer* renderer = NULL;
 
-	SDL_Window* createWindow();
+	SDL_Window* createWindow(int screenWidth = 480, int screenHeight = 320);
 
 	void update();
 
