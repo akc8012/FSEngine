@@ -51,7 +51,7 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 			{
 				cout << errorMessage << endl;
 			}
-			break;
+		break;
 
 		case SDLK_w:
 			try
@@ -65,7 +65,7 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 			{
 				cout << errorMessage << endl;
 			}
-			break;
+		break;
 
 		case SDLK_F11:
 		case SDLK_F12:
@@ -86,8 +86,7 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 				SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 				cout << "Stop fullscreen" << endl;
 			}
-
-			break;
+		break;
 	}
 }
 
