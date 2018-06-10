@@ -11,6 +11,9 @@ private:
 	Renderer* renderer = NULL;
 
 	SDL_Window* createWindow(int width = WindowStartWidth, int height = WindowStartHeight);
+	
+	void setFullscreen();
+	void setWindowed();
 
 	void update();
 

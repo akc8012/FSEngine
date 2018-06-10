@@ -67,23 +67,26 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 			}
 		break;
 
-		case SDLK_SPACE:
-			cout << "Go fullscreen" << endl;
-
-			SDL_DisplayMode displayMode;
-			SDL_GetCurrentDisplayMode(0, &displayMode);
-
-			SDL_SetWindowSize(window, displayMode.w, displayMode.h);
-			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-		break;
-
-		case SDLK_v:
-			cout << "Leave fullscreen" << endl;
-
-			SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
-			SDL_SetWindowSize(window, WindowStartWidth, WindowStartHeight);
+		case SDLK_F11:
+		case SDLK_F12:
+			SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN ? setWindowed() : setFullscreen();
 		break;
 	}
+}
+
+void Engine::setFullscreen()
+{
+	SDL_DisplayMode displayMode;
+	SDL_GetCurrentDisplayMode(0, &displayMode);
+
+	SDL_SetWindowSize(window, displayMode.w, displayMode.h);
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+}
+
+void Engine::setWindowed()
+{
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
+	SDL_SetWindowSize(window, WindowStartWidth, WindowStartHeight);
 }
 
 void Engine::handleWindowEvent(SDL_WindowEvent windowEvent)
