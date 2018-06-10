@@ -11,12 +11,25 @@ private:
 	ShaderProgram* shaderProgram = NULL;
 	uint vertexArrayId = 0;
 
+	struct VertexAttribute
+	{
+		int location;
+		int size;
+		bool normalize;
+		int stride;
+		int offset;
+	};
+
 	SDL_GLContext createContext(SDL_Window* window);
 	uint createVertexArray();
 
 	void sendVertices(uint vertexBufferId);
 	void sendIndices(uint elementBufferId);
-	void sendVertexAttributes(uint length);
+
+	void sendPositionAttribute();
+	void sendColorAttribute();
+	void sendTextureAttribute();
+	void sendVertexAttribute(const VertexAttribute& attribute);
 
 	void unbindVertexObjects();
 

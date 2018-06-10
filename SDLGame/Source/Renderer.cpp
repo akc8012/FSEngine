@@ -38,6 +38,7 @@ SDL_GLContext Renderer::createContext(SDL_Window* window)
 uint Renderer::createVertexArray()
 {
 	uint vertexBufferId, elementBufferId;
+	//to-do: clarify all this stuff
 	glGenVertexArrays(1, &vertexArrayId);
 	glGenBuffers(1, &vertexBufferId);
 	glGenBuffers(1, &elementBufferId);
@@ -46,9 +47,6 @@ uint Renderer::createVertexArray()
 
 	sendVertices(vertexBufferId);
 	sendIndices(elementBufferId);
-
-	int length = 3;
-	sendVertexAttributes(length);
 
 	unbindVertexObjects();
 	glDeleteBuffers(1, &elementBufferId);
@@ -61,14 +59,61 @@ void Renderer::sendVertices(uint vertexBufferId)
 {
 	float vertices[] =
 	{
-		 0.5f,  0.5f, 0.0f,  // top right
-		 0.5f, -0.5f, 0.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  // bottom left
-		-0.5f,  0.5f, 0.0f   // top left 
+		 // positions         // colors           // texture coords
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	sendPositionAttribute();
+	sendColorAttribute();
+	sendTextureAttribute();
+}
+
+void Renderer::sendPositionAttribute()
+{
+	VertexAttribute positionAttribute;
+	positionAttribute.location = 0;
+	positionAttribute.size = 3;
+	positionAttribute.normalize = false;
+	positionAttribute.stride = 8 * sizeof(float);
+	positionAttribute.offset = 0;
+
+	sendVertexAttribute(positionAttribute);
+}
+
+void Renderer::sendColorAttribute()
+{
+	VertexAttribute colorAttribute;
+	colorAttribute.location = 1;
+	colorAttribute.size = 3;
+	colorAttribute.normalize = false;
+	colorAttribute.stride = 8 * sizeof(float);
+	colorAttribute.offset = 3;
+
+	sendVertexAttribute(colorAttribute);
+}
+
+void Renderer::sendTextureAttribute()
+{
+	VertexAttribute textureAttribute;
+	textureAttribute.location = 2;
+	textureAttribute.size = 3;
+	textureAttribute.normalize = false;
+	textureAttribute.stride = 8 * sizeof(float);
+	textureAttribute.offset = 6;
+
+	sendVertexAttribute(textureAttribute);
+}
+
+void Renderer::sendVertexAttribute(const VertexAttribute& attribute)
+{
+	glVertexAttribPointer(attribute.location, attribute.size, GL_FLOAT, attribute.normalize, attribute.stride, (void*)(attribute.offset * sizeof(float)));
+	glEnableVertexAttribArray(attribute.location);
 }
 
 void Renderer::sendIndices(uint elementBufferId)
@@ -80,12 +125,6 @@ void Renderer::sendIndices(uint elementBufferId)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-}
-
-void Renderer::sendVertexAttributes(uint length)
-{
-	glVertexAttribPointer(0, length, GL_FLOAT, false, length * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
 }
 
 void Renderer::unbindVertexObjects()
