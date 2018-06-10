@@ -19,6 +19,7 @@ bool Engine::init()
 
 
 		Texture* texture = new Texture("Resource/Image/wall.png");
+		delete texture;
 	}
 	catch (string errorMessage)
 	{
