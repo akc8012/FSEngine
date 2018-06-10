@@ -32,16 +32,9 @@ void Engine::handleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
 	if (windowEvent.event == SDL_WINDOWEVENT_SIZE_CHANGED)
 	{
-		try
-		{
-			//to-do: fix memory leak
-			delete renderer;
-			renderer = new Renderer(window->get());
-		}
-		catch (string errorMessage)
-		{
-			cout << errorMessage << endl;
-		}
+		int width, height;
+		SDL_GetWindowSize(window->get(), &width, &height);
+		window->setResolution(width, height);
 	}
 }
 
@@ -54,22 +47,6 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 			{
 				renderer->rebuildShaderProgram();
 				cout << "Rebuilt shader program" << endl;
-			}
-			catch (string errorMessage)
-			{
-				cout << errorMessage << endl;
-			}
-		break;
-
-		case SDLK_w:
-			try
-			{
-				delete window;
-				window = new Window();
-
-				delete renderer;
-				renderer = new Renderer(window->get());
-				cout << "Recreated window" << endl;
 			}
 			catch (string errorMessage)
 			{

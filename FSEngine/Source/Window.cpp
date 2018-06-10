@@ -1,4 +1,7 @@
 #include "../Header/Window.h"
+#include <GL\glew.h>
+#include <SDL_opengl.h>
+#include <GL\GLU.h>
 #include <string>
 using namespace std;
 
@@ -36,8 +39,8 @@ void Window::toggleFullscreen()
 
 void Window::setWindowed()
 {
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
 	SDL_SetWindowSize(window, StartWidth, StartHeight);
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
 }
 
 void Window::setFullscreen()
@@ -47,6 +50,12 @@ void Window::setFullscreen()
 
 	SDL_SetWindowSize(window, displayMode.w, displayMode.h);
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+}
+
+void Window::setResolution(int width, int height)
+{
+	const int PositionX = 0, PositionY = PositionX;
+	glViewport(PositionX, PositionY, width, height);
 }
 
 Window::~Window()

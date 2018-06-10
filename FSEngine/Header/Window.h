@@ -18,6 +18,7 @@ public:
 	void toggleFullscreen();
 	void setWindowed();
 	void setFullscreen();
+	void setResolution(int width, int height);
 
 	~Window();
 };
