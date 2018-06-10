@@ -1,31 +1,24 @@
 #include "../Header/Engine.h"
 
-int main(int argc, char* args[])
+void runGameLoop(Engine* engine)
 {
-	Engine* engine = new Engine();
-	if (!engine->init())
-	{
-		delete engine;
-		return -1;
-	}
-
-	bool quit = false;
-	while (!quit)
+	while (true)
 	{
 		SDL_Event sdlEvent;
 		while (SDL_PollEvent(&sdlEvent) != 0)
 		{
 			switch (sdlEvent.type)
 			{
+				//to-do: fix console window persisting on quit
 				case SDL_QUIT:
-					quit = true;
+					return;
 				break;
 
 				case SDL_KEYDOWN:
 					engine->handleKeyboardEvent(sdlEvent.key);
 
 					if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
-						quit = true;
+						return;
 				break;
 
 				case SDL_WINDOWEVENT:
@@ -36,9 +29,23 @@ int main(int argc, char* args[])
 
 		engine->run();
 	}
+}
+
+int main(int argc, char* args[])
+{
+	Engine* engine = new Engine();
+	if (!engine->init())
+	{
+		delete engine;
+		return -1;
+	}
+
+	runGameLoop(engine);
 
 	delete engine;
 	engine = NULL;
+
+	printf("BUH BYE");
 
 	return 0;
 }

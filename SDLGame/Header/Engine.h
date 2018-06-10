@@ -7,6 +7,7 @@ class Engine
 private:
 	static const int WindowStartWidth = 480, WindowStartHeight = 320;
 
+	//to-do: extract window out from engine into it's own class
 	SDL_Window* window = NULL;
 	Renderer* renderer = NULL;
 
