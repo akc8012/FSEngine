@@ -24,13 +24,13 @@ bool Engine::init()
 	return true;
 }
 
-SDL_Window* Engine::createWindow(int screenWidth, int screenHeight)
+SDL_Window* Engine::createWindow(int width, int height)
 {
 	if (window != NULL)
 		SDL_DestroyWindow(window);
 
 	const int PositionX = 1420, PositionY = 700;
-	window = SDL_CreateWindow("SDL Tutorial", PositionX, PositionY, screenWidth, screenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("SDL Tutorial", PositionX, PositionY, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created: " + SDL_GetError();
 
@@ -67,25 +67,21 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 			}
 		break;
 
-		case SDLK_F11:
-		case SDLK_F12:
+		case SDLK_SPACE:
+			cout << "Go fullscreen" << endl;
+
 			SDL_DisplayMode displayMode;
 			SDL_GetCurrentDisplayMode(0, &displayMode);
 
-			int windowFlags = SDL_GetWindowFlags(window);
-			if (windowFlags == SDL_WINDOW_FULLSCREEN)
-			{
-				cout << "Start create window" <<endl;
-				window = createWindow();
-				cout << "End create window" << endl;
-			}
-			else
-			{
-				cout << "Start fullscreen" << endl;
-				window = createWindow(displayMode.w, displayMode.h);
-				SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-				cout << "Stop fullscreen" << endl;
-			}
+			SDL_SetWindowSize(window, displayMode.w, displayMode.h);
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		break;
+
+		case SDLK_v:
+			cout << "Leave fullscreen" << endl;
+
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
+			SDL_SetWindowSize(window, WindowStartWidth, WindowStartHeight);
 		break;
 	}
 }

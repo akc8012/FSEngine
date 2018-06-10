@@ -5,10 +5,12 @@
 class Engine
 {
 private:
+	static const int WindowStartWidth = 480, WindowStartHeight = 320;
+
 	SDL_Window* window = NULL;
 	Renderer* renderer = NULL;
 
-	SDL_Window* createWindow(int screenWidth = 480, int screenHeight = 320);
+	SDL_Window* createWindow(int width = WindowStartWidth, int height = WindowStartHeight);
 
 	void update();
 
