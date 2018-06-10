@@ -1,4 +1,5 @@
 #include "../Header/Engine.h"
+#include <SDL_image.h>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -10,8 +11,14 @@ bool Engine::init()
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
+		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+			throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
+
 		window = createWindow();
 		renderer = new Renderer(window);
+
+
+		Texture* texture = new Texture("Resource/Image/wall.png");
 	}
 	catch (string errorMessage)
 	{
@@ -126,5 +133,6 @@ Engine::~Engine()
 	delete renderer;
 	renderer = NULL;
 
+	IMG_Quit();
 	SDL_Quit();
 }

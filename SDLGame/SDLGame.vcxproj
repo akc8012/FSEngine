@@ -141,21 +141,21 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\AndUtility.h" />
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resource\Image\hello_world.bmp" />
-    <Image Include="Resource\Image\loaded.jpg" />
-    <Image Include="Resource\Image\loaded.png" />
+    <ClInclude Include="Header\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\FragmentShader.shader" />
     <None Include="Resource\Shader\VertexShader.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Image\wall.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,20 +6,20 @@
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\AndUtility.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
     <ClInclude Include="Header\AndUtility.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resource\Image\hello_world.bmp" />
-    <Image Include="Resource\Image\loaded.png" />
-    <Image Include="Resource\Image\loaded.jpg" />
+    <ClInclude Include="Header\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />
     <None Include="Resource\Shader\FragmentShader.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\Image\wall.png" />
   </ItemGroup>
 </Project>
