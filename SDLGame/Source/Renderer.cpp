@@ -23,6 +23,8 @@ Renderer::Renderer(SDL_Window* window)
 
 	shaderProgram = new ShaderProgram();
 	vertexArrayId = createVertexArray();
+
+	brickTexture = new Texture("Resource/Image/wall.png");
 }
 
 SDL_GLContext Renderer::createContext(SDL_Window* window)
@@ -139,8 +141,11 @@ void Renderer::render(SDL_Window* window)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(shaderProgram->getShaderProgramId());
+	glBindTexture(GL_TEXTURE_2D, brickTexture->getTextureId());
 	glBindVertexArray(vertexArrayId);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	const int Count = 6, Indices = 0;
+	glDrawElements(GL_TRIANGLES, Count, GL_UNSIGNED_INT, Indices);
 
 	SDL_GL_SwapWindow(window);
 }
@@ -152,6 +157,7 @@ void Renderer::rebuildShaderProgram()
 
 Renderer::~Renderer()
 {
+	delete brickTexture;
 	glDeleteVertexArrays(1, &vertexArrayId);
 	delete shaderProgram;
 	SDL_GL_DeleteContext(context);

@@ -16,10 +16,6 @@ bool Engine::init()
 
 		window = createWindow();
 		renderer = new Renderer(window);
-
-
-		Texture* texture = new Texture("Resource/Image/wall.png");
-		delete texture;
 	}
 	catch (string errorMessage)
 	{
@@ -37,8 +33,7 @@ SDL_Window* Engine::createWindow(int width, int height)
 	if (window != NULL)
 		SDL_DestroyWindow(window);
 
-	const int PositionX = 1420, PositionY = 700;
-	window = SDL_CreateWindow("SDL Tutorial", PositionX, PositionY, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("FS Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created: " + SDL_GetError();
 

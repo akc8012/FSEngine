@@ -89,7 +89,7 @@ int ShaderProgram::tryCompileShaderSource(uint type, const char* source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		cout << (string)"Warning: Unable to compile " << getShaderTypeText(type) << " " << infoLog;
+		cout << (string)"Warning: Unable to compile " << getShaderTypeText(type) << " shader: " << infoLog;
 		return -1;
 	}
 
