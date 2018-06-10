@@ -13,5 +13,5 @@ public:
 	Texture(const char* filepath);
 	~Texture();
 
-	uint getTextureId();
+	uint getId();
 };

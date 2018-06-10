@@ -22,5 +22,5 @@ public:
 	~ShaderProgram();
 
 	void createShaderProgram();
-	uint getShaderProgramId();
+	uint getId();
 };

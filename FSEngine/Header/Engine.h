@@ -6,8 +6,6 @@
 class Engine
 {
 private:
-	static const int WindowStartWidth = 480, WindowStartHeight = 320;
-
 	Window* window = NULL;
 	Renderer* renderer = NULL;
 

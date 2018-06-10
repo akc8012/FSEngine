@@ -101,7 +101,7 @@ string ShaderProgram::getShaderTypeText(uint type)
 	return type == GL_VERTEX_SHADER ? (string)"vertex" : (string)"fragment";
 }
 
-uint ShaderProgram::getShaderProgramId()
+uint ShaderProgram::getId()
 {
 	return shaderProgramId;
 }

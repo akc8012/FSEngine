@@ -92,8 +92,8 @@ void Engine::run()
 //to-do: fix hanging here
 Engine::~Engine()
 {
-	delete window;
 	delete renderer;
+	delete window;
 
 	IMG_Quit();
 	SDL_Quit();

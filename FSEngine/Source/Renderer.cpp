@@ -136,8 +136,8 @@ void Renderer::render(SDL_Window* window)
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glUseProgram(shaderProgram->getShaderProgramId());
-	glBindTexture(GL_TEXTURE_2D, brickTexture->getTextureId());
+	glUseProgram(shaderProgram->getId());
+	glBindTexture(GL_TEXTURE_2D, brickTexture->getId());
 	glBindVertexArray(vertexArrayId);
 
 	const int Count = 6, Indices = 0;
