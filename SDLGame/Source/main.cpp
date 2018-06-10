@@ -15,11 +15,12 @@ int main(int argc, char* args[])
 		SDL_Event sdlEvent;
 		while (SDL_PollEvent(&sdlEvent) != 0)
 		{
-			if (sdlEvent.type == SDL_QUIT)
-				quit = true;
-
-			if (sdlEvent.type == SDL_KEYDOWN)
-				engine->handleKeydown(sdlEvent.key.keysym.sym);
+			switch (sdlEvent.type)
+			{
+				case SDL_QUIT: quit = true; break;
+				case SDL_KEYDOWN: engine->handleKeyboardEvent(sdlEvent.key); break;
+				case SDL_WINDOWEVENT: engine->handleWindowEvent(sdlEvent.window); break;
+			}
 		}
 
 		engine->run();

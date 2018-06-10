@@ -37,9 +37,9 @@ SDL_Window* Engine::createWindow()
 	return window;
 }
 
-void Engine::handleKeydown(SDL_Keycode keycode)
+void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 {
-	switch (keycode)
+	switch (keyboardEvent.keysym.sym)
 	{
 		case SDLK_s:
 		{
@@ -68,6 +68,22 @@ void Engine::handleKeydown(SDL_Keycode keycode)
 				cout << errorMessage << endl;
 			}
 			break;
+		}
+	}
+}
+
+void Engine::handleWindowEvent(SDL_WindowEvent windowEvent)
+{
+	if (windowEvent.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+	{
+		try
+		{
+			delete renderer;
+			renderer = new Renderer(window);
+		}
+		catch (string errorMessage)
+		{
+			cout << errorMessage << endl;
 		}
 	}
 }

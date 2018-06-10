@@ -16,6 +16,7 @@ public:
 	~Engine();
 
 	bool init();
-	void handleKeydown(SDL_Keycode keycode);
+	void handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent);
+	void handleWindowEvent(SDL_WindowEvent windowEvent);
 	void run();
 };
