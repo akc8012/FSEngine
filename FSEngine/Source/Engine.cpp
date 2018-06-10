@@ -14,8 +14,8 @@ bool Engine::init()
 		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
 			throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
 
-		window = createWindow();
-		renderer = new Renderer(window);
+		window = new Window();
+		renderer = new Renderer(window->get());
 	}
 	catch (string errorMessage)
 	{
@@ -28,19 +28,24 @@ bool Engine::init()
 	return true;
 }
 
-SDL_Window* Engine::createWindow(int width, int height)
+void Engine::handleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
-	if (window != NULL)
-		SDL_DestroyWindow(window);
-
-	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-	if (window == NULL)
-		throw (string)"Window could not be created: " + SDL_GetError();
-
-	return window;
+	if (windowEvent.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+	{
+		try
+		{
+			//to-do: fix memory leak
+			delete renderer;
+			renderer = new Renderer(window->get());
+		}
+		catch (string errorMessage)
+		{
+			cout << errorMessage << endl;
+		}
+	}
 }
 
-void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
+void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 {
 	switch (keyboardEvent.keysym.sym)
 	{
@@ -59,9 +64,11 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 		case SDLK_w:
 			try
 			{
-				window = createWindow();
+				delete window;
+				window = new Window();
+
 				delete renderer;
-				renderer = new Renderer(window);
+				renderer = new Renderer(window->get());
 				cout << "Recreated window" << endl;
 			}
 			catch (string errorMessage)
@@ -72,62 +79,21 @@ void Engine::handleKeyboardEvent(SDL_KeyboardEvent keyboardEvent)
 
 		case SDLK_F11:
 		case SDLK_F12:
-			SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN ? setWindowed() : setFullscreen();
+			window->toggleFullscreen();
 		break;
-	}
-}
-
-void Engine::setFullscreen()
-{
-	SDL_DisplayMode displayMode;
-	SDL_GetCurrentDisplayMode(0, &displayMode);
-
-	SDL_SetWindowSize(window, displayMode.w, displayMode.h);
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-}
-
-void Engine::setWindowed()
-{
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
-	SDL_SetWindowSize(window, WindowStartWidth, WindowStartHeight);
-}
-
-void Engine::handleWindowEvent(SDL_WindowEvent windowEvent)
-{
-	if (windowEvent.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-	{
-		try
-		{
-			//to-do: fix memory leak
-			delete renderer;
-			renderer = new Renderer(window);
-		}
-		catch (string errorMessage)
-		{
-			cout << errorMessage << endl;
-		}
 	}
 }
 
 void Engine::run()
 {
-	update();
-	renderer->render(window);
-}
-
-void Engine::update()
-{
-
+	renderer->render(window->get());
 }
 
 //to-do: fix hanging here
 Engine::~Engine()
 {
-	SDL_DestroyWindow(window);
-	window = NULL;
-
+	delete window;
 	delete renderer;
-	renderer = NULL;
 
 	IMG_Quit();
 	SDL_Quit();
