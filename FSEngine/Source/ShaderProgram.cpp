@@ -62,7 +62,7 @@ uint ShaderProgram::createFragmentShader()
 		"}\n"
 	};
 
-	return createShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentShader.shader", fragmentShaderFallbackSource);
+	return createShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMixShader.shader", fragmentShaderFallbackSource);
 }
 
 uint ShaderProgram::createShaderFromFilepath(uint type, const char* filepath, const char* fallbackSource)

@@ -24,7 +24,13 @@ Renderer::Renderer(SDL_Window* window)
 	shaderProgram = new ShaderProgram();
 	vertexArrayId = createVertexArray();
 
+	//to-do: set uniform functions in ShaderProgram
+	glUseProgram(shaderProgram->getId());
+	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture1"), 0);
+	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture2"), 1);
+
 	brickTexture = new Texture("Resource/Image/wall.png");
+	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
 }
 
 SDL_GLContext Renderer::createContext(SDL_Window* window)
@@ -137,7 +143,12 @@ void Renderer::render(SDL_Window* window)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glUseProgram(shaderProgram->getId());
+
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, brickTexture->getId());
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->getId());
+	
 	glBindVertexArray(vertexArrayId);
 
 	const int Count = 6, Indices = 0;
@@ -154,6 +165,7 @@ void Renderer::rebuildShaderProgram()
 Renderer::~Renderer()
 {
 	delete brickTexture;
+	delete awesomefaceTexture;
 	delete shaderProgram;
 
 	const int Amount = 1;

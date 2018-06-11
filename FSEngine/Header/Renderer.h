@@ -10,8 +10,10 @@ class Renderer
 private:
 	SDL_GLContext context;
 	ShaderProgram* shaderProgram = NULL;
-	Texture* brickTexture = NULL;
 	uint vertexArrayId = 0;
+
+	Texture* brickTexture = NULL;
+	Texture* awesomefaceTexture = NULL;
 
 	struct VertexAttribute
 	{

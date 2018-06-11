@@ -20,8 +20,10 @@
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />
     <None Include="Resource\Shader\FragmentShader.shader" />
+    <None Include="Resource\Shader\FragmentMixShader.shader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />
+    <Image Include="Resource\Image\awesomeface.png" />
   </ItemGroup>
 </Project>

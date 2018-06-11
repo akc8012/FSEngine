@@ -153,10 +153,12 @@
     <ClInclude Include="Header\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resource\Shader\FragmentMixShader.shader" />
     <None Include="Resource\Shader\FragmentShader.shader" />
     <None Include="Resource\Shader\VertexShader.shader" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\Image\awesomeface.png" />
     <Image Include="Resource\Image\wall.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
