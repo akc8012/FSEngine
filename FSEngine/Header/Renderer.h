@@ -3,14 +3,12 @@
 #include "Texture.h"
 #include <SDL.h>
 
-#define uint unsigned int
-
 class Renderer
 {
 private:
 	SDL_GLContext context;
 	ShaderProgram* shaderProgram = NULL;
-	uint vertexArrayId = 0;
+	unsigned int vertexArrayId = 0;
 
 	Texture* brickTexture = NULL;
 	Texture* awesomefaceTexture = NULL;
@@ -25,10 +23,10 @@ private:
 	};
 
 	SDL_GLContext createContext(SDL_Window* window);
-	uint createVertexArray();
+	unsigned int createVertexArray();
 
-	void sendVertices(uint vertexBufferId);
-	void sendIndices(uint elementBufferId);
+	void sendVertices(unsigned int vertexBufferId);
+	void sendIndices(unsigned int elementBufferId);
 
 	void sendPositionAttribute();
 	void sendColorAttribute();

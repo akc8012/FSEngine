@@ -26,7 +26,7 @@ Texture::Texture(const char* filepath)
 	SDL_FreeSurface(surface);
 }
 
-uint Texture::getId()
+unsigned int Texture::getId()
 {
 	return textureId;
 }

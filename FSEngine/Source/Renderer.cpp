@@ -14,7 +14,7 @@ Renderer::Renderer(SDL_Window* window)
 	context = createContext(window);
 
 	glewExperimental = GL_TRUE;
-	uint glewError = glewInit();
+	unsigned int glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 
@@ -43,9 +43,9 @@ SDL_GLContext Renderer::createContext(SDL_Window* window)
 	return context;
 }
 
-uint Renderer::createVertexArray()
+unsigned int Renderer::createVertexArray()
 {
-	uint vertexBufferId, elementBufferId;
+	unsigned int vertexBufferId, elementBufferId;
 	const int Amount = 1;
 	glGenVertexArrays(Amount, &vertexArrayId);
 	glGenBuffers(Amount, &vertexBufferId);
@@ -65,7 +65,7 @@ uint Renderer::createVertexArray()
 	return vertexArrayId;
 }
 
-void Renderer::sendVertices(uint vertexBufferId)
+void Renderer::sendVertices(unsigned int vertexBufferId)
 {
 	float vertices[] =
 	{
@@ -126,9 +126,9 @@ void Renderer::sendVertexAttribute(const VertexAttribute& attribute)
 	glEnableVertexAttribArray(attribute.location);
 }
 
-void Renderer::sendIndices(uint elementBufferId)
+void Renderer::sendIndices(unsigned int elementBufferId)
 {
-	uint indices[] = {
+	unsigned int indices[] = {
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
