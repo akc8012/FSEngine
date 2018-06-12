@@ -78,7 +78,7 @@
     <LibraryPath>C:\sdl2\lib\x64;C:\sdl2\image\lib\x64;C:\sdl2\mixer\lib\x64;C:\sdl2\ttf\lib\x64;C:\opengl\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;C:\opengl\glm;$(IncludePath)</IncludePath>
     <LibraryPath>C:\sdl2\lib\x64;C:\sdl2\image\lib\x64;C:\sdl2\mixer\lib\x64;C:\sdl2\ttf\lib\x64;C:\opengl\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
