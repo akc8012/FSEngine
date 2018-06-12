@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 using namespace std;
+using namespace glm;
 
 bool Engine::init()
 {
@@ -29,7 +30,16 @@ bool Engine::init()
 	}
 
 	cout << "Success" << endl;
+	mathStuff();
 	return true;
+}
+
+void Engine::mathStuff()
+{
+	vec4 vec(1, 0, 0, 1);
+	mat4 trans = translate(mat4(1.0), vec3(1, 1, 0));
+	vec = trans * vec;
+	cout << vec.x << vec.y << vec.z << endl;
 }
 
 void Engine::handleWindowEvent(const SDL_WindowEvent& windowEvent)
