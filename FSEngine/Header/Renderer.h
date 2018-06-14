@@ -33,6 +33,8 @@ private:
 	void sendTextureAttribute();
 	void sendVertexAttribute(const VertexAttribute& attribute);
 
+	void mathStuff();
+
 public:
 	Renderer(SDL_Window* window);
 	~Renderer();

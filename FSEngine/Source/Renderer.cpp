@@ -3,7 +3,12 @@
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 #include <string>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 using namespace std;
+using namespace glm;
 
 Renderer::Renderer(SDL_Window* window)
 {
@@ -31,6 +36,15 @@ Renderer::Renderer(SDL_Window* window)
 
 	brickTexture = new Texture("Resource/Image/wall.png");
 	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
+
+	mathStuff();
+}
+
+void Renderer::mathStuff()
+{
+	vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
+	mat4 trans = translate(mat4(1.0f), vec3(1.0f, 1.0f, 0.0f));
+	vec = trans * vec;
 }
 
 SDL_GLContext Renderer::createContext(SDL_Window* window)

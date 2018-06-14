@@ -13,7 +13,6 @@ public:
 	~Engine();
 
 	bool init();
-	void mathStuff();
 
 	void handleWindowEvent(const SDL_WindowEvent& windowEvent);
 	void handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
