@@ -36,15 +36,6 @@ Renderer::Renderer(SDL_Window* window)
 
 	brickTexture = new Texture("Resource/Image/wall.png");
 	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
-
-	mathStuff();
-}
-
-void Renderer::mathStuff()
-{
-	vec4 vec(1.0f, 0.0f, 0.0f, 1.0f);
-	mat4 trans = translate(mat4(1.0f), vec3(1.0f, 1.0f, 0.0f));
-	vec = trans * vec;
 }
 
 SDL_GLContext Renderer::createContext(SDL_Window* window)
@@ -165,10 +156,22 @@ void Renderer::render(SDL_Window* window)
 	
 	glBindVertexArray(vertexArrayId);
 
+	rotateContainer();
+
 	const int Count = 6, Indices = 0;
 	glDrawElements(GL_TRIANGLES, Count, GL_UNSIGNED_INT, Indices);
 
 	SDL_GL_SwapWindow(window);
+}
+
+void Renderer::rotateContainer()
+{
+	mat4 transform = translate(mat4(1.0f), vec3(0.5f, -0.5f, 0.0f));
+	transform = rotate(transform, (float)SDL_GetTicks() / 1000.0f, vec3(0.0f, 0.0f, 1.0f));
+
+	const int Count = 1;
+	const bool Transpose = false;
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->getId(), "transform"), Count, Transpose, value_ptr(transform));
 }
 
 void Renderer::rebuildShaderProgram()
