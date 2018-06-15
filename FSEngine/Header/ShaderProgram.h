@@ -2,25 +2,23 @@
 #include <string>
 using namespace std;
 
-#define uint unsigned int
-
 class ShaderProgram
 {
 private:
-	uint shaderProgramId = 0;
+	unsigned int shaderProgramId = 0;
 
-	uint createVertexShader();
-	uint createFragmentShader();
+	unsigned int createVertexShader();
+	unsigned int createFragmentShader();
 
-	uint createShaderFromFilepath(uint type, const char* filepath, const char* fallbackSource);
-	int tryCompileShaderSource(uint type, const char* filepath);
+	unsigned int createShaderFromFilepath(unsigned int type, const char* filepath, const char* fallbackSource);
+	int tryCompileShaderSource(unsigned int type, const char* filepath);
 	
-	static string getShaderTypeText(uint type);
+	static string getShaderTypeText(unsigned int type);
 
 public:
 	ShaderProgram();
 	~ShaderProgram();
 
 	void createShaderProgram();
-	uint getId();
+	unsigned int getId();
 };

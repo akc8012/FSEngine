@@ -3,7 +3,12 @@
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 #include <string>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 using namespace std;
+using namespace glm;
 
 Renderer::Renderer(SDL_Window* window)
 {
@@ -14,7 +19,7 @@ Renderer::Renderer(SDL_Window* window)
 	context = createContext(window);
 
 	glewExperimental = GL_TRUE;
-	uint glewError = glewInit();
+	unsigned int glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 
@@ -43,9 +48,9 @@ SDL_GLContext Renderer::createContext(SDL_Window* window)
 	return context;
 }
 
-uint Renderer::createVertexArray()
+unsigned int Renderer::createVertexArray()
 {
-	uint vertexBufferId, elementBufferId;
+	unsigned int vertexBufferId, elementBufferId;
 	const int Amount = 1;
 	glGenVertexArrays(Amount, &vertexArrayId);
 	glGenBuffers(Amount, &vertexBufferId);
@@ -65,7 +70,7 @@ uint Renderer::createVertexArray()
 	return vertexArrayId;
 }
 
-void Renderer::sendVertices(uint vertexBufferId)
+void Renderer::sendVertices(unsigned int vertexBufferId)
 {
 	float vertices[] =
 	{
@@ -126,9 +131,9 @@ void Renderer::sendVertexAttribute(const VertexAttribute& attribute)
 	glEnableVertexAttribArray(attribute.location);
 }
 
-void Renderer::sendIndices(uint elementBufferId)
+void Renderer::sendIndices(unsigned int elementBufferId)
 {
-	uint indices[] = {
+	unsigned int indices[] = {
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
@@ -151,10 +156,22 @@ void Renderer::render(SDL_Window* window)
 	
 	glBindVertexArray(vertexArrayId);
 
+	rotateContainer();
+
 	const int Count = 6, Indices = 0;
 	glDrawElements(GL_TRIANGLES, Count, GL_UNSIGNED_INT, Indices);
 
 	SDL_GL_SwapWindow(window);
+}
+
+void Renderer::rotateContainer()
+{
+	mat4 transform = translate(mat4(1.0f), vec3(0.5f, -0.5f, 0.0f));
+	transform = rotate(transform, (float)SDL_GetTicks() / 1000.0f, vec3(0.0f, 0.0f, 1.0f));
+
+	const int Count = 1;
+	const bool Transpose = false;
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->getId(), "transform"), Count, Transpose, value_ptr(transform));
 }
 
 void Renderer::rebuildShaderProgram()

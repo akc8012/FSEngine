@@ -17,10 +17,10 @@ void ShaderProgram::createShaderProgram()
 	glDeleteProgram(shaderProgramId);
 	shaderProgramId = glCreateProgram();
 
-	uint vertexShaderId = createVertexShader();
+	unsigned int vertexShaderId = createVertexShader();
 	glAttachShader(shaderProgramId, vertexShaderId);
 
-	uint fragmentShaderId = createFragmentShader();
+	unsigned int fragmentShaderId = createFragmentShader();
 	glAttachShader(shaderProgramId, fragmentShaderId);
 
 	int success;
@@ -37,7 +37,7 @@ void ShaderProgram::createShaderProgram()
 	glDeleteShader(fragmentShaderId);
 }
 
-uint ShaderProgram::createVertexShader()
+unsigned int ShaderProgram::createVertexShader()
 {
 	char vertexShaderFallbackSource[] = {
 		"#version 330 core\n"
@@ -51,7 +51,7 @@ uint ShaderProgram::createVertexShader()
 	return createShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.shader", vertexShaderFallbackSource);
 }
 
-uint ShaderProgram::createFragmentShader()
+unsigned int ShaderProgram::createFragmentShader()
 {
 	char fragmentShaderFallbackSource[] = {
 		"#version 330 core\n"
@@ -65,7 +65,7 @@ uint ShaderProgram::createFragmentShader()
 	return createShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMixShader.shader", fragmentShaderFallbackSource);
 }
 
-uint ShaderProgram::createShaderFromFilepath(uint type, const char* filepath, const char* fallbackSource)
+unsigned int ShaderProgram::createShaderFromFilepath(unsigned int type, const char* filepath, const char* fallbackSource)
 {
 	int shaderId = tryCompileShaderSource(type, AndUtility::loadTextFromFile(filepath).c_str());
 	if (shaderId == -1)
@@ -77,9 +77,9 @@ uint ShaderProgram::createShaderFromFilepath(uint type, const char* filepath, co
 	return shaderId;
 }
 
-int ShaderProgram::tryCompileShaderSource(uint type, const char* source)
+int ShaderProgram::tryCompileShaderSource(unsigned int type, const char* source)
 {
-	uint shaderId = glCreateShader(type);
+	unsigned int shaderId = glCreateShader(type);
 	glShaderSource(shaderId, 1, &source, NULL);
 
 	int success;
@@ -96,12 +96,12 @@ int ShaderProgram::tryCompileShaderSource(uint type, const char* source)
 	return shaderId;
 }
 
-string ShaderProgram::getShaderTypeText(uint type)
+string ShaderProgram::getShaderTypeText(unsigned int type)
 {
 	return type == GL_VERTEX_SHADER ? (string)"vertex" : (string)"fragment";
 }
 
-uint ShaderProgram::getId()
+unsigned int ShaderProgram::getId()
 {
 	return shaderProgramId;
 }
