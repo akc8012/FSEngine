@@ -30,9 +30,8 @@ Renderer::Renderer(SDL_Window* window)
 	vertexArrayId = createVertexArray();
 
 	//to-do: set uniform functions in ShaderProgram
-	glUseProgram(shaderProgram->getId());
-	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture1"), 0);
-	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture2"), 1);
+	shaderProgram->use();
+	setFragmentMixUniforms();
 
 	brickTexture = new Texture("Resource/Image/wall.png");
 	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
@@ -142,12 +141,18 @@ void Renderer::sendIndices(unsigned int elementBufferId)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
+void Renderer::setFragmentMixUniforms()
+{
+	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture1"), 0);
+	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture2"), 1);
+}
+
 void Renderer::render(SDL_Window* window)
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glUseProgram(shaderProgram->getId());
+	shaderProgram->use();
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, brickTexture->getId());
@@ -174,9 +179,10 @@ void Renderer::rotateContainer()
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->getId(), "transform"), Count, Transpose, value_ptr(transform));
 }
 
-void Renderer::rebuildShaderProgram()
+void Renderer::recompileShaders()
 {
-	shaderProgram->createShaderProgram();
+	shaderProgram->createShaders();
+	setFragmentMixUniforms();
 }
 
 Renderer::~Renderer()

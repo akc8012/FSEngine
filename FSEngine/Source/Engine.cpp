@@ -44,7 +44,7 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		case SDLK_s:
 			try
 			{
-				renderer->rebuildShaderProgram();
+				renderer->recompileShaders();
 				printf("Rebuilt shader program\n");
 			}
 			catch (string errorMessage)

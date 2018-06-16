@@ -8,29 +8,19 @@ using namespace std;
 
 ShaderProgram::ShaderProgram()
 {
-	createShaderProgram();
+	shaderProgramId = glCreateProgram();
+	createShaders();
 }
 
-void ShaderProgram::createShaderProgram()
+void ShaderProgram::createShaders()
 {
-	glDeleteProgram(shaderProgramId);
-	shaderProgramId = glCreateProgram();
-
 	unsigned int vertexShaderId = createVertexShader();
 	glAttachShader(shaderProgramId, vertexShaderId);
 
 	unsigned int fragmentShaderId = createFragmentShader();
 	glAttachShader(shaderProgramId, fragmentShaderId);
 
-	int success;
-	glLinkProgram(shaderProgramId);
-	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		char infoLog[512];
-		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
-		throw (string)"Error linking program: " + infoLog;
-	}
+	linkShaderProgram(vertexShaderId, fragmentShaderId);
 
 	glDeleteShader(vertexShaderId);
 	glDeleteShader(fragmentShaderId);
@@ -95,6 +85,23 @@ int ShaderProgram::tryCompileShaderSource(unsigned int type, const char* source)
 	return shaderId;
 }
 
+void ShaderProgram::linkShaderProgram(const unsigned int vertexShaderId, const unsigned int fragmentShaderId)
+{
+	glLinkProgram(shaderProgramId);
+
+	glDetachShader(shaderProgramId, vertexShaderId);
+	glDetachShader(shaderProgramId, fragmentShaderId);
+
+	int success;
+	glGetProgramiv(shaderProgramId, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		char infoLog[512];
+		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
+		throw (string)"Error linking program: " + infoLog;
+	}
+}
+
 string ShaderProgram::getShaderTypeText(unsigned int type)
 {
 	return type == GL_VERTEX_SHADER ? (string)"vertex" : (string)"fragment";
@@ -103,6 +110,11 @@ string ShaderProgram::getShaderTypeText(unsigned int type)
 unsigned int ShaderProgram::getId()
 {
 	return shaderProgramId;
+}
+
+void ShaderProgram::use()
+{
+	glUseProgram(shaderProgramId);
 }
 
 ShaderProgram::~ShaderProgram()

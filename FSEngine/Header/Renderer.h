@@ -33,6 +33,7 @@ private:
 	void sendTextureAttribute();
 	void sendVertexAttribute(const VertexAttribute& attribute);
 
+	void setFragmentMixUniforms();
 	void rotateContainer();
 
 public:
@@ -40,5 +41,5 @@ public:
 	~Renderer();
 
 	void render(SDL_Window* window);
-	void rebuildShaderProgram();
+	void recompileShaders();
 };
