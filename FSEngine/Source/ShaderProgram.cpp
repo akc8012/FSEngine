@@ -104,7 +104,7 @@ void ShaderProgram::linkShaderProgram(const unsigned int vertexShaderId, const u
 
 string ShaderProgram::getShaderTypeText(unsigned int type)
 {
-	return type == GL_VERTEX_SHADER ? (string)"vertex" : (string)"fragment";
+	return (string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
 }
 
 unsigned int ShaderProgram::getId()
