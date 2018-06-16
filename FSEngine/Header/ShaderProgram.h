@@ -1,6 +1,11 @@
 #pragma once
 #include <string>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 using namespace std;
+using namespace glm;
 
 class ShaderProgram
 {
@@ -23,4 +28,9 @@ public:
 	void createShaders();
 	unsigned int getId();
 	void use();
+
+	void setBool(const char* name, bool value) const;
+	void setInt(const char* name, int value) const;
+	void setFloat(const char* name, float value) const;
+	void setMatrix(const char* name, mat4 value) const;
 };

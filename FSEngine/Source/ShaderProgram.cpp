@@ -117,6 +117,19 @@ void ShaderProgram::use()
 	glUseProgram(shaderProgramId);
 }
 
+void ShaderProgram::setBool(const char* name, bool value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), (int)value); }
+
+void ShaderProgram::setInt(const char* name, int value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), value); }
+
+void ShaderProgram::setFloat(const char* name, float value) const { glUniform1f(glGetUniformLocation(shaderProgramId, name), value); }
+
+void ShaderProgram::setMatrix(const char* name, mat4 value) const
+{
+	const int Count = 1;
+	const bool Transpose = false;
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgramId, name), Count, Transpose, value_ptr(value));
+}
+
 ShaderProgram::~ShaderProgram()
 {
 	glDeleteProgram(shaderProgramId);

@@ -145,8 +145,8 @@ void Renderer::sendIndices(unsigned int elementBufferId)
 void Renderer::setFragmentMixUniforms()
 {
 	int uniformValue = 0;
-	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture1"), uniformValue);
-	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture2"), uniformValue+1);
+	shaderProgram->setInt("texture1", uniformValue);
+	shaderProgram->setInt("texture2", uniformValue+1);
 }
 
 void Renderer::render(SDL_Window* window)
@@ -182,9 +182,7 @@ void Renderer::rotateContainer()
 	mat4 transform = translate(mat4(1.0f), vec3(0.5f, -0.5f, 0.0f));
 	transform = rotate(transform, (float)SDL_GetTicks() / 1000.0f, vec3(0.0f, 0.0f, 1.0f));
 
-	const int Count = 1;
-	const bool Transpose = false;
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->getId(), "transform"), Count, Transpose, value_ptr(transform));
+	shaderProgram->setMatrix("transform", transform);
 }
 
 void Renderer::drawTriangles()
