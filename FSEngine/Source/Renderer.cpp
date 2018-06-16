@@ -27,6 +27,8 @@ Renderer::Renderer(SDL_Window* window)
 	if (SDL_GL_SetSwapInterval(Interval) == -1)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
+	glEnable(GL_DEPTH_TEST);
+
 	shaderProgram = new ShaderProgram();
 	vertexArrayId = createVertexArray();
 
@@ -74,10 +76,47 @@ void Renderer::sendVertices(unsigned int vertexBufferId)
 	float vertices[] =
 	{
 		 // positions         // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f    // top left 
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
@@ -153,7 +192,7 @@ void Renderer::render(SDL_Window* window)
 void Renderer::clearScreen()
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::bindTextures()
@@ -166,9 +205,11 @@ void Renderer::bindTextures()
 
 void Renderer::setModelMatrix()
 {
-	const float Angle = radians(-55.0f);
-	const vec3 Axis = vec3(1.0f, 0.0f, 0.0f);
-	mat4 modelMatrix = rotate(mat4(1.0f), Angle, Axis);
+	float seconds = (float)SDL_GetTicks() / 1000.0f;
+	float angle = seconds * radians(50.0f);
+	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
+	mat4 modelMatrix = rotate(mat4(1.0f), angle, Axis);
+
 	shaderProgram->setMatrix("model", modelMatrix);
 }
 
@@ -187,13 +228,14 @@ void Renderer::setProjectionMatrix(SDL_Window* window)
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 	mat4 projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
+
 	shaderProgram->setMatrix("projection", projectionMatrix);
 }
 
 void Renderer::drawTriangles()
 {
-	const int Count = 6, Indices = 0;
-	glDrawElements(GL_TRIANGLES, Count, GL_UNSIGNED_INT, Indices);
+	const int First = 0, Count = 36;
+	glDrawArrays(GL_TRIANGLES, 0, Count);
 }
 
 void Renderer::recompileShaders()

@@ -49,7 +49,7 @@ void Window::setFullscreen()
 	SDL_GetCurrentDisplayMode(0, &displayMode);
 
 	SDL_SetWindowSize(window, displayMode.w, displayMode.h);
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 }
 
 void Window::setResolution(int width, int height)
