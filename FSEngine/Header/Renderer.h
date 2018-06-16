@@ -17,7 +17,7 @@ private:
 	{
 		int location;
 		int size;
-		bool normalize;
+		bool normalize = false;
 		int stride;
 		int offset;
 	};
@@ -37,7 +37,9 @@ private:
 	void bindTextures();
 	void drawTriangles();
 
-	void rotateContainer();
+	void setModelMatrix();
+	void setViewMatrix();
+	void setProjectionMatrix(SDL_Window* window);
 	void setFragmentMixUniforms();
 
 public:

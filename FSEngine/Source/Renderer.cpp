@@ -30,7 +30,6 @@ Renderer::Renderer(SDL_Window* window)
 	shaderProgram = new ShaderProgram();
 	vertexArrayId = createVertexArray();
 
-	//to-do: set uniform functions in ShaderProgram
 	shaderProgram->use();
 	setFragmentMixUniforms();
 
@@ -94,7 +93,6 @@ void Renderer::sendPositionAttribute()
 	VertexAttribute positionAttribute;
 	positionAttribute.location = 0;
 	positionAttribute.size = 3;
-	positionAttribute.normalize = false;
 	positionAttribute.stride = 8 * sizeof(float);
 	positionAttribute.offset = 0;
 
@@ -106,7 +104,6 @@ void Renderer::sendColorAttribute()
 	VertexAttribute colorAttribute;
 	colorAttribute.location = 1;
 	colorAttribute.size = 3;
-	colorAttribute.normalize = false;
 	colorAttribute.stride = 8 * sizeof(float);
 	colorAttribute.offset = 3;
 
@@ -118,7 +115,6 @@ void Renderer::sendTextureAttribute()
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 2;
 	textureAttribute.size = 3;
-	textureAttribute.normalize = false;
 	textureAttribute.stride = 8 * sizeof(float);
 	textureAttribute.offset = 6;
 
@@ -157,7 +153,10 @@ void Renderer::render(SDL_Window* window)
 	bindTextures();
 	glBindVertexArray(vertexArrayId);
 
-	rotateContainer();
+	setModelMatrix();
+	setViewMatrix();
+	setProjectionMatrix(window);
+
 	drawTriangles();
 
 	SDL_GL_SwapWindow(window);
@@ -177,12 +176,30 @@ void Renderer::bindTextures()
 	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->getId());
 }
 
-void Renderer::rotateContainer()
+void Renderer::setModelMatrix()
 {
-	mat4 transform = translate(mat4(1.0f), vec3(0.5f, -0.5f, 0.0f));
-	transform = rotate(transform, (float)SDL_GetTicks() / 1000.0f, vec3(0.0f, 0.0f, 1.0f));
+	const float Angle = radians(-55.0f);
+	const vec3 Axis = vec3(1.0f, 0.0f, 0.0f);
+	mat4 modelMatrix = rotate(mat4(1.0f), Angle, Axis);
+	shaderProgram->setMatrix("model", modelMatrix);
+}
 
-	shaderProgram->setMatrix("transform", transform);
+void Renderer::setViewMatrix()
+{
+	mat4 viewMatrix = translate(mat4(1.0f), vec3(0.0f, 0.0f, -3.0f));
+	shaderProgram->setMatrix("view", viewMatrix);
+}
+
+void Renderer::setProjectionMatrix(SDL_Window* window)
+{
+	const float FieldOfView = radians(45.0f);
+	int width, height;
+	SDL_GetWindowSize(window, &width, &height);
+	const float AspectRatio = (float)width / (float)height;
+	const float NearPlane = 0.1f;
+	const float FarPlane = 100.0f;
+	mat4 projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
+	shaderProgram->setMatrix("projection", projectionMatrix);
 }
 
 void Renderer::drawTriangles()
