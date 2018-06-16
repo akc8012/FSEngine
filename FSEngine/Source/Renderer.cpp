@@ -23,7 +23,8 @@ Renderer::Renderer(SDL_Window* window)
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 
-	if (SDL_GL_SetSwapInterval(1) == -1)
+	const int Interval = 1;
+	if (SDL_GL_SetSwapInterval(Interval) == -1)
 		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
 
 	shaderProgram = new ShaderProgram();
@@ -143,8 +144,9 @@ void Renderer::sendIndices(unsigned int elementBufferId)
 
 void Renderer::setFragmentMixUniforms()
 {
-	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture1"), 0);
-	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture2"), 1);
+	int uniformValue = 0;
+	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture1"), uniformValue);
+	glUniform1i(glGetUniformLocation(shaderProgram->getId(), "texture2"), uniformValue+1);
 }
 
 void Renderer::render(SDL_Window* window)

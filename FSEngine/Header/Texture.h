@@ -5,7 +5,7 @@
 class Texture
 {
 private:
-	unsigned int textureId = 0;
+	unsigned int textureId = NULL;
 
 public:
 	Texture(const char* filepath);

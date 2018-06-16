@@ -11,7 +11,8 @@ Texture::Texture(const char* filepath)
 	if (surface == NULL)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 
-	glGenTextures(1, &textureId);
+	const int Amount = 1;
+	glGenTextures(Amount, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -33,5 +34,6 @@ unsigned int Texture::getId()
 
 Texture::~Texture()
 {
-	glDeleteTextures(1, &textureId);
+	const int Amount = 1;
+	glDeleteTextures(Amount, &textureId);
 }
