@@ -36,7 +36,7 @@ private:
 	void bindTextures();
 	void drawTriangles();
 
-	void setModelMatrix(int model);
+	void setModelMatrix();
 	void setViewMatrix();
 	void setProjectionMatrix(SDL_Window* window);
 	void setFragmentMixUniforms();
