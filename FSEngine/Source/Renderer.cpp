@@ -149,24 +149,30 @@ void Renderer::setFragmentMixUniforms()
 
 void Renderer::render(SDL_Window* window)
 {
-	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	clearScreen();
 
 	shaderProgram->use();
+	bindTextures();
+	glBindVertexArray(vertexArrayId);
 
+	rotateContainer();
+	drawTriangles();
+
+	SDL_GL_SwapWindow(window);
+}
+
+void Renderer::clearScreen()
+{
+	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::bindTextures()
+{
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, brickTexture->getId());
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->getId());
-	
-	glBindVertexArray(vertexArrayId);
-
-	rotateContainer();
-
-	const int Count = 6, Indices = 0;
-	glDrawElements(GL_TRIANGLES, Count, GL_UNSIGNED_INT, Indices);
-
-	SDL_GL_SwapWindow(window);
 }
 
 void Renderer::rotateContainer()
@@ -177,6 +183,12 @@ void Renderer::rotateContainer()
 	const int Count = 1;
 	const bool Transpose = false;
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram->getId(), "transform"), Count, Transpose, value_ptr(transform));
+}
+
+void Renderer::drawTriangles()
+{
+	const int Count = 6, Indices = 0;
+	glDrawElements(GL_TRIANGLES, Count, GL_UNSIGNED_INT, Indices);
 }
 
 void Renderer::recompileShaders()

@@ -33,8 +33,12 @@ private:
 	void sendTextureAttribute();
 	void sendVertexAttribute(const VertexAttribute& attribute);
 
-	void setFragmentMixUniforms();
+	void clearScreen();
+	void bindTextures();
+	void drawTriangles();
+
 	void rotateContainer();
+	void setFragmentMixUniforms();
 
 public:
 	Renderer(SDL_Window* window);
