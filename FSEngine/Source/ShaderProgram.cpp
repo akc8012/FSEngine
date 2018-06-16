@@ -4,7 +4,6 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
-#include <iostream>
 using namespace std;
 
 ShaderProgram::ShaderProgram()
@@ -71,7 +70,7 @@ unsigned int ShaderProgram::createShaderFromFilepath(unsigned int type, const ch
 	if (shaderId == -1)
 	{
 		shaderId = tryCompileShaderSource(type, fallbackSource);
-		cout << "Using fallback " << getShaderTypeText(type) << " shader" << endl;
+		printf("Using fallback %s shader\n", getShaderTypeText(type).c_str());
 	}
 
 	return shaderId;
@@ -89,7 +88,7 @@ int ShaderProgram::tryCompileShaderSource(unsigned int type, const char* source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		cout << (string)"Warning: Unable to compile " << getShaderTypeText(type) << " shader: " << infoLog;
+		printf("Warning: Unable to compile %s shader: %s\n", getShaderTypeText(type).c_str(), infoLog);
 		return -1;
 	}
 

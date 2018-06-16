@@ -1,6 +1,5 @@
 #include "../Header/Engine.h"
 #include <SDL_image.h>
-#include <iostream>
 #include <string>
 using namespace std;
 
@@ -19,12 +18,12 @@ bool Engine::init()
 	}
 	catch (string errorMessage)
 	{
-		cout << errorMessage << endl;
-		cin.get();
+		printf("%s\n", errorMessage.c_str());
+		getchar();
 		return false;
 	}
 
-	cout << "Success" << endl;
+	printf("Success\n");
 	return true;
 }
 
@@ -46,11 +45,11 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 			try
 			{
 				renderer->rebuildShaderProgram();
-				cout << "Rebuilt shader program" << endl;
+				printf("Rebuilt shader program\n");
 			}
 			catch (string errorMessage)
 			{
-				cout << errorMessage << endl;
+				printf("%s\n", errorMessage.c_str());
 			}
 		break;
 

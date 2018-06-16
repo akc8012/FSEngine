@@ -1,7 +1,6 @@
 #include "../Header/AndUtility.h"
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 string AndUtility::loadTextFromFile(const char* filepath)
 {
@@ -18,7 +17,7 @@ string AndUtility::tryLoadTextFromFile(const char* filepath)
 	bool success = false;
 	string file = internalTryLoadTextFromFile(filepath, success);
 	if (!success)
-		cout << "Warning: Unable to load text file from path: " << filepath;
+		printf("Warning: Unable to load text file from path: %s", filepath);
 
 	return file;
 }
