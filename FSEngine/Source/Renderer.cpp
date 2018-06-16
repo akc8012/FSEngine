@@ -180,11 +180,15 @@ void Renderer::render(SDL_Window* window)
 	bindTextures();
 	glBindVertexArray(vertexArrayId);
 
-	setModelMatrix();
 	setViewMatrix();
 	setProjectionMatrix(window);
 
-	drawTriangles();
+	const int Models = 10;
+	for (int i = 0; i < Models; i++)
+	{
+		setModelMatrix(i);
+		drawTriangles();
+	}
 
 	SDL_GL_SwapWindow(window);
 }
@@ -203,12 +207,28 @@ void Renderer::bindTextures()
 	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->getId());
 }
 
-void Renderer::setModelMatrix()
+void Renderer::setModelMatrix(int model)
 {
+	vec3 cubePositions[] =
+	{
+		vec3( 0.0f,  0.0f,  0.0f),
+		vec3( 2.0f,  5.0f, -15.0f),
+		vec3(-1.5f, -2.2f, -2.5f),
+		vec3(-3.8f, -2.0f, -12.3f),
+		vec3( 2.4f, -0.4f, -3.5f),
+		vec3(-1.7f,  3.0f, -7.5f),
+		vec3( 1.3f, -2.0f, -2.5f),
+		vec3( 1.5f,  2.0f, -2.5f),
+		vec3( 1.5f,  0.2f, -1.5f),
+		vec3(-1.3f,  1.0f, -1.5f)
+	};
+
+	mat4 modelMatrix = translate(mat4(1.0f), cubePositions[model]);
+
 	float seconds = (float)SDL_GetTicks() / 1000.0f;
-	float angle = seconds * radians(50.0f);
+	float angle = seconds * radians(50.0f) * (model+1);
 	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
-	mat4 modelMatrix = rotate(mat4(1.0f), angle, Axis);
+	modelMatrix = rotate(modelMatrix, angle, Axis);
 
 	shaderProgram->setMatrix("model", modelMatrix);
 }
