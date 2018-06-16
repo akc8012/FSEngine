@@ -29,7 +29,6 @@ private:
 	void sendIndices(unsigned int elementBufferId);
 
 	void sendPositionAttribute();
-	void sendColorAttribute();
 	void sendTextureAttribute();
 	void sendVertexAttribute(const VertexAttribute& attribute);
 
