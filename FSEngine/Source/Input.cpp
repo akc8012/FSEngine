@@ -18,11 +18,14 @@ float Input::getAnalogAxis(SDL_GameControllerAxis axis)
 {
 	const int JoystickIndex = 0;
 	SDL_GameController* gameController = SDL_GameControllerOpen(JoystickIndex);
-	Sint16 stickHorizontalAxisInt = SDL_GameControllerGetAxis(gameController, axis);
+	Sint16 analogInputInt = SDL_GameControllerGetAxis(gameController, axis);
 	SDL_GameControllerClose(gameController);
 
 	const int MaxInt = 32767;
-	return clamp((float)stickHorizontalAxisInt / MaxInt, -1.0f, 1.0f);
+	float analogInput = clamp((float)analogInputInt / MaxInt, -1.0f, 1.0f);
+
+	const float DeadZone = 0.1f;
+	return abs(analogInput) > DeadZone ? analogInput : 0.0f;
 }
 
 float Input::getDigitalAxis(SDL_Scancode positiveInput, SDL_Scancode negativeInput)
