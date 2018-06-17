@@ -33,6 +33,11 @@ float Timer::getSeconds()
 {
 	return (float)SDL_GetTicks() / 1000.0f;
 }
+
+void Timer::close()
+{
+	delete frameRateTimer;
+}
 #pragma endregion
 
 #pragma region Member Methods

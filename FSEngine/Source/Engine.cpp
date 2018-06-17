@@ -74,7 +74,7 @@ void Engine::run()
 
 void Engine::update()
 {
-
+	//printf("%f\n", Timer::getFramesPerSecond());
 }
 
 void Engine::draw()
@@ -85,6 +85,7 @@ void Engine::draw()
 //to-do: fix hanging here
 Engine::~Engine()
 {
+	Timer::close();
 	delete renderer;
 	delete window;
 

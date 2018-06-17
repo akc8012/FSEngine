@@ -20,6 +20,7 @@ private:
 public:
 	static void init();
 	static void update();
+	static void close();
 
 	static float getDeltaTime();
 	static float getFramesPerSecond();
