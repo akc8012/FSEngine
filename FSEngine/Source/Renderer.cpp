@@ -128,7 +128,7 @@ void Renderer::sendPositionAttribute()
 	VertexAttribute positionAttribute;
 	positionAttribute.location = 0;
 	positionAttribute.size = 3;
-	positionAttribute.stride = 5 * sizeof(float);
+	positionAttribute.stride = 5;
 	positionAttribute.offset = 0;
 
 	sendVertexAttribute(positionAttribute);
@@ -139,7 +139,7 @@ void Renderer::sendTextureAttribute()
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 1;
 	textureAttribute.size = 2;
-	textureAttribute.stride = 5 * sizeof(float);
+	textureAttribute.stride = 5;
 	textureAttribute.offset = 3;
 
 	sendVertexAttribute(textureAttribute);
@@ -147,7 +147,7 @@ void Renderer::sendTextureAttribute()
 
 void Renderer::sendVertexAttribute(const VertexAttribute& attribute)
 {
-	glVertexAttribPointer(attribute.location, attribute.size, GL_FLOAT, attribute.normalize, attribute.stride, (void*)(attribute.offset * sizeof(float)));
+	glVertexAttribPointer(attribute.location, attribute.size, GL_FLOAT, attribute.normalize, attribute.stride * sizeof(float), (void*)(attribute.offset * sizeof(float)));
 	glEnableVertexAttribArray(attribute.location);
 }
 
