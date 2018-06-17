@@ -16,7 +16,7 @@ bool Engine::init()
 
 		window = new Window();
 		renderer = new Renderer(window->get());
-		timer = new LTimer();
+		timer = new Timer();
 
 		timer->start();
 	}
@@ -78,8 +78,8 @@ void Engine::update()
 {
 	Timer::update();
 
-	system("CLS");
-	printf("%i\n", timer->getTicks());
+	//system("CLS");
+	//printf("%i\n", timer->getTimerTicks());
 }
 
 //to-do: fix hanging here
