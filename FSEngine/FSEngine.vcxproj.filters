@@ -8,6 +8,7 @@
     <ClCompile Include="Source\AndUtility.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="Source\Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -16,6 +17,7 @@
     <ClInclude Include="Header\AndUtility.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Window.h" />
+    <ClInclude Include="Header\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />

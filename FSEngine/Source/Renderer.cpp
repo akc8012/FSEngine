@@ -1,14 +1,11 @@
 #include "../Header/Renderer.h"
+#include "../Header/Input.h"
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 #include <string>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 using namespace std;
-using namespace glm;
 
 Renderer::Renderer(SDL_Window* window)
 {
@@ -205,12 +202,17 @@ void Renderer::bindTextures()
 
 void Renderer::setModelMatrix()
 {
+	vec3 input = vec3(Input::getHorizontalAxis(), Input::getVerticalAxis(), 0);
+	const float SpeedModifier = 0.01f;
+	cubePosition += input * SpeedModifier;
+	mat4 transform = translate(mat4(1.0f), cubePosition);
+
 	float seconds = (float)SDL_GetTicks() / 1000.0f;
 	float angle = seconds * radians(50.0f);
 	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
-	mat4 modelMatrix = rotate(mat4(1.0f), angle, Axis);
+	transform = rotate(transform, angle, Axis);
 
-	shaderProgram->setMatrix("model", modelMatrix);
+	shaderProgram->setMatrix("model", transform);
 }
 
 void Renderer::setViewMatrix()

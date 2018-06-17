@@ -41,7 +41,7 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 {
 	switch (keyboardEvent.keysym.sym)
 	{
-		case SDLK_s:
+		case SDLK_x:
 			try
 			{
 				renderer->recompileShaders();
