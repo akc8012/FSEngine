@@ -18,7 +18,7 @@ private:
 	Texture* brickTexture = NULL;
 	Texture* awesomefaceTexture = NULL;
 
-	vec3 cubePosition;
+	vec3 cameraPosition = vec3(0, 0, 3);
 
 	struct VertexAttribute
 	{
