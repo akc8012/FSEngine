@@ -9,6 +9,7 @@
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -18,6 +19,7 @@
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\Input.h" />
+    <ClInclude Include="Header\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />

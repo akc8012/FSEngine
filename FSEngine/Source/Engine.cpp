@@ -1,4 +1,5 @@
 #include "../Header/Engine.h"
+#include "../Header/Time.h"
 #include <SDL_image.h>
 #include <string>
 using namespace std;
@@ -62,7 +63,13 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 
 void Engine::run()
 {
+	update();
 	renderer->render(window->get());
+}
+
+void Engine::update()
+{
+	Time::update();
 }
 
 //to-do: fix hanging here

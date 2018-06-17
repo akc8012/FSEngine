@@ -16,5 +16,7 @@ public:
 
 	void handleWindowEvent(const SDL_WindowEvent& windowEvent);
 	void handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
+
 	void run();
+	void update();
 };

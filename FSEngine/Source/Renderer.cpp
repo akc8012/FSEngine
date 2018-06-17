@@ -1,5 +1,6 @@
 #include "../Header/Renderer.h"
 #include "../Header/Input.h"
+#include "../Header/Time.h"
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
@@ -202,8 +203,7 @@ void Renderer::bindTextures()
 
 void Renderer::setModelMatrix()
 {
-	float seconds = (float)SDL_GetTicks() / 1000.0f;
-	float angle = seconds * radians(50.0f);
+	float angle = Time::getSeconds() * radians(50.0f);
 	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
 	mat4 transform = rotate(mat4(1.0f), angle, Axis);
 
@@ -212,12 +212,11 @@ void Renderer::setModelMatrix()
 
 void Renderer::setViewMatrix()
 {
-	const float CameraSpeed = 0.05f;
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::getHorizontalAxis() * CameraSpeed;
-	cameraPosition += -Input::getVerticalAxis() * forwardVector * CameraSpeed;
+	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::getHorizontalAxis() * Time::getDeltaTime();
+	cameraPosition += -Input::getVerticalAxis() * forwardVector * Time::getDeltaTime();
 
 	mat4 view = lookAt(cameraPosition, cameraPosition + forwardVector, upVector);
 	shaderProgram->setMatrix("view", view);
