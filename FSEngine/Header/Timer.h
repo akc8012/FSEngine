@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 
-class Time
+class Timer
 {
 private:
 	static float lastTime;

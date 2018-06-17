@@ -1,5 +1,5 @@
 #include "../Header/Engine.h"
-#include "../Header/Time.h"
+#include "../Header/Timer.h"
 #include <SDL_image.h>
 #include <string>
 using namespace std;
@@ -76,7 +76,7 @@ void Engine::run()
 
 void Engine::update()
 {
-	Time::update();
+	Timer::update();
 
 	system("CLS");
 	printf("%i\n", timer->getTicks());

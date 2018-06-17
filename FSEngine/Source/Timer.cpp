@@ -1,19 +1,19 @@
-#include "../Header/Time.h"
+#include "../Header/Timer.h"
 
-float Time::lastTime = 0.0f;
+float Timer::lastTime = 0.0f;
 
-float Time::getSeconds()
+float Timer::getSeconds()
 {
 	return (float)SDL_GetTicks() / 1000.0f;
 }
 
-float Time::getDeltaTime()
+float Timer::getDeltaTime()
 {
 	float currentTime = getSeconds();
 	return currentTime - lastTime;
 }
 
-void Time::update()
+void Timer::update()
 {
 	lastTime = getSeconds();
 }
