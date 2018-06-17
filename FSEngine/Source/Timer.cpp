@@ -4,17 +4,12 @@
 #pragma region Static Methods
 float Timer::lastTime = 0.0f;
 unsigned int Timer::countedFrames = 0;
-float Timer::initOffset = 0.0f;
+Timer* Timer::frameRateTimer = NULL;
 
 void Timer::init()
 {
-	initOffset = getSeconds();
-}
-
-void Timer::update()
-{
-	lastTime = getSeconds();
-	countedFrames++;
+	frameRateTimer = new Timer();
+	frameRateTimer->start();
 }
 
 float Timer::getDeltaTime()
@@ -25,7 +20,13 @@ float Timer::getDeltaTime()
 
 float Timer::getFramesPerSecond()
 {
-	return (float)(countedFrames - 1) / (getSeconds() - initOffset);
+	return (float)countedFrames / (frameRateTimer->getTimerSeconds());
+}
+
+void Timer::update()
+{
+	lastTime = getSeconds();
+	countedFrames++;
 }
 
 float Timer::getSeconds()

@@ -31,11 +31,13 @@ bool Engine::init()
 
 void Engine::handleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
-	if (windowEvent.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+	switch (windowEvent.event)
 	{
-		int width, height;
-		SDL_GetWindowSize(window->get(), &width, &height);
-		window->setResolution(width, height);
+		case SDL_WINDOWEVENT_SIZE_CHANGED:
+			int width, height;
+			SDL_GetWindowSize(window->get(), &width, &height);
+			window->setResolution(width, height);
+		break;
 	}
 }
 
@@ -66,12 +68,13 @@ void Engine::run()
 {
 	update();
 	draw();
+
+	Timer::update();
 }
 
 void Engine::update()
 {
-	Timer::update();
-	printf("%f\n", Timer::getFramesPerSecond());
+
 }
 
 void Engine::draw()

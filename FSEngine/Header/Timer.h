@@ -6,7 +6,7 @@ class Timer
 private:
 	static float lastTime;
 	static unsigned int countedFrames;
-	static float initOffset;
+	static Timer* frameRateTimer;
 
 	enum State { Stopped, Running, Paused };
 	State state = Stopped;
