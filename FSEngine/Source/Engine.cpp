@@ -1,5 +1,5 @@
 #include "../Header/Engine.h"
-#include "../Header/Time.h"
+#include "../Header/Timer.h"
 #include <SDL_image.h>
 #include <string>
 using namespace std;
@@ -16,6 +16,9 @@ bool Engine::init()
 
 		window = new Window();
 		renderer = new Renderer(window->get());
+		timer = new Timer();
+
+		timer->start();
 	}
 	catch (string errorMessage)
 	{
@@ -54,6 +57,10 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 			}
 		break;
 
+		case SDLK_SPACE:
+			timer->togglePause();
+		break;
+
 		case SDLK_F11:
 		case SDLK_F12:
 			window->toggleFullscreen();
@@ -69,12 +76,14 @@ void Engine::run()
 
 void Engine::update()
 {
-	Time::update();
+	Timer::update();
+	printf("%i\n", timer->getTimerTicks());
 }
 
 //to-do: fix hanging here
 Engine::~Engine()
 {
+	delete timer;
 	delete renderer;
 	delete window;
 

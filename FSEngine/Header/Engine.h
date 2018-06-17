@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer.h"
 #include "Window.h"
+#include "Timer.h"
 #include <SDL.h>
 
 class Engine
@@ -8,6 +9,7 @@ class Engine
 private:
 	Window* window = NULL;
 	Renderer* renderer = NULL;
+	Timer* timer;
 
 public:
 	~Engine();
