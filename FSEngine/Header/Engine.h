@@ -1,7 +1,6 @@
 #pragma once
 #include "Renderer.h"
 #include "Window.h"
-#include "Timer.h"
 #include <SDL.h>
 
 class Engine
@@ -9,7 +8,9 @@ class Engine
 private:
 	Window* window = NULL;
 	Renderer* renderer = NULL;
-	Timer* timer;
+
+	void draw();
+	void update();
 
 public:
 	~Engine();
@@ -20,5 +21,4 @@ public:
 	void handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 
 	void run();
-	void update();
 };

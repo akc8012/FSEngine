@@ -5,6 +5,8 @@ class Timer
 {
 private:
 	static float lastTime;
+	static unsigned int countedFrames;
+	static float initOffset;
 
 	enum State { Stopped, Running, Paused };
 	State state = Stopped;
@@ -16,9 +18,12 @@ private:
 	void resetStartingTicks();
 
 public:
-	static float getSeconds();
-	static float getDeltaTime();
+	static void init();
 	static void update();
+
+	static float getDeltaTime();
+	static float getFramesPerSecond();
+	static float getSeconds();
 
 	void start();
 	void stop();
@@ -28,6 +33,7 @@ public:
 	void togglePause();
 
 	unsigned int getTimerTicks() const;
+	float getTimerSeconds() const;
 	bool isRunning() const;
 	bool isPaused() const;
 };

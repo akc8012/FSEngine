@@ -1,11 +1,20 @@
 #include "../Header/Timer.h"
+#include <stdio.h>
 
 #pragma region Static Methods
 float Timer::lastTime = 0.0f;
+unsigned int Timer::countedFrames = 0;
+float Timer::initOffset = 0.0f;
 
-float Timer::getSeconds()
+void Timer::init()
 {
-	return (float)SDL_GetTicks() / 1000.0f;
+	initOffset = getSeconds();
+}
+
+void Timer::update()
+{
+	lastTime = getSeconds();
+	countedFrames++;
 }
 
 float Timer::getDeltaTime()
@@ -14,9 +23,14 @@ float Timer::getDeltaTime()
 	return currentTime - lastTime;
 }
 
-void Timer::update()
+float Timer::getFramesPerSecond()
 {
-	lastTime = getSeconds();
+	return (float)(countedFrames - 1) / (getSeconds() - initOffset);
+}
+
+float Timer::getSeconds()
+{
+	return (float)SDL_GetTicks() / 1000.0f;
 }
 #pragma endregion
 
@@ -90,6 +104,11 @@ unsigned int Timer::getTimerTicks() const
 		default:
 			return 0;
 	}
+}
+
+float Timer::getTimerSeconds() const
+{
+	return (float)getTimerTicks() / 1000.0f;
 }
 
 bool Timer::isRunning() const
