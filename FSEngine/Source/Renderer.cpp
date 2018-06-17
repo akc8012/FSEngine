@@ -5,32 +5,17 @@
 #include <SDL_opengl.h>
 #include <GL\GLU.h>
 #include <string>
-
 using namespace std;
 
 Renderer::Renderer(SDL_Window* window)
 {
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
 	context = createContext(window);
-
-	glewExperimental = GL_TRUE;
-	unsigned int glewError = glewInit();
-	if (glewError != GLEW_OK)
-		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
-
-	const int Interval = 1;
-	if (SDL_GL_SetSwapInterval(Interval) == -1)
-		throw (string)"Warning: Unable to set VSync! SDL Error: " + SDL_GetError();
-
-	glEnable(GL_DEPTH_TEST);
+	initOpenGl();
+	initGlew();
 
 	shaderProgram = new ShaderProgram();
 	vertexArrayId = createVertexArray();
 
-	shaderProgram->use();
 	setFragmentMixUniforms();
 
 	brickTexture = new Texture("Resource/Image/wall.png");
@@ -45,6 +30,27 @@ SDL_GLContext Renderer::createContext(SDL_Window* window)
 		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 
 	return context;
+}
+
+void Renderer::initOpenGl()
+{
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	const int AdaptiveVsync = -1;
+	if (SDL_GL_SetSwapInterval(AdaptiveVsync) != 0)
+		throw (string)"Error: Unable to set Adaptive VSync! SDL Error: " + SDL_GetError();
+
+	glEnable(GL_DEPTH_TEST);
+}
+
+void Renderer::initGlew()
+{
+	glewExperimental = GL_TRUE;
+	unsigned int glewError = glewInit();
+	if (glewError != GLEW_OK)
+		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 }
 
 unsigned int Renderer::createVertexArray()
@@ -165,6 +171,8 @@ void Renderer::sendIndices(unsigned int elementBufferId)
 
 void Renderer::setFragmentMixUniforms()
 {
+	shaderProgram->use();
+
 	int uniformValue = 0;
 	shaderProgram->setInt("texture1", uniformValue);
 	shaderProgram->setInt("texture2", uniformValue+1);

@@ -30,8 +30,10 @@ private:
 	};
 
 	SDL_GLContext createContext(SDL_Window* window);
-	unsigned int createVertexArray();
+	void initOpenGl();
+	void initGlew();
 
+	unsigned int createVertexArray();
 	void sendVertices(unsigned int vertexBufferId);
 	void sendIndices(unsigned int elementBufferId);
 

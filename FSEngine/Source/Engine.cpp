@@ -16,6 +16,9 @@ bool Engine::init()
 
 		window = new Window();
 		renderer = new Renderer(window->get());
+		timer = new LTimer();
+
+		timer->start();
 	}
 	catch (string errorMessage)
 	{
@@ -54,6 +57,10 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 			}
 		break;
 
+		case SDLK_SPACE:
+			timer->togglePause();
+		break;
+
 		case SDLK_F11:
 		case SDLK_F12:
 			window->toggleFullscreen();
@@ -70,11 +77,15 @@ void Engine::run()
 void Engine::update()
 {
 	Time::update();
+
+	system("CLS");
+	printf("%i\n", timer->getTicks());
 }
 
 //to-do: fix hanging here
 Engine::~Engine()
 {
+	delete timer;
 	delete renderer;
 	delete window;
 

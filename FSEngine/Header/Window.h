@@ -4,7 +4,7 @@
 class Window
 {
 private:
-	static const int StartWidth = 480, StartHeight = 320;
+	static const int StartWidth = 800, StartHeight = 600;
 	SDL_Window* window;
 
 	SDL_Window* createWindow(int width = StartWidth, int height = StartHeight);
