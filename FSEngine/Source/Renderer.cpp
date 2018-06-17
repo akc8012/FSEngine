@@ -202,23 +202,25 @@ void Renderer::bindTextures()
 
 void Renderer::setModelMatrix()
 {
-	vec3 input = vec3(Input::getHorizontalAxis(), -Input::getVerticalAxis(), 0);
-	const float SpeedModifier = 0.01f;
-	cubePosition += input * SpeedModifier;
-	mat4 transform = translate(mat4(1.0f), cubePosition);
-
 	float seconds = (float)SDL_GetTicks() / 1000.0f;
 	float angle = seconds * radians(50.0f);
 	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
-	transform = rotate(transform, angle, Axis);
+	mat4 transform = rotate(mat4(1.0f), angle, Axis);
 
 	shaderProgram->setMatrix("model", transform);
 }
 
 void Renderer::setViewMatrix()
 {
-	mat4 viewMatrix = translate(mat4(1.0f), vec3(0.0f, 0.0f, -3.0f));
-	shaderProgram->setMatrix("view", viewMatrix);
+	const float CameraSpeed = 0.05f;
+	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
+	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
+
+	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::getHorizontalAxis() * CameraSpeed;
+	cameraPosition += -Input::getVerticalAxis() * forwardVector * CameraSpeed;
+
+	mat4 view = lookAt(cameraPosition, cameraPosition + forwardVector, upVector);
+	shaderProgram->setMatrix("view", view);
 }
 
 void Renderer::setProjectionMatrix(SDL_Window* window)
