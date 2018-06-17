@@ -77,9 +77,7 @@ void Engine::run()
 void Engine::update()
 {
 	Timer::update();
-
-	//system("CLS");
-	//printf("%i\n", timer->getTimerTicks());
+	printf("%i\n", timer->getTimerTicks());
 }
 
 //to-do: fix hanging here
