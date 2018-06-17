@@ -3,6 +3,11 @@
 #include "Texture.h"
 #include <SDL.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+using namespace glm;
+
 class Renderer
 {
 private:
@@ -12,6 +17,8 @@ private:
 
 	Texture* brickTexture = NULL;
 	Texture* awesomefaceTexture = NULL;
+
+	vec3 cubePosition;
 
 	struct VertexAttribute
 	{
@@ -36,7 +43,7 @@ private:
 	void bindTextures();
 	void drawTriangles();
 
-	void setModelMatrix(int model);
+	void setModelMatrix();
 	void setViewMatrix();
 	void setProjectionMatrix(SDL_Window* window);
 	void setFragmentMixUniforms();
