@@ -7,7 +7,7 @@ bool Engine::init()
 {
 	try
 	{
-		if (SDL_Init(SDL_INIT_VIDEO) != 0)
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0)
 			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
 		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))

@@ -202,7 +202,7 @@ void Renderer::bindTextures()
 
 void Renderer::setModelMatrix()
 {
-	vec3 input = vec3(Input::getHorizontalAxis(), Input::getVerticalAxis(), 0);
+	vec3 input = vec3(Input::getHorizontalAxis(), -Input::getVerticalAxis(), 0);
 	const float SpeedModifier = 0.01f;
 	cubePosition += input * SpeedModifier;
 	mat4 transform = translate(mat4(1.0f), cubePosition);
