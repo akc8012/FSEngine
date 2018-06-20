@@ -6,42 +6,42 @@ float Timer::lastTime = 0.0f;
 unsigned int Timer::countedFrames = 0;
 Timer* Timer::frameRateTimer = NULL;
 
-void Timer::init()
+void Timer::Init()
 {
 	frameRateTimer = new Timer();
-	frameRateTimer->start();
+	frameRateTimer->Start();
 }
 
-float Timer::getDeltaTime()
+float Timer::GetDeltaTime()
 {
-	float currentTime = getSeconds();
+	float currentTime = GetSeconds();
 	return currentTime - lastTime;
 }
 
-float Timer::getFramesPerSecond()
+float Timer::GetFramesPerSecond()
 {
-	return (float)countedFrames / (frameRateTimer->getTimerSeconds());
+	return (float)countedFrames / (frameRateTimer->GetTimerSeconds());
 }
 
-void Timer::update()
+void Timer::Update()
 {
-	lastTime = getSeconds();
+	lastTime = GetSeconds();
 	countedFrames++;
 }
 
-float Timer::getSeconds()
+float Timer::GetSeconds()
 {
 	return (float)SDL_GetTicks() / 1000.0f;
 }
 
-void Timer::close()
+void Timer::Close()
 {
 	delete frameRateTimer;
 }
 #pragma endregion
 
 #pragma region Member Methods
-void Timer::start()
+void Timer::Start()
 {
 	state = Running;
 
@@ -49,7 +49,7 @@ void Timer::start()
 	pausedTicks = 0;
 }
 
-void Timer::stop()
+void Timer::Stop()
 {
 	state = Stopped;
 
@@ -57,46 +57,46 @@ void Timer::stop()
 	pausedTicks = 0;
 }
 
-void Timer::pause()
+void Timer::Pause()
 {
 	if (state == Running)
 	{
 		state = Paused;
 
-		calculatePausedTicks();
+		CalculatePausedTicks();
 		ticks = 0;
 	}
 }
 
-void Timer::calculatePausedTicks()
+void Timer::CalculatePausedTicks()
 {
 	pausedTicks = SDL_GetTicks() - ticks;
 }
 
-void Timer::unpause()
+void Timer::UnPause()
 {
 	if (state == Paused)
 	{
 		state = Running;
-		resetStartingTicks();
+		ResetStartingTicks();
 	}
 }
 
-void Timer::resetStartingTicks()
+void Timer::ResetStartingTicks()
 {
 	ticks = SDL_GetTicks() - pausedTicks;
 	pausedTicks = 0;
 }
 
-void Timer::togglePause()
+void Timer::TogglePause()
 {
 	if (state == Paused)
-		unpause();
+		UnPause();
 	else if (state == Running)
-		pause();
+		Pause();
 }
 
-unsigned int Timer::getTimerTicks() const
+unsigned int Timer::GetTimerTicks() const
 {
 	switch (state)
 	{
@@ -112,17 +112,17 @@ unsigned int Timer::getTimerTicks() const
 	}
 }
 
-float Timer::getTimerSeconds() const
+float Timer::GetTimerSeconds() const
 {
-	return (float)getTimerTicks() / 1000.0f;
+	return (float)GetTimerTicks() / 1000.0f;
 }
 
-bool Timer::isRunning() const
+bool Timer::IsRunning() const
 {
 	return state == Running;
 }
 
-bool Timer::isPaused() const
+bool Timer::IsPaused() const
 {
 	return state == Paused;
 }

@@ -2,27 +2,27 @@
 #include <fstream>
 #include <sstream>
 
-string AndUtility::loadTextFromFile(const char* filepath)
+string AndUtility::LoadTextFromFile(const char* filepath)
 {
 	bool success = false;
-	string file = internalTryLoadTextFromFile(filepath, success);
+	string file = InternalTryLoadTextFromFile(filepath, success);
 	if (!success)
 		throw (string)"Unable to load text file from path: " + filepath;
 
 	return file;
 }
 
-string AndUtility::tryLoadTextFromFile(const char* filepath)
+string AndUtility::TryLoadTextFromFile(const char* filepath)
 {
 	bool success = false;
-	string file = internalTryLoadTextFromFile(filepath, success);
+	string file = InternalTryLoadTextFromFile(filepath, success);
 	if (!success)
 		printf("Warning: Unable to load text file from path: %s", filepath);
 
 	return file;
 }
 
-string AndUtility::internalTryLoadTextFromFile(const char* filepath, bool& success)
+string AndUtility::InternalTryLoadTextFromFile(const char* filepath, bool& success)
 {
 	ifstream inputStream(filepath, ios::in | ios::binary);
 	

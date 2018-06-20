@@ -5,9 +5,9 @@ using namespace std;
 class AndUtility
 {
 private:
-	static string internalTryLoadTextFromFile(const char* filepath, bool& success);
+	static string InternalTryLoadTextFromFile(const char* filepath, bool& success);
 
 public:
-	static string loadTextFromFile(const char* filepath);
-	static string tryLoadTextFromFile(const char* filepath);
+	static string LoadTextFromFile(const char* filepath);
+	static string TryLoadTextFromFile(const char* filepath);
 };

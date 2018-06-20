@@ -14,27 +14,27 @@ private:
 	unsigned int ticks = 0;
 	unsigned int pausedTicks = 0;
 
-	void calculatePausedTicks();
-	void resetStartingTicks();
+	void CalculatePausedTicks();
+	void ResetStartingTicks();
 
 public:
-	static void init();
-	static void update();
-	static void close();
+	static void Init();
+	static void Update();
+	static void Close();
 
-	static float getDeltaTime();
-	static float getFramesPerSecond();
-	static float getSeconds();
+	static float GetDeltaTime();
+	static float GetFramesPerSecond();
+	static float GetSeconds();
 
-	void start();
-	void stop();
+	void Start();
+	void Stop();
 
-	void pause();
-	void unpause();
-	void togglePause();
+	void Pause();
+	void UnPause();
+	void TogglePause();
 
-	unsigned int getTimerTicks() const;
-	float getTimerSeconds() const;
-	bool isRunning() const;
-	bool isPaused() const;
+	unsigned int GetTimerTicks() const;
+	float GetTimerSeconds() const;
+	bool IsRunning() const;
+	bool IsPaused() const;
 };

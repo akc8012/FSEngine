@@ -5,6 +5,7 @@ class Window
 {
 private:
 	static const int StartWidth = 800, StartHeight = 600;
+	
 	SDL_Window* window;
 
 	SDL_Window* createWindow(int width = StartWidth, int height = StartHeight);
@@ -15,10 +16,10 @@ public:
 
 	SDL_Window* get();
 
-	void toggleFullscreen();
-	void setWindowed();
-	void setFullscreen();
-	void setResolution(int width, int height);
+	void ToggleFullscreen();
+	void SetWindowed();
+	void SetFullscreen();
+	void SetResolution(int width, int height);
 
 	~Window();
 };

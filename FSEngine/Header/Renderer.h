@@ -29,31 +29,31 @@ private:
 		int offset;
 	};
 
-	SDL_GLContext createContext(SDL_Window* window);
-	void initOpenGl();
-	void initGlew();
+	SDL_GLContext CreateContext(SDL_Window* window);
+	void InitOpenGl();
+	void InitGlew();
 
-	unsigned int createVertexArray();
-	void sendVertices(unsigned int vertexBufferId);
-	void sendIndices(unsigned int elementBufferId);
+	unsigned int CreateVertexArray();
+	void SendVertices(unsigned int vertexBufferId);
+	void SendIndices(unsigned int elementBufferId);
 
-	void sendPositionAttribute();
-	void sendTextureAttribute();
-	void sendVertexAttribute(const VertexAttribute& attribute);
+	void SendPositionAttribute();
+	void SendTextureAttribute();
+	void SendVertexAttribute(const VertexAttribute& attribute);
 
-	void clearScreen();
-	void bindTextures();
-	void drawTriangles();
+	void ClearScreen();
+	void BindTextures();
+	void DrawTriangles();
 
-	void setModelMatrix();
-	void setViewMatrix();
-	void setProjectionMatrix(SDL_Window* window);
-	void setFragmentMixUniforms();
+	void SetModelMatrix();
+	void SetViewMatrix();
+	void SetProjectionMatrix(SDL_Window* window);
+	void SetFragmentMixUniforms();
 
 public:
 	Renderer(SDL_Window* window);
 	~Renderer();
 
-	void render(SDL_Window* window);
-	void recompileShaders();
+	void Render(SDL_Window* window);
+	void RecompileShaders();
 };

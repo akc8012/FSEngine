@@ -9,20 +9,20 @@ using namespace std;
 
 Renderer::Renderer(SDL_Window* window)
 {
-	context = createContext(window);
-	initOpenGl();
-	initGlew();
+	context = CreateContext(window);
+	InitOpenGl();
+	InitGlew();
 
 	shaderProgram = new ShaderProgram();
-	vertexArrayId = createVertexArray();
+	vertexArrayId = CreateVertexArray();
 
-	setFragmentMixUniforms();
+	SetFragmentMixUniforms();
 
 	brickTexture = new Texture("Resource/Image/wall.png");
 	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
 }
 
-SDL_GLContext Renderer::createContext(SDL_Window* window)
+SDL_GLContext Renderer::CreateContext(SDL_Window* window)
 {
 	SDL_GL_DeleteContext(context);
 	context = SDL_GL_CreateContext(window);
@@ -32,7 +32,7 @@ SDL_GLContext Renderer::createContext(SDL_Window* window)
 	return context;
 }
 
-void Renderer::initOpenGl()
+void Renderer::InitOpenGl()
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -45,7 +45,7 @@ void Renderer::initOpenGl()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void Renderer::initGlew()
+void Renderer::InitGlew()
 {
 	glewExperimental = GL_TRUE;
 	unsigned int glewError = glewInit();
@@ -53,7 +53,7 @@ void Renderer::initGlew()
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 }
 
-unsigned int Renderer::createVertexArray()
+unsigned int Renderer::CreateVertexArray()
 {
 	unsigned int vertexBufferId, elementBufferId;
 	const int Amount = 1;
@@ -63,8 +63,8 @@ unsigned int Renderer::createVertexArray()
 
 	glBindVertexArray(vertexArrayId);
 
-	sendVertices(vertexBufferId);
-	sendIndices(elementBufferId);
+	SendVertices(vertexBufferId);
+	SendIndices(elementBufferId);
 
 	glBindBuffer(GL_ARRAY_BUFFER, NULL);
 	glBindVertexArray(NULL);
@@ -75,7 +75,7 @@ unsigned int Renderer::createVertexArray()
 	return vertexArrayId;
 }
 
-void Renderer::sendVertices(unsigned int vertexBufferId)
+void Renderer::SendVertices(unsigned int vertexBufferId)
 {
 	float vertices[] =
 	{
@@ -126,11 +126,11 @@ void Renderer::sendVertices(unsigned int vertexBufferId)
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	sendPositionAttribute();
-	sendTextureAttribute();
+	SendPositionAttribute();
+	SendTextureAttribute();
 }
 
-void Renderer::sendPositionAttribute()
+void Renderer::SendPositionAttribute()
 {
 	VertexAttribute positionAttribute;
 	positionAttribute.location = 0;
@@ -138,10 +138,10 @@ void Renderer::sendPositionAttribute()
 	positionAttribute.stride = 5;
 	positionAttribute.offset = 0;
 
-	sendVertexAttribute(positionAttribute);
+	SendVertexAttribute(positionAttribute);
 }
 
-void Renderer::sendTextureAttribute()
+void Renderer::SendTextureAttribute()
 {
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 1;
@@ -149,16 +149,16 @@ void Renderer::sendTextureAttribute()
 	textureAttribute.stride = 5;
 	textureAttribute.offset = 3;
 
-	sendVertexAttribute(textureAttribute);
+	SendVertexAttribute(textureAttribute);
 }
 
-void Renderer::sendVertexAttribute(const VertexAttribute& attribute)
+void Renderer::SendVertexAttribute(const VertexAttribute& attribute)
 {
 	glVertexAttribPointer(attribute.location, attribute.size, GL_FLOAT, attribute.normalize, attribute.stride * sizeof(float), (void*)(attribute.offset * sizeof(float)));
 	glEnableVertexAttribArray(attribute.location);
 }
 
-void Renderer::sendIndices(unsigned int elementBufferId)
+void Renderer::SendIndices(unsigned int elementBufferId)
 {
 	unsigned int indices[] = {
 		0, 1, 3,   // first triangle
@@ -169,68 +169,68 @@ void Renderer::sendIndices(unsigned int elementBufferId)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
-void Renderer::setFragmentMixUniforms()
+void Renderer::SetFragmentMixUniforms()
 {
-	shaderProgram->use();
+	shaderProgram->Use();
 
 	int uniformValue = 0;
-	shaderProgram->setInt("texture1", uniformValue);
-	shaderProgram->setInt("texture2", uniformValue+1);
+	shaderProgram->SetInt("texture1", uniformValue);
+	shaderProgram->SetInt("texture2", uniformValue+1);
 }
 
-void Renderer::render(SDL_Window* window)
+void Renderer::Render(SDL_Window* window)
 {
-	clearScreen();
+	ClearScreen();
 
-	shaderProgram->use();
-	bindTextures();
+	shaderProgram->Use();
+	BindTextures();
 	glBindVertexArray(vertexArrayId);
 
-	setModelMatrix();
-	setViewMatrix();
-	setProjectionMatrix(window);
+	SetModelMatrix();
+	SetViewMatrix();
+	SetProjectionMatrix(window);
 
-	drawTriangles();
+	DrawTriangles();
 
 	SDL_GL_SwapWindow(window);
 }
 
-void Renderer::clearScreen()
+void Renderer::ClearScreen()
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::bindTextures()
+void Renderer::BindTextures()
 {
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, brickTexture->getId());
+	glBindTexture(GL_TEXTURE_2D, brickTexture->GetId());
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->getId());
+	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->GetId());
 }
 
-void Renderer::setModelMatrix()
+void Renderer::SetModelMatrix()
 {
-	float angle = Timer::getSeconds() * radians(50.0f);
+	float angle = Timer::GetSeconds() * radians(50.0f);
 	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
 	mat4 transform = rotate(mat4(1.0f), angle, Axis);
 
-	shaderProgram->setMatrix("model", transform);
+	shaderProgram->SetMatrix("model", transform);
 }
 
-void Renderer::setViewMatrix()
+void Renderer::SetViewMatrix()
 {
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::getHorizontalAxis() * Timer::getDeltaTime();
-	cameraPosition += -Input::getVerticalAxis() * forwardVector * Timer::getDeltaTime();
+	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::GetHorizontalAxis() * Timer::GetDeltaTime();
+	cameraPosition += -Input::GetVerticalAxis() * forwardVector * Timer::GetDeltaTime();
 
 	mat4 view = lookAt(cameraPosition, cameraPosition + forwardVector, upVector);
-	shaderProgram->setMatrix("view", view);
+	shaderProgram->SetMatrix("view", view);
 }
 
-void Renderer::setProjectionMatrix(SDL_Window* window)
+void Renderer::SetProjectionMatrix(SDL_Window* window)
 {
 	const float FieldOfView = radians(45.0f);
 	int width, height;
@@ -240,19 +240,19 @@ void Renderer::setProjectionMatrix(SDL_Window* window)
 	const float FarPlane = 100.0f;
 	mat4 projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
 
-	shaderProgram->setMatrix("projection", projectionMatrix);
+	shaderProgram->SetMatrix("projection", projectionMatrix);
 }
 
-void Renderer::drawTriangles()
+void Renderer::DrawTriangles()
 {
 	const int First = 0, Count = 36;
 	glDrawArrays(GL_TRIANGLES, 0, Count);
 }
 
-void Renderer::recompileShaders()
+void Renderer::RecompileShaders()
 {
-	shaderProgram->createShaders();
-	setFragmentMixUniforms();
+	shaderProgram->CreateShaders();
+	SetFragmentMixUniforms();
 }
 
 Renderer::~Renderer()

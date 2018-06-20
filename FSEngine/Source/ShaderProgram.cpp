@@ -9,24 +9,24 @@ using namespace std;
 ShaderProgram::ShaderProgram()
 {
 	shaderProgramId = glCreateProgram();
-	createShaders();
+	CreateShaders();
 }
 
-void ShaderProgram::createShaders()
+void ShaderProgram::CreateShaders()
 {
-	unsigned int vertexShaderId = createVertexShader();
+	unsigned int vertexShaderId = CreateVertexShader();
 	glAttachShader(shaderProgramId, vertexShaderId);
 
-	unsigned int fragmentShaderId = createFragmentShader();
+	unsigned int fragmentShaderId = CreateFragmentShader();
 	glAttachShader(shaderProgramId, fragmentShaderId);
 
-	linkShaderProgram(vertexShaderId, fragmentShaderId);
+	LinkShaderProgram(vertexShaderId, fragmentShaderId);
 
 	glDeleteShader(vertexShaderId);
 	glDeleteShader(fragmentShaderId);
 }
 
-unsigned int ShaderProgram::createVertexShader()
+unsigned int ShaderProgram::CreateVertexShader()
 {
 	char vertexShaderFallbackSource[] = {
 		"#version 330 core\n"
@@ -37,10 +37,10 @@ unsigned int ShaderProgram::createVertexShader()
 		"}\n"
 	};
 
-	return createShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.shader", vertexShaderFallbackSource);
+	return CreateShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.shader", vertexShaderFallbackSource);
 }
 
-unsigned int ShaderProgram::createFragmentShader()
+unsigned int ShaderProgram::CreateFragmentShader()
 {
 	char fragmentShaderFallbackSource[] = {
 		"#version 330 core\n"
@@ -51,22 +51,22 @@ unsigned int ShaderProgram::createFragmentShader()
 		"}\n"
 	};
 
-	return createShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMixShader.shader", fragmentShaderFallbackSource);
+	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMixShader.shader", fragmentShaderFallbackSource);
 }
 
-unsigned int ShaderProgram::createShaderFromFilepath(unsigned int type, const char* filepath, const char* fallbackSource)
+unsigned int ShaderProgram::CreateShaderFromFilepath(unsigned int type, const char* filepath, const char* fallbackSource)
 {
-	int shaderId = tryCompileShaderSource(type, AndUtility::loadTextFromFile(filepath).c_str());
+	int shaderId = TryCompileShaderSource(type, AndUtility::LoadTextFromFile(filepath).c_str());
 	if (shaderId == -1)
 	{
-		shaderId = tryCompileShaderSource(type, fallbackSource);
-		printf("Using fallback %s shader\n", getShaderTypeText(type).c_str());
+		shaderId = TryCompileShaderSource(type, fallbackSource);
+		printf("Using fallback %s shader\n", GetShaderTypeText(type).c_str());
 	}
 
 	return shaderId;
 }
 
-int ShaderProgram::tryCompileShaderSource(unsigned int type, const char* source)
+int ShaderProgram::TryCompileShaderSource(unsigned int type, const char* source)
 {
 	unsigned int shaderId = glCreateShader(type);
 	glShaderSource(shaderId, 1, &source, NULL);
@@ -78,14 +78,14 @@ int ShaderProgram::tryCompileShaderSource(unsigned int type, const char* source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		printf("Warning: Unable to compile %s shader: %s\n", getShaderTypeText(type).c_str(), infoLog);
+		printf("Warning: Unable to compile %s shader: %s\n", GetShaderTypeText(type).c_str(), infoLog);
 		return -1;
 	}
 
 	return shaderId;
 }
 
-void ShaderProgram::linkShaderProgram(const unsigned int vertexShaderId, const unsigned int fragmentShaderId)
+void ShaderProgram::LinkShaderProgram(const unsigned int vertexShaderId, const unsigned int fragmentShaderId)
 {
 	glLinkProgram(shaderProgramId);
 
@@ -102,28 +102,28 @@ void ShaderProgram::linkShaderProgram(const unsigned int vertexShaderId, const u
 	}
 }
 
-string ShaderProgram::getShaderTypeText(unsigned int type)
+string ShaderProgram::GetShaderTypeText(unsigned int type)
 {
 	return (string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
 }
 
-unsigned int ShaderProgram::getId()
+unsigned int ShaderProgram::GetId()
 {
 	return shaderProgramId;
 }
 
-void ShaderProgram::use()
+void ShaderProgram::Use()
 {
 	glUseProgram(shaderProgramId);
 }
 
-void ShaderProgram::setBool(const char* name, bool value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), (int)value); }
+void ShaderProgram::SetBool(const char* name, bool value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), (int)value); }
 
-void ShaderProgram::setInt(const char* name, int value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), value); }
+void ShaderProgram::SetInt(const char* name, int value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), value); }
 
-void ShaderProgram::setFloat(const char* name, float value) const { glUniform1f(glGetUniformLocation(shaderProgramId, name), value); }
+void ShaderProgram::SetFloat(const char* name, float value) const { glUniform1f(glGetUniformLocation(shaderProgramId, name), value); }
 
-void ShaderProgram::setMatrix(const char* name, mat4 value) const
+void ShaderProgram::SetMatrix(const char* name, mat4 value) const
 {
 	const int Count = 1;
 	const bool Transpose = false;

@@ -32,18 +32,18 @@ SDL_Window* Window::createWindow(int width, int height)
 	return window;
 }
 
-void Window::toggleFullscreen()
+void Window::ToggleFullscreen()
 {
-	SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN ? setWindowed() : setFullscreen();
+	SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN ? SetWindowed() : SetFullscreen();
 }
 
-void Window::setWindowed()
+void Window::SetWindowed()
 {
 	SDL_SetWindowSize(window, StartWidth, StartHeight);
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
 }
 
-void Window::setFullscreen()
+void Window::SetFullscreen()
 {
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -52,7 +52,7 @@ void Window::setFullscreen()
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 }
 
-void Window::setResolution(int width, int height)
+void Window::SetResolution(int width, int height)
 {
 	const int PositionX = 0, PositionY = PositionX;
 	glViewport(PositionX, PositionY, width, height);

@@ -3,17 +3,17 @@
 int main(int argc, char* args[])
 {
 	Engine* engine = new Engine();
-	if (!engine->init())
+	if (!engine->Init())
 	{
 		delete engine;
 		return -1;
 	}
 
-	while (engine->isRunning())
+	while (engine->IsRunning())
 	{
-		engine->pollEvents();
-		engine->update();
-		engine->draw();
+		engine->PollEvents();
+		engine->Update();
+		engine->Draw();
 	}
 
 	delete engine;

@@ -4,12 +4,12 @@
 #include <string>
 using namespace std;
 
-bool Engine::isRunning()
+bool Engine::IsRunning()
 {
 	return running;
 }
 
-bool Engine::init()
+bool Engine::Init()
 {
 	try
 	{
@@ -21,7 +21,7 @@ bool Engine::init()
 
 		window = new Window();
 		renderer = new Renderer(window->get());
-		Timer::init();
+		Timer::Init();
 	}
 	catch (string errorMessage)
 	{
@@ -36,7 +36,7 @@ bool Engine::init()
 	return running;
 }
 
-void Engine::pollEvents()
+void Engine::PollEvents()
 {
 	SDL_Event sdlEvent;
 	while (SDL_PollEvent(&sdlEvent) != NULL)
@@ -49,39 +49,39 @@ void Engine::pollEvents()
 			break;
 
 			case SDL_KEYDOWN:
-				handleKeyboardEvent(sdlEvent.key);
+				HandleKeyboardEvent(sdlEvent.key);
 
 				if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
 					running = false;
 			break;
 
 			case SDL_WINDOWEVENT:
-				handleWindowEvent(sdlEvent.window);
+				HandleWindowEvent(sdlEvent.window);
 			break;
 		}
 	}
 }
 
-void Engine::handleWindowEvent(const SDL_WindowEvent& windowEvent)
+void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
 	switch (windowEvent.event)
 	{
 		case SDL_WINDOWEVENT_SIZE_CHANGED:
 			int width, height;
 			SDL_GetWindowSize(window->get(), &width, &height);
-			window->setResolution(width, height);
+			window->SetResolution(width, height);
 		break;
 	}
 }
 
-void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
+void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 {
 	switch (keyboardEvent.keysym.sym)
 	{
 		case SDLK_x:
 			try
 			{
-				renderer->recompileShaders();
+				renderer->RecompileShaders();
 				printf("Rebuilt shader program\n");
 			}
 			catch (string errorMessage)
@@ -92,27 +92,27 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 
 		case SDLK_F11:
 		case SDLK_F12:
-			window->toggleFullscreen();
+			window->ToggleFullscreen();
 		break;
 	}
 }
 
-void Engine::update()
+void Engine::Update()
 {
 	//printf("%f\n", Timer::getFramesPerSecond());
 
-	Timer::update();
+	Timer::Update();
 }
 
-void Engine::draw()
+void Engine::Draw()
 {
-	renderer->render(window->get());
+	renderer->Render(window->get());
 }
 
 //to-do: fix hanging here
 Engine::~Engine()
 {
-	Timer::close();
+	Timer::Close();
 	delete renderer;
 	delete window;
 

@@ -4,10 +4,10 @@
 class Input
 {
 private:
-	static float getAnalogAxis(SDL_GameControllerAxis axis);
-	static float getDigitalAxis(SDL_Scancode positiveInput, SDL_Scancode negativeInput);
+	static float GetAnalogAxis(SDL_GameControllerAxis axis);
+	static float GetDigitalAxis(SDL_Scancode positiveInput, SDL_Scancode negativeInput);
 
 public:
-	static float getHorizontalAxis();
-	static float getVerticalAxis();
+	static float GetHorizontalAxis();
+	static float GetVerticalAxis();
 };

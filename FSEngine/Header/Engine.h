@@ -11,16 +11,16 @@ private:
 	Window* window = NULL;
 	Renderer* renderer = NULL;
 
-	void handleWindowEvent(const SDL_WindowEvent& windowEvent);
-	void handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
+	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);
+	void HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 
 public:
 	~Engine();
 
-	bool isRunning();
-	bool init();
+	bool IsRunning();
+	bool Init();
 
-	void pollEvents();
-	void update();
-	void draw();
+	void PollEvents();
+	void Update();
+	void Draw();
 };
