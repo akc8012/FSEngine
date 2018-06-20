@@ -38,9 +38,9 @@ void Renderer::initOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	const int AdaptiveVsync = -1;
-	if (SDL_GL_SetSwapInterval(AdaptiveVsync) != 0)
-		throw (string)"Error: Unable to set Adaptive VSync! SDL Error: " + SDL_GetError();
+	const int VSyncOn = 0;
+	if (SDL_GL_SetSwapInterval(VSyncOn) != 0)
+		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
 
 	glEnable(GL_DEPTH_TEST);
 }

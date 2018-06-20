@@ -4,6 +4,11 @@
 #include <string>
 using namespace std;
 
+bool Engine::isRunning()
+{
+	return running;
+}
+
 bool Engine::init()
 {
 	try
@@ -26,7 +31,35 @@ bool Engine::init()
 	}
 
 	printf("Success\n");
-	return true;
+
+	running = true;
+	return running;
+}
+
+void Engine::pollEvents()
+{
+	SDL_Event sdlEvent;
+	while (SDL_PollEvent(&sdlEvent) != NULL)
+	{
+		switch (sdlEvent.type)
+		{
+			//to-do: fix console window persisting on quit
+			case SDL_QUIT:
+				running = false;
+			break;
+
+			case SDL_KEYDOWN:
+				handleKeyboardEvent(sdlEvent.key);
+
+				if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
+					running = false;
+			break;
+
+			case SDL_WINDOWEVENT:
+				handleWindowEvent(sdlEvent.window);
+			break;
+		}
+	}
 }
 
 void Engine::handleWindowEvent(const SDL_WindowEvent& windowEvent)
@@ -64,17 +97,11 @@ void Engine::handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 	}
 }
 
-void Engine::run()
-{
-	update();
-	draw();
-
-	Timer::update();
-}
-
 void Engine::update()
 {
 	//printf("%f\n", Timer::getFramesPerSecond());
+
+	Timer::update();
 }
 
 void Engine::draw()
@@ -91,4 +118,6 @@ Engine::~Engine()
 
 	IMG_Quit();
 	SDL_Quit();
+
+	running = false;
 }

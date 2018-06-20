@@ -6,19 +6,21 @@
 class Engine
 {
 private:
+	bool running = false;
+
 	Window* window = NULL;
 	Renderer* renderer = NULL;
-
-	void draw();
-	void update();
-
-public:
-	~Engine();
-
-	bool init();
 
 	void handleWindowEvent(const SDL_WindowEvent& windowEvent);
 	void handleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 
-	void run();
+public:
+	~Engine();
+
+	bool isRunning();
+	bool init();
+
+	void pollEvents();
+	void update();
+	void draw();
 };
