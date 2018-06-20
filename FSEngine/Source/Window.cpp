@@ -7,20 +7,20 @@ using namespace std;
 
 Window::Window()
 {
-	window = createWindow();
+	window = CreateWindow();
 }
 
 Window::Window(int width, int height)
 {
-	window = createWindow(width, height);
+	window = CreateWindow(width, height);
 }
 
-SDL_Window* Window::get()
+SDL_Window* Window::Get()
 {
 	return window;
 }
 
-SDL_Window* Window::createWindow(int width, int height)
+SDL_Window* Window::CreateWindow(int width, int height)
 {
 	if (window != NULL)
 		SDL_DestroyWindow(window);

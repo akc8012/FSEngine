@@ -7,50 +7,15 @@
 #include <string>
 using namespace std;
 
-Renderer::Renderer(SDL_Window* window)
+Renderer::Renderer(ShaderProgram* shaderProgram)
 {
-	context = CreateContext(window);
-	InitOpenGl();
-	InitGlew();
-
-	shaderProgram = new ShaderProgram();
+	this->shaderProgram = shaderProgram;
 	vertexArrayId = CreateVertexArray();
 
 	SetFragmentMixUniforms();
 
 	brickTexture = new Texture("Resource/Image/wall.png");
 	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
-}
-
-SDL_GLContext Renderer::CreateContext(SDL_Window* window)
-{
-	SDL_GL_DeleteContext(context);
-	context = SDL_GL_CreateContext(window);
-	if (context == NULL)
-		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
-
-	return context;
-}
-
-void Renderer::InitOpenGl()
-{
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-	const int VSyncOn = 0;
-	if (SDL_GL_SetSwapInterval(VSyncOn) != 0)
-		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
-
-	glEnable(GL_DEPTH_TEST);
-}
-
-void Renderer::InitGlew()
-{
-	glewExperimental = GL_TRUE;
-	unsigned int glewError = glewInit();
-	if (glewError != GLEW_OK)
-		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 }
 
 unsigned int Renderer::CreateVertexArray()
@@ -259,9 +224,7 @@ Renderer::~Renderer()
 {
 	delete brickTexture;
 	delete awesomefaceTexture;
-	delete shaderProgram;
 
 	const int Amount = 1;
 	glDeleteVertexArrays(Amount, &vertexArrayId);
-	SDL_GL_DeleteContext(context);
 }

@@ -11,7 +11,6 @@ using namespace glm;
 class Renderer
 {
 private:
-	SDL_GLContext context;
 	ShaderProgram* shaderProgram = NULL;
 	unsigned int vertexArrayId = 0;
 
@@ -28,10 +27,6 @@ private:
 		int stride;
 		int offset;
 	};
-
-	SDL_GLContext CreateContext(SDL_Window* window);
-	void InitOpenGl();
-	void InitGlew();
 
 	unsigned int CreateVertexArray();
 	void SendVertices(unsigned int vertexBufferId);
@@ -51,7 +46,7 @@ private:
 	void SetFragmentMixUniforms();
 
 public:
-	Renderer(SDL_Window* window);
+	Renderer(ShaderProgram* shaderProgram);
 	~Renderer();
 
 	void Render(SDL_Window* window);

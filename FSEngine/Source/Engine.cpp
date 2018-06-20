@@ -1,6 +1,9 @@
 #include "../Header/Engine.h"
 #include "../Header/Timer.h"
 #include <SDL_image.h>
+#include <GL\glew.h>
+#include <SDL_opengl.h>
+#include <GL\GLU.h>
 #include <string>
 using namespace std;
 
@@ -13,14 +16,16 @@ bool Engine::Init()
 {
 	try
 	{
-		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0)
-			throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
-
-		if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
-			throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
+		InitSDL();
 
 		window = new Window();
-		renderer = new Renderer(window->get());
+		CreateContext();
+
+		InitOpenGl();
+		InitGlew();
+
+		shaderProgram = new ShaderProgram();
+		renderer = new Renderer(shaderProgram);
 	}
 	catch (string errorMessage)
 	{
@@ -33,6 +38,44 @@ bool Engine::Init()
 
 	running = true;
 	return running;
+}
+
+void Engine::InitSDL()
+{
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0)
+		throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
+
+	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
+}
+
+void Engine::CreateContext()
+{
+	SDL_GL_DeleteContext(context);
+	context = SDL_GL_CreateContext(window->Get());
+	if (context == NULL)
+		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
+}
+
+void Engine::InitOpenGl()
+{
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	const int VSyncOn = 0;
+	if (SDL_GL_SetSwapInterval(VSyncOn) != 0)
+		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
+
+	glEnable(GL_DEPTH_TEST);
+}
+
+void Engine::InitGlew()
+{
+	glewExperimental = GL_TRUE;
+	unsigned int glewError = glewInit();
+	if (glewError != GLEW_OK)
+		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 }
 
 void Engine::PollEvents()
@@ -67,7 +110,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	{
 		case SDL_WINDOWEVENT_SIZE_CHANGED:
 			int width, height;
-			SDL_GetWindowSize(window->get(), &width, &height);
+			SDL_GetWindowSize(window->Get(), &width, &height);
 			window->SetResolution(width, height);
 		break;
 	}
@@ -98,17 +141,19 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 
 void Engine::Update()
 {
-	//printf("%f\n", Timer::getFramesPerSecond());
+	//to-do: update timer object here, let other objects use it for delta time
 }
 
 void Engine::Draw()
 {
-	renderer->Render(window->get());
+	renderer->Render(window->Get());
 }
 
 Engine::~Engine()
 {
 	delete renderer;
+	delete shaderProgram;
+	SDL_GL_DeleteContext(context);
 	delete window;
 
 	IMG_Quit();

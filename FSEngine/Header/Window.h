@@ -8,13 +8,13 @@ private:
 	
 	SDL_Window* window;
 
-	SDL_Window* createWindow(int width = StartWidth, int height = StartHeight);
+	SDL_Window* CreateWindow(int width = StartWidth, int height = StartHeight);
 
 public:
 	Window();
 	Window(int width, int height);
 
-	SDL_Window* get();
+	SDL_Window* Get();
 
 	void ToggleFullscreen();
 	void SetWindowed();
