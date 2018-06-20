@@ -21,7 +21,6 @@ bool Engine::Init()
 
 		window = new Window();
 		renderer = new Renderer(window->get());
-		Timer::Init();
 	}
 	catch (string errorMessage)
 	{
@@ -100,8 +99,6 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 void Engine::Update()
 {
 	//printf("%f\n", Timer::getFramesPerSecond());
-
-	Timer::Update();
 }
 
 void Engine::Draw()
@@ -109,10 +106,8 @@ void Engine::Draw()
 	renderer->Render(window->get());
 }
 
-//to-do: fix hanging here
 Engine::~Engine()
 {
-	Timer::Close();
 	delete renderer;
 	delete window;
 

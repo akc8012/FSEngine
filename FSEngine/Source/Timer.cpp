@@ -1,46 +1,10 @@
 #include "../Header/Timer.h"
-#include <stdio.h>
-
-#pragma region Static Methods
-float Timer::lastTime = 0.0f;
-unsigned int Timer::countedFrames = 0;
-Timer* Timer::frameRateTimer = NULL;
-
-void Timer::Init()
-{
-	frameRateTimer = new Timer();
-	frameRateTimer->Start();
-}
-
-float Timer::GetDeltaTime()
-{
-	float currentTime = GetSeconds();
-	return currentTime - lastTime;
-}
-
-float Timer::GetFramesPerSecond()
-{
-	return (float)countedFrames / (frameRateTimer->GetTimerSeconds());
-}
-
-void Timer::Update()
-{
-	lastTime = GetSeconds();
-	countedFrames++;
-}
 
 float Timer::GetSeconds()
 {
 	return (float)SDL_GetTicks() / 1000.0f;
 }
 
-void Timer::Close()
-{
-	delete frameRateTimer;
-}
-#pragma endregion
-
-#pragma region Member Methods
 void Timer::Start()
 {
 	state = Running;
@@ -126,4 +90,3 @@ bool Timer::IsPaused() const
 {
 	return state == Paused;
 }
-#pragma endregion

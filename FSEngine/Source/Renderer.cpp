@@ -223,8 +223,8 @@ void Renderer::SetViewMatrix()
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::GetHorizontalAxis() * Timer::GetDeltaTime();
-	cameraPosition += -Input::GetVerticalAxis() * forwardVector * Timer::GetDeltaTime();
+	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::GetHorizontalAxis();
+	cameraPosition += -Input::GetVerticalAxis() * forwardVector;
 
 	mat4 view = lookAt(cameraPosition, cameraPosition + forwardVector, upVector);
 	shaderProgram->SetMatrix("view", view);

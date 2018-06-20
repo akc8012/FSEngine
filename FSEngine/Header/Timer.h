@@ -4,10 +4,6 @@
 class Timer
 {
 private:
-	static float lastTime;
-	static unsigned int countedFrames;
-	static Timer* frameRateTimer;
-
 	enum State { Stopped, Running, Paused };
 	State state = Stopped;
 
@@ -18,12 +14,6 @@ private:
 	void ResetStartingTicks();
 
 public:
-	static void Init();
-	static void Update();
-	static void Close();
-
-	static float GetDeltaTime();
-	static float GetFramesPerSecond();
 	static float GetSeconds();
 
 	void Start();
