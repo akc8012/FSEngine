@@ -2,12 +2,20 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 #include "Window.h"
+#include "Input.h"
+
 #include <SDL.h>
+#include <GL/glew.h>
+#include <SDL_opengl.h>
+#include <GL/GLU.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 using namespace glm;
+
+#include <string>
+using namespace std;
 
 class Renderer
 {

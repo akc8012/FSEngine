@@ -1,6 +1,4 @@
 #include "../Header/AndUtility.h"
-#include <fstream>
-#include <sstream>
 
 string AndUtility::LoadTextFromFile(const char* filepath)
 {

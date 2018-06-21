@@ -1,6 +1,9 @@
 #pragma once
 #include <SDL.h>
 
+#include <algorithm>
+using namespace std;
+
 class Input
 {
 private:

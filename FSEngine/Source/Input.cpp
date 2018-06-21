@@ -1,6 +1,4 @@
 #include "../Header/Input.h"
-#include <algorithm>
-using namespace std;
 
 float Input::GetHorizontalAxis()
 {

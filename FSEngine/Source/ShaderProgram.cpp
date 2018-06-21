@@ -1,10 +1,4 @@
 #include "../Header/ShaderProgram.h"
-#include "../Header/AndUtility.h"
-#include <SDL.h>
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-#include <GL\GLU.h>
-using namespace std;
 
 ShaderProgram::ShaderProgram()
 {

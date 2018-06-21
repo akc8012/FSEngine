@@ -2,7 +2,16 @@
 #include "Window.h"
 #include "ShaderProgram.h"
 #include "Renderer.h"
+#include "Timer.h"
+
 #include <SDL.h>
+#include <SDL_image.h>
+#include <GL\glew.h>
+#include <SDL_opengl.h>
+#include <GL\GLU.h>
+
+#include <string>
+using namespace std;
 
 class Engine
 {
