@@ -19,7 +19,6 @@ bool Engine::Init()
 		InitSDL();
 
 		window = new Window();
-		CreateContext();
 
 		InitOpenGl();
 		InitGlew();
@@ -47,14 +46,6 @@ void Engine::InitSDL()
 
 	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
 		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
-}
-
-void Engine::CreateContext()
-{
-	SDL_GL_DeleteContext(context);
-	context = SDL_GL_CreateContext(window->Get());
-	if (context == NULL)
-		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 }
 
 void Engine::InitOpenGl()
@@ -109,9 +100,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	switch (windowEvent.event)
 	{
 		case SDL_WINDOWEVENT_SIZE_CHANGED:
-			int width, height;
-			SDL_GetWindowSize(window->Get(), &width, &height);
-			window->SetResolution(width, height);
+			window->SetResolutionToWindowResolution();
 		break;
 	}
 }
@@ -146,14 +135,13 @@ void Engine::Update()
 
 void Engine::Draw()
 {
-	renderer->Render(window->Get());
+	renderer->Render(window);
 }
 
 Engine::~Engine()
 {
 	delete renderer;
 	delete shaderProgram;
-	SDL_GL_DeleteContext(context);
 	delete window;
 
 	IMG_Quit();

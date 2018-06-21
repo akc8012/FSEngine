@@ -7,20 +7,17 @@ using namespace std;
 
 Window::Window()
 {
-	window = CreateWindow();
+	CreateWindow();
+	CreateContext();
 }
 
 Window::Window(int width, int height)
 {
-	window = CreateWindow(width, height);
+	CreateWindow(width, height);
+	CreateContext();
 }
 
-SDL_Window* Window::Get()
-{
-	return window;
-}
-
-SDL_Window* Window::CreateWindow(int width, int height)
+void Window::CreateWindow(int width, int height)
 {
 	if (window != NULL)
 		SDL_DestroyWindow(window);
@@ -28,8 +25,14 @@ SDL_Window* Window::CreateWindow(int width, int height)
 	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	if (window == NULL)
 		throw (string)"Window could not be created: " + SDL_GetError();
+}
 
-	return window;
+void Window::CreateContext()
+{
+	SDL_GL_DeleteContext(context);
+	context = SDL_GL_CreateContext(window);
+	if (context == NULL)
+		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 }
 
 void Window::ToggleFullscreen()
@@ -52,13 +55,33 @@ void Window::SetFullscreen()
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 }
 
+void Window::SetResolutionToWindowResolution()
+{
+	int width, height;
+	SDL_GetWindowSize(window, &width, &height);
+	SetResolution(width, height);
+}
+
 void Window::SetResolution(int width, int height)
 {
 	const int PositionX = 0, PositionY = PositionX;
 	glViewport(PositionX, PositionY, width, height);
 }
 
+vec2 Window::GetWindowSize()
+{
+	int width, height;
+	SDL_GetWindowSize(window, &width, &height);
+	return vec2(width, height);
+}
+
+void Window::SwapWindow()
+{
+	SDL_GL_SwapWindow(window);
+}
+
 Window::~Window()
 {
+	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 }

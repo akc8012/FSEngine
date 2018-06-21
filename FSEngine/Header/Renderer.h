@@ -1,6 +1,7 @@
 #pragma once
 #include "ShaderProgram.h"
 #include "Texture.h"
+#include "Window.h"
 #include <SDL.h>
 
 #include <glm/glm.hpp>
@@ -28,7 +29,7 @@ private:
 		int offset;
 	};
 
-	unsigned int CreateVertexArray();
+	void CreateVertexArray();
 	void SendVertices(unsigned int vertexBufferId);
 	void SendIndices(unsigned int elementBufferId);
 
@@ -42,13 +43,13 @@ private:
 
 	void SetModelMatrix();
 	void SetViewMatrix();
-	void SetProjectionMatrix(SDL_Window* window);
+	void SetProjectionMatrix(vec2 windowSize);
 	void SetFragmentMixUniforms();
 
 public:
 	Renderer(ShaderProgram* shaderProgram);
 	~Renderer();
 
-	void Render(SDL_Window* window);
+	void Render(Window* window);
 	void RecompileShaders();
 };

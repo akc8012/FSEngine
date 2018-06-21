@@ -10,12 +10,10 @@ private:
 	bool running = false;
 
 	Window* window = NULL;
-	SDL_GLContext context;
 	ShaderProgram* shaderProgram = NULL;
 	Renderer* renderer = NULL;
 
 	void InitSDL();
-	void CreateContext();
 	void InitOpenGl();
 	void InitGlew();
 

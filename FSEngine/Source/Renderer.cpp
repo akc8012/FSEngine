@@ -1,24 +1,24 @@
 #include "../Header/Renderer.h"
 #include "../Header/Input.h"
 #include "../Header/Timer.h"
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include <SDL_opengl.h>
-#include <GL\GLU.h>
+#include <GL/GLU.h>
 #include <string>
 using namespace std;
 
 Renderer::Renderer(ShaderProgram* shaderProgram)
 {
 	this->shaderProgram = shaderProgram;
-	vertexArrayId = CreateVertexArray();
 
+	CreateVertexArray();
 	SetFragmentMixUniforms();
 
 	brickTexture = new Texture("Resource/Image/wall.png");
 	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
 }
 
-unsigned int Renderer::CreateVertexArray()
+void Renderer::CreateVertexArray()
 {
 	unsigned int vertexBufferId, elementBufferId;
 	const int Amount = 1;
@@ -36,8 +36,6 @@ unsigned int Renderer::CreateVertexArray()
 
 	glDeleteBuffers(Amount, &elementBufferId);
 	glDeleteBuffers(Amount, &vertexBufferId);
-
-	return vertexArrayId;
 }
 
 void Renderer::SendVertices(unsigned int vertexBufferId)
@@ -143,7 +141,7 @@ void Renderer::SetFragmentMixUniforms()
 	shaderProgram->SetInt("texture2", uniformValue+1);
 }
 
-void Renderer::Render(SDL_Window* window)
+void Renderer::Render(Window* window)
 {
 	ClearScreen();
 
@@ -153,11 +151,11 @@ void Renderer::Render(SDL_Window* window)
 
 	SetModelMatrix();
 	SetViewMatrix();
-	SetProjectionMatrix(window);
+	SetProjectionMatrix(window->GetWindowSize());
 
 	DrawTriangles();
 
-	SDL_GL_SwapWindow(window);
+	window->SwapWindow();
 }
 
 void Renderer::ClearScreen()
@@ -195,12 +193,10 @@ void Renderer::SetViewMatrix()
 	shaderProgram->SetMatrix("view", view);
 }
 
-void Renderer::SetProjectionMatrix(SDL_Window* window)
+void Renderer::SetProjectionMatrix(vec2 windowSize)
 {
 	const float FieldOfView = radians(45.0f);
-	int width, height;
-	SDL_GetWindowSize(window, &width, &height);
-	const float AspectRatio = (float)width / (float)height;
+	const float AspectRatio = (float)windowSize.x / (float)windowSize.y;
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 	mat4 projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
