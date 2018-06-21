@@ -13,7 +13,7 @@ Renderer::Renderer(ShaderProgram* shaderProgram)
 
 void Renderer::CreateVertexArray()
 {
-	unsigned int vertexBufferId, elementBufferId;
+	Uint32 vertexBufferId, elementBufferId;
 	const int Amount = 1;
 	glGenVertexArrays(Amount, &vertexArrayId);
 	glGenBuffers(Amount, &vertexBufferId);
@@ -31,7 +31,7 @@ void Renderer::CreateVertexArray()
 	glDeleteBuffers(Amount, &vertexBufferId);
 }
 
-void Renderer::SendVertices(unsigned int vertexBufferId)
+void Renderer::SendVertices(Uint32 vertexBufferId)
 {
 	float vertices[] =
 	{
@@ -114,9 +114,9 @@ void Renderer::SendVertexAttribute(const VertexAttribute& attribute)
 	glEnableVertexAttribArray(attribute.location);
 }
 
-void Renderer::SendIndices(unsigned int elementBufferId)
+void Renderer::SendIndices(Uint32 elementBufferId)
 {
-	unsigned int indices[] = {
+	Uint32 indices[] = {
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};

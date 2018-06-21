@@ -60,7 +60,7 @@ void Timer::TogglePause()
 		Pause();
 }
 
-unsigned int Timer::GetTimerTicks() const
+Uint32 Timer::GetTimerTicks() const
 {
 	switch (state)
 	{

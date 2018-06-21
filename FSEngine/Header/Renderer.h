@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Window.h"
 #include "Input.h"
+#include "Timer.h"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -21,7 +22,7 @@ class Renderer
 {
 private:
 	ShaderProgram* shaderProgram = NULL;
-	unsigned int vertexArrayId = 0;
+	Uint32 vertexArrayId = 0;
 
 	Texture* brickTexture = NULL;
 	Texture* awesomefaceTexture = NULL;
@@ -38,8 +39,8 @@ private:
 	};
 
 	void CreateVertexArray();
-	void SendVertices(unsigned int vertexBufferId);
-	void SendIndices(unsigned int elementBufferId);
+	void SendVertices(Uint32 vertexBufferId);
+	void SendIndices(Uint32 elementBufferId);
 
 	void SendPositionAttribute();
 	void SendTextureAttribute();

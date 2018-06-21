@@ -57,7 +57,7 @@ void Engine::InitOpenGl()
 void Engine::InitGlew()
 {
 	glewExperimental = GL_TRUE;
-	unsigned int glewError = glewInit();
+	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 }

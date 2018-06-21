@@ -17,16 +17,16 @@ using namespace std;
 class ShaderProgram
 {
 private:
-	unsigned int shaderProgramId = NULL;
+	Uint32 shaderProgramId = NULL;
 
-	unsigned int CreateVertexShader();
-	unsigned int CreateFragmentShader();
-	void LinkShaderProgram(const unsigned int vertexShaderId, const unsigned int fragmentShaderId);
+	Uint32 CreateVertexShader();
+	Uint32 CreateFragmentShader();
+	void LinkShaderProgram(const Uint32 vertexShaderId, const Uint32 fragmentShaderId);
 
-	unsigned int CreateShaderFromFilepath(unsigned int type, const char* filepath, const char* fallbackSource);
-	int TryCompileShaderSource(unsigned int type, const char* filepath);
+	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
+	int TryCompileShaderSource(Uint32 type, const char* filepath);
 	
-	static string GetShaderTypeText(unsigned int type);
+	static string GetShaderTypeText(Uint32 type);
 
 public:
 	ShaderProgram();
@@ -34,7 +34,7 @@ public:
 
 	void CreateShaders();
 	void Use();
-	unsigned int GetId();
+	Uint32 GetId();
 
 	void SetBool(const char* name, bool value) const;
 	void SetInt(const char* name, int value) const;

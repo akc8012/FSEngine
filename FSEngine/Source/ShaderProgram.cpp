@@ -8,10 +8,10 @@ ShaderProgram::ShaderProgram()
 
 void ShaderProgram::CreateShaders()
 {
-	unsigned int vertexShaderId = CreateVertexShader();
+	Uint32 vertexShaderId = CreateVertexShader();
 	glAttachShader(shaderProgramId, vertexShaderId);
 
-	unsigned int fragmentShaderId = CreateFragmentShader();
+	Uint32 fragmentShaderId = CreateFragmentShader();
 	glAttachShader(shaderProgramId, fragmentShaderId);
 
 	LinkShaderProgram(vertexShaderId, fragmentShaderId);
@@ -20,7 +20,7 @@ void ShaderProgram::CreateShaders()
 	glDeleteShader(fragmentShaderId);
 }
 
-unsigned int ShaderProgram::CreateVertexShader()
+Uint32 ShaderProgram::CreateVertexShader()
 {
 	char vertexShaderFallbackSource[] = {
 		"#version 330 core\n"
@@ -34,7 +34,7 @@ unsigned int ShaderProgram::CreateVertexShader()
 	return CreateShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.shader", vertexShaderFallbackSource);
 }
 
-unsigned int ShaderProgram::CreateFragmentShader()
+Uint32 ShaderProgram::CreateFragmentShader()
 {
 	char fragmentShaderFallbackSource[] = {
 		"#version 330 core\n"
@@ -48,7 +48,7 @@ unsigned int ShaderProgram::CreateFragmentShader()
 	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMixShader.shader", fragmentShaderFallbackSource);
 }
 
-unsigned int ShaderProgram::CreateShaderFromFilepath(unsigned int type, const char* filepath, const char* fallbackSource)
+Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource)
 {
 	int shaderId = TryCompileShaderSource(type, AndUtility::LoadTextFromFile(filepath).c_str());
 	if (shaderId == -1)
@@ -60,9 +60,9 @@ unsigned int ShaderProgram::CreateShaderFromFilepath(unsigned int type, const ch
 	return shaderId;
 }
 
-int ShaderProgram::TryCompileShaderSource(unsigned int type, const char* source)
+int ShaderProgram::TryCompileShaderSource(Uint32 type, const char* source)
 {
-	unsigned int shaderId = glCreateShader(type);
+	Uint32 shaderId = glCreateShader(type);
 	glShaderSource(shaderId, 1, &source, NULL);
 
 	int success;
@@ -79,7 +79,7 @@ int ShaderProgram::TryCompileShaderSource(unsigned int type, const char* source)
 	return shaderId;
 }
 
-void ShaderProgram::LinkShaderProgram(const unsigned int vertexShaderId, const unsigned int fragmentShaderId)
+void ShaderProgram::LinkShaderProgram(const Uint32 vertexShaderId, const Uint32 fragmentShaderId)
 {
 	glLinkProgram(shaderProgramId);
 
@@ -96,12 +96,12 @@ void ShaderProgram::LinkShaderProgram(const unsigned int vertexShaderId, const u
 	}
 }
 
-string ShaderProgram::GetShaderTypeText(unsigned int type)
+string ShaderProgram::GetShaderTypeText(Uint32 type)
 {
 	return (string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
 }
 
-unsigned int ShaderProgram::GetId()
+Uint32 ShaderProgram::GetId()
 {
 	return shaderProgramId;
 }
@@ -111,11 +111,20 @@ void ShaderProgram::Use()
 	glUseProgram(shaderProgramId);
 }
 
-void ShaderProgram::SetBool(const char* name, bool value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), (int)value); }
+void ShaderProgram::SetBool(const char* name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(shaderProgramId, name), (int)value);
+}
 
-void ShaderProgram::SetInt(const char* name, int value) const { glUniform1i(glGetUniformLocation(shaderProgramId, name), value); }
+void ShaderProgram::SetInt(const char* name, int value) const
+{
+	glUniform1i(glGetUniformLocation(shaderProgramId, name), value);
+}
 
-void ShaderProgram::SetFloat(const char* name, float value) const { glUniform1f(glGetUniformLocation(shaderProgramId, name), value); }
+void ShaderProgram::SetFloat(const char* name, float value) const
+{
+	glUniform1f(glGetUniformLocation(shaderProgramId, name), value);
+}
 
 void ShaderProgram::SetMatrix(const char* name, mat4 value) const
 {

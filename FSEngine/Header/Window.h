@@ -15,7 +15,7 @@ class Window
 private:
 	static const int StartWidth = 800, StartHeight = 600;
 
-	SDL_Window* window;
+	SDL_Window* window = NULL;
 	SDL_GLContext context;
 
 	void CreateWindow(int width = StartWidth, int height = StartHeight);

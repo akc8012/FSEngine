@@ -7,8 +7,8 @@ private:
 	enum State { Stopped, Running, Paused };
 	State state = Stopped;
 
-	unsigned int ticks = 0;
-	unsigned int pausedTicks = 0;
+	Uint32 ticks = 0;
+	Uint32 pausedTicks = 0;
 
 	void CalculatePausedTicks();
 	void ResetStartingTicks();
@@ -23,7 +23,7 @@ public:
 	void UnPause();
 	void TogglePause();
 
-	unsigned int GetTimerTicks() const;
+	Uint32 GetTimerTicks() const;
 	float GetTimerSeconds() const;
 	bool IsRunning() const;
 	bool IsPaused() const;

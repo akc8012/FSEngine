@@ -11,11 +11,11 @@ using namespace std;
 class Texture
 {
 private:
-	unsigned int textureId = NULL;
+	Uint32 textureId = NULL;
 
 public:
 	Texture(const char* filepath);
 	~Texture();
 
-	unsigned int GetId();
+	Uint32 GetId();
 };
