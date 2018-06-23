@@ -47,11 +47,15 @@ void Engine::InitOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	const int VSyncOn = 0;
-	if (SDL_GL_SetSwapInterval(VSyncOn) != 0)
-		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
-
+	const int AdaptiveVsync = -1;
+	SetSwapInterval(AdaptiveVsync);
 	glEnable(GL_DEPTH_TEST);
+}
+
+void Engine::SetSwapInterval(int interval)
+{
+	if (SDL_GL_SetSwapInterval(interval) != 0)
+		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
 }
 
 void Engine::InitGlew()
@@ -60,6 +64,22 @@ void Engine::InitGlew()
 	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
+}
+
+void Engine::GameLoop()
+{
+	CalculateDeltaTime();
+
+	PollEvents();
+	Update();
+	Draw();
+}
+
+void Engine::CalculateDeltaTime()
+{
+	Uint32 currentFrame = SDL_GetTicks();
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
 }
 
 void Engine::PollEvents()
@@ -88,6 +108,58 @@ void Engine::PollEvents()
 	}
 }
 
+void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
+{
+	switch (keyboardEvent.keysym.sym)
+	{
+	case SDLK_x:
+		try
+		{
+			renderer->RecompileShaders();
+			printf("Rebuilt shader program\n");
+		}
+		catch (string errorMessage)
+		{
+			printf("%s\n", errorMessage.c_str());
+		}
+		break;
+
+	case SDLK_F11:
+	case SDLK_F12:
+		window->ToggleFullscreen();
+		break;
+
+	case SDLK_f:
+		ToggleSwapInterval();
+		printf("Set swap interval to: %i\n", SDL_GL_GetSwapInterval());
+		break;
+	}
+}
+
+void Engine::ToggleSwapInterval()
+{
+	enum SwapIntervals { AdaptiveVsync = -1, VsyncOff, VsyncOn };
+	int currentSwapInterval = SDL_GL_GetSwapInterval();
+	int targetSwapInterval;
+
+	switch (currentSwapInterval)
+	{
+	case AdaptiveVsync:
+		targetSwapInterval = VsyncOff;
+		break;
+
+	case VsyncOff:
+		targetSwapInterval = VsyncOn;
+		break;
+
+	case VsyncOn:
+		targetSwapInterval = AdaptiveVsync;
+		break;
+	}
+
+	SetSwapInterval(targetSwapInterval);
+}
+
 void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
 	switch (windowEvent.event)
@@ -98,37 +170,14 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	}
 }
 
-void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
-{
-	switch (keyboardEvent.keysym.sym)
-	{
-		case SDLK_x:
-			try
-			{
-				renderer->RecompileShaders();
-				printf("Rebuilt shader program\n");
-			}
-			catch (string errorMessage)
-			{
-				printf("%s\n", errorMessage.c_str());
-			}
-		break;
-
-		case SDLK_F11:
-		case SDLK_F12:
-			window->ToggleFullscreen();
-		break;
-	}
-}
-
 void Engine::Update()
 {
-	//to-do: update timer object here, let other objects use it for delta time
+	
 }
 
 void Engine::Draw()
 {
-	renderer->Render(window);
+	renderer->Render(window, deltaTime);
 }
 
 Engine::~Engine()

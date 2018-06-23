@@ -17,6 +17,8 @@ class Engine
 {
 private:
 	bool running = false;
+	Uint32 lastFrame = 0;
+	Uint32 deltaTime = 0;
 
 	Window* window = NULL;
 	ShaderProgram* shaderProgram = NULL;
@@ -26,8 +28,16 @@ private:
 	void InitOpenGl();
 	void InitGlew();
 
-	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);
+	void ToggleSwapInterval();
+	void SetSwapInterval(int interval);
+
+	void PollEvents();
+	void Update();
+	void Draw();
+
 	void HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
+	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);
+	void CalculateDeltaTime();
 
 public:
 	~Engine();
@@ -35,7 +45,5 @@ public:
 	bool IsRunning();
 	bool Init();
 
-	void PollEvents();
-	void Update();
-	void Draw();
+	void GameLoop();
 };

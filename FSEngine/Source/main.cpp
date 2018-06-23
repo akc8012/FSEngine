@@ -10,11 +10,7 @@ int main(int argc, char* args[])
 	}
 
 	while (engine->IsRunning())
-	{
-		engine->PollEvents();
-		engine->Update();
-		engine->Draw();
-	}
+		engine->GameLoop();
 
 	delete engine;
 	return 0;

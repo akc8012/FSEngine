@@ -51,7 +51,7 @@ private:
 	void DrawTriangles();
 
 	void SetModelMatrix();
-	void SetViewMatrix();
+	void SetViewMatrix(Uint32 deltaTime);
 	void SetProjectionMatrix(vec2 windowSize);
 	void SetFragmentMixUniforms();
 
@@ -59,6 +59,6 @@ public:
 	Renderer(ShaderProgram* shaderProgram);
 	~Renderer();
 
-	void Render(Window* window);
+	void Render(Window* window, Uint32 deltaTime);
 	void RecompileShaders();
 };

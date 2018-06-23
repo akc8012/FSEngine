@@ -134,7 +134,7 @@ void Renderer::SetFragmentMixUniforms()
 	shaderProgram->SetInt("texture2", uniformValue+1);
 }
 
-void Renderer::Render(Window* window)
+void Renderer::Render(Window* window, Uint32 deltaTime)
 {
 	ClearScreen();
 
@@ -143,7 +143,7 @@ void Renderer::Render(Window* window)
 	glBindVertexArray(vertexArrayId);
 
 	SetModelMatrix();
-	SetViewMatrix();
+	SetViewMatrix(deltaTime);
 	SetProjectionMatrix(window->GetWindowSize());
 
 	DrawTriangles();
@@ -174,13 +174,14 @@ void Renderer::SetModelMatrix()
 	shaderProgram->SetMatrix("model", transform);
 }
 
-void Renderer::SetViewMatrix()
+void Renderer::SetViewMatrix(Uint32 deltaTime)
 {
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	cameraPosition += normalize(cross(forwardVector, upVector)) * Input::GetHorizontalAxis();
-	cameraPosition += -Input::GetVerticalAxis() * forwardVector;
+	const float SpeedMod = 0.015f;
+	cameraPosition += normalize(cross(forwardVector, upVector)) * (Input::GetHorizontalAxis() * SpeedMod * deltaTime);
+	cameraPosition += forwardVector * (-Input::GetVerticalAxis() * SpeedMod * deltaTime);
 
 	mat4 view = lookAt(cameraPosition, cameraPosition + forwardVector, upVector);
 	shaderProgram->SetMatrix("view", view);
