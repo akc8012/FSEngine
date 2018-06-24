@@ -10,7 +10,6 @@ bool Engine::Init()
 	try
 	{
 		InitSDL();
-
 		window = new Window();
 
 		InitOpenGl();
@@ -77,9 +76,9 @@ void Engine::GameLoop()
 
 void Engine::CalculateDeltaTime()
 {
-	Uint32 currentFrame = SDL_GetTicks();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
+	Uint32 currentFrameStamp = SDL_GetTicks();
+	deltaTime = currentFrameStamp - lastFrameStamp;
+	lastFrameStamp = currentFrameStamp;
 }
 
 void Engine::PollEvents()

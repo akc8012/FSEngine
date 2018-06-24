@@ -15,6 +15,7 @@ private:
 
 public:
 	static float GetSeconds();
+	static float MsToSeconds(Uint32 ms);
 
 	void Start();
 	void Stop();

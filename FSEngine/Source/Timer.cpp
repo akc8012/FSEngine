@@ -2,7 +2,12 @@
 
 float Timer::GetSeconds()
 {
-	return (float)SDL_GetTicks() / 1000.0f;
+	return MsToSeconds(SDL_GetTicks());
+}
+
+float Timer::MsToSeconds(Uint32 ms)
+{
+	return (float)ms / 1000.0f;
 }
 
 void Timer::Start()

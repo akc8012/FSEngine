@@ -16,7 +16,7 @@ class Engine
 {
 private:
 	bool running = false;
-	Uint32 lastFrame = 0;
+	Uint32 lastFrameStamp = 0;
 	Uint32 deltaTime = 0;
 
 	Window* window = NULL;
