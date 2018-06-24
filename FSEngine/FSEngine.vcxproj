@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\RotatingCrate.cpp" />
     <ClCompile Include="Source\AndUtility.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Header\ShaderProgram.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Timer.h" />
+    <ClInclude Include="Header\TransformComponent.h" />
     <ClInclude Include="Header\Window.h" />
   </ItemGroup>
   <ItemGroup>

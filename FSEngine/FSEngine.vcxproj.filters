@@ -15,6 +15,7 @@
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\RotatingCrate.cpp" />
     <ClCompile Include="Source\Component.cpp" />
+    <ClCompile Include="Source\TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\RotatingCrate.h" />
     <ClInclude Include="Header\Component.h" />
+    <ClInclude Include="Header\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />
