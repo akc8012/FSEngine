@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\RotatingCrate.cpp" />
     <ClCompile Include="Source\AndUtility.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Header\AndUtility.h" />
     <ClInclude Include="Header\Camera.h" />
+    <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\Input.h" />

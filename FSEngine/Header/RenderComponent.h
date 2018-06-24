@@ -1,7 +1,8 @@
 #pragma once
+#include "Component.h"
 #include "Texture.h"
 
-class RenderComponent
+class RenderComponent : public Component
 {
 private:
 	Texture* texture = NULL;
