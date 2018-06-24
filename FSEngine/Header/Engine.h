@@ -3,6 +3,7 @@
 #include "ShaderProgram.h"
 #include "Renderer.h"
 #include "Timer.h"
+#include "Camera.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -22,6 +23,7 @@ private:
 	Window* window = NULL;
 	ShaderProgram* shaderProgram = NULL;
 	Renderer* renderer = NULL;
+	Camera* camera = NULL;
 
 	void InitSDL();
 	void InitOpenGl();

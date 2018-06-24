@@ -2,7 +2,6 @@
 #include "ShaderProgram.h"
 #include "Texture.h"
 #include "Window.h"
-#include "Input.h"
 #include "Timer.h"
 
 #include <SDL.h>
@@ -26,8 +25,6 @@ private:
 	Texture* brickTexture = NULL;
 	Texture* awesomefaceTexture = NULL;
 
-	vec3 cameraPosition = vec3(0, 0, 3);
-
 	struct VertexAttribute
 	{
 		int location;
@@ -50,7 +47,7 @@ private:
 	void DrawTriangles();
 
 	void SetModelMatrix();
-	void SetViewMatrix(Uint32 deltaTime);
+	void SetViewMatrix(mat4 viewMatrix);
 	void SetProjectionMatrix(vec2 windowSize);
 	void SetFragmentMixUniforms();
 
@@ -58,6 +55,6 @@ public:
 	Renderer(ShaderProgram* shaderProgram);
 	~Renderer();
 
-	void Render(Window* window, Uint32 deltaTime);
+	void Render(Window* window, mat4 viewMatrix);
 	void RecompileShaders();
 };
