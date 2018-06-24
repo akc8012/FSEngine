@@ -89,20 +89,19 @@ void Engine::PollEvents()
 	{
 		switch (sdlEvent.type)
 		{
-			//to-do: fix console window persisting on quit
-			case SDL_QUIT:
+		case SDL_QUIT:
+			running = false;
+			break;
+
+		case SDL_KEYDOWN:
+			HandleKeyboardEvent(sdlEvent.key);
+
+			if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
 				running = false;
 			break;
 
-			case SDL_KEYDOWN:
-				HandleKeyboardEvent(sdlEvent.key);
-
-				if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
-					running = false;
-			break;
-
-			case SDL_WINDOWEVENT:
-				HandleWindowEvent(sdlEvent.window);
+		case SDL_WINDOWEVENT:
+			HandleWindowEvent(sdlEvent.window);
 			break;
 		}
 	}
@@ -164,8 +163,8 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
 	switch (windowEvent.event)
 	{
-		case SDL_WINDOWEVENT_SIZE_CHANGED:
-			window->SetResolutionToWindowResolution();
+	case SDL_WINDOWEVENT_SIZE_CHANGED:
+		window->SetResolutionToWindowResolution();
 		break;
 	}
 }
