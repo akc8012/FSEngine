@@ -17,6 +17,7 @@ bool Engine::Init()
 
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(shaderProgram);
+		camera = new Camera();
 	}
 	catch (string errorMessage)
 	{
@@ -170,16 +171,17 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update()
 {
-	
+	camera->CalculateViewMatrix(deltaTime);
 }
 
 void Engine::Draw()
 {
-	renderer->Render(window, deltaTime);
+	renderer->Render(window, camera->GetViewMatrix());
 }
 
 Engine::~Engine()
 {
+	delete camera;
 	delete renderer;
 	delete shaderProgram;
 	delete window;

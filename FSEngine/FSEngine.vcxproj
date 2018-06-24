@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\AndUtility.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\AndUtility.h" />
+    <ClInclude Include="Header\Camera.h" />
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\Renderer.h" />

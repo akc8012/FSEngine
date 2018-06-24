@@ -10,6 +10,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -20,6 +21,7 @@
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\Timer.h" />
+    <ClInclude Include="Header\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />
