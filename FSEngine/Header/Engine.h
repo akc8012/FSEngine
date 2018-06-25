@@ -4,6 +4,8 @@
 #include "Renderer.h"
 #include "Timer.h"
 #include "Camera.h"
+#include "GameObject.h"
+#include "RotatingCrate.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -24,6 +26,7 @@ private:
 	ShaderProgram* shaderProgram = NULL;
 	Renderer* renderer = NULL;
 	Camera* camera = NULL;
+	GameObject* rotatingCrate = NULL;
 
 	void InitSDL();
 	void InitOpenGl();

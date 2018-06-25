@@ -72,6 +72,18 @@ void RenderComponent::SendIndices(Uint32 elementBufferId)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
+void RenderComponent::BindTextures()
+{
+	//to-do: should Texture handle this?
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture->GetId());
+}
+
+void RenderComponent::BindVertexArray()
+{
+	glBindVertexArray(vertexArrayId);
+}
+
 RenderComponent::~RenderComponent()
 {
 	delete texture;

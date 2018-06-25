@@ -31,4 +31,7 @@ private:
 public:
 	RenderComponent(float* vertices, Uint32* indices, const char* textureFilepath);
 	~RenderComponent();
+
+	void BindTextures();
+	void BindVertexArray();
 };
