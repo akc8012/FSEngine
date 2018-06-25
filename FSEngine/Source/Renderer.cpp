@@ -29,7 +29,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
 }
 
-void Renderer::EndRender(mat4 viewMatrix, Window* window)
+void Renderer::EndRender(Window* window, mat4 viewMatrix)
 {
 	//to-do: extract this further into camera?
 	SetViewMatrix(viewMatrix);

@@ -61,7 +61,7 @@ RotatingCrate::RotatingCrate()
 void RotatingCrate::Update()
 {
 	float angle = Timer::GetSeconds() * radians(50.0f);
-	const vec3 Axis = vec3(1.0f, 0.0f, 0.0f);
+	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
 	transformComponent->SetRotation(angle, Axis);
 }
 

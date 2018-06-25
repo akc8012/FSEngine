@@ -181,7 +181,7 @@ void Engine::Draw()
 {
 	renderer->StartRender();
 	renderer->RenderGameObject(rotatingCrate);
-	renderer->EndRender(camera->GetViewMatrix(), window);
+	renderer->EndRender(window, camera->GetViewMatrix());
 }
 
 Engine::~Engine()

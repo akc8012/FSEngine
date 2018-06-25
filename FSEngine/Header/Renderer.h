@@ -35,7 +35,7 @@ public:
 
 	void StartRender();
 	void RenderGameObject(GameObject* gameObject);
-	void EndRender(mat4 viewMatrix, Window* window);
+	void EndRender(Window* window, mat4 viewMatrix);
 
 	void RecompileShaders();
 };
