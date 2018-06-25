@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Window.h"
 #include "Timer.h"
+#include "TransformComponent.h"
 
 #include <SDL.h>
 #include <GL/glew.h>

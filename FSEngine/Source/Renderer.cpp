@@ -168,10 +168,13 @@ void Renderer::BindTextures()
 void Renderer::SetModelMatrix()
 {
 	float angle = Timer::GetSeconds() * radians(50.0f);
-	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
+	const vec3 Axis = vec3(1.0f, 0.0f, 0.0f);
 	mat4 transform = rotate(mat4(1.0f), angle, Axis);
 
 	shaderProgram->SetMatrix("model", transform);
+
+	system("CLS");
+	printf("%s", TransformComponent::GetFormattedMatrixString(transform).c_str());
 }
 
 void Renderer::SetViewMatrix(mat4 viewMatrix)
