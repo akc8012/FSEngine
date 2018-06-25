@@ -4,6 +4,10 @@ Renderer::Renderer(ShaderProgram* shaderProgram)
 {
 	this->shaderProgram = shaderProgram;
 	SetFragmentMixUniforms();
+
+	uniformLocations["model"] = shaderProgram->GetUniformLocation("model");
+	uniformLocations["view"] = shaderProgram->GetUniformLocation("view");
+	uniformLocations["projection"] = shaderProgram->GetUniformLocation("projection");
 }
 
 void Renderer::SetFragmentMixUniforms()
@@ -26,7 +30,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	gameObject->GetRenderComponent()->BindTextures();
 	gameObject->GetRenderComponent()->BindVertexArray();
-	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
+	shaderProgram->SetMatrix(uniformLocations["model"], gameObject->GetTransformComponent()->GetMatrix());
 }
 
 void Renderer::EndRender(Window* window, mat4 viewMatrix)
@@ -47,7 +51,7 @@ void Renderer::ClearScreen()
 
 void Renderer::SetViewMatrix(mat4 viewMatrix)
 {
-	shaderProgram->SetMatrix("view", viewMatrix);
+	shaderProgram->SetMatrix(uniformLocations["view"], viewMatrix);
 }
 
 void Renderer::SetProjectionMatrix(vec2 windowSize)
@@ -58,7 +62,7 @@ void Renderer::SetProjectionMatrix(vec2 windowSize)
 	const float FarPlane = 100.0f;
 	mat4 projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
 
-	shaderProgram->SetMatrix("projection", projectionMatrix);
+	shaderProgram->SetMatrix(uniformLocations["projection"], projectionMatrix);
 }
 
 void Renderer::DrawTriangles()

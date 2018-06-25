@@ -101,7 +101,7 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 	return (string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
 }
 
-Uint32 ShaderProgram::GetId()
+Uint32 ShaderProgram::GetId() const
 {
 	return shaderProgramId;
 }
@@ -113,24 +113,29 @@ void ShaderProgram::Use()
 
 void ShaderProgram::SetBool(const char* name, bool value) const
 {
-	glUniform1i(glGetUniformLocation(shaderProgramId, name), (int)value);
+	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
 void ShaderProgram::SetInt(const char* name, int value) const
 {
-	glUniform1i(glGetUniformLocation(shaderProgramId, name), value);
+	glUniform1i(GetUniformLocation(name), value);
 }
 
 void ShaderProgram::SetFloat(const char* name, float value) const
 {
-	glUniform1f(glGetUniformLocation(shaderProgramId, name), value);
+	glUniform1f(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetMatrix(const char* name, mat4 value) const
+Uint32 ShaderProgram::GetUniformLocation(const char* name) const
+{
+	return glGetUniformLocation(shaderProgramId, name);
+}
+
+void ShaderProgram::SetMatrix(Uint32 uniformLocation, mat4 value) const
 {
 	const int Count = 1;
 	const bool Transpose = false;
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgramId, name), Count, Transpose, value_ptr(value));
+	glUniformMatrix4fv(uniformLocation, Count, Transpose, value_ptr(value));
 }
 
 ShaderProgram::~ShaderProgram()

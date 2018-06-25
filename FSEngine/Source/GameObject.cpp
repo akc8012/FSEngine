@@ -5,15 +5,6 @@ GameObject::GameObject()
 
 }
 
-GameObject::~GameObject()
-{
-	if (renderComponent != NULL)
-		delete renderComponent;
-
-	if (transformComponent != NULL)
-		delete transformComponent;
-}
-
 RenderComponent* GameObject::GetRenderComponent()
 {
 	return renderComponent;
@@ -27,4 +18,13 @@ TransformComponent* GameObject::GetTransformComponent()
 void GameObject::Update()
 {
 
+}
+
+GameObject::~GameObject()
+{
+	if (renderComponent != NULL)
+		delete renderComponent;
+
+	if (transformComponent != NULL)
+		delete transformComponent;
 }

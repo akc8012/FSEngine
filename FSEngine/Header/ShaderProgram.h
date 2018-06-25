@@ -33,10 +33,12 @@ public:
 
 	void CreateShaders();
 	void Use();
-	Uint32 GetId();
+
+	Uint32 GetId() const;
+	Uint32 GetUniformLocation(const char* name) const;
 
 	void SetBool(const char* name, bool value) const;
 	void SetInt(const char* name, int value) const;
 	void SetFloat(const char* name, float value) const;
-	void SetMatrix(const char* name, mat4 value) const;
+	void SetMatrix(Uint32 uniformLocation, mat4 value) const;
 };

@@ -15,12 +15,14 @@
 using namespace glm;
 
 #include <string>
+#include <map>
 using namespace std;
 
 class Renderer
 {
 private:
 	ShaderProgram* shaderProgram = NULL;
+	map<string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
 
 	void ClearScreen();
 	void DrawTriangles();

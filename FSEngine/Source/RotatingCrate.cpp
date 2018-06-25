@@ -54,6 +54,7 @@ RotatingCrate::RotatingCrate()
 		1, 2, 3    // second triangle
 	};
 
+	//to-do: we should pass in a vector of textures (owner is GameObject), rather than have this component handle it
 	renderComponent = new RenderComponent(vertices, indices, "Resource/Image/wall.png");
 	transformComponent = new TransformComponent();
 }
