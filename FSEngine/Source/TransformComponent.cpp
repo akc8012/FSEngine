@@ -44,3 +44,9 @@ void TransformComponent::Translate(vec3 translation)
 {
 	transform = translate(transform, translation);
 }
+
+void TransformComponent::SetRotation(float angle, vec3 axis)
+{
+	mat4 identity = mat4(1.0f);
+	transform = rotate(identity, angle, axis);
+}

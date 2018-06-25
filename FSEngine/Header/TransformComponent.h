@@ -24,4 +24,6 @@ public:
 	void Scale(vec3 scaleVector);
 	void Rotate(float angle, vec3 axis);
 	void Translate(vec3 translation);
+
+	void SetRotation(float angle, vec3 axis);
 };

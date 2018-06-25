@@ -3,130 +3,12 @@
 Renderer::Renderer(ShaderProgram* shaderProgram)
 {
 	this->shaderProgram = shaderProgram;
-
-	CreateVertexArray();
 	SetFragmentMixUniforms();
-
-	brickTexture = new Texture("Resource/Image/wall.png");
-	awesomefaceTexture = new Texture("Resource/Image/awesomeface.png");
-}
-
-void Renderer::CreateVertexArray()
-{
-	Uint32 vertexBufferId, elementBufferId;
-	const int Amount = 1;
-	glGenVertexArrays(Amount, &vertexArrayId);
-	glGenBuffers(Amount, &vertexBufferId);
-	glGenBuffers(Amount, &elementBufferId);
-
-	glBindVertexArray(vertexArrayId);
-
-	SendVertices(vertexBufferId);
-	SendIndices(elementBufferId);
-
-	glBindBuffer(GL_ARRAY_BUFFER, NULL);
-	glBindVertexArray(NULL);
-
-	glDeleteBuffers(Amount, &elementBufferId);
-	glDeleteBuffers(Amount, &vertexBufferId);
-}
-
-void Renderer::SendVertices(Uint32 vertexBufferId)
-{
-	float vertices[] =
-	{
-		 // positions         // texture coords
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	SendPositionAttribute();
-	SendTextureAttribute();
-}
-
-void Renderer::SendPositionAttribute()
-{
-	VertexAttribute positionAttribute;
-	positionAttribute.location = 0;
-	positionAttribute.size = 3;
-	positionAttribute.stride = 5;
-	positionAttribute.offset = 0;
-
-	SendVertexAttribute(positionAttribute);
-}
-
-void Renderer::SendTextureAttribute()
-{
-	VertexAttribute textureAttribute;
-	textureAttribute.location = 1;
-	textureAttribute.size = 2;
-	textureAttribute.stride = 5;
-	textureAttribute.offset = 3;
-
-	SendVertexAttribute(textureAttribute);
-}
-
-void Renderer::SendVertexAttribute(const VertexAttribute& attribute)
-{
-	glVertexAttribPointer(attribute.location, attribute.size, GL_FLOAT, attribute.normalize, attribute.stride * sizeof(float), (void*)(attribute.offset * sizeof(float)));
-	glEnableVertexAttribArray(attribute.location);
-}
-
-void Renderer::SendIndices(Uint32 elementBufferId)
-{
-	Uint32 indices[] = {
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
 void Renderer::SetFragmentMixUniforms()
 {
+	//to-do: move this logic to shaderprogram?
 	shaderProgram->Use();
 
 	int uniformValue = 0;
@@ -134,20 +16,26 @@ void Renderer::SetFragmentMixUniforms()
 	shaderProgram->SetInt("texture2", uniformValue+1);
 }
 
-void Renderer::Render(Window* window, mat4 viewMatrix)
+void Renderer::StartRender()
 {
 	ClearScreen();
-
 	shaderProgram->Use();
-	BindTextures();
-	glBindVertexArray(vertexArrayId);
+}
 
-	SetModelMatrix();
+void Renderer::RenderGameObject(GameObject* gameObject)
+{
+	gameObject->GetRenderComponent()->BindTextures();
+	gameObject->GetRenderComponent()->BindVertexArray();
+	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
+}
+
+void Renderer::EndRender(Window* window, mat4 viewMatrix)
+{
+	//to-do: extract this further into camera?
 	SetViewMatrix(viewMatrix);
 	SetProjectionMatrix(window->GetWindowSize());
 
-	DrawTriangles();
-
+	DrawTriangles(); //to-do: can this be moved to the end of RenderGameObject()?
 	window->SwapWindow();
 }
 
@@ -155,26 +43,6 @@ void Renderer::ClearScreen()
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void Renderer::BindTextures()
-{
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, brickTexture->GetId());
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, awesomefaceTexture->GetId());
-}
-
-void Renderer::SetModelMatrix()
-{
-	float angle = Timer::GetSeconds() * radians(50.0f);
-	const vec3 Axis = vec3(1.0f, 0.0f, 0.0f);
-	mat4 transform = rotate(mat4(1.0f), angle, Axis);
-
-	shaderProgram->SetMatrix("model", transform);
-
-	system("CLS");
-	printf("%s", TransformComponent::GetFormattedMatrixString(transform).c_str());
 }
 
 void Renderer::SetViewMatrix(mat4 viewMatrix)
@@ -207,9 +75,5 @@ void Renderer::RecompileShaders()
 
 Renderer::~Renderer()
 {
-	delete brickTexture;
-	delete awesomefaceTexture;
 
-	const int Amount = 1;
-	glDeleteVertexArrays(Amount, &vertexArrayId);
 }
