@@ -1,6 +1,6 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(float* vertices, Uint32* indices, const char* textureFilepath)
+RenderComponent::RenderComponent(vector<float> vertices, vector<Uint32> indices, const char* textureFilepath)
 {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -32,7 +32,7 @@ void RenderComponent::CreateVertexArray()
 void RenderComponent::SendVertices(Uint32 vertexBufferId)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices.front(), GL_STATIC_DRAW);
 
 	SendPositionAttribute();
 	SendTextureAttribute();
@@ -69,7 +69,7 @@ void RenderComponent::SendVertexAttribute(const VertexAttribute& attribute)
 void RenderComponent::SendIndices(Uint32 elementBufferId)
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Uint32), &indices.front(), GL_STATIC_DRAW);
 }
 
 void RenderComponent::BindTextures()

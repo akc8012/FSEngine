@@ -2,14 +2,17 @@
 #include "Component.h"
 #include "Texture.h"
 
+#include <vector>
+using namespace std;
+
 class RenderComponent : public Component
 {
 private:
 	Texture* texture = NULL;
 	Uint32 vertexArrayId = 0;
 
-	float* vertices;
-	Uint32* indices;
+	vector<float> vertices;
+	vector<Uint32> indices;
 
 	struct VertexAttribute
 	{
@@ -29,7 +32,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(float* vertices, Uint32* indices, const char* textureFilepath);
+	RenderComponent(vector<float> vertices, vector<Uint32> indices, const char* textureFilepath);
 	~RenderComponent();
 
 	void BindTextures();

@@ -8,6 +8,7 @@ Renderer::Renderer(ShaderProgram* shaderProgram)
 
 void Renderer::SetFragmentMixUniforms()
 {
+	//to-do: move this logic to shaderprogram?
 	shaderProgram->Use();
 
 	int uniformValue = 0;
