@@ -62,10 +62,7 @@ void RotatingCrate::Update()
 {
 	float angle = Timer::GetSeconds() * radians(50.0f);
 	const vec3 Axis = vec3(1.0f, 0.0f, 0.0f);
-	transformComponent->Rotate(angle, Axis);
-
-	system("CLS");
-	printf("%s", TransformComponent::GetFormattedMatrixString(transformComponent->GetMatrix()).c_str());
+	transformComponent->SetRotation(angle, Axis);
 }
 
 RotatingCrate::~RotatingCrate()
