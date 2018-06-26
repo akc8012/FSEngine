@@ -17,7 +17,6 @@ bool Engine::Init()
 
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(shaderProgram);
-		camera = new Camera();
 
 		rotatingCrate = new RotatingCrate();
 	}
@@ -173,21 +172,19 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update()
 {
-	rotatingCrate->Update();
-	camera->CalculateViewMatrix(deltaTime);
+	rotatingCrate->Update(deltaTime);
 }
 
 void Engine::Draw()
 {
 	renderer->StartRender();
 	renderer->RenderGameObject(rotatingCrate);
-	renderer->EndRender(window, camera->GetViewMatrix());
+	renderer->EndRender(deltaTime, window);
 }
 
 Engine::~Engine()
 {
 	delete rotatingCrate;
-	delete camera;
 	delete renderer;
 	delete shaderProgram;
 	delete window;

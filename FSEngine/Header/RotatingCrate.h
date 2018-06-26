@@ -13,5 +13,5 @@ public:
 	RotatingCrate();
 	~RotatingCrate();
 
-	void Update();
+	void Update(Uint32 deltaTime);
 };

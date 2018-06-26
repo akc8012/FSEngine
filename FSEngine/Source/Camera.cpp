@@ -12,7 +12,22 @@ void Camera::CalculateViewMatrix(Uint32 deltaTime)
 	viewMatrix = lookAt(position, position + forwardVector, upVector);
 }
 
+void Camera::CalculateProjectionMatrix(vec2 windowSize)
+{
+	const float FieldOfView = radians(45.0f);
+	const float AspectRatio = (float)windowSize.x / (float)windowSize.y;
+	const float NearPlane = 0.1f;
+	const float FarPlane = 100.0f;
+
+	projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
+}
+
 mat4 Camera::GetViewMatrix()
 {
 	return viewMatrix;
+}
+
+mat4 Camera::GetProjectionMatrix()
+{
+	return projectionMatrix;
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "ShaderProgram.h"
-#include "Texture.h"
+#include "Camera.h"
 #include "Window.h"
 #include "Timer.h"
 #include "GameObject.h"
@@ -22,14 +22,14 @@ class Renderer
 {
 private:
 	ShaderProgram* shaderProgram = NULL;
+	Camera* camera = NULL;
+
 	map<string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
+
+	void SetFragmentMixUniforms();
 
 	void ClearScreen();
 	void DrawTriangles();
-
-	void SetViewMatrix(mat4 viewMatrix);
-	void SetProjectionMatrix(vec2 windowSize);
-	void SetFragmentMixUniforms();
 
 public:
 	Renderer(ShaderProgram* shaderProgram);
@@ -37,7 +37,7 @@ public:
 
 	void StartRender();
 	void RenderGameObject(GameObject* gameObject);
-	void EndRender(Window* window, mat4 viewMatrix);
+	void EndRender(Uint32 deltaTime, Window* window);
 
 	void RecompileShaders();
 };

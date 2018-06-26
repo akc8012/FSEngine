@@ -3,6 +3,7 @@
 Renderer::Renderer(ShaderProgram* shaderProgram)
 {
 	this->shaderProgram = shaderProgram;
+	camera = new Camera();
 	SetFragmentMixUniforms();
 
 	uniformLocations["model"] = shaderProgram->GetUniformLocation("model");
@@ -33,11 +34,13 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	shaderProgram->SetMatrix(uniformLocations["model"], gameObject->GetTransformComponent()->GetMatrix());
 }
 
-void Renderer::EndRender(Window* window, mat4 viewMatrix)
+void Renderer::EndRender(Uint32 deltaTime, Window* window)
 {
-	//to-do: extract this further into camera?
-	SetViewMatrix(viewMatrix);
-	SetProjectionMatrix(window->GetWindowSize());
+	camera->CalculateViewMatrix(deltaTime);
+	camera->CalculateProjectionMatrix(window->GetWindowSize());
+
+	shaderProgram->SetMatrix(uniformLocations["view"], camera->GetViewMatrix());
+	shaderProgram->SetMatrix(uniformLocations["projection"], camera->GetProjectionMatrix());
 
 	DrawTriangles(); //to-do: can this be moved to the end of RenderGameObject()?
 	window->SwapWindow();
@@ -47,22 +50,6 @@ void Renderer::ClearScreen()
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void Renderer::SetViewMatrix(mat4 viewMatrix)
-{
-	shaderProgram->SetMatrix(uniformLocations["view"], viewMatrix);
-}
-
-void Renderer::SetProjectionMatrix(vec2 windowSize)
-{
-	const float FieldOfView = radians(45.0f);
-	const float AspectRatio = (float)windowSize.x / (float)windowSize.y;
-	const float NearPlane = 0.1f;
-	const float FarPlane = 100.0f;
-	mat4 projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
-
-	shaderProgram->SetMatrix(uniformLocations["projection"], projectionMatrix);
 }
 
 void Renderer::DrawTriangles()
@@ -79,5 +66,5 @@ void Renderer::RecompileShaders()
 
 Renderer::~Renderer()
 {
-
+	delete camera;
 }

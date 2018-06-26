@@ -15,7 +15,7 @@ TransformComponent* GameObject::GetTransformComponent()
 	return transformComponent;
 }
 
-void GameObject::Update()
+void GameObject::Update(Uint32 deltaTime)
 {
 
 }

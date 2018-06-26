@@ -15,5 +15,5 @@ public:
 	//to-do: change this to one template GetComponent
 	RenderComponent* GetRenderComponent();
 	TransformComponent* GetTransformComponent();
-	virtual void Update();
+	virtual void Update(Uint32 deltaTime);
 };
