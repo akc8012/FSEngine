@@ -39,9 +39,8 @@ void Renderer::EndRender(Uint32 deltaTime)
 {
 	camera->Update(deltaTime);
 
-	Camera* tempCam = dynamic_cast<Camera*>(camera);
-	shaderProgram->SetMatrix(uniformLocations["view"], tempCam->GetViewMatrix());
-	shaderProgram->SetMatrix(uniformLocations["projection"], tempCam->GetProjectionMatrix());
+	shaderProgram->SetMatrix(uniformLocations["view"], camera->GetTransformComponent()->GetMatrix());
+	shaderProgram->SetMatrix(uniformLocations["projection"], camera->GetProjectionMatrix());
 
 	DrawTriangles(); //to-do: can this be moved to the end of RenderGameObject()?
 	window->SwapWindow();

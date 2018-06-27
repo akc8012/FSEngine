@@ -22,7 +22,7 @@ class Renderer
 private:
 	Window* window = NULL;
 	ShaderProgram* shaderProgram = NULL;
-	GameObject* camera = NULL;
+	Camera* camera = NULL;
 
 	map<string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
 

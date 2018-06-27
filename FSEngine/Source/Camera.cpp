@@ -3,6 +3,9 @@
 Camera::Camera(Window* window)
 {
 	this->window = window;
+
+	transformComponent = new TransformComponent();
+	transformComponent->SetPosition(vec3(3, 0, -3));
 }
 
 void Camera::Update(Uint32 deltaTime)
@@ -17,10 +20,11 @@ void Camera::CalculateViewMatrix(Uint32 deltaTime)
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
 	const float SpeedMod = 0.005f;
+	vec3 position = -transformComponent->GetPosition();
 	position += normalize(cross(forwardVector, upVector)) * (Input::GetHorizontalAxis() * SpeedMod * deltaTime);
 	position += forwardVector * (-Input::GetVerticalAxis() * SpeedMod * deltaTime);
 
-	viewMatrix = lookAt(position, position + forwardVector, upVector);
+	transformComponent->LookAt(position, forwardVector, upVector);
 }
 
 void Camera::CalculateProjectionMatrix()
@@ -35,12 +39,7 @@ void Camera::CalculateProjectionMatrix()
 	projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
 }
 
-mat4 Camera::GetViewMatrix()
-{
-	return viewMatrix;
-}
-
-mat4 Camera::GetProjectionMatrix()
+mat4 Camera::GetProjectionMatrix() const
 {
 	return projectionMatrix;
 }
