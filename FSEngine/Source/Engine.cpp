@@ -16,7 +16,7 @@ bool Engine::Init()
 		InitGlew();
 
 		shaderProgram = new ShaderProgram();
-		renderer = new Renderer(shaderProgram);
+		renderer = new Renderer(window, shaderProgram);
 
 		rotatingCrate = new RotatingCrate();
 	}
@@ -179,7 +179,7 @@ void Engine::Draw()
 {
 	renderer->StartRender();
 	renderer->RenderGameObject(rotatingCrate);
-	renderer->EndRender(deltaTime, window);
+	renderer->EndRender(deltaTime);
 }
 
 Engine::~Engine()

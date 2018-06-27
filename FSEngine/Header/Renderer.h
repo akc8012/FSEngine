@@ -1,9 +1,8 @@
 #pragma once
 #include "ShaderProgram.h"
-#include "Camera.h"
 #include "Window.h"
-#include "Timer.h"
 #include "GameObject.h"
+#include "Camera.h"
 
 #include <SDL.h>
 #include <GL/glew.h>
@@ -21,8 +20,9 @@ using namespace std;
 class Renderer
 {
 private:
+	Window* window = NULL;
 	ShaderProgram* shaderProgram = NULL;
-	Camera* camera = NULL;
+	GameObject* camera = NULL;
 
 	map<string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
 
@@ -32,12 +32,12 @@ private:
 	void DrawTriangles();
 
 public:
-	Renderer(ShaderProgram* shaderProgram);
+	Renderer(Window* window, ShaderProgram* shaderProgram);
 	~Renderer();
 
 	void StartRender();
 	void RenderGameObject(GameObject* gameObject);
-	void EndRender(Uint32 deltaTime, Window* window);
+	void EndRender(Uint32 deltaTime);
 
 	void RecompileShaders();
 };

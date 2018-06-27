@@ -1,9 +1,10 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(ShaderProgram* shaderProgram)
+Renderer::Renderer(Window* window, ShaderProgram* shaderProgram)
 {
+	this->window = window;
 	this->shaderProgram = shaderProgram;
-	camera = new Camera();
+	camera = new Camera(window);
 	SetFragmentMixUniforms();
 
 	uniformLocations["model"] = shaderProgram->GetUniformLocation("model");
@@ -34,13 +35,13 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	shaderProgram->SetMatrix(uniformLocations["model"], gameObject->GetTransformComponent()->GetMatrix());
 }
 
-void Renderer::EndRender(Uint32 deltaTime, Window* window)
+void Renderer::EndRender(Uint32 deltaTime)
 {
-	camera->CalculateViewMatrix(deltaTime);
-	camera->CalculateProjectionMatrix(window->GetWindowSize());
+	camera->Update(deltaTime);
 
-	shaderProgram->SetMatrix(uniformLocations["view"], camera->GetViewMatrix());
-	shaderProgram->SetMatrix(uniformLocations["projection"], camera->GetProjectionMatrix());
+	Camera* tempCam = dynamic_cast<Camera*>(camera);
+	shaderProgram->SetMatrix(uniformLocations["view"], tempCam->GetViewMatrix());
+	shaderProgram->SetMatrix(uniformLocations["projection"], tempCam->GetProjectionMatrix());
 
 	DrawTriangles(); //to-do: can this be moved to the end of RenderGameObject()?
 	window->SwapWindow();

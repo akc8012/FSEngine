@@ -1,5 +1,16 @@
 #include "../Header/Camera.h"
 
+Camera::Camera(Window* window)
+{
+	this->window = window;
+}
+
+void Camera::Update(Uint32 deltaTime)
+{
+	CalculateViewMatrix(deltaTime);
+	CalculateProjectionMatrix();
+}
+
 void Camera::CalculateViewMatrix(Uint32 deltaTime)
 {
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
@@ -12,8 +23,10 @@ void Camera::CalculateViewMatrix(Uint32 deltaTime)
 	viewMatrix = lookAt(position, position + forwardVector, upVector);
 }
 
-void Camera::CalculateProjectionMatrix(vec2 windowSize)
+void Camera::CalculateProjectionMatrix()
 {
+	vec2 windowSize = window->GetWindowSize();
+
 	const float FieldOfView = radians(45.0f);
 	const float AspectRatio = (float)windowSize.x / (float)windowSize.y;
 	const float NearPlane = 0.1f;
