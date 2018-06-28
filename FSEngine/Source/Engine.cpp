@@ -22,6 +22,8 @@ bool Engine::Init()
 
 		rotatingCrate2 = new RotatingCrate(vec3(-0.5f, -0.2f, 0.1f));
 		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
+
+		textQuad = new TextQuad();
 	}
 	catch (string errorMessage)
 	{
@@ -43,6 +45,9 @@ void Engine::InitSDL()
 
 	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
 		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
+
+	if (TTF_Init() != 0)
+		throw (string)"SDL_ttf could not initialize! SDL_ttf error: " + TTF_GetError();
 }
 
 void Engine::InitOpenGl()
@@ -189,6 +194,7 @@ void Engine::Draw()
 
 Engine::~Engine()
 {
+	delete textQuad;
 	delete rotatingCrate;
 	delete rotatingCrate2;
 
@@ -196,6 +202,7 @@ Engine::~Engine()
 	delete shaderProgram;
 	delete window;
 
+	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 

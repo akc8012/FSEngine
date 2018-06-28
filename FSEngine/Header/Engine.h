@@ -5,9 +5,11 @@
 #include "Timer.h"
 #include "GameObject.h"
 #include "RotatingCrate.h"
+#include "TextQuad.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
@@ -27,6 +29,7 @@ private:
 
 	GameObject* rotatingCrate = NULL;
 	GameObject* rotatingCrate2 = NULL;
+	GameObject* textQuad = NULL;
 
 	void InitSDL();
 	void InitOpenGl();
