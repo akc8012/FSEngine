@@ -21,15 +21,16 @@ class Engine
 private:
 	bool running = false;
 	Uint32 lastFrameStamp = 0;
-	Uint32 deltaTime = 0;
 
-	Window* window = NULL;
-	ShaderProgram* shaderProgram = NULL;
-	Renderer* renderer = NULL;
+	Window* window = nullptr;
+	ShaderProgram* shaderProgram = nullptr;
+	Renderer* renderer = nullptr;
 
-	GameObject* rotatingCrate = NULL;
-	GameObject* rotatingCrate2 = NULL;
-	GameObject* textQuad = NULL;
+	Texture* crateTexture = nullptr;
+	Texture* faceTexture = nullptr;
+	GameObject* rotatingCrate = nullptr;
+	GameObject* rotatingCrate2 = nullptr;
+	GameObject* textQuad = nullptr;
 
 	void InitSDL();
 	void InitOpenGl();
@@ -38,18 +39,18 @@ private:
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);
 
+	Uint32 CalculateDeltaTime();
 	void PollEvents();
-	void Update();
-	void Draw();
+	void Update(Uint32 deltaTime);
+	void Draw(Uint32 deltaTime);
 
 	void HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);
-	void CalculateDeltaTime();
 
 public:
 	~Engine();
 
-	bool IsRunning();
+	bool IsRunning() const;
 	bool Init();
 
 	void GameLoop();

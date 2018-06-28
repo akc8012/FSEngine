@@ -1,6 +1,6 @@
 #include "../Header/Engine.h"
 
-bool Engine::IsRunning()
+bool Engine::IsRunning() const
 {
 	return running;
 }
@@ -18,12 +18,14 @@ bool Engine::Init()
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(window, shaderProgram);
 
-		rotatingCrate = new RotatingCrate(vec3(0.5f, 0.2f, 0));
+		faceTexture = new Texture("awesomeface.png");
+		crateTexture = new Texture("wall.png");
 
-		rotatingCrate2 = new RotatingCrate(vec3(-0.5f, -0.2f, 0.1f));
-		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
-
+		rotatingCrate = new RotatingCrate(faceTexture, vec3(0.5f, 0.2f, 0));
+		rotatingCrate2 = new RotatingCrate(crateTexture, vec3(-0.5f, -0.2f, 0.1f));
 		textQuad = new TextQuad();
+
+		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
 	}
 	catch (string errorMessage)
 	{
@@ -77,18 +79,20 @@ void Engine::InitGlew()
 
 void Engine::GameLoop()
 {
-	CalculateDeltaTime();
+	Uint32 deltaTime = CalculateDeltaTime();
 
 	PollEvents();
-	Update();
-	Draw();
+	Update(deltaTime);
+	Draw(deltaTime);
 }
 
-void Engine::CalculateDeltaTime()
+Uint32 Engine::CalculateDeltaTime()
 {
 	Uint32 currentFrameStamp = SDL_GetTicks();
-	deltaTime = currentFrameStamp - lastFrameStamp;
+	Uint32 deltaTime = currentFrameStamp - lastFrameStamp;
 	lastFrameStamp = currentFrameStamp;
+
+	return deltaTime;
 }
 
 void Engine::PollEvents()
@@ -178,17 +182,20 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	}
 }
 
-void Engine::Update()
+void Engine::Update(Uint32 deltaTime)
 {
 	rotatingCrate->Update(deltaTime);
 	rotatingCrate2->Update(deltaTime);
 }
 
-void Engine::Draw()
+void Engine::Draw(Uint32 deltaTime)
 {
 	renderer->StartRender(deltaTime);
+
 	renderer->RenderGameObject(rotatingCrate);
 	renderer->RenderGameObject(rotatingCrate2);
+	renderer->RenderGameObject(textQuad);
+
 	renderer->EndRender();
 }
 
@@ -197,6 +204,9 @@ Engine::~Engine()
 	delete textQuad;
 	delete rotatingCrate;
 	delete rotatingCrate2;
+
+	delete faceTexture;
+	delete crateTexture;
 
 	delete renderer;
 	delete shaderProgram;

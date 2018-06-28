@@ -11,10 +11,12 @@ class Texture
 {
 private:
 	Uint32 textureId = NULL;
+	void GenerateTexture(SDL_Surface* surface);
 
 public:
 	Texture(const char* filepath);
+	Texture(SDL_Surface* surface);
 	~Texture();
 
-	Uint32 GetId();
+	Uint32 GetId() const;
 };

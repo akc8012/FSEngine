@@ -1,17 +1,16 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(vector<float> vertices, Uint32 stride, vector<Uint32> indices, const char* textureFilepath)
+RenderComponent::RenderComponent(Texture* texture, vector<float> vertices, Uint32 stride, vector<Uint32> indices)
 {
+	this->texture = texture;
 	this->vertices = vertices;
-	this->stride = stride;
 	this->indices = indices;
-	triangleCount = (Uint32)vertices.size() / stride;
 
-	CreateVertexArray();
-	texture = new Texture(textureFilepath);
+	triangleCount = (Uint32)vertices.size() / stride;
+	CreateVertexArray(stride);
 }
 
-void RenderComponent::CreateVertexArray()
+void RenderComponent::CreateVertexArray(Uint32 stride)
 {
 	Uint32 vertexBufferId, elementBufferId;
 	const int Amount = 1;
@@ -21,7 +20,7 @@ void RenderComponent::CreateVertexArray()
 
 	glBindVertexArray(vertexArrayId);
 
-	SendVertices(vertexBufferId);
+	SendVertices(vertexBufferId, stride);
 	SendIndices(elementBufferId);
 
 	glBindBuffer(GL_ARRAY_BUFFER, NULL);
@@ -31,16 +30,16 @@ void RenderComponent::CreateVertexArray()
 	glDeleteBuffers(Amount, &vertexBufferId);
 }
 
-void RenderComponent::SendVertices(Uint32 vertexBufferId)
+void RenderComponent::SendVertices(Uint32 vertexBufferId, Uint32 stride)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices.front(), GL_STATIC_DRAW);
 
-	SendPositionAttribute();
-	SendTextureAttribute();
+	SendPositionAttribute(stride);
+	SendTextureAttribute(stride);
 }
 
-void RenderComponent::SendPositionAttribute()
+void RenderComponent::SendPositionAttribute(Uint32 stride)
 {
 	VertexAttribute positionAttribute;
 	positionAttribute.location = 0;
@@ -51,7 +50,7 @@ void RenderComponent::SendPositionAttribute()
 	SendVertexAttribute(positionAttribute);
 }
 
-void RenderComponent::SendTextureAttribute()
+void RenderComponent::SendTextureAttribute(Uint32 stride)
 {
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 1;
@@ -76,7 +75,6 @@ void RenderComponent::SendIndices(Uint32 elementBufferId)
 
 void RenderComponent::BindTextures()
 {
-	//to-do: should Texture handle this?
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->GetId());
 }
@@ -93,8 +91,6 @@ Uint32 RenderComponent::GetTriangleCount() const
 
 RenderComponent::~RenderComponent()
 {
-	delete texture;
-
 	const int Amount = 1;
 	glDeleteVertexArrays(Amount, &vertexArrayId);
 }

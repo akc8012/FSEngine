@@ -8,13 +8,12 @@ using namespace std;
 class RenderComponent : public Component
 {
 private:
-	Texture* texture = NULL;
-	Uint32 vertexArrayId = 0;
-	Uint32 stride;
-	Uint32 triangleCount;
+	Texture* texture = nullptr;
+	Uint32 vertexArrayId = NULL;
 
 	vector<float> vertices;
 	vector<Uint32> indices;
+	Uint32 triangleCount;
 
 	struct VertexAttribute
 	{
@@ -25,16 +24,16 @@ private:
 		int offset;
 	};
 
-	void CreateVertexArray();
-	void SendVertices(Uint32 vertexBufferId);
+	void CreateVertexArray(Uint32 stride);
+	void SendVertices(Uint32 vertexBufferId, Uint32 stride);
 	void SendIndices(Uint32 elementBufferId);
 
-	void SendPositionAttribute();
-	void SendTextureAttribute();
+	void SendPositionAttribute(Uint32 stride);
+	void SendTextureAttribute(Uint32 stride);
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(vector<float> vertices, Uint32 stride, vector<Uint32> indices, const char* textureFilepath);
+	RenderComponent(Texture* texture, vector<float> vertices, Uint32 stride, vector<Uint32> indices);
 	~RenderComponent();
 
 	void BindTextures();

@@ -6,6 +6,17 @@ Texture::Texture(const char* filepath)
 	if (surface == NULL)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 
+	GenerateTexture(surface);
+	SDL_FreeSurface(surface);
+}
+
+Texture::Texture(SDL_Surface* surface)
+{
+	GenerateTexture(surface);
+}
+
+void Texture::GenerateTexture(SDL_Surface* surface)
+{
 	const int Amount = 1;
 	glGenTextures(Amount, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -18,11 +29,9 @@ Texture::Texture(const char* filepath)
 	const int MipmapLevel = 0, Border = 0;
 	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, GL_RGB, surface->w, surface->h, Border, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
 	glGenerateMipmap(GL_TEXTURE_2D);
-
-	SDL_FreeSurface(surface);
 }
 
-Uint32 Texture::GetId()
+Uint32 Texture::GetId() const
 {
 	return textureId;
 }

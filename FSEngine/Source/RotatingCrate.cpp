@@ -1,6 +1,6 @@
 #include "../Header/RotatingCrate.h"
 
-RotatingCrate::RotatingCrate(vec3 position)
+RotatingCrate::RotatingCrate(Texture* texture, vec3 position)
 {
 	vector<float> vertices =
 	{
@@ -54,10 +54,8 @@ RotatingCrate::RotatingCrate(vec3 position)
 		1, 2, 3    // second triangle
 	};
 
-	//to-do: we should pass in a vector of textures (owner is GameObject), rather than have this component handle it
-	//to-do: may want to pass it in on instantiation, to avoid loading same textures from disk twice
-	Uint32 stride = 5;
-	renderComponent = new RenderComponent(vertices, stride, indices, "wall.png");
+	const Uint32 Stride = 5;
+	renderComponent = new RenderComponent(texture, vertices, Stride, indices);
 
 	transformComponent = new TransformComponent();
 	transformComponent->SetPosition(position);

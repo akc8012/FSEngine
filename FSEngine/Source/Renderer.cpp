@@ -55,7 +55,7 @@ void Renderer::ClearScreen()
 void Renderer::DrawTriangles(Uint32 triangleCount)
 {
 	const int First = 0;
-	glDrawArrays(GL_TRIANGLES, 0, triangleCount);
+	glDrawArrays(GL_TRIANGLES, First, triangleCount);
 }
 
 void Renderer::RecompileShaders()
