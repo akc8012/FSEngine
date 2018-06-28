@@ -10,6 +10,8 @@ class RenderComponent : public Component
 private:
 	Texture* texture = NULL;
 	Uint32 vertexArrayId = 0;
+	Uint32 stride;
+	Uint32 triangleCount;
 
 	vector<float> vertices;
 	vector<Uint32> indices;
@@ -32,9 +34,11 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(vector<float> vertices, vector<Uint32> indices, const char* textureFilepath);
+	RenderComponent(vector<float> vertices, Uint32 stride, vector<Uint32> indices, const char* textureFilepath);
 	~RenderComponent();
 
 	void BindTextures();
 	void BindVertexArray();
+
+	Uint32 GetTriangleCount() const;
 };

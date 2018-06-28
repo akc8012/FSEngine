@@ -1,9 +1,11 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(vector<float> vertices, vector<Uint32> indices, const char* textureFilepath)
+RenderComponent::RenderComponent(vector<float> vertices, Uint32 stride, vector<Uint32> indices, const char* textureFilepath)
 {
 	this->vertices = vertices;
+	this->stride = stride;
 	this->indices = indices;
+	triangleCount = (Uint32)vertices.size() / stride;
 
 	CreateVertexArray();
 	texture = new Texture(textureFilepath);
@@ -43,7 +45,7 @@ void RenderComponent::SendPositionAttribute()
 	VertexAttribute positionAttribute;
 	positionAttribute.location = 0;
 	positionAttribute.size = 3;
-	positionAttribute.stride = 5;
+	positionAttribute.stride = stride;
 	positionAttribute.offset = 0;
 
 	SendVertexAttribute(positionAttribute);
@@ -54,7 +56,7 @@ void RenderComponent::SendTextureAttribute()
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 1;
 	textureAttribute.size = 2;
-	textureAttribute.stride = 5;
+	textureAttribute.stride = stride;
 	textureAttribute.offset = 3;
 
 	SendVertexAttribute(textureAttribute);
@@ -82,6 +84,11 @@ void RenderComponent::BindTextures()
 void RenderComponent::BindVertexArray()
 {
 	glBindVertexArray(vertexArrayId);
+}
+
+Uint32 RenderComponent::GetTriangleCount() const
+{
+	return triangleCount;
 }
 
 RenderComponent::~RenderComponent()

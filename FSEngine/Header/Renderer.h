@@ -29,15 +29,15 @@ private:
 	void SetFragmentMixUniforms();
 
 	void ClearScreen();
-	void DrawTriangles();
+	void DrawTriangles(Uint32 triangleCount);
 
 public:
 	Renderer(Window* window, ShaderProgram* shaderProgram);
 	~Renderer();
 
-	void StartRender();
+	void StartRender(Uint32 deltaTime);
 	void RenderGameObject(GameObject* gameObject);
-	void EndRender(Uint32 deltaTime);
+	void EndRender();
 
 	void RecompileShaders();
 };

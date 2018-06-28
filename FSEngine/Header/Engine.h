@@ -24,7 +24,9 @@ private:
 	Window* window = NULL;
 	ShaderProgram* shaderProgram = NULL;
 	Renderer* renderer = NULL;
+
 	GameObject* rotatingCrate = NULL;
+	GameObject* rotatingCrate2 = NULL;
 
 	void InitSDL();
 	void InitOpenGl();

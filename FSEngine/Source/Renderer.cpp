@@ -22,10 +22,14 @@ void Renderer::SetFragmentMixUniforms()
 	shaderProgram->SetInt("texture2", uniformValue+1);
 }
 
-void Renderer::StartRender()
+void Renderer::StartRender(Uint32 deltaTime)
 {
 	ClearScreen();
 	shaderProgram->Use();
+
+	camera->Update(deltaTime);
+	shaderProgram->SetMatrix(uniformLocations["view"], camera->GetTransformComponent()->GetMatrix());
+	shaderProgram->SetMatrix(uniformLocations["projection"], camera->GetProjectionMatrix());
 }
 
 void Renderer::RenderGameObject(GameObject* gameObject)
@@ -33,16 +37,12 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	gameObject->GetRenderComponent()->BindTextures();
 	gameObject->GetRenderComponent()->BindVertexArray();
 	shaderProgram->SetMatrix(uniformLocations["model"], gameObject->GetTransformComponent()->GetMatrix());
+
+	DrawTriangles(gameObject->GetRenderComponent()->GetTriangleCount());
 }
 
-void Renderer::EndRender(Uint32 deltaTime)
+void Renderer::EndRender()
 {
-	camera->Update(deltaTime);
-
-	shaderProgram->SetMatrix(uniformLocations["view"], camera->GetTransformComponent()->GetMatrix());
-	shaderProgram->SetMatrix(uniformLocations["projection"], camera->GetProjectionMatrix());
-
-	DrawTriangles(); //to-do: can this be moved to the end of RenderGameObject()?
 	window->SwapWindow();
 }
 
@@ -52,10 +52,10 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::DrawTriangles()
+void Renderer::DrawTriangles(Uint32 triangleCount)
 {
-	const int First = 0, Count = 36;
-	glDrawArrays(GL_TRIANGLES, 0, Count);
+	const int First = 0;
+	glDrawArrays(GL_TRIANGLES, 0, triangleCount);
 }
 
 void Renderer::RecompileShaders()

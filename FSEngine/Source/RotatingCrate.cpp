@@ -55,7 +55,9 @@ RotatingCrate::RotatingCrate(vec3 position)
 	};
 
 	//to-do: we should pass in a vector of textures (owner is GameObject), rather than have this component handle it
-	renderComponent = new RenderComponent(vertices, indices, "wall.png");
+	//to-do: may want to pass it in on instantiation, to avoid loading same textures from disk twice
+	Uint32 stride = 5;
+	renderComponent = new RenderComponent(vertices, stride, indices, "wall.png");
 
 	transformComponent = new TransformComponent();
 	transformComponent->SetPosition(position);

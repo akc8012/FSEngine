@@ -19,6 +19,9 @@ bool Engine::Init()
 		renderer = new Renderer(window, shaderProgram);
 
 		rotatingCrate = new RotatingCrate(vec3(0.5f, 0.2f, 0));
+
+		rotatingCrate2 = new RotatingCrate(vec3(-0.5f, -0.2f, 0.1f));
+		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
 	}
 	catch (string errorMessage)
 	{
@@ -173,18 +176,22 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 void Engine::Update()
 {
 	rotatingCrate->Update(deltaTime);
+	rotatingCrate2->Update(deltaTime);
 }
 
 void Engine::Draw()
 {
-	renderer->StartRender();
+	renderer->StartRender(deltaTime);
 	renderer->RenderGameObject(rotatingCrate);
-	renderer->EndRender(deltaTime);
+	renderer->RenderGameObject(rotatingCrate2);
+	renderer->EndRender();
 }
 
 Engine::~Engine()
 {
 	delete rotatingCrate;
+	delete rotatingCrate2;
+
 	delete renderer;
 	delete shaderProgram;
 	delete window;
