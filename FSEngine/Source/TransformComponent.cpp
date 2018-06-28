@@ -24,10 +24,35 @@ mat4 TransformComponent::GetMatrix() const
 	return transform;
 }
 
+vec3 TransformComponent::GetScale() const
+{
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	return matrixValues.scale;
+}
+
+quat TransformComponent::GetRotation() const
+{
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	return matrixValues.rotation;
+}
+
+vec3 TransformComponent::GetEulerAngles() const
+{
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	return eulerAngles(matrixValues.rotation);
+}
+
 vec3 TransformComponent::GetPosition() const
 {
-	const int PositionColumn = 3;
-	return transform[PositionColumn];
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	return matrixValues.translation;
+}
+
+TransformComponent::MatrixValues TransformComponent::DecomposeTransformMatrix() const
+{
+	MatrixValues matrixValues;
+	decompose(transform, matrixValues.scale, matrixValues.rotation, matrixValues.translation, matrixValues.skew, matrixValues.perspective);
+	return matrixValues;
 }
 
 void TransformComponent::Scale(vec3 scaleVector)
@@ -45,16 +70,28 @@ void TransformComponent::Translate(vec3 translation)
 	transform = translate(transform, translation);
 }
 
+void TransformComponent::SetScale(vec3 scaleVector)
+{
+	mat4 identity = mat4(1.0f);
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+
+	transform = translate(identity, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identity, scaleVector);
+}
+
 void TransformComponent::SetRotation(float angle, vec3 axis)
 {
 	mat4 identity = mat4(1.0f);
-	transform = rotate(identity, angle, axis);
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+
+	transform = translate(identity, matrixValues.translation) * rotate(identity, angle, axis) * scale(identity, matrixValues.scale);
 }
 
 void TransformComponent::SetPosition(vec3 position)
 {
 	mat4 identity = mat4(1.0f);
-	transform = translate(identity, position);
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+
+	transform = translate(identity, position) * toMat4(matrixValues.rotation) * scale(identity, matrixValues.scale);
 }
 
 void TransformComponent::LookAt(vec3 position, vec3 forwardVector, vec3 upVector)

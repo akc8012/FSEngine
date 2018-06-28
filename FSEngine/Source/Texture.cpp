@@ -2,7 +2,7 @@
 
 Texture::Texture(const char* filepath)
 {
-	SDL_Surface* surface = IMG_Load(filepath);
+	SDL_Surface* surface = IMG_Load(((string)"Resource/Image/" + filepath).c_str());
 	if (surface == NULL)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 

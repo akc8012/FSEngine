@@ -1,6 +1,6 @@
 #include "../Header/RotatingCrate.h"
 
-RotatingCrate::RotatingCrate()
+RotatingCrate::RotatingCrate(vec3 position)
 {
 	vector<float> vertices =
 	{
@@ -55,18 +55,16 @@ RotatingCrate::RotatingCrate()
 	};
 
 	//to-do: we should pass in a vector of textures (owner is GameObject), rather than have this component handle it
-	renderComponent = new RenderComponent(vertices, indices, "Resource/Image/wall.png");
+	renderComponent = new RenderComponent(vertices, indices, "wall.png");
+
 	transformComponent = new TransformComponent();
+	transformComponent->SetPosition(position);
 }
 
 void RotatingCrate::Update(Uint32 deltaTime)
 {
 	float angle = Timer::GetSeconds() * radians(50.0f);
-	const vec3 Axis = vec3(0.5f, 1.0f, 0.0f);
+	const vec3 Axis = vec3(0.5f, 1, 0);
+
 	transformComponent->SetRotation(angle, Axis);
-}
-
-RotatingCrate::~RotatingCrate()
-{
-
 }

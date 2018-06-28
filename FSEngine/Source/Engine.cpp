@@ -18,7 +18,7 @@ bool Engine::Init()
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(window, shaderProgram);
 
-		rotatingCrate = new RotatingCrate();
+		rotatingCrate = new RotatingCrate(vec3(0.5f, 0.2f, 0));
 	}
 	catch (string errorMessage)
 	{

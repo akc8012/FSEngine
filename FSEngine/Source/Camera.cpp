@@ -5,7 +5,7 @@ Camera::Camera(Window* window)
 	this->window = window;
 
 	transformComponent = new TransformComponent();
-	transformComponent->SetPosition(vec3(3, 0, -3));
+	transformComponent->SetPosition(vec3(0, 0, -3));
 }
 
 void Camera::Update(Uint32 deltaTime)

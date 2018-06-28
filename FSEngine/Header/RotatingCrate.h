@@ -10,8 +10,7 @@ class RotatingCrate : public GameObject
 private:
 
 public:
-	RotatingCrate();
-	~RotatingCrate();
+	RotatingCrate(vec3 position);
 
 	void Update(Uint32 deltaTime);
 };
