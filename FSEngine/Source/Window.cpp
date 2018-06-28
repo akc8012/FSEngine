@@ -14,11 +14,11 @@ Window::Window(int width, int height)
 
 void Window::CreateWindow(int width, int height)
 {
-	if (window != NULL)
+	if (window != nullptr)
 		SDL_DestroyWindow(window);
 
 	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-	if (window == NULL)
+	if (window == nullptr)
 		throw (string)"Window could not be created: " + SDL_GetError();
 }
 
@@ -26,7 +26,7 @@ void Window::CreateContext()
 {
 	SDL_GL_DeleteContext(context);
 	context = SDL_GL_CreateContext(window);
-	if (context == NULL)
+	if (context == nullptr)
 		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 }
 
@@ -63,7 +63,7 @@ void Window::SetResolution(int width, int height)
 	glViewport(PositionX, PositionY, width, height);
 }
 
-vec2 Window::GetWindowSize()
+vec2 Window::GetWindowSize() const
 {
 	int width, height;
 	SDL_GetWindowSize(window, &width, &height);

@@ -14,8 +14,8 @@ class Window
 private:
 	static const int StartWidth = 800, StartHeight = 600;
 
-	SDL_Window* window = NULL;
-	SDL_GLContext context;
+	SDL_Window* window = nullptr;
+	SDL_GLContext context = nullptr;
 
 	void CreateWindow(int width = StartWidth, int height = StartHeight);
 
@@ -30,7 +30,7 @@ public:
 
 	void SetResolutionToWindowResolution();
 	void SetResolution(int width, int height);
-	vec2 GetWindowSize();
+	vec2 GetWindowSize() const;
 
 	void SwapWindow();
 

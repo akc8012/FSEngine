@@ -14,7 +14,7 @@ using namespace std;
 class Camera : public GameObject
 {
 private:
-	Window* window = NULL;
+	Window* window = nullptr;
 	mat4 projectionMatrix = mat4(1.0f);
 
 	void CalculateViewMatrix(Uint32 deltaTime);

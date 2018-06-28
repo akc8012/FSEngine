@@ -22,9 +22,9 @@ void GameObject::Update(Uint32 deltaTime)
 
 GameObject::~GameObject()
 {
-	if (renderComponent != NULL)
+	if (renderComponent != nullptr)
 		delete renderComponent;
 
-	if (transformComponent != NULL)
+	if (transformComponent != nullptr)
 		delete transformComponent;
 }

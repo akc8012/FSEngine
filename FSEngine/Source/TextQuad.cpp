@@ -4,7 +4,7 @@ TextQuad::TextQuad()
 {
 	const int FontSize = 18;
 	font = TTF_OpenFont("Resource/Font/arial.ttf", FontSize);
-	if (font == NULL)
+	if (font == nullptr)
 		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
 
 	SDL_Surface* surface = TTF_RenderText_Blended(font, "hah crappy text", SDL_Color { 0, 0, 0, 255 });
@@ -13,7 +13,7 @@ TextQuad::TextQuad()
 
 	vector<float> vertices =
 	{
-		 // positions         // texture coords
+		 // positions        // texture coords
 		-1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
 		 1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
 		 1.0f,  1.0f, 0.0f,  1.0f, 1.0f,

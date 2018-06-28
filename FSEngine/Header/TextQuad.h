@@ -7,8 +7,8 @@
 class TextQuad : public GameObject
 {
 private:
-	TTF_Font* font;
-	Texture* texture;
+	TTF_Font* font = nullptr;
+	Texture* texture = nullptr;
 
 public:
 	TextQuad();

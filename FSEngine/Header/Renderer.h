@@ -20,9 +20,9 @@ using namespace std;
 class Renderer
 {
 private:
-	Window* window = NULL;
-	ShaderProgram* shaderProgram = NULL;
-	Camera* camera = NULL;
+	Window* window = nullptr;
+	ShaderProgram* shaderProgram = nullptr;
+	Camera* camera = nullptr;
 
 	map<string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
 

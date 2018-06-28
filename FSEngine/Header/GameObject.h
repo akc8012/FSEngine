@@ -5,8 +5,8 @@
 class GameObject
 {
 protected:
-	RenderComponent* renderComponent = NULL;
-	TransformComponent* transformComponent = NULL;
+	RenderComponent* renderComponent = nullptr;
+	TransformComponent* transformComponent = nullptr;
 
 public:
 	GameObject();
