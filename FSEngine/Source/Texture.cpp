@@ -27,8 +27,22 @@ void Texture::GenerateTexture(SDL_Surface* surface)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	const int MipmapLevel = 0, Border = 0;
-	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, GL_RGB, surface->w, surface->h, Border, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
+	Uint32 colors = surface->format->BytesPerPixel;
+	GLenum textureFormat = GetTextureFormat(colors, surface->format->Rmask);
+
+	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, colors, surface->w, surface->h, Border, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 	glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+GLenum Texture::GetTextureFormat(Uint32 colors, Uint32 rmask) const
+{
+	bool hasAlphaChannel = colors == 4;
+	bool isStandardRMask = rmask == 0x000000ff;
+
+	if (hasAlphaChannel)
+		return isStandardRMask ? GL_RGBA : GL_BGRA;
+	else
+		return isStandardRMask ? GL_RGB : GL_BGR;
 }
 
 Uint32 Texture::GetId() const

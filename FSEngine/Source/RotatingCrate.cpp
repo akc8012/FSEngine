@@ -55,7 +55,7 @@ RotatingCrate::RotatingCrate(Texture* texture, vec3 position)
 	};
 
 	const Uint32 Stride = 5;
-	renderComponent = new RenderComponent(texture, vertices, Stride, indices);
+	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
 
 	transformComponent = new TransformComponent();
 	transformComponent->SetPosition(position);

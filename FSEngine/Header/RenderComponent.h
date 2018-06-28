@@ -33,7 +33,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(Texture* texture, vector<float> vertices, Uint32 stride, vector<Uint32> indices);
+	RenderComponent(Texture* texture, vector<float> vertices, vector<Uint32> indices, Uint32 stride);
 	~RenderComponent();
 
 	void BindTextures();
