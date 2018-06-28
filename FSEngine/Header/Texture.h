@@ -11,10 +11,13 @@ class Texture
 {
 private:
 	Uint32 textureId = NULL;
+	void GenerateTexture(SDL_Surface* surface);
+	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 
 public:
 	Texture(const char* filepath);
+	Texture(SDL_Surface* surface);
 	~Texture();
 
-	Uint32 GetId();
+	Uint32 GetId() const;
 };

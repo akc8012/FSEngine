@@ -6,6 +6,17 @@ Texture::Texture(const char* filepath)
 	if (surface == NULL)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 
+	GenerateTexture(surface);
+	SDL_FreeSurface(surface);
+}
+
+Texture::Texture(SDL_Surface* surface)
+{
+	GenerateTexture(surface);
+}
+
+void Texture::GenerateTexture(SDL_Surface* surface)
+{
 	const int Amount = 1;
 	glGenTextures(Amount, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -16,13 +27,25 @@ Texture::Texture(const char* filepath)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	const int MipmapLevel = 0, Border = 0;
-	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, GL_RGB, surface->w, surface->h, Border, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
-	glGenerateMipmap(GL_TEXTURE_2D);
+	Uint32 colors = surface->format->BytesPerPixel;
+	GLenum textureFormat = GetTextureFormat(colors, surface->format->Rmask);
 
-	SDL_FreeSurface(surface);
+	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, colors, surface->w, surface->h, Border, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
+	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-Uint32 Texture::GetId()
+GLenum Texture::GetTextureFormat(Uint32 colors, Uint32 rmask) const
+{
+	bool hasAlphaChannel = colors == 4;
+	bool isStandardRMask = rmask == 0x000000ff;
+
+	if (hasAlphaChannel)
+		return isStandardRMask ? GL_RGBA : GL_BGRA;
+	else
+		return isStandardRMask ? GL_RGB : GL_BGR;
+}
+
+Uint32 Texture::GetId() const
 {
 	return textureId;
 }

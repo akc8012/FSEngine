@@ -16,6 +16,7 @@
     <ClCompile Include="Source\RotatingCrate.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
+    <ClCompile Include="Source\TextQuad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="Header\RotatingCrate.h" />
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\TransformComponent.h" />
+    <ClInclude Include="Header\TextQuad.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />
@@ -41,5 +43,8 @@
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />
     <Image Include="Resource\Image\awesomeface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Resource\Font\arial.ttf" />
   </ItemGroup>
 </Project>
