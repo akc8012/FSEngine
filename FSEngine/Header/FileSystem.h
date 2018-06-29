@@ -15,4 +15,6 @@ private:
 public:
 	static string LoadTextFromFile(const char* filepath);
 	static string TryLoadTextFromFile(const char* filepath);
+
+	static json GetSettingValue(const char* key);
 };

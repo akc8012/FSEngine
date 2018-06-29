@@ -39,6 +39,7 @@
     <None Include="Resource\Shader\VertexShader.shader" />
     <None Include="Resource\Shader\FragmentShader.shader" />
     <None Include="Resource\Shader\FragmentMixShader.shader" />
+    <None Include="Resource\Json\settings.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />

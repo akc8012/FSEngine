@@ -1,5 +1,12 @@
 #include "../Header/FileSystem.h"
 
+json FileSystem::GetSettingValue(const char* key)
+{
+	string file = LoadTextFromFile("Resource/Json/settings.json");
+	json jsonFile = json::parse(file);
+	return jsonFile[key];
+}
+
 string FileSystem::LoadTextFromFile(const char* filepath)
 {
 	bool success = false;

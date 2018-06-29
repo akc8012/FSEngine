@@ -173,6 +173,7 @@
     <ClInclude Include="Header\TextQuad.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resource\Json\settings.json" />
     <None Include="Resource\Shader\FragmentMixShader.shader" />
     <None Include="Resource\Shader\FragmentShader.shader" />
     <None Include="Resource\Shader\VertexShader.shader" />
