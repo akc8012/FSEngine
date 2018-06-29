@@ -25,7 +25,7 @@ private:
 
 	std::map<std::string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
 
-	void SetFragmentMixUniforms();
+	void SetFragmentTextureUniforms();
 
 	void ClearScreen();
 	void DrawTriangles(Uint32 triangleCount);

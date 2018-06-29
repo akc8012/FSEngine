@@ -13,5 +13,4 @@ private:
 public:
 	TextQuad();
 	~TextQuad();
-
 };

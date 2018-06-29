@@ -197,6 +197,7 @@ void Engine::Update(Uint32 deltaTime)
 {
 	rotatingCrate->Update(deltaTime);
 	rotatingCrate2->Update(deltaTime);
+	textQuad->Update(deltaTime);
 }
 
 void Engine::Draw(Uint32 deltaTime)

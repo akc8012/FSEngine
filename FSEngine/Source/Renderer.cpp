@@ -5,21 +5,20 @@ Renderer::Renderer(Window* window, ShaderProgram* shaderProgram)
 	this->window = window;
 	this->shaderProgram = shaderProgram;
 	camera = new Camera(window);
-	SetFragmentMixUniforms();
+	SetFragmentTextureUniforms();
 
 	uniformLocations["model"] = shaderProgram->GetUniformLocation("model");
 	uniformLocations["view"] = shaderProgram->GetUniformLocation("view");
 	uniformLocations["projection"] = shaderProgram->GetUniformLocation("projection");
 }
 
-void Renderer::SetFragmentMixUniforms()
+void Renderer::SetFragmentTextureUniforms()
 {
 	//to-do: move this logic to shaderprogram?
 	shaderProgram->Use();
 
-	int uniformValue = 0;
-	shaderProgram->SetInt("texture1", uniformValue);
-	shaderProgram->SetInt("texture2", uniformValue+1);
+	const int UniformValue = 0;
+	shaderProgram->SetInt("texture1", UniformValue);
 }
 
 void Renderer::StartRender(Uint32 deltaTime)
@@ -61,7 +60,7 @@ void Renderer::DrawTriangles(Uint32 triangleCount)
 void Renderer::RecompileShaders()
 {
 	shaderProgram->CreateShaders();
-	SetFragmentMixUniforms();
+	SetFragmentTextureUniforms();
 }
 
 Renderer::~Renderer()
