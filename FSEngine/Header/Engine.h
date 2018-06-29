@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "ShaderProgram.h"
 #include "Renderer.h"
+#include "FileSystem.h"
 #include "Timer.h"
 #include "GameObject.h"
 #include "RotatingCrate.h"
@@ -23,6 +24,7 @@ private:
 	Uint32 lastFrameStamp = 0;
 
 	Window* window = nullptr;
+	FileSystem* fileSystem = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
 	Renderer* renderer = nullptr;
 

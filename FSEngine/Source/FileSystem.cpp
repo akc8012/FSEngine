@@ -1,10 +1,17 @@
 #include "../Header/FileSystem.h"
 
-json FileSystem::GetSettingValue(const char* key)
+void FileSystem::LoadSettingsFile()
 {
 	string file = LoadTextFromFile("Resource/Json/settings.json");
-	json jsonFile = json::parse(file);
-	return jsonFile[key];
+	settingsJson = json::parse(file);
+}
+
+json FileSystem::GetSettingsValue(const char* key) const
+{
+	if (settingsJson == nullptr)
+		throw (string)"Error: Attempting to access settings json without loading it first";
+
+	return settingsJson[key];
 }
 
 string FileSystem::LoadTextFromFile(const char* filepath)

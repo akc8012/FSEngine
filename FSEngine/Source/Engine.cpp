@@ -15,6 +15,7 @@ bool Engine::Init()
 		InitOpenGl();
 		InitGlew();
 
+		fileSystem = new FileSystem();
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(window, shaderProgram);
 
@@ -27,8 +28,8 @@ bool Engine::Init()
 
 		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
 
-
-		printf("%i\n", FileSystem::GetSettingValue("number").get<int>());
+		fileSystem->LoadSettingsFile();
+		printf("%i\n", fileSystem->GetSettingsValue("number").get<int>());
 	}
 	catch (string errorMessage)
 	{
@@ -217,6 +218,7 @@ Engine::~Engine()
 
 	delete renderer;
 	delete shaderProgram;
+	delete fileSystem;
 	delete window;
 
 	TTF_Quit();
