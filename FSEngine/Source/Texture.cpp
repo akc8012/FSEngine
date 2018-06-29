@@ -30,6 +30,7 @@ void Texture::GenerateTexture(SDL_Surface* surface)
 	Uint32 colors = surface->format->BytesPerPixel;
 	GLenum textureFormat = GetTextureFormat(colors, surface->format->Rmask);
 
+	FlipSurface(surface);
 	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, colors, surface->w, surface->h, Border, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
@@ -43,6 +44,36 @@ GLenum Texture::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 		return isStandardRMask ? GL_RGBA : GL_BGRA;
 	else
 		return isStandardRMask ? GL_RGB : GL_BGR;
+}
+
+void Texture::FlipSurface(SDL_Surface* surface)
+{
+	const int ExpectedColorDepth = 4;
+	if (surface->format->BytesPerPixel != ExpectedColorDepth)
+		throw (string)"Error loading texture: Cannot flip surface because it does not have 32 bits of color depth";
+
+	const int PixelCount = surface->w * surface->h;
+	Uint32* sourcePixels = (Uint32*)surface->pixels;
+	Uint32* targetPixels = new Uint32[PixelCount];
+
+	for (int row = 0; row < surface->h; row++)
+	{
+		int flippedRowIndex = abs(row - (surface->h-1));
+
+		for (int column = 0; column < surface->w; column++)
+		{
+			Uint32 pixel = sourcePixels[GetPixelIndex(column, row, surface->w)];
+			targetPixels[GetPixelIndex(column, flippedRowIndex, surface->w)] = pixel;
+		}
+	}
+
+	for (int i = 0; i < PixelCount; i++)
+		sourcePixels[i] = targetPixels[i];
+}
+
+int Texture::GetPixelIndex(int x, int y, int surfaceWidth) const
+{
+	return (y * surfaceWidth) + x;
 }
 
 Uint32 Texture::GetId() const
