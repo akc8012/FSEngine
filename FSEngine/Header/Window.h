@@ -1,4 +1,6 @@
 #pragma once
+#include "FileSystem.h"
+
 #include <SDL.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
@@ -12,25 +14,27 @@ using namespace std;
 class Window
 {
 private:
-	static const int StartWidth = 800, StartHeight = 600;
-
+	FileSystem* fileSystem = nullptr;
 	SDL_Window* window = nullptr;
 	SDL_GLContext context = nullptr;
 
-	void CreateWindow(int width = StartWidth, int height = StartHeight);
-
-public:
-	Window();
-	Window(int width, int height);
-	void CreateContext();
-
-	void ToggleFullscreen();
 	void SetWindowed();
 	void SetFullscreen();
 
+	void CreateContext();
+	void CreateWindow(tvec2<int> size, bool fullscreen);
+	tvec2<int> GetResolutionSetting() const;
+	tvec2<int> GetScreenResolution() const;
+
+public:
+	Window(FileSystem* fileSystem);
+	Window(FileSystem* fileSystem, tvec2<int> size, bool fullscreen);
+
+	void ToggleFullscreen();
 	void SetResolutionToWindowResolution();
+
 	void SetResolution(int width, int height);
-	vec2 GetWindowSize() const;
+	tvec2<int> GetWindowSize() const;
 
 	void SwapWindow();
 

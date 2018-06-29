@@ -1,23 +1,33 @@
 #include "../Header/Window.h"
 
-Window::Window()
+Window::Window(FileSystem* fileSystem)
 {
-	CreateWindow();
+	this->fileSystem = fileSystem;
+
+	CreateWindow(GetResolutionSetting(), fileSystem->GetSettingsValue("Fullscreen").get<bool>());
 	CreateContext();
 }
 
-Window::Window(int width, int height)
+Window::Window(FileSystem* fileSystem, tvec2<int> size, bool fullscreen)
 {
-	CreateWindow(width, height);
+	this->fileSystem = fileSystem;
+
+	CreateWindow(size, fullscreen);
 	CreateContext();
 }
 
-void Window::CreateWindow(int width, int height)
+void Window::CreateWindow(tvec2<int> size, bool fullscreen)
 {
 	if (window != nullptr)
 		SDL_DestroyWindow(window);
 
-	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	if (fullscreen)
+		size = GetScreenResolution();
+
+	const int FullscreenFlag = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
+	const int WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | FullscreenFlag;
+	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size.x, size.y, WindowFlags);
+
 	if (window == nullptr)
 		throw (string)"Window could not be created: " + SDL_GetError();
 }
@@ -37,24 +47,25 @@ void Window::ToggleFullscreen()
 
 void Window::SetWindowed()
 {
-	SDL_SetWindowSize(window, StartWidth, StartHeight);
-	SDL_SetWindowFullscreen(window, SDL_WINDOW_RESIZABLE);
+	tvec2<int> resolutionSetting = GetResolutionSetting();
+
+	SDL_SetWindowSize(window, resolutionSetting.x, resolutionSetting.y);
+	SDL_SetWindowFullscreen(window, 0);
+	SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
 void Window::SetFullscreen()
 {
-	SDL_DisplayMode displayMode;
-	SDL_GetCurrentDisplayMode(0, &displayMode);
+	tvec2<int> screenResolution = GetScreenResolution();
 
-	SDL_SetWindowSize(window, displayMode.w, displayMode.h);
+	SDL_SetWindowSize(window, screenResolution.x, screenResolution.y);
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 }
 
 void Window::SetResolutionToWindowResolution()
 {
-	int width, height;
-	SDL_GetWindowSize(window, &width, &height);
-	SetResolution(width, height);
+	tvec2<int> windowSize = GetWindowSize();
+	SetResolution(windowSize.x, windowSize.y);
 }
 
 void Window::SetResolution(int width, int height)
@@ -63,11 +74,24 @@ void Window::SetResolution(int width, int height)
 	glViewport(PositionX, PositionY, width, height);
 }
 
-vec2 Window::GetWindowSize() const
+tvec2<int> Window::GetWindowSize() const
 {
 	int width, height;
 	SDL_GetWindowSize(window, &width, &height);
-	return vec2(width, height);
+	return tvec2<int>(width, height);
+}
+
+tvec2<int> Window::GetScreenResolution() const
+{
+	SDL_DisplayMode displayMode;
+	SDL_GetCurrentDisplayMode(0, &displayMode);
+	return tvec2<int>(displayMode.w, displayMode.h);
+}
+
+tvec2<int> Window::GetResolutionSetting() const
+{
+	json resolution = fileSystem->GetSettingsValue("Resolution");
+	return tvec2<int>(resolution[0], resolution[1]);
 }
 
 void Window::SwapWindow()

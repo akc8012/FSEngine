@@ -1,3 +1,5 @@
 {
-  "SwapInterval": -1
+  "SwapInterval": -1,
+  "Resolution": [800, 600],
+  "Fullscreen": false
 }

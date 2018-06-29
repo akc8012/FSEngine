@@ -32,7 +32,7 @@ void Camera::CalculateProjectionMatrix()
 	vec2 windowSize = window->GetWindowSize();
 
 	const float FieldOfView = radians(45.0f);
-	const float AspectRatio = (float)windowSize.x / (float)windowSize.y;
+	const float AspectRatio = windowSize.x / windowSize.y;
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 

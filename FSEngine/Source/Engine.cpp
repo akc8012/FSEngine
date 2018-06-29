@@ -12,7 +12,7 @@ bool Engine::Init()
 		fileSystem = new FileSystem();
 
 		InitSDL();
-		window = new Window();
+		window = new Window(fileSystem);
 
 		InitOpenGl();
 		InitGlew();
