@@ -26,6 +26,9 @@ bool Engine::Init()
 		textQuad = new TextQuad();
 
 		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
+
+
+		printf("%i\n", FileSystem::GetSettingValue("number").get<int>());
 	}
 	catch (string errorMessage)
 	{

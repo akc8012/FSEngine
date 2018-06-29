@@ -1,6 +1,13 @@
-#include "../Header/AndUtility.h"
+#include "../Header/FileSystem.h"
 
-string AndUtility::LoadTextFromFile(const char* filepath)
+json FileSystem::GetSettingValue(const char* key)
+{
+	string file = LoadTextFromFile("Resource/Json/settings.json");
+	json jsonFile = json::parse(file);
+	return jsonFile[key];
+}
+
+string FileSystem::LoadTextFromFile(const char* filepath)
 {
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
@@ -10,7 +17,7 @@ string AndUtility::LoadTextFromFile(const char* filepath)
 	return file;
 }
 
-string AndUtility::TryLoadTextFromFile(const char* filepath)
+string FileSystem::TryLoadTextFromFile(const char* filepath)
 {
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
@@ -20,7 +27,7 @@ string AndUtility::TryLoadTextFromFile(const char* filepath)
 	return file;
 }
 
-string AndUtility::InternalTryLoadTextFromFile(const char* filepath, bool& success)
+string FileSystem::InternalTryLoadTextFromFile(const char* filepath, bool& success)
 {
 	ifstream inputStream(filepath, ios::in | ios::binary);
 	

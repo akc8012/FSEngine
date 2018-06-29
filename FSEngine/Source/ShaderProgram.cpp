@@ -50,7 +50,7 @@ Uint32 ShaderProgram::CreateFragmentShader()
 
 Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource)
 {
-	int shaderId = TryCompileShaderSource(type, AndUtility::LoadTextFromFile(filepath).c_str());
+	int shaderId = TryCompileShaderSource(type, FileSystem::LoadTextFromFile(filepath).c_str());
 	if (shaderId == -1)
 	{
 		shaderId = TryCompileShaderSource(type, fallbackSource);

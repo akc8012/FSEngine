@@ -4,7 +4,10 @@
 #include <sstream>
 using namespace std;
 
-class AndUtility
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
+
+class FileSystem
 {
 private:
 	static string InternalTryLoadTextFromFile(const char* filepath, bool& success);
@@ -12,4 +15,6 @@ private:
 public:
 	static string LoadTextFromFile(const char* filepath);
 	static string TryLoadTextFromFile(const char* filepath);
+
+	static json GetSettingValue(const char* key);
 };

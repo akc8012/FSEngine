@@ -5,7 +5,6 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\AndUtility.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Input.cpp" />
@@ -17,12 +16,12 @@
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\TextQuad.cpp" />
+    <ClCompile Include="Source\FileSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
-    <ClInclude Include="Header\AndUtility.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\Input.h" />
@@ -34,11 +33,13 @@
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\TransformComponent.h" />
     <ClInclude Include="Header\TextQuad.h" />
+    <ClInclude Include="Header\FileSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Shader\VertexShader.shader" />
     <None Include="Resource\Shader\FragmentShader.shader" />
     <None Include="Resource\Shader\FragmentMixShader.shader" />
+    <None Include="Resource\Json\settings.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />
