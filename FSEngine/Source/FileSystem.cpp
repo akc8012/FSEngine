@@ -1,6 +1,6 @@
-#include "../Header/AndUtility.h"
+#include "../Header/FileSystem.h"
 
-string AndUtility::LoadTextFromFile(const char* filepath)
+string FileSystem::LoadTextFromFile(const char* filepath)
 {
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
@@ -10,7 +10,7 @@ string AndUtility::LoadTextFromFile(const char* filepath)
 	return file;
 }
 
-string AndUtility::TryLoadTextFromFile(const char* filepath)
+string FileSystem::TryLoadTextFromFile(const char* filepath)
 {
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
@@ -20,7 +20,7 @@ string AndUtility::TryLoadTextFromFile(const char* filepath)
 	return file;
 }
 
-string AndUtility::InternalTryLoadTextFromFile(const char* filepath, bool& success)
+string FileSystem::InternalTryLoadTextFromFile(const char* filepath, bool& success)
 {
 	ifstream inputStream(filepath, ios::in | ios::binary);
 	
