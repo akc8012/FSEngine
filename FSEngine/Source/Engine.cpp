@@ -9,13 +9,14 @@ bool Engine::Init()
 {
 	try
 	{
+		fileSystem = new FileSystem();
+
 		InitSDL();
 		window = new Window();
 
 		InitOpenGl();
 		InitGlew();
 
-		fileSystem = new FileSystem();
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(window, shaderProgram);
 
@@ -27,9 +28,6 @@ bool Engine::Init()
 		textQuad = new TextQuad();
 
 		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
-
-		fileSystem->LoadSettingsFile();
-		printf("%i\n", fileSystem->GetSettingsValue("number").get<int>());
 	}
 	catch (string errorMessage)
 	{
@@ -62,9 +60,7 @@ void Engine::InitOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	const int AdaptiveVsync = -1;
-	SetSwapInterval(AdaptiveVsync);
-
+	SetSwapInterval(fileSystem->GetSettingsValue("SwapInterval").get<int>());
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_BLEND);
@@ -153,6 +149,11 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		ToggleSwapInterval();
 		printf("Set swap interval to: %i\n", SDL_GL_GetSwapInterval());
 		break;
+
+	case SDLK_k:
+		fileSystem->LoadSettingsFile();
+		printf("Reloaded settings file\n");
+		break;
 	}
 }
 
@@ -218,8 +219,8 @@ Engine::~Engine()
 
 	delete renderer;
 	delete shaderProgram;
-	delete fileSystem;
 	delete window;
+	delete fileSystem;
 
 	TTF_Quit();
 	IMG_Quit();

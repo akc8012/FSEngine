@@ -15,6 +15,8 @@ private:
 	static string InternalTryLoadTextFromFile(const char* filepath, bool& success);
 
 public:
+	FileSystem();
+
 	static string LoadTextFromFile(const char* filepath);
 	static string TryLoadTextFromFile(const char* filepath);
 

@@ -1,5 +1,10 @@
 #include "../Header/FileSystem.h"
 
+FileSystem::FileSystem()
+{
+	LoadSettingsFile();
+}
+
 void FileSystem::LoadSettingsFile()
 {
 	string file = LoadTextFromFile("Resource/Json/settings.json");
@@ -11,7 +16,11 @@ json FileSystem::GetSettingsValue(const char* key) const
 	if (settingsJson == nullptr)
 		throw (string)"Error: Attempting to access settings json without loading it first";
 
-	return settingsJson[key];
+	auto jsonValue = settingsJson.find(key);
+	if (jsonValue == settingsJson.end())
+		throw (string)"Error: Could not retrieve settings value using key: " + key;
+
+	return jsonValue.value();
 }
 
 string FileSystem::LoadTextFromFile(const char* filepath)
