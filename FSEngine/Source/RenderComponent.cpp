@@ -1,6 +1,6 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(Texture* texture, vector<float> vertices, vector<Uint32> indices, Uint32 stride)
+RenderComponent::RenderComponent(Texture* texture, std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride)
 {
 	this->texture = texture;
 	this->vertices = vertices;

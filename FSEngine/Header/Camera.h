@@ -9,7 +9,6 @@
 using namespace glm;
 
 #include <vector>
-using namespace std;
 
 class Camera : public GameObject
 {

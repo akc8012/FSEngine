@@ -2,6 +2,9 @@
 
 TextQuad::TextQuad()
 {
+	using std::string;
+	using std::vector;
+
 	const int FontSize = 18;
 	font = TTF_OpenFont("Resource/Font/arial.ttf", FontSize);
 	if (font == nullptr)

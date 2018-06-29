@@ -92,13 +92,13 @@ void ShaderProgram::LinkShaderProgram(const Uint32 vertexShaderId, const Uint32 
 	{
 		char infoLog[512];
 		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
-		throw (string)"Error linking program: " + infoLog;
+		throw (std::string)"Error linking program: " + infoLog;
 	}
 }
 
-string ShaderProgram::GetShaderTypeText(Uint32 type)
+std::string ShaderProgram::GetShaderTypeText(Uint32 type)
 {
-	return (string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
+	return (std::string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
 }
 
 Uint32 ShaderProgram::GetId() const

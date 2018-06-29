@@ -3,13 +3,13 @@
 float Input::GetHorizontalAxis()
 {
 	float axis = GetAnalogAxis(SDL_CONTROLLER_AXIS_LEFTX) + GetDigitalAxis(SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT) + GetDigitalAxis(SDL_SCANCODE_D, SDL_SCANCODE_A);
-	return clamp(axis, -1.0f, 1.0f);
+	return std::clamp(axis, -1.0f, 1.0f);
 }
 
 float Input::GetVerticalAxis()
 {
 	float axis = GetAnalogAxis(SDL_CONTROLLER_AXIS_LEFTY) + GetDigitalAxis(SDL_SCANCODE_DOWN, SDL_SCANCODE_UP) + GetDigitalAxis(SDL_SCANCODE_S, SDL_SCANCODE_W);
-	return clamp(axis, -1.0f, 1.0f);
+	return std::clamp(axis, -1.0f, 1.0f);
 }
 
 float Input::GetAnalogAxis(SDL_GameControllerAxis axis)
@@ -20,7 +20,7 @@ float Input::GetAnalogAxis(SDL_GameControllerAxis axis)
 	SDL_GameControllerClose(gameController);
 
 	const int MaxInt = 32767;
-	float analogInput = clamp((float)analogInputInt / MaxInt, -1.0f, 1.0f);
+	float analogInput = std::clamp((float)analogInputInt / MaxInt, -1.0f, 1.0f);
 
 	const float DeadZone = 0.1f;
 	return abs(analogInput) > DeadZone ? analogInput : 0.0f;

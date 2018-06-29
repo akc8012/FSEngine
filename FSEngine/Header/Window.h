@@ -9,7 +9,6 @@
 using namespace glm;
 
 #include <string>
-using namespace std;
 
 class Window
 {

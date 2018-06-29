@@ -15,7 +15,6 @@ using namespace glm;
 
 #include <string>
 #include <map>
-using namespace std;
 
 class Renderer
 {
@@ -24,7 +23,7 @@ private:
 	ShaderProgram* shaderProgram = nullptr;
 	Camera* camera = nullptr;
 
-	map<string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
+	std::map<std::string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
 
 	void SetFragmentMixUniforms();
 

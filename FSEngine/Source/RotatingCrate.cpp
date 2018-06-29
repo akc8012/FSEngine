@@ -2,6 +2,8 @@
 
 RotatingCrate::RotatingCrate(Texture* texture, vec3 position)
 {
+	using std::vector;
+
 	vector<float> vertices =
 	{
 		 // positions         // texture coords

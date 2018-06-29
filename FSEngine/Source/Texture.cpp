@@ -2,6 +2,8 @@
 
 Texture::Texture(const char* filepath)
 {
+	using std::string;
+
 	SDL_Surface* surface = IMG_Load(((string)"Resource/Image/" + filepath).c_str());
 	if (surface == nullptr)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
@@ -50,7 +52,7 @@ void Texture::FlipSurface(SDL_Surface* surface)
 {
 	const int ExpectedColorDepth = 4;
 	if (surface->format->BytesPerPixel != ExpectedColorDepth)
-		throw (string)"Error loading texture: Cannot flip surface because it does not have 32 bits of color depth";
+		throw (std::string)"Error loading texture: Cannot flip surface because it does not have 32 bits of color depth";
 
 	const int PixelCount = surface->w * surface->h;
 	Uint32* sourcePixels = (Uint32*)surface->pixels;

@@ -3,7 +3,6 @@
 #include "Texture.h"
 
 #include <vector>
-using namespace std;
 
 class RenderComponent : public Component
 {
@@ -11,8 +10,8 @@ private:
 	Texture* texture = nullptr;
 	Uint32 vertexArrayId = NULL;
 
-	vector<float> vertices;
-	vector<Uint32> indices;
+	std::vector<float> vertices;
+	std::vector<Uint32> indices;
 	Uint32 triangleCount;
 
 	struct VertexAttribute
@@ -33,7 +32,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(Texture* texture, vector<float> vertices, vector<Uint32> indices, Uint32 stride);
+	RenderComponent(Texture* texture, std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride);
 	~RenderComponent();
 
 	void BindTextures();

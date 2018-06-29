@@ -1,7 +1,9 @@
 #include "../Header/TransformComponent.h"
 
-string TransformComponent::GetFormattedMatrixString(mat4 matrix)
+std::string TransformComponent::GetFormattedMatrixString(mat4 matrix)
 {
+	using std::string;
+
 	string matrixString = "";
 
 	const int ColumnAmount = 4, RowAmount = ColumnAmount;
@@ -10,7 +12,7 @@ string TransformComponent::GetFormattedMatrixString(mat4 matrix)
 		for (int row = 0; row < RowAmount; row++)
 		{
 			string comma = (row != RowAmount-1) ? ", " : "";
-			matrixString += to_string(matrix[col][row]) + comma;
+			matrixString += std::to_string(matrix[col][row]) + comma;
 		}
 
 		matrixString += "\n";

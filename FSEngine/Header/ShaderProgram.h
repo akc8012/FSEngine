@@ -11,7 +11,6 @@
 using namespace glm;
 
 #include <string>
-using namespace std;
 
 class ShaderProgram
 {
@@ -25,7 +24,7 @@ private:
 	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
 	int TryCompileShaderSource(Uint32 type, const char* filepath);
 	
-	static string GetShaderTypeText(Uint32 type);
+	static std::string GetShaderTypeText(Uint32 type);
 
 public:
 	ShaderProgram();
