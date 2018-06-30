@@ -9,14 +9,15 @@ ShaderProgram::ShaderProgram()
 void ShaderProgram::CompileShaders()
 {
 	CreateShaderProgram();
-	InitUniformValues();
+	MapUniformValues();
 }
 
-void ShaderProgram::InitUniformValues()
+void ShaderProgram::MapUniformValues()
 {
-	uniformLocations["model"] = GetUniformLocation("model");
-	uniformLocations["view"] = GetUniformLocation("view");
-	uniformLocations["projection"] = GetUniformLocation("projection");
+	uniformLocations["model"] = GetUniformLocationFromGl("model");
+	uniformLocations["view"] = GetUniformLocationFromGl("view");
+	uniformLocations["projection"] = GetUniformLocationFromGl("projection");
+	uniformLocations["renderPerspective"] = GetUniformLocationFromGl("renderPerspective");
 }
 
 void ShaderProgram::CreateShaderProgram()
@@ -114,11 +115,6 @@ std::string ShaderProgram::GetShaderTypeText(Uint32 type)
 	return (std::string)(type == GL_VERTEX_SHADER ? "vertex" : "fragment");
 }
 
-Uint32 ShaderProgram::GetId() const
-{
-	return shaderProgramId;
-}
-
 void ShaderProgram::Use()
 {
 	glUseProgram(shaderProgramId);
@@ -144,6 +140,18 @@ void ShaderProgram::SetMatrix(const char* name, mat4 value)
 	const int Count = 1;
 	const bool Transpose = false;
 
+	glUniformMatrix4fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
+}
+
+bool ShaderProgram::GetBool(const char* name) const
+{
+	int value;
+	glGetUniformiv(shaderProgramId, GetUniformLocation(name), &value);
+	return value;
+}
+
+Uint32 ShaderProgram::GetUniformLocation(const char* name) const
+{
 	Uint32 location = -1;
 	try
 	{
@@ -151,14 +159,14 @@ void ShaderProgram::SetMatrix(const char* name, mat4 value)
 	}
 	catch (std::out_of_range)
 	{
-		location = GetUniformLocation(name);
-		printf("Warning: Could not find stored uniform location with name: %s. Using GetUniformLocation().\n", name);
+		location = GetUniformLocationFromGl(name);
+		printf("Warning: Could not find stored uniform location with name: %s. Using GetUniformLocationFromGl().\n", name);
 	}
 
-	glUniformMatrix4fv(location, Count, Transpose, value_ptr(value));
+	return location;
 }
 
-Uint32 ShaderProgram::GetUniformLocation(const char* name) const
+Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
 {
 	return glGetUniformLocation(shaderProgramId, name);
 }

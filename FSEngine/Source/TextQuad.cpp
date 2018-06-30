@@ -6,12 +6,12 @@ TextQuad::TextQuad(FileSystem* fileSystem)
 	using std::string;
 	using std::vector;
 
-	const int FontSize = 18;
+	const int FontSize = 80;
 	font = TTF_OpenFont("Resource/Font/arial.ttf", FontSize);
 	if (font == nullptr)
 		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
 
-	SDL_Surface* surface = TTF_RenderText_Blended(font, "hah crappy text", SDL_Color { 0, 0, 0, 255 });
+	SDL_Surface* surface = TTF_RenderText_Blended(font, "woo text quad", SDL_Color { 0, 0, 0, 255 });
 	texture = new Texture(surface);
 	SDL_FreeSurface(surface);
 
@@ -36,6 +36,7 @@ TextQuad::TextQuad(FileSystem* fileSystem)
 	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
 
 	transformComponent = new TransformComponent();
+	transformComponent->SetScale(vec3(1, 0.25f, 1));
 }
 
 TextQuad::~TextQuad()

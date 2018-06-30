@@ -23,6 +23,7 @@ private:
 	Camera* camera = nullptr;
 
 	void ClearScreen();
+	void SetCameraMatrices();
 	void DrawTriangles(Uint32 triangleCount);
 
 public:

@@ -28,8 +28,10 @@ private:
 	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
 	int TryCompileShaderSource(Uint32 type, const char* filepath);
 
-	void InitUniformValues();
-	
+	void MapUniformValues();
+	Uint32 GetUniformLocation(const char* name) const;
+	Uint32 GetUniformLocationFromGl(const char* name) const;
+
 	static std::string GetShaderTypeText(Uint32 type);
 
 public:
@@ -39,11 +41,10 @@ public:
 	void CompileShaders();
 	void Use();
 
-	Uint32 GetId() const;
-	Uint32 GetUniformLocation(const char* name) const;
-
 	void SetBool(const char* name, bool value);
 	void SetInt(const char* name, int value);
 	void SetFloat(const char* name, float value);
 	void SetMatrix(const char* name, mat4 value);
+
+	bool GetBool(const char* name) const;
 };

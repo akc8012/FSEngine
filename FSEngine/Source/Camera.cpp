@@ -13,6 +13,7 @@ void Camera::Update(Uint32 deltaTime)
 {
 	CalculateViewMatrix(deltaTime);
 	CalculateProjectionMatrixPerspective();
+	CalculateProjectionMatrixOrthographic();
 }
 
 void Camera::CalculateViewMatrix(Uint32 deltaTime)
@@ -37,22 +38,27 @@ void Camera::CalculateProjectionMatrixPerspective()
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 
-	projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
+	projectionPerspective = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
 }
 
 void Camera::CalculateProjectionMatrixOrthographic()
 {
 	vec2 windowSize = window->GetWindowSize();
 
-	const float Left = 0.0f;
-	const float Right = 1.5f;
-	const float Bottom = 0.0f;
-	const float Top = 1.5f;
+	const float Left = -1.0f;
+	const float Right = 1.0f;
+	const float Bottom = Left;
+	const float Top = Right;
 
-	projectionMatrix = ortho(Left, Right, Bottom, Top);
+	projectionOrthographic = ortho(Left, Right, Bottom, Top);
 }
 
-mat4 Camera::GetProjectionMatrix() const
+mat4 Camera::GetProjectionPerspective() const
 {
-	return projectionMatrix;
+	return projectionPerspective;
+}
+
+mat4 Camera::GetProjectionOrthographic() const
+{
+	return projectionOrthographic;
 }

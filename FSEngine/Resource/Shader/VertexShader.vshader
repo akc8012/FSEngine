@@ -7,9 +7,11 @@ out vec2 texureCoord;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform bool renderPerspective = true;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(vertexPosition, 1.0);
+	mat4 viewMatrix = renderPerspective ? view : mat4(1);
+	gl_Position = projection * viewMatrix * model * vec4(vertexPosition, 1.0);
 	texureCoord = inTextureCoord;
 }

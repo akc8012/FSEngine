@@ -13,12 +13,12 @@ void Renderer::StartRender(Uint32 deltaTime)
 	shaderProgram->Use();
 
 	camera->Update(deltaTime);
-	shaderProgram->SetMatrix("view", camera->GetTransformComponent()->GetMatrix());
-	shaderProgram->SetMatrix("projection", camera->GetProjectionMatrix());
 }
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
+	SetCameraMatrices();
+
 	gameObject->GetRenderComponent()->BindTextures();
 	gameObject->GetRenderComponent()->BindVertexArray();
 	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
@@ -35,6 +35,16 @@ void Renderer::ClearScreen()
 {
 	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer::SetCameraMatrices()
+{
+	bool renderPerspective = shaderProgram->GetBool("renderPerspective");
+	if (renderPerspective)
+		shaderProgram->SetMatrix("view", camera->GetTransformComponent()->GetMatrix());
+
+	mat4 projection = renderPerspective ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
+	shaderProgram->SetMatrix("projection", projection);
 }
 
 void Renderer::DrawTriangles(Uint32 triangleCount)

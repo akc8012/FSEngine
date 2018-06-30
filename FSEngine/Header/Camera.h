@@ -14,7 +14,8 @@ class Camera : public GameObject
 {
 private:
 	Window* window = nullptr;
-	mat4 projectionMatrix = mat4(1.0f);
+	mat4 projectionPerspective = mat4(1.0f);
+	mat4 projectionOrthographic = mat4(1.0f);
 
 	void CalculateViewMatrix(Uint32 deltaTime);
 	void CalculateProjectionMatrixPerspective();
@@ -24,5 +25,6 @@ public:
 	Camera(FileSystem* fileSystem, Window* window);
 	void Update(Uint32 deltaTime);
 
-	mat4 GetProjectionMatrix() const;
+	mat4 GetProjectionPerspective() const;
+	mat4 GetProjectionOrthographic() const;
 };
