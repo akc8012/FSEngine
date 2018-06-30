@@ -6,12 +6,13 @@ Camera::Camera(Window* window)
 
 	transformComponent = new TransformComponent();
 	transformComponent->SetPosition(vec3(0, 0, -3));
+
+	CalculateProjectionMatrixPerspective();
 }
 
 void Camera::Update(Uint32 deltaTime)
 {
 	CalculateViewMatrix(deltaTime);
-	CalculateProjectionMatrix();
 }
 
 void Camera::CalculateViewMatrix(Uint32 deltaTime)
@@ -27,7 +28,7 @@ void Camera::CalculateViewMatrix(Uint32 deltaTime)
 	transformComponent->LookAt(position, forwardVector, upVector);
 }
 
-void Camera::CalculateProjectionMatrix()
+void Camera::CalculateProjectionMatrixPerspective()
 {
 	vec2 windowSize = window->GetWindowSize();
 
@@ -37,6 +38,18 @@ void Camera::CalculateProjectionMatrix()
 	const float FarPlane = 100.0f;
 
 	projectionMatrix = perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
+}
+
+void Camera::CalculateProjectionMatrixOrthographic()
+{
+	vec2 windowSize = window->GetWindowSize();
+
+	const float FieldOfView = 0.0f;
+	const float AspectRatio = windowSize.x / windowSize.y;
+	const float NearPlane = 0.0f;
+	const float FarPlane = 600.0f;
+
+	projectionMatrix = ortho(FieldOfView, AspectRatio, NearPlane, FarPlane);
 }
 
 mat4 Camera::GetProjectionMatrix() const

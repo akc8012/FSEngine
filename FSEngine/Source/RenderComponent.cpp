@@ -75,7 +75,6 @@ void RenderComponent::SendIndices(Uint32 elementBufferId)
 
 void RenderComponent::BindTextures()
 {
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture->GetId());
 }
 

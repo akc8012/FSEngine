@@ -12,7 +12,6 @@ public:
 	GameObject();
 	~GameObject();
 
-	//to-do: change this to one template GetComponent
 	RenderComponent* GetRenderComponent();
 	TransformComponent* GetTransformComponent();
 	virtual void Update(Uint32 deltaTime);

@@ -5,20 +5,6 @@ Renderer::Renderer(Window* window, ShaderProgram* shaderProgram)
 	this->window = window;
 	this->shaderProgram = shaderProgram;
 	camera = new Camera(window);
-	SetFragmentTextureUniforms();
-
-	uniformLocations["model"] = shaderProgram->GetUniformLocation("model");
-	uniformLocations["view"] = shaderProgram->GetUniformLocation("view");
-	uniformLocations["projection"] = shaderProgram->GetUniformLocation("projection");
-}
-
-void Renderer::SetFragmentTextureUniforms()
-{
-	//to-do: move this logic to shaderprogram?
-	shaderProgram->Use();
-
-	const int UniformValue = 0;
-	shaderProgram->SetInt("texture1", UniformValue);
 }
 
 void Renderer::StartRender(Uint32 deltaTime)
@@ -27,15 +13,15 @@ void Renderer::StartRender(Uint32 deltaTime)
 	shaderProgram->Use();
 
 	camera->Update(deltaTime);
-	shaderProgram->SetMatrix(uniformLocations["view"], camera->GetTransformComponent()->GetMatrix());
-	shaderProgram->SetMatrix(uniformLocations["projection"], camera->GetProjectionMatrix());
+	shaderProgram->SetMatrix("view", camera->GetTransformComponent()->GetMatrix());
+	shaderProgram->SetMatrix("projection", camera->GetProjectionMatrix());
 }
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	gameObject->GetRenderComponent()->BindTextures();
 	gameObject->GetRenderComponent()->BindVertexArray();
-	shaderProgram->SetMatrix(uniformLocations["model"], gameObject->GetTransformComponent()->GetMatrix());
+	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
 
 	DrawTriangles(gameObject->GetRenderComponent()->GetTriangleCount());
 }
@@ -55,12 +41,6 @@ void Renderer::DrawTriangles(Uint32 triangleCount)
 {
 	const int First = 0;
 	glDrawArrays(GL_TRIANGLES, First, triangleCount);
-}
-
-void Renderer::RecompileShaders()
-{
-	shaderProgram->CreateShaders();
-	SetFragmentTextureUniforms();
 }
 
 Renderer::~Renderer()

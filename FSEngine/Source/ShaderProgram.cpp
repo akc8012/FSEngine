@@ -3,10 +3,23 @@
 ShaderProgram::ShaderProgram()
 {
 	shaderProgramId = glCreateProgram();
-	CreateShaders();
+	CompileShaders();
 }
 
-void ShaderProgram::CreateShaders()
+void ShaderProgram::CompileShaders()
+{
+	CreateShaderProgram();
+	InitUniformValues();
+}
+
+void ShaderProgram::InitUniformValues()
+{
+	uniformLocations["model"] = GetUniformLocation("model");
+	uniformLocations["view"] = GetUniformLocation("view");
+	uniformLocations["projection"] = GetUniformLocation("projection");
+}
+
+void ShaderProgram::CreateShaderProgram()
 {
 	Uint32 vertexShaderId = CreateVertexShader();
 	glAttachShader(shaderProgramId, vertexShaderId);
@@ -111,31 +124,43 @@ void ShaderProgram::Use()
 	glUseProgram(shaderProgramId);
 }
 
-void ShaderProgram::SetBool(const char* name, bool value) const
+void ShaderProgram::SetBool(const char* name, bool value)
 {
 	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
-void ShaderProgram::SetInt(const char* name, int value) const
+void ShaderProgram::SetInt(const char* name, int value)
 {
 	glUniform1i(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetFloat(const char* name, float value) const
+void ShaderProgram::SetFloat(const char* name, float value)
 {
 	glUniform1f(GetUniformLocation(name), value);
+}
+
+void ShaderProgram::SetMatrix(const char* name, mat4 value)
+{
+	const int Count = 1;
+	const bool Transpose = false;
+
+	Uint32 location = -1;
+	try
+	{
+		location = uniformLocations.at(name);
+	}
+	catch (std::out_of_range)
+	{
+		location = GetUniformLocation(name);
+		printf("Warning: Could not find stored uniform location with name: %s. Using GetUniformLocation().\n", name);
+	}
+
+	glUniformMatrix4fv(location, Count, Transpose, value_ptr(value));
 }
 
 Uint32 ShaderProgram::GetUniformLocation(const char* name) const
 {
 	return glGetUniformLocation(shaderProgramId, name);
-}
-
-void ShaderProgram::SetMatrix(Uint32 uniformLocation, mat4 value) const
-{
-	const int Count = 1;
-	const bool Transpose = false;
-	glUniformMatrix4fv(uniformLocation, Count, Transpose, value_ptr(value));
 }
 
 ShaderProgram::~ShaderProgram()

@@ -14,7 +14,6 @@
 using namespace glm;
 
 #include <string>
-#include <map>
 
 class Renderer
 {
@@ -22,10 +21,6 @@ private:
 	Window* window = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
 	Camera* camera = nullptr;
-
-	std::map<std::string, Uint32> uniformLocations; //to-do: we shouldn't be storing all of this here
-
-	void SetFragmentTextureUniforms();
 
 	void ClearScreen();
 	void DrawTriangles(Uint32 triangleCount);
@@ -37,6 +32,4 @@ public:
 	void StartRender(Uint32 deltaTime);
 	void RenderGameObject(GameObject* gameObject);
 	void EndRender();
-
-	void RecompileShaders();
 };

@@ -133,7 +133,7 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 	case SDLK_x:
 		try
 		{
-			renderer->RecompileShaders();
+			shaderProgram->CompileShaders();
 			printf("Rebuilt shader program\n");
 		}
 		catch (std::string errorMessage)

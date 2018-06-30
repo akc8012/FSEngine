@@ -11,11 +11,15 @@
 using namespace glm;
 
 #include <string>
+#include <map>
 
 class ShaderProgram
 {
 private:
 	Uint32 shaderProgramId = NULL;
+	std::map<std::string, Uint32> uniformLocations;
+
+	void CreateShaderProgram();
 
 	Uint32 CreateVertexShader();
 	Uint32 CreateFragmentShader();
@@ -23,6 +27,8 @@ private:
 
 	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
 	int TryCompileShaderSource(Uint32 type, const char* filepath);
+
+	void InitUniformValues();
 	
 	static std::string GetShaderTypeText(Uint32 type);
 
@@ -30,14 +36,14 @@ public:
 	ShaderProgram();
 	~ShaderProgram();
 
-	void CreateShaders();
+	void CompileShaders();
 	void Use();
 
 	Uint32 GetId() const;
 	Uint32 GetUniformLocation(const char* name) const;
 
-	void SetBool(const char* name, bool value) const;
-	void SetInt(const char* name, int value) const;
-	void SetFloat(const char* name, float value) const;
-	void SetMatrix(Uint32 uniformLocation, mat4 value) const;
+	void SetBool(const char* name, bool value);
+	void SetInt(const char* name, int value);
+	void SetFloat(const char* name, float value);
+	void SetMatrix(const char* name, mat4 value);
 };

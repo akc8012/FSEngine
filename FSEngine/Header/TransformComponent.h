@@ -25,7 +25,7 @@ private:
 	};
 
 	mat4 transform = mat4(1.0f);
-	// to-do: static constants for identity mat, up vec, etc
+
 public:
 	static std::string GetFormattedMatrixString(mat4 matrix);
 
