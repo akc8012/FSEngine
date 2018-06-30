@@ -1,6 +1,7 @@
 #include "../Header/TextQuad.h"
 
-TextQuad::TextQuad()
+TextQuad::TextQuad(FileSystem* fileSystem)
+ : GameObject(fileSystem)
 {
 	using std::string;
 	using std::vector;
@@ -35,7 +36,6 @@ TextQuad::TextQuad()
 	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
 
 	transformComponent = new TransformComponent();
-	transformComponent->SetPosition(vec3(2, 0.2f, -3));
 }
 
 TextQuad::~TextQuad()

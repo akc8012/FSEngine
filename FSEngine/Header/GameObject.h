@@ -1,15 +1,17 @@
 #pragma once
+#include "FileSystem.h"
 #include "RenderComponent.h"
 #include "TransformComponent.h"
 
 class GameObject
 {
 protected:
+	FileSystem* fileSystem = nullptr;
 	RenderComponent* renderComponent = nullptr;
 	TransformComponent* transformComponent = nullptr;
 
 public:
-	GameObject();
+	GameObject(FileSystem* fileSystem);
 	~GameObject();
 
 	RenderComponent* GetRenderComponent();

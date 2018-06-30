@@ -1,18 +1,18 @@
 #include "../Header/Camera.h"
 
-Camera::Camera(Window* window)
+Camera::Camera(FileSystem* fileSystem, Window* window)
+ : GameObject(fileSystem)
 {
 	this->window = window;
 
 	transformComponent = new TransformComponent();
 	transformComponent->SetPosition(vec3(0, 0, -3));
-
-	CalculateProjectionMatrixPerspective();
 }
 
 void Camera::Update(Uint32 deltaTime)
 {
 	CalculateViewMatrix(deltaTime);
+	CalculateProjectionMatrixPerspective();
 }
 
 void Camera::CalculateViewMatrix(Uint32 deltaTime)
@@ -44,12 +44,12 @@ void Camera::CalculateProjectionMatrixOrthographic()
 {
 	vec2 windowSize = window->GetWindowSize();
 
-	const float FieldOfView = 0.0f;
-	const float AspectRatio = windowSize.x / windowSize.y;
-	const float NearPlane = 0.0f;
-	const float FarPlane = 600.0f;
+	const float Left = 0.0f;
+	const float Right = 1.5f;
+	const float Bottom = 0.0f;
+	const float Top = 1.5f;
 
-	projectionMatrix = ortho(FieldOfView, AspectRatio, NearPlane, FarPlane);
+	projectionMatrix = ortho(Left, Right, Bottom, Top);
 }
 
 mat4 Camera::GetProjectionMatrix() const

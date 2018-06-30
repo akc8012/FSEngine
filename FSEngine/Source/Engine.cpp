@@ -18,16 +18,19 @@ bool Engine::Init()
 		InitGlew();
 
 		shaderProgram = new ShaderProgram();
-		renderer = new Renderer(window, shaderProgram);
+		renderer = new Renderer(fileSystem, window, shaderProgram);
 
 		faceTexture = new Texture("awesomeface.png");
 		crateTexture = new Texture("wall.png");
 
-		rotatingCrateFace = new RotatingCrate(faceTexture, vec3(0.5f, 0.2f, 0));
-		rotatingCrateBrick = new RotatingCrate(crateTexture, vec3(-0.5f, -0.2f, 0.1f));
-		textQuad = new TextQuad();
+		rotatingCrateFace = new RotatingCrate(fileSystem, faceTexture);
+		rotatingCrateBrick = new RotatingCrate(fileSystem, crateTexture);
+		textQuad = new TextQuad(fileSystem);
 
+		rotatingCrateFace->GetTransformComponent()->SetPosition(vec3(0.5f, 0.2f, 0));
+		rotatingCrateBrick->GetTransformComponent()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
 		rotatingCrateBrick->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
+		textQuad->GetTransformComponent()->SetPosition(vec3(2, 0.2f, -3));
 	}
 	catch (std::string errorMessage)
 	{

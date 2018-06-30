@@ -11,6 +11,6 @@ private:
 	Texture* texture = nullptr;
 
 public:
-	TextQuad();
+	TextQuad(FileSystem* fileSystem);
 	~TextQuad();
 };

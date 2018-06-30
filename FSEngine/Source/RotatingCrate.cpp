@@ -1,6 +1,7 @@
 #include "../Header/RotatingCrate.h"
 
-RotatingCrate::RotatingCrate(Texture* texture, vec3 position)
+RotatingCrate::RotatingCrate(FileSystem* fileSystem, Texture* texture)
+ : GameObject(fileSystem)
 {
 	using std::vector;
 
@@ -60,7 +61,6 @@ RotatingCrate::RotatingCrate(Texture* texture, vec3 position)
 	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
 
 	transformComponent = new TransformComponent();
-	transformComponent->SetPosition(position);
 }
 
 void RotatingCrate::Update(Uint32 deltaTime)

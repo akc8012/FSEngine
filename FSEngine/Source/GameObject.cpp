@@ -1,8 +1,8 @@
 #include "../Header/GameObject.h"
 
-GameObject::GameObject()
+GameObject::GameObject(FileSystem* fileSystem)
 {
-
+	this->fileSystem = fileSystem;
 }
 
 RenderComponent* GameObject::GetRenderComponent()

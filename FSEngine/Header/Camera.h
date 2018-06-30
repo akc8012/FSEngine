@@ -21,7 +21,7 @@ private:
 	void CalculateProjectionMatrixOrthographic();
 
 public:
-	Camera(Window* window);
+	Camera(FileSystem* fileSystem, Window* window);
 	void Update(Uint32 deltaTime);
 
 	mat4 GetProjectionMatrix() const;

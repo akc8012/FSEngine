@@ -1,10 +1,10 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(Window* window, ShaderProgram* shaderProgram)
+Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram)
 {
 	this->window = window;
 	this->shaderProgram = shaderProgram;
-	camera = new Camera(window);
+	camera = new Camera(fileSystem, window);
 }
 
 void Renderer::StartRender(Uint32 deltaTime)
