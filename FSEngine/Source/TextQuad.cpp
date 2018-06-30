@@ -8,8 +8,7 @@ TextQuad::TextQuad(FileSystem* fileSystem)
 	transformComponent = new TransformComponent();
 
 	LoadFont("arial.ttf");
-	CreateTexture(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
-	transformComponent->SetScale(vec3(1, 1.f * textAspect, 1));
+	SetText(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
 
 	CreateRenderComponent();
 }
@@ -18,7 +17,7 @@ void TextQuad::LoadFont(const char* fontName)
 {
 	using std::string;
 
-	const int FontSize = 80;
+	const int FontSize = 32;
 	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
 	if (font == nullptr)
 		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
@@ -63,12 +62,19 @@ void TextQuad::CreateRenderComponent()
 	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
 }
 
+void TextQuad::Update(Uint32 deltaTime)
+{
+	SetText(fileSystem->GetSettingsValue("RenderText").get<std::string>());
+}
+
 void TextQuad::SetText(std::string text)
 {
 	if (renderText != text)
 	{
 		CreateTexture(text.c_str());
-		transformComponent->SetScale(vec3(1, 1.f * textAspect, 1));
+
+		const float ScaleFactor = 0.2f;
+		transformComponent->SetScale(vec3(ScaleFactor, ScaleFactor * textAspect, 1));
 	}
 }
 

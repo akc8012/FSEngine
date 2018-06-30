@@ -30,6 +30,7 @@ bool Engine::Init()
 		rotatingCrateFace->GetTransformComponent()->SetPosition(vec3(0.5f, 0.2f, 0));
 		rotatingCrateBrick->GetTransformComponent()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
 		rotatingCrateBrick->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
+		textQuad->GetTransformComponent()->SetPosition(vec3(-0.78f, 0.94f, 1));
 	}
 	catch (std::string errorMessage)
 	{
@@ -200,19 +201,18 @@ void Engine::Update(Uint32 deltaTime)
 	rotatingCrateFace->Update(deltaTime);
 	rotatingCrateBrick->Update(deltaTime);
 	textQuad->Update(deltaTime);
-	
-	TextQuad* textQuadChild = dynamic_cast<TextQuad*>(textQuad);
-	textQuadChild->SetText(fileSystem->GetSettingsValue("RenderText").get<std::string>());
 }
 
 void Engine::Draw(Uint32 deltaTime)
 {
 	renderer->StartRender(deltaTime);
 
+	glEnable(GL_DEPTH_TEST);
 	shaderProgram->SetBool("renderPerspective", true);
 	renderer->RenderGameObject(rotatingCrateFace);
 	renderer->RenderGameObject(rotatingCrateBrick);
 
+	glDisable(GL_DEPTH_TEST);
 	shaderProgram->SetBool("renderPerspective", false);
 	renderer->RenderGameObject(textQuad);
 

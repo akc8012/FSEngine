@@ -16,9 +16,11 @@ private:
 	void CreateTexture(const char* text);
 	void CreateRenderComponent();
 
+	void SetText(std::string text);
+
 public:
 	TextQuad(FileSystem* fileSystem);
 	~TextQuad();
 
-	void SetText(std::string text);
+	void Update(Uint32 deltaTime);
 };
