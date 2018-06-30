@@ -36,10 +36,10 @@
     <ClInclude Include="Header\FileSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\Shader\VertexShader.shader" />
-    <None Include="Resource\Shader\FragmentShader.shader" />
-    <None Include="Resource\Shader\FragmentMixShader.shader" />
     <None Include="Resource\Json\settings.json" />
+    <None Include="Resource\Shader\VertexShader.vshader" />
+    <None Include="Resource\Shader\FragmentShader.fshader" />
+    <None Include="Resource\Shader\FragmentMixShader.fshader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />

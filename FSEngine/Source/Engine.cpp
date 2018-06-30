@@ -23,11 +23,11 @@ bool Engine::Init()
 		faceTexture = new Texture("awesomeface.png");
 		crateTexture = new Texture("wall.png");
 
-		rotatingCrate = new RotatingCrate(faceTexture, vec3(0.5f, 0.2f, 0));
-		rotatingCrate2 = new RotatingCrate(crateTexture, vec3(-0.5f, -0.2f, 0.1f));
+		rotatingCrateFace = new RotatingCrate(faceTexture, vec3(0.5f, 0.2f, 0));
+		rotatingCrateBrick = new RotatingCrate(crateTexture, vec3(-0.5f, -0.2f, 0.1f));
 		textQuad = new TextQuad();
 
-		rotatingCrate2->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
+		rotatingCrateBrick->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
 	}
 	catch (std::string errorMessage)
 	{
@@ -195,8 +195,8 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update(Uint32 deltaTime)
 {
-	rotatingCrate->Update(deltaTime);
-	rotatingCrate2->Update(deltaTime);
+	rotatingCrateFace->Update(deltaTime);
+	rotatingCrateBrick->Update(deltaTime);
 	textQuad->Update(deltaTime);
 }
 
@@ -204,8 +204,8 @@ void Engine::Draw(Uint32 deltaTime)
 {
 	renderer->StartRender(deltaTime);
 
-	renderer->RenderGameObject(rotatingCrate);
-	renderer->RenderGameObject(rotatingCrate2);
+	renderer->RenderGameObject(rotatingCrateFace);
+	renderer->RenderGameObject(rotatingCrateBrick);
 	renderer->RenderGameObject(textQuad);
 
 	renderer->EndRender();
@@ -214,8 +214,8 @@ void Engine::Draw(Uint32 deltaTime)
 Engine::~Engine()
 {
 	delete textQuad;
-	delete rotatingCrate;
-	delete rotatingCrate2;
+	delete rotatingCrateFace;
+	delete rotatingCrateBrick;
 
 	delete faceTexture;
 	delete crateTexture;

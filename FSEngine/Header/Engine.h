@@ -29,8 +29,8 @@ private:
 
 	Texture* crateTexture = nullptr;
 	Texture* faceTexture = nullptr;
-	GameObject* rotatingCrate = nullptr;
-	GameObject* rotatingCrate2 = nullptr;
+	GameObject* rotatingCrateFace = nullptr;
+	GameObject* rotatingCrateBrick = nullptr;
 	GameObject* textQuad = nullptr;
 
 	void InitSDL();
