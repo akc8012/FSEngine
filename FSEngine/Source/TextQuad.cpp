@@ -4,16 +4,43 @@ TextQuad::TextQuad(FileSystem* fileSystem)
  : GameObject(fileSystem)
 {
 	using std::string;
-	using std::vector;
+
+	transformComponent = new TransformComponent();
+
+	LoadFont("arial.ttf");
+	CreateTexture(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
+	transformComponent->SetScale(vec3(1, 1.f * textAspect, 1));
+
+	CreateRenderComponent();
+}
+
+void TextQuad::LoadFont(const char* fontName)
+{
+	using std::string;
 
 	const int FontSize = 80;
-	font = TTF_OpenFont("Resource/Font/arial.ttf", FontSize);
+	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
 	if (font == nullptr)
 		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
+}
 
-	SDL_Surface* surface = TTF_RenderText_Blended(font, "woo text quad", SDL_Color { 0, 0, 0, 255 });
-	texture = new Texture(surface);
+void TextQuad::CreateTexture(const char* text)
+{
+	renderText = text;
+	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), SDL_Color { 0, 0, 0, 255 });
+	textAspect = (float)surface->h / (float)surface->w;
+
+	if (texture == nullptr)
+		texture = new Texture(surface);
+	else
+		texture->GenerateTexture(surface);
+
 	SDL_FreeSurface(surface);
+}
+
+void TextQuad::CreateRenderComponent()
+{
+	using std::vector;
 
 	vector<float> vertices =
 	{
@@ -34,9 +61,15 @@ TextQuad::TextQuad(FileSystem* fileSystem)
 
 	const Uint32 Stride = 5;
 	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
+}
 
-	transformComponent = new TransformComponent();
-	transformComponent->SetScale(vec3(1, 0.25f, 1));
+void TextQuad::SetText(std::string text)
+{
+	if (renderText != text)
+	{
+		CreateTexture(text.c_str());
+		transformComponent->SetScale(vec3(1, 1.f * textAspect, 1));
+	}
 }
 
 TextQuad::~TextQuad()

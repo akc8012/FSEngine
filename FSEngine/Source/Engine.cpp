@@ -200,6 +200,9 @@ void Engine::Update(Uint32 deltaTime)
 	rotatingCrateFace->Update(deltaTime);
 	rotatingCrateBrick->Update(deltaTime);
 	textQuad->Update(deltaTime);
+	
+	TextQuad* textQuadChild = dynamic_cast<TextQuad*>(textQuad);
+	textQuadChild->SetText(fileSystem->GetSettingsValue("RenderText").get<std::string>());
 }
 
 void Engine::Draw(Uint32 deltaTime)

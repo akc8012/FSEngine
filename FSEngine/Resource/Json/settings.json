@@ -1,5 +1,7 @@
 {
   "SwapInterval": -1,
   "Resolution": [800, 600],
-  "Fullscreen": false
+  "Fullscreen": false,
+
+  "RenderText": "example text"
 }

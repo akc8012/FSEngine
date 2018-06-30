@@ -19,6 +19,8 @@ Texture::Texture(SDL_Surface* surface)
 
 void Texture::GenerateTexture(SDL_Surface* surface)
 {
+	DeleteTexture();
+
 	const int Amount = 1;
 	glGenTextures(Amount, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -85,6 +87,14 @@ Uint32 Texture::GetId() const
 
 Texture::~Texture()
 {
-	const int Amount = 1;
-	glDeleteTextures(Amount, &textureId);
+	DeleteTexture();
+}
+
+void Texture::DeleteTexture()
+{
+	if (textureId != NULL)
+	{
+		const int Amount = 1;
+		glDeleteTextures(Amount, &textureId);
+	}
 }
