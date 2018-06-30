@@ -1,13 +1,15 @@
 #pragma once
-#include <SDL_image.h>
+#include "Component.h"
+
 #include <SDL.h>
+#include <SDL_image.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
 #include <cstdlib>
 #include <string>
 
-class Texture
+class TextureComponent : public Component
 {
 private:
 	Uint32 textureId = NULL;
@@ -20,12 +22,11 @@ private:
 	void DeleteTexture();
 
 public:
-	Texture(const char* filepath);
-	Texture(SDL_Surface* surface);
+	TextureComponent(const char* filepath);
+	TextureComponent(SDL_Surface* surface);
 
 	void GenerateTexture(SDL_Surface* surface);
+	void Bind();
 
-	~Texture();
-
-	Uint32 GetId() const;
+	~TextureComponent();
 };

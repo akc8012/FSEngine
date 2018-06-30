@@ -5,14 +5,19 @@ GameObject::GameObject(FileSystem* fileSystem)
 	this->fileSystem = fileSystem;
 }
 
-RenderComponent* GameObject::GetRenderComponent()
+RenderComponent* GameObject::GetRenderComponent() const
 {
 	return renderComponent;
 }
 
-TransformComponent* GameObject::GetTransformComponent()
+TransformComponent* GameObject::GetTransformComponent() const
 {
 	return transformComponent;
+}
+
+TextureComponent* GameObject::GetTextureComponent() const
+{
+	return textureComponent;
 }
 
 void GameObject::Update(Uint32 deltaTime)

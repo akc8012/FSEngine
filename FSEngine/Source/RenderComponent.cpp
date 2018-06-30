@@ -1,8 +1,7 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(Texture* texture, std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride)
+RenderComponent::RenderComponent(std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride)
 {
-	this->texture = texture;
 	this->vertices = vertices;
 	this->indices = indices;
 
@@ -71,11 +70,6 @@ void RenderComponent::SendIndices(Uint32 elementBufferId)
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Uint32), &indices.front(), GL_STATIC_DRAW);
-}
-
-void RenderComponent::BindTextures()
-{
-	glBindTexture(GL_TEXTURE_2D, texture->GetId());
 }
 
 void RenderComponent::BindVertexArray()

@@ -1,6 +1,6 @@
-#include "../Header/Texture.h"
+#include "../Header/TextureComponent.h"
 
-Texture::Texture(const char* filepath)
+TextureComponent::TextureComponent(const char* filepath)
 {
 	using std::string;
 
@@ -12,12 +12,12 @@ Texture::Texture(const char* filepath)
 	SDL_FreeSurface(surface);
 }
 
-Texture::Texture(SDL_Surface* surface)
+TextureComponent::TextureComponent(SDL_Surface* surface)
 {
 	GenerateTexture(surface);
 }
 
-void Texture::GenerateTexture(SDL_Surface* surface)
+void TextureComponent::GenerateTexture(SDL_Surface* surface)
 {
 	DeleteTexture();
 
@@ -39,7 +39,7 @@ void Texture::GenerateTexture(SDL_Surface* surface)
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-GLenum Texture::GetTextureFormat(Uint32 colors, Uint32 rmask) const
+GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 {
 	bool hasAlphaChannel = colors == 4;
 	bool isStandardRMask = rmask == 0x000000ff;
@@ -50,7 +50,7 @@ GLenum Texture::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 		return isStandardRMask ? GL_RGB : GL_BGR;
 }
 
-void Texture::FlipSurface(SDL_Surface* surface)
+void TextureComponent::FlipSurface(SDL_Surface* surface)
 {
 	const int ExpectedColorDepth = 4;
 	if (surface->format->BytesPerPixel != ExpectedColorDepth)
@@ -75,22 +75,22 @@ void Texture::FlipSurface(SDL_Surface* surface)
 		sourcePixels[i] = targetPixels[i];
 }
 
-int Texture::GetPixelIndex(int x, int y, int surfaceWidth) const
+int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 {
 	return (y * surfaceWidth) + x;
 }
 
-Uint32 Texture::GetId() const
+void TextureComponent::Bind()
 {
-	return textureId;
+	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-Texture::~Texture()
+TextureComponent::~TextureComponent()
 {
 	DeleteTexture();
 }
 
-void Texture::DeleteTexture()
+void TextureComponent::DeleteTexture()
 {
 	if (textureId != NULL)
 	{

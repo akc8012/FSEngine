@@ -19,7 +19,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
-	gameObject->GetRenderComponent()->BindTextures();
+	gameObject->GetTextureComponent()->Bind();
 	gameObject->GetRenderComponent()->BindVertexArray();
 	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
 

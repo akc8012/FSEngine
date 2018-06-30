@@ -150,7 +150,7 @@
     <ClCompile Include="Source\RenderComponent.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\Texture.cpp" />
+    <ClCompile Include="Source\TextureComponent.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\TextQuad.cpp" />
@@ -166,7 +166,7 @@
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\RotatingCrate.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
-    <ClInclude Include="Header\Texture.h" />
+    <ClInclude Include="Header\TextureComponent.h" />
     <ClInclude Include="Header\Timer.h" />
     <ClInclude Include="Header\TransformComponent.h" />
     <ClInclude Include="Header\Window.h" />

@@ -29,10 +29,10 @@ void TextQuad::CreateTexture(const char* text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), SDL_Color { 0, 0, 0, 255 });
 	textAspect = (float)surface->h / (float)surface->w;
 
-	if (texture == nullptr)
-		texture = new Texture(surface);
+	if (textureComponent == nullptr)
+		textureComponent = new TextureComponent(surface);
 	else
-		texture->GenerateTexture(surface);
+		textureComponent->GenerateTexture(surface);
 
 	SDL_FreeSurface(surface);
 }
@@ -59,7 +59,7 @@ void TextQuad::CreateRenderComponent()
 	};
 
 	const Uint32 Stride = 5;
-	renderComponent = new RenderComponent(texture, vertices, indices, Stride);
+	renderComponent = new RenderComponent(vertices, indices, Stride);
 }
 
 void TextQuad::Update(Uint32 deltaTime)
@@ -80,6 +80,6 @@ void TextQuad::SetText(std::string text)
 
 TextQuad::~TextQuad()
 {
-	delete texture;
+	delete textureComponent;
 	TTF_CloseFont(font);
 }

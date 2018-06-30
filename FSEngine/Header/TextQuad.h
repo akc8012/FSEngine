@@ -8,7 +8,6 @@ class TextQuad : public GameObject
 {
 private:
 	TTF_Font* font = nullptr;
-	Texture* texture = nullptr;
 	std::string renderText;
 	float textAspect;
 

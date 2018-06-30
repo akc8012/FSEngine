@@ -10,7 +10,7 @@ private:
 
 
 public:
-	RotatingCrate(FileSystem* fileSystem, Texture* texture);
+	RotatingCrate(FileSystem* fileSystem, TextureComponent* textureComponent);
 
 	void Update(Uint32 deltaTime);
 };

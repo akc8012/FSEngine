@@ -1,13 +1,15 @@
 #pragma once
 #include "Component.h"
-#include "Texture.h"
+
+#include <SDL.h>
+#include <GL\glew.h>
+#include <SDL_opengl.h>
 
 #include <vector>
 
 class RenderComponent : public Component
 {
 private:
-	Texture* texture = nullptr;
 	Uint32 vertexArrayId = NULL;
 
 	std::vector<float> vertices;
@@ -32,11 +34,9 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(Texture* texture, std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride);
+	RenderComponent(std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride);
 	~RenderComponent();
 
-	void BindTextures();
 	void BindVertexArray();
-
 	Uint32 GetTriangleCount() const;
 };

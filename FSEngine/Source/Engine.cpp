@@ -20,8 +20,8 @@ bool Engine::Init()
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(fileSystem, window, shaderProgram);
 
-		faceTexture = new Texture("awesomeface.png");
-		crateTexture = new Texture("wall.png");
+		faceTexture = new TextureComponent("awesomeface.png");
+		crateTexture = new TextureComponent("wall.png");
 
 		rotatingCrateFace = new RotatingCrate(fileSystem, faceTexture);
 		rotatingCrateBrick = new RotatingCrate(fileSystem, crateTexture);
