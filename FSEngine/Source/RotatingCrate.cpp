@@ -1,6 +1,6 @@
 #include "../Header/RotatingCrate.h"
 
-RotatingCrate::RotatingCrate(FileSystem* fileSystem, TextureComponent* textureComponent)
+RotatingCrate::RotatingCrate(FileSystem* fileSystem)
  : GameObject(fileSystem)
 {
 	using std::vector;

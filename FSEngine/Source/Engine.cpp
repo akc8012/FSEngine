@@ -23,8 +23,12 @@ bool Engine::Init()
 		faceTexture = new TextureComponent("awesomeface.png");
 		crateTexture = new TextureComponent("wall.png");
 
-		rotatingCrateFace = new RotatingCrate(fileSystem, faceTexture);
-		rotatingCrateBrick = new RotatingCrate(fileSystem, crateTexture);
+		rotatingCrateFace = new RotatingCrate(fileSystem);
+		rotatingCrateBrick = new RotatingCrate(fileSystem);
+
+		rotatingCrateFace->SetTextureComponent(faceTexture);
+		rotatingCrateBrick->SetTextureComponent(crateTexture);
+
 		textQuad = new TextQuad(fileSystem);
 
 		rotatingCrateFace->GetTransformComponent()->SetPosition(vec3(0.5f, 0.2f, 0));

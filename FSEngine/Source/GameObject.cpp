@@ -20,6 +20,21 @@ TextureComponent* GameObject::GetTextureComponent() const
 	return textureComponent;
 }
 
+void GameObject::SetRenderComponent(RenderComponent* renderComponent)
+{
+	this->renderComponent = renderComponent;
+}
+
+void GameObject::SetTransformComponent(TransformComponent* transformComponent)
+{
+	this->transformComponent = transformComponent;
+}
+
+void GameObject::SetTextureComponent(TextureComponent* textureComponent)
+{
+	this->textureComponent = textureComponent;
+}
+
 void GameObject::Update(Uint32 deltaTime)
 {
 
