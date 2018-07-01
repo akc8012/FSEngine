@@ -122,6 +122,9 @@ void ShaderProgram::Use()
 
 void ShaderProgram::SetBool(const char* name, bool value)
 {
+	if (name == "renderPerspective")
+		renderPerspective = value;
+
 	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
@@ -143,11 +146,14 @@ void ShaderProgram::SetMatrix(const char* name, mat4 value)
 	glUniformMatrix4fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
-bool ShaderProgram::GetBool(const char* name) const
+void ShaderProgram::SetRenderPerspective(bool renderPerspective)
 {
-	int value;
-	glGetUniformiv(shaderProgramId, GetUniformLocation(name), &value);
-	return value;
+	this->renderPerspective = renderPerspective;
+}
+
+bool ShaderProgram::RenderPerspective() const
+{
+	return renderPerspective;
 }
 
 Uint32 ShaderProgram::GetUniformLocation(const char* name) const

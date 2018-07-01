@@ -39,11 +39,10 @@ void Renderer::ClearScreen()
 
 void Renderer::SetCameraMatrices()
 {
-	bool renderPerspective = shaderProgram->GetBool("renderPerspective");
-	if (renderPerspective)
+	if (shaderProgram->RenderPerspective())
 		shaderProgram->SetMatrix("view", camera->GetTransformComponent()->GetMatrix());
 
-	mat4 projection = renderPerspective ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
+	mat4 projection = shaderProgram->RenderPerspective() ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
 	shaderProgram->SetMatrix("projection", projection);
 }
 

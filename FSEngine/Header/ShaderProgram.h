@@ -11,13 +11,14 @@
 using namespace glm;
 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 class ShaderProgram
 {
 private:
 	Uint32 shaderProgramId = NULL;
-	std::map<std::string, Uint32> uniformLocations;
+	std::unordered_map<std::string, Uint32> uniformLocations;
+	bool renderPerspective = true;
 
 	void CreateShaderProgram();
 
@@ -46,5 +47,6 @@ public:
 	void SetFloat(const char* name, float value);
 	void SetMatrix(const char* name, mat4 value);
 
-	bool GetBool(const char* name) const;
+	void SetRenderPerspective(bool renderPerspective);
+	bool RenderPerspective() const;
 };
