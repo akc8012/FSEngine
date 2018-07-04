@@ -34,7 +34,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride);
+	RenderComponent(const std::vector<float>& vertices, const std::vector<Uint32>& indices, Uint32 stride);
 	~RenderComponent();
 
 	void BindVertexArray();

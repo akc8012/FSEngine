@@ -24,7 +24,7 @@ private:
 
 	Uint32 CreateVertexShader();
 	Uint32 CreateFragmentShader();
-	void LinkShaderProgram(const Uint32 vertexShaderId, const Uint32 fragmentShaderId);
+	void LinkShaderProgram(Uint32 vertexShaderId, Uint32 fragmentShaderId);
 
 	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
 	int TryCompileShaderSource(Uint32 type, const char* filepath);
@@ -45,7 +45,7 @@ public:
 	void SetBool(const char* name, bool value);
 	void SetInt(const char* name, int value);
 	void SetFloat(const char* name, float value);
-	void SetMatrix(const char* name, mat4 value);
+	void SetMatrix(const char* name, const mat4& value);
 
 	void SetRenderPerspective(bool renderPerspective);
 	bool RenderPerspective() const;

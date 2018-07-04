@@ -8,7 +8,7 @@ Window::Window(FileSystem* fileSystem)
 	CreateContext();
 }
 
-Window::Window(FileSystem* fileSystem, tvec2<int> size, bool fullscreen)
+Window::Window(FileSystem* fileSystem, const tvec2<int>& size, bool fullscreen)
 {
 	this->fileSystem = fileSystem;
 
@@ -16,17 +16,15 @@ Window::Window(FileSystem* fileSystem, tvec2<int> size, bool fullscreen)
 	CreateContext();
 }
 
-void Window::CreateWindow(tvec2<int> size, bool fullscreen)
+void Window::CreateWindow(const tvec2<int>& resolution, bool fullscreen)
 {
 	if (window != nullptr)
 		SDL_DestroyWindow(window);
 
-	if (fullscreen)
-		size = GetScreenResolution();
-
+	const tvec2<int> WindowSize = fullscreen ? GetScreenResolution() : resolution;
 	const int FullscreenFlag = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
 	const int WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | FullscreenFlag;
-	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, size.x, size.y, WindowFlags);
+	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowSize.x, WindowSize.y, WindowFlags);
 
 	if (window == nullptr)
 		throw (std::string)"Window could not be created: " + SDL_GetError();

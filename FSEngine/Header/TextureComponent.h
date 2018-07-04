@@ -8,6 +8,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <memory>
 
 class TextureComponent : public Component
 {

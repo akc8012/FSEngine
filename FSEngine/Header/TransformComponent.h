@@ -15,6 +15,8 @@ using namespace glm;
 class TransformComponent : public Component
 {
 private:
+	mat4 transform = mat4(1.0f);
+
 	struct MatrixValues
 	{
 		vec3 scale;
@@ -24,10 +26,8 @@ private:
 		vec4 perspective;
 	};
 
-	mat4 transform = mat4(1.0f);
-
 public:
-	static std::string GetFormattedMatrixString(mat4 matrix);
+	static std::string GetFormattedMatrixString(const mat4& matrix);
 
 	mat4 GetMatrix() const;
 
@@ -37,13 +37,13 @@ public:
 	vec3 GetPosition() const;
 	MatrixValues DecomposeTransformMatrix() const;
 
-	void Scale(vec3 scaleVector);
-	void Rotate(float angle, vec3 axis);
-	void Translate(vec3 translation);
+	void Scale(const vec3& scaleVector);
+	void Rotate(float angle, const vec3& axis);
+	void Translate(const vec3& translation);
 
-	void SetScale(vec3 scaleVector);
-	void SetRotation(float angle, vec3 axis);
-	void SetPosition(vec3 position);
+	void SetScale(const vec3& scaleVector);
+	void SetRotation(float angle, const vec3& axis);
+	void SetPosition(const vec3& position);
 
-	void LookAt(vec3 position, vec3 forwardVector, vec3 upVector);
+	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
 };

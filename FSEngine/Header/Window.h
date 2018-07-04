@@ -21,13 +21,13 @@ private:
 	void SetFullscreen();
 
 	void CreateContext();
-	void CreateWindow(tvec2<int> size, bool fullscreen);
+	void CreateWindow(const tvec2<int>& resolution, bool fullscreen);
 	tvec2<int> GetResolutionSetting() const;
 	tvec2<int> GetScreenResolution() const;
 
 public:
 	Window(FileSystem* fileSystem);
-	Window(FileSystem* fileSystem, tvec2<int> size, bool fullscreen);
+	Window(FileSystem* fileSystem, const tvec2<int>& resolution, bool fullscreen);
 
 	void ToggleFullscreen();
 	void SetResolutionToWindowResolution();

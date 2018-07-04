@@ -12,7 +12,7 @@ float Input::GetVerticalAxis()
 	return std::clamp(axis, -1.0f, 1.0f);
 }
 
-float Input::GetAnalogAxis(SDL_GameControllerAxis axis)
+float Input::GetAnalogAxis(const SDL_GameControllerAxis& axis)
 {
 	const int JoystickIndex = 0;
 	SDL_GameController* gameController = SDL_GameControllerOpen(JoystickIndex);
@@ -26,7 +26,7 @@ float Input::GetAnalogAxis(SDL_GameControllerAxis axis)
 	return abs(analogInput) > DeadZone ? analogInput : 0.0f;
 }
 
-float Input::GetDigitalAxis(SDL_Scancode positiveInput, SDL_Scancode negativeInput)
+float Input::GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput)
 {
 	float axis = 0;
 	const Uint8* keyboardState = SDL_GetKeyboardState(NULL);

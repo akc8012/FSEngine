@@ -1,6 +1,6 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(std::vector<float> vertices, std::vector<Uint32> indices, Uint32 stride)
+RenderComponent::RenderComponent(const std::vector<float>& vertices, const std::vector<Uint32>& indices, Uint32 stride)
 {
 	this->vertices = vertices;
 	this->indices = indices;

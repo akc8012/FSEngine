@@ -93,7 +93,7 @@ int ShaderProgram::TryCompileShaderSource(Uint32 type, const char* source)
 	return shaderId;
 }
 
-void ShaderProgram::LinkShaderProgram(const Uint32 vertexShaderId, const Uint32 fragmentShaderId)
+void ShaderProgram::LinkShaderProgram(Uint32 vertexShaderId, Uint32 fragmentShaderId)
 {
 	glLinkProgram(shaderProgramId);
 
@@ -138,7 +138,7 @@ void ShaderProgram::SetFloat(const char* name, float value)
 	glUniform1f(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetMatrix(const char* name, mat4 value)
+void ShaderProgram::SetMatrix(const char* name, const mat4& value)
 {
 	const int Count = 1;
 	const bool Transpose = false;

@@ -52,13 +52,15 @@ GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 
 void TextureComponent::FlipSurface(SDL_Surface* surface)
 {
+	using std::unique_ptr;
+
 	const int ExpectedColorDepth = 4;
 	if (surface->format->BytesPerPixel != ExpectedColorDepth)
 		throw (std::string)"Error loading texture: Cannot flip surface because it does not have 32 bits of color depth";
 
 	const int PixelCount = surface->w * surface->h;
 	Uint32* sourcePixels = (Uint32*)surface->pixels;
-	Uint32* targetPixels = new Uint32[PixelCount];
+	unique_ptr<Uint32[]> targetPixels(new Uint32[PixelCount]);
 
 	for (int row = 0; row < surface->h; row++)
 	{
