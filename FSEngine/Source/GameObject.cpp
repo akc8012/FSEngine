@@ -19,7 +19,7 @@ GameObject::~GameObject()
 {
 	for (auto& component : components)
 	{
-		if (component != nullptr)
+		if (!component->IsShared())
 			delete component;
 	}
 }
