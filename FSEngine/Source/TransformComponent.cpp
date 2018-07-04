@@ -100,3 +100,8 @@ void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector,
 {
 	transform = lookAt(position, position + forwardVector, upVector);
 }
+
+const type_info& TransformComponent::GetType() const
+{
+	return typeid(this);
+}

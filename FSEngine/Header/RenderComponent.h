@@ -39,4 +39,6 @@ public:
 
 	void BindVertexArray();
 	Uint32 GetTriangleCount() const;
+
+	const type_info& GetType() const;
 };

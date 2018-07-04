@@ -87,11 +87,6 @@ void TextureComponent::Bind()
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-TextureComponent::~TextureComponent()
-{
-	DeleteTexture();
-}
-
 void TextureComponent::DeleteTexture()
 {
 	if (textureId != NULL)
@@ -99,4 +94,14 @@ void TextureComponent::DeleteTexture()
 		const int Amount = 1;
 		glDeleteTextures(Amount, &textureId);
 	}
+}
+
+const type_info& TextureComponent::GetType() const
+{
+	return typeid(this);
+}
+
+TextureComponent::~TextureComponent()
+{
+	DeleteTexture();
 }

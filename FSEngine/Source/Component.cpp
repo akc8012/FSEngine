@@ -1,6 +1,6 @@
 #include "../Header/Component.h"
 
-void Component::Update()
+bool Component::IsType(const type_info& typeInfo)
 {
-
+	return this->GetType() == typeInfo;
 }

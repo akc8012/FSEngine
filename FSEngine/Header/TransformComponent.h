@@ -15,8 +15,6 @@ using namespace glm;
 class TransformComponent : public Component
 {
 private:
-	mat4 transform = mat4(1.0f);
-
 	struct MatrixValues
 	{
 		vec3 scale;
@@ -25,6 +23,8 @@ private:
 		vec3 skew;
 		vec4 perspective;
 	};
+
+	mat4 transform = mat4(1.0f);
 
 public:
 	static std::string GetFormattedMatrixString(const mat4& matrix);
@@ -46,4 +46,6 @@ public:
 	void SetPosition(const vec3& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
+
+	const type_info& GetType() const;
 };

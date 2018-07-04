@@ -4,11 +4,14 @@
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 
+#include <vector>
+
 class GameObject
 {
 protected:
 	FileSystem* fileSystem = nullptr;
 
+	std::vector<Component*> components;
 	RenderComponent* renderComponent = nullptr;
 	TransformComponent* transformComponent = nullptr;
 	TextureComponent* textureComponent = nullptr;
@@ -16,6 +19,9 @@ protected:
 public:
 	GameObject(FileSystem* fileSystem);
 	~GameObject();
+
+	void AddComponent(Component* component);
+	Component* GetComponent(const type_info& typeInfo) const;
 
 	RenderComponent* GetRenderComponent() const;
 	TransformComponent* GetTransformComponent() const;

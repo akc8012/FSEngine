@@ -25,9 +25,10 @@ private:
 public:
 	TextureComponent(const char* filepath);
 	TextureComponent(SDL_Surface* surface);
+	~TextureComponent();
 
 	void GenerateTexture(SDL_Surface* surface);
 	void Bind();
 
-	~TextureComponent();
+	const type_info& GetType() const;
 };

@@ -82,6 +82,11 @@ Uint32 RenderComponent::GetTriangleCount() const
 	return triangleCount;
 }
 
+const type_info& RenderComponent::GetType() const
+{
+	return typeid(this);
+}
+
 RenderComponent::~RenderComponent()
 {
 	const int Amount = 1;
