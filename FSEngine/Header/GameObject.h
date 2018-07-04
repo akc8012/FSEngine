@@ -10,26 +10,25 @@ class GameObject
 {
 protected:
 	FileSystem* fileSystem = nullptr;
-
 	std::vector<Component*> components;
-	RenderComponent* renderComponent = nullptr;
-	TransformComponent* transformComponent = nullptr;
-	TextureComponent* textureComponent = nullptr;
 
 public:
 	GameObject(FileSystem* fileSystem);
 	~GameObject();
 
 	void AddComponent(Component* component);
-	Component* GetComponent(const type_info& typeInfo) const;
-
-	RenderComponent* GetRenderComponent() const;
-	TransformComponent* GetTransformComponent() const;
-	TextureComponent* GetTextureComponent() const;
-
-	void SetRenderComponent(RenderComponent* renderComponent);
-	void SetTransformComponent(TransformComponent* transformComponent);
-	void SetTextureComponent(TextureComponent* textureComponent);
+	template <typename T> T* GetComponent();
 
 	virtual void Update(Uint32 deltaTime);
 };
+
+template <typename T> inline T* GameObject::GetComponent()
+{
+	for (const auto& component : components)
+	{
+		if (component->IsType(typeid(const T*)))
+			return dynamic_cast<T*>(component);
+	}
+
+	return nullptr;
+}

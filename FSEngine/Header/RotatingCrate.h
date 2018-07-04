@@ -11,6 +11,5 @@ private:
 
 public:
 	RotatingCrate(FileSystem* fileSystem);
-
 	void Update(Uint32 deltaTime);
 };

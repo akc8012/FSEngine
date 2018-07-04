@@ -19,11 +19,11 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
-	gameObject->GetTextureComponent()->Bind();
-	gameObject->GetRenderComponent()->BindVertexArray();
-	shaderProgram->SetMatrix("model", gameObject->GetTransformComponent()->GetMatrix());
+	gameObject->GetComponent<TextureComponent>()->Bind();
+	gameObject->GetComponent<RenderComponent>()->BindVertexArray();
+	shaderProgram->SetMatrix("model", gameObject->GetComponent<TransformComponent>()->GetMatrix());
 
-	DrawTriangles(gameObject->GetRenderComponent()->GetTriangleCount());
+	DrawTriangles(gameObject->GetComponent<RenderComponent>()->GetTriangleCount());
 }
 
 void Renderer::EndRender()
@@ -40,7 +40,7 @@ void Renderer::ClearScreen()
 void Renderer::SetCameraMatrices()
 {
 	if (shaderProgram->RenderPerspective())
-		shaderProgram->SetMatrix("view", camera->GetTransformComponent()->GetMatrix());
+		shaderProgram->SetMatrix("view", camera->GetComponent<TransformComponent>()->GetMatrix());
 
 	mat4 projection = shaderProgram->RenderPerspective() ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
 	shaderProgram->SetMatrix("projection", projection);

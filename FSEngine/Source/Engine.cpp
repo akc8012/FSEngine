@@ -20,21 +20,20 @@ bool Engine::Init()
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(fileSystem, window, shaderProgram);
 
-		faceTexture = new TextureComponent("awesomeface.png");
-		crateTexture = new TextureComponent("wall.png");
-
 		rotatingCrateFace = new RotatingCrate(fileSystem);
 		rotatingCrateBrick = new RotatingCrate(fileSystem);
 
-		rotatingCrateFace->SetTextureComponent(faceTexture);
-		rotatingCrateBrick->SetTextureComponent(crateTexture);
+		faceTexture = new TextureComponent("awesomeface.png");
+		crateTexture = new TextureComponent("wall.png");
+		rotatingCrateFace->AddComponent(faceTexture);
+		rotatingCrateBrick->AddComponent(crateTexture);
 
 		textQuad = new TextQuad(fileSystem);
 
-		rotatingCrateFace->GetTransformComponent()->SetPosition(vec3(0.5f, 0.2f, 0));
-		rotatingCrateBrick->GetTransformComponent()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
-		rotatingCrateBrick->GetTransformComponent()->SetScale(vec3(2, 0.8f, 2.8f));
-		textQuad->GetTransformComponent()->SetPosition(vec3(-0.78f, 0.94f, 1));
+		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(0.5f, 0.2f, 0));
+		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
+		rotatingCrateBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+		textQuad->GetComponent<TransformComponent>()->SetPosition(vec3(-0.78f, 0.94f, 1));
 	}
 	catch (std::string errorMessage)
 	{

@@ -5,8 +5,8 @@ Camera::Camera(FileSystem* fileSystem, Window* window)
 {
 	this->window = window;
 
-	transformComponent = new TransformComponent();
-	transformComponent->SetPosition(vec3(0, 0, -3));
+	AddComponent(new TransformComponent());
+	GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, -3));
 }
 
 void Camera::Update(Uint32 deltaTime)
@@ -22,11 +22,11 @@ void Camera::CalculateViewMatrix(Uint32 deltaTime)
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
 	const float SpeedMod = 0.005f;
-	vec3 position = -transformComponent->GetPosition();
+	vec3 position = -GetComponent<TransformComponent>()->GetPosition();
 	position += normalize(cross(forwardVector, upVector)) * (Input::GetHorizontalAxis() * SpeedMod * deltaTime);
 	position += forwardVector * (-Input::GetVerticalAxis() * SpeedMod * deltaTime);
 
-	transformComponent->LookAt(position, forwardVector, upVector);
+	GetComponent<TransformComponent>()->LookAt(position, forwardVector, upVector);
 }
 
 void Camera::CalculateProjectionMatrixPerspective()

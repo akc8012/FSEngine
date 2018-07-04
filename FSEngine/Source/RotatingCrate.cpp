@@ -58,10 +58,8 @@ RotatingCrate::RotatingCrate(FileSystem* fileSystem)
 	};
 
 	const Uint32 Stride = 5;
-	renderComponent = new RenderComponent(vertices, indices, Stride);
-
-	transformComponent = new TransformComponent();
-	this->textureComponent = textureComponent;
+	AddComponent(new RenderComponent(vertices, indices, Stride));
+	AddComponent(new TransformComponent());
 }
 
 void RotatingCrate::Update(Uint32 deltaTime)
@@ -69,5 +67,5 @@ void RotatingCrate::Update(Uint32 deltaTime)
 	float angle = Timer::GetSeconds() * radians(50.0f);
 	const vec3 Axis = vec3(0.5f, 1, 0);
 
-	transformComponent->SetRotation(angle, Axis);
+	GetComponent<TransformComponent>()->SetRotation(angle, Axis);
 }

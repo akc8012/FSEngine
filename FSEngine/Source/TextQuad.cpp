@@ -5,7 +5,7 @@ TextQuad::TextQuad(FileSystem* fileSystem)
 {
 	using std::string;
 
-	transformComponent = new TransformComponent();
+	AddComponent(new TransformComponent());
 
 	LoadFont("arial.ttf");
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
@@ -29,10 +29,10 @@ void TextQuad::CreateTexture(const char* text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), SDL_Color { 0, 0, 0, 255 });
 	textAspect = (float)surface->h / (float)surface->w;
 
-	if (textureComponent == nullptr)
-		textureComponent = new TextureComponent(surface);
+	if (GetComponent<TextureComponent>() == nullptr)
+		AddComponent(new TextureComponent(surface));
 	else
-		textureComponent->GenerateTexture(surface);
+		GetComponent<TextureComponent>()->GenerateTexture(surface);
 
 	SDL_FreeSurface(surface);
 }
@@ -59,7 +59,7 @@ void TextQuad::CreateRenderComponent()
 	};
 
 	const Uint32 Stride = 5;
-	renderComponent = new RenderComponent(vertices, indices, Stride);
+	AddComponent(new RenderComponent(vertices, indices, Stride));
 }
 
 void TextQuad::Update(Uint32 deltaTime)
@@ -74,12 +74,11 @@ void TextQuad::SetText(std::string text)
 		CreateTexture(text.c_str());
 
 		const float ScaleFactor = 0.2f;
-		transformComponent->SetScale(vec3(ScaleFactor, ScaleFactor * textAspect, 1));
+		GetComponent<TransformComponent>()->SetScale(vec3(ScaleFactor, ScaleFactor * textAspect, 1));
 	}
 }
 
 TextQuad::~TextQuad()
 {
-	delete textureComponent;
 	TTF_CloseFont(font);
 }
