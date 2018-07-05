@@ -1,5 +1,11 @@
 #include "../Header/Input.h"
 
+Input::Input()
+{
+	const int JoystickIndex = 0;
+	gameController = SDL_GameControllerOpen(JoystickIndex);
+}
+
 float Input::GetHorizontalAxis()
 {
 	float axis = GetAnalogAxis(SDL_CONTROLLER_AXIS_LEFTX) + GetDigitalAxis(SDL_SCANCODE_RIGHT, SDL_SCANCODE_LEFT) + GetDigitalAxis(SDL_SCANCODE_D, SDL_SCANCODE_A);
@@ -14,13 +20,14 @@ float Input::GetVerticalAxis()
 
 float Input::GetAnalogAxis(const SDL_GameControllerAxis& axis)
 {
-	const int JoystickIndex = 0;
-	SDL_GameController* gameController = SDL_GameControllerOpen(JoystickIndex);
-	Sint16 analogInputInt = SDL_GameControllerGetAxis(gameController, axis);
-	SDL_GameControllerClose(gameController);
+	Sint16 input = SDL_GameControllerGetAxis(gameController, axis);
+	return ClampAnalogInput(input);
+}
 
+float Input::ClampAnalogInput(Sint16 input)
+{
 	const int MaxInt = 32767;
-	float analogInput = std::clamp((float)analogInputInt / MaxInt, -1.0f, 1.0f);
+	float analogInput = std::clamp((float)input / MaxInt, -1.0f, 1.0f);
 
 	const float DeadZone = 0.1f;
 	return abs(analogInput) > DeadZone ? analogInput : 0.0f;
@@ -36,4 +43,9 @@ float Input::GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancod
 		axis--;
 
 	return axis;
+}
+
+Input::~Input()
+{
+	SDL_GameControllerClose(gameController);
 }

@@ -1,8 +1,9 @@
 #include "../Header/GameObject.h"
 
-GameObject::GameObject(FileSystem* fileSystem)
+GameObject::GameObject(FileSystem* fileSystem, Input* input)
 {
 	this->fileSystem = fileSystem;
+	this->input= input;
 }
 
 void GameObject::AddComponent(Component* component)

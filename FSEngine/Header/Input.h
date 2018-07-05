@@ -6,10 +6,16 @@
 class Input
 {
 private:
-	static float GetAnalogAxis(const SDL_GameControllerAxis& axis);
-	static float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput);
+	SDL_GameController * gameController;
+
+	float GetAnalogAxis(const SDL_GameControllerAxis& axis);
+	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput);
+	float ClampAnalogInput(Sint16 input);
 
 public:
-	static float GetHorizontalAxis();
-	static float GetVerticalAxis();
+	Input();
+	~Input();
+
+	float GetHorizontalAxis();
+	float GetVerticalAxis();
 };

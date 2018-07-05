@@ -27,7 +27,7 @@ private:
 	void DrawTriangles(Uint32 triangleCount);
 
 public:
-	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram);
+	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram, Input* input);
 	~Renderer();
 
 	void StartRender(float deltaTime);

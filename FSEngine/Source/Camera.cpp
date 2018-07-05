@@ -1,7 +1,7 @@
 #include "../Header/Camera.h"
 
-Camera::Camera(FileSystem* fileSystem, Window* window)
- : GameObject(fileSystem)
+Camera::Camera(FileSystem* fileSystem, Input* input, Window* window)
+ : GameObject(fileSystem, input)
 {
 	this->window = window;
 
@@ -23,8 +23,8 @@ void Camera::CalculateViewMatrix(float deltaTime)
 
 	const float SpeedMod = 4;
 	vec3 position = -GetComponent<TransformComponent>()->GetPosition();
-	position += normalize(cross(forwardVector, upVector)) * (Input::GetHorizontalAxis() * SpeedMod * deltaTime);
-	position += forwardVector * (-Input::GetVerticalAxis() * SpeedMod * deltaTime);
+	position += normalize(cross(forwardVector, upVector)) * (input->GetHorizontalAxis() * SpeedMod * deltaTime);
+	position += forwardVector * (-input->GetVerticalAxis() * SpeedMod * deltaTime);
 
 	GetComponent<TransformComponent>()->LookAt(position, forwardVector, upVector);
 }

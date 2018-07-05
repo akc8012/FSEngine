@@ -25,6 +25,7 @@ private:
 	FileSystem* fileSystem = nullptr;
 	Window* window = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
+	Input* input = nullptr;
 	Renderer* renderer = nullptr;
 
 	GameObject* rotatingCrateFace = nullptr;

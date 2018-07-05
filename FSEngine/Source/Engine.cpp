@@ -18,11 +18,12 @@ bool Engine::Init()
 		InitGlew();
 
 		shaderProgram = new ShaderProgram();
-		renderer = new Renderer(fileSystem, window, shaderProgram);
+		input = new Input();
+		renderer = new Renderer(fileSystem, window, shaderProgram, input);
 
-		rotatingCrateFace = new RotatingCrate(fileSystem);
-		rotatingCrateBrick = new RotatingCrate(fileSystem);
-		textQuad = new TextQuad(fileSystem);
+		rotatingCrateFace = new RotatingCrate(fileSystem, input);
+		rotatingCrateBrick = new RotatingCrate(fileSystem, input);
+		textQuad = new TextQuad(fileSystem, input);
 
 		rotatingCrateFace->AddComponent(new TextureComponent("awesomeface.png"));
 		rotatingCrateBrick->AddComponent(new TextureComponent("wall.png"));
@@ -226,6 +227,7 @@ Engine::~Engine()
 	delete rotatingCrateBrick;
 
 	delete renderer;
+	delete input;
 	delete shaderProgram;
 	delete window;
 	delete fileSystem;

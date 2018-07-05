@@ -22,7 +22,7 @@ private:
 	void CalculateProjectionMatrixOrthographic();
 
 public:
-	Camera(FileSystem* fileSystem, Window* window);
+	Camera(FileSystem* fileSystem, Input* input, Window* window);
 	void Update(float deltaTime);
 
 	mat4 GetProjectionPerspective() const;

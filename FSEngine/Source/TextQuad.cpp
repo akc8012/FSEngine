@@ -1,7 +1,7 @@
 #include "../Header/TextQuad.h"
 
-TextQuad::TextQuad(FileSystem* fileSystem)
- : GameObject(fileSystem)
+TextQuad::TextQuad(FileSystem* fileSystem, Input* input)
+ : GameObject(fileSystem, input)
 {
 	using std::string;
 

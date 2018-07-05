@@ -18,7 +18,7 @@ private:
 	void SetText(std::string text);
 
 public:
-	TextQuad(FileSystem* fileSystem);
+	TextQuad(FileSystem* fileSystem, Input* input);
 	~TextQuad();
 
 	void Update(float deltaTime);

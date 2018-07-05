@@ -10,6 +10,6 @@ private:
 
 
 public:
-	RotatingCrate(FileSystem* fileSystem);
+	RotatingCrate(FileSystem* fileSystem, Input* input);
 	void Update(float deltaTime);
 };

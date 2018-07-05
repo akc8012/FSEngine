@@ -1,7 +1,7 @@
 #include "../Header/RotatingCrate.h"
 
-RotatingCrate::RotatingCrate(FileSystem* fileSystem)
- : GameObject(fileSystem)
+RotatingCrate::RotatingCrate(FileSystem* fileSystem, Input* input)
+ : GameObject(fileSystem, input)
 {
 	using std::vector;
 
