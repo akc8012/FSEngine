@@ -19,7 +19,7 @@ public:
 	void AddComponent(Component* component);
 	template <typename T> T* GetComponent();
 
-	virtual void Update(Uint32 deltaTime);
+	virtual void Update(float deltaTime);
 };
 
 template <typename T> inline T* GameObject::GetComponent()

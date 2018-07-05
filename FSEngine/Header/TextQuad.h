@@ -21,5 +21,5 @@ public:
 	TextQuad(FileSystem* fileSystem);
 	~TextQuad();
 
-	void Update(Uint32 deltaTime);
+	void Update(float deltaTime);
 };

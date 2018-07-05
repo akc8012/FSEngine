@@ -30,7 +30,7 @@ public:
 	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram);
 	~Renderer();
 
-	void StartRender(Uint32 deltaTime);
+	void StartRender(float deltaTime);
 	void RenderGameObject(GameObject* gameObject);
 	void EndRender();
 };

@@ -20,7 +20,7 @@ class Engine
 {
 private:
 	bool running = false;
-	Uint32 lastFrameStamp = 0;
+	float lastFrameTime = 0.0f;
 
 	FileSystem* fileSystem = nullptr;
 	Window* window = nullptr;
@@ -38,10 +38,10 @@ private:
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);
 
-	Uint32 CalculateDeltaTime();
+	float CalculateDeltaTime();
 	void PollEvents();
-	void Update(Uint32 deltaTime);
-	void Draw(Uint32 deltaTime);
+	void Update(float deltaTime);
+	void Draw(float deltaTime);
 
 	void HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);

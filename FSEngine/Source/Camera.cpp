@@ -9,19 +9,19 @@ Camera::Camera(FileSystem* fileSystem, Window* window)
 	GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, -3));
 }
 
-void Camera::Update(Uint32 deltaTime)
+void Camera::Update(float deltaTime)
 {
 	CalculateViewMatrix(deltaTime);
 	CalculateProjectionMatrixPerspective();
 	CalculateProjectionMatrixOrthographic();
 }
 
-void Camera::CalculateViewMatrix(Uint32 deltaTime)
+void Camera::CalculateViewMatrix(float deltaTime)
 {
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	const float SpeedMod = 0.005f;
+	const float SpeedMod = 4;
 	vec3 position = -GetComponent<TransformComponent>()->GetPosition();
 	position += normalize(cross(forwardVector, upVector)) * (Input::GetHorizontalAxis() * SpeedMod * deltaTime);
 	position += forwardVector * (-Input::GetVerticalAxis() * SpeedMod * deltaTime);

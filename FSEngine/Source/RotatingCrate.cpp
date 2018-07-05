@@ -62,7 +62,7 @@ RotatingCrate::RotatingCrate(FileSystem* fileSystem)
 	AddComponent(new TransformComponent());
 }
 
-void RotatingCrate::Update(Uint32 deltaTime)
+void RotatingCrate::Update(float deltaTime)
 {
 	float angle = Timer::GetSeconds() * radians(50.0f);
 	const vec3 Axis = vec3(0.5f, 1, 0);

@@ -88,18 +88,18 @@ void Engine::InitGlew()
 
 void Engine::GameLoop()
 {
-	Uint32 deltaTime = CalculateDeltaTime();
+	float deltaTime = CalculateDeltaTime();
 
 	PollEvents();
 	Update(deltaTime);
 	Draw(deltaTime);
 }
 
-Uint32 Engine::CalculateDeltaTime()
+float Engine::CalculateDeltaTime()
 {
-	Uint32 currentFrameStamp = SDL_GetTicks();
-	Uint32 deltaTime = currentFrameStamp - lastFrameStamp;
-	lastFrameStamp = currentFrameStamp;
+	float currentFrameTime = Timer::GetSeconds();
+	float deltaTime = currentFrameTime - lastFrameTime;
+	lastFrameTime = currentFrameTime;
 
 	return deltaTime;
 }
@@ -196,14 +196,14 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	}
 }
 
-void Engine::Update(Uint32 deltaTime)
+void Engine::Update(float deltaTime)
 {
 	rotatingCrateFace->Update(deltaTime);
 	rotatingCrateBrick->Update(deltaTime);
 	textQuad->Update(deltaTime);
 }
 
-void Engine::Draw(Uint32 deltaTime)
+void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
 

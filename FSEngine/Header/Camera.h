@@ -17,13 +17,13 @@ private:
 	mat4 projectionPerspective = mat4(1.0f);
 	mat4 projectionOrthographic = mat4(1.0f);
 
-	void CalculateViewMatrix(Uint32 deltaTime);
+	void CalculateViewMatrix(float deltaTime);
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
 
 public:
 	Camera(FileSystem* fileSystem, Window* window);
-	void Update(Uint32 deltaTime);
+	void Update(float deltaTime);
 
 	mat4 GetProjectionPerspective() const;
 	mat4 GetProjectionOrthographic() const;

@@ -62,7 +62,7 @@ void TextQuad::CreateRenderComponent()
 	AddComponent(new RenderComponent(vertices, indices, Stride));
 }
 
-void TextQuad::Update(Uint32 deltaTime)
+void TextQuad::Update(float deltaTime)
 {
 	SetText(fileSystem->GetSettingsValue("RenderText").get<std::string>());
 }

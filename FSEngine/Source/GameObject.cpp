@@ -10,7 +10,7 @@ void GameObject::AddComponent(Component* component)
 	components.push_back(component);
 }
 
-void GameObject::Update(Uint32 deltaTime)
+void GameObject::Update(float deltaTime)
 {
 
 }

@@ -7,7 +7,7 @@ Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shader
 	camera = new Camera(fileSystem, window);
 }
 
-void Renderer::StartRender(Uint32 deltaTime)
+void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
 	shaderProgram->Use();
