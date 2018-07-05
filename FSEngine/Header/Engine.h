@@ -27,8 +27,6 @@ private:
 	ShaderProgram* shaderProgram = nullptr;
 	Renderer* renderer = nullptr;
 
-	TextureComponent* crateTexture = nullptr;
-	TextureComponent* faceTexture = nullptr;
 	GameObject* rotatingCrateFace = nullptr;
 	GameObject* rotatingCrateBrick = nullptr;
 	GameObject* textQuad = nullptr;

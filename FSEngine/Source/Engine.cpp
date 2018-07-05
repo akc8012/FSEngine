@@ -24,13 +24,8 @@ bool Engine::Init()
 		rotatingCrateBrick = new RotatingCrate(fileSystem);
 		textQuad = new TextQuad(fileSystem);
 
-		faceTexture = new TextureComponent("awesomeface.png");
-		crateTexture = new TextureComponent("wall.png");
-		faceTexture->SetShared(true);
-		crateTexture->SetShared(true);
-
-		rotatingCrateFace->AddComponent(faceTexture);
-		rotatingCrateBrick->AddComponent(crateTexture);
+		rotatingCrateFace->AddComponent(new TextureComponent("awesomeface.png"));
+		rotatingCrateBrick->AddComponent(new TextureComponent("wall.png"));
 
 		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(0.5f, 0.2f, 0));
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
@@ -229,12 +224,6 @@ Engine::~Engine()
 	delete textQuad;
 	delete rotatingCrateFace;
 	delete rotatingCrateBrick;
-
-	if (!faceTexture->IsShared())
-		delete faceTexture;
-
-	if (!crateTexture->IsShared())
-		delete crateTexture;
 
 	delete renderer;
 	delete shaderProgram;

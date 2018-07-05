@@ -7,6 +7,8 @@ private:
 	bool isShared = false;
 
 public:
+	virtual ~Component();
+
 	virtual const type_info& GetType() const = 0;
 	bool IsType(const type_info& typeInfo);
 
