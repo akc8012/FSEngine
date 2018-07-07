@@ -17,6 +17,7 @@
     <ClCompile Include="Source\TextQuad.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
     <ClCompile Include="Source\TextureComponent.cpp" />
+    <ClCompile Include="Source\MeshComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="Header\TextQuad.h" />
     <ClInclude Include="Header\FileSystem.h" />
     <ClInclude Include="Header\TextureComponent.h" />
+    <ClInclude Include="Header\MeshComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

@@ -1,6 +1,6 @@
 #include "../Header/RenderComponent.h"
 
-RenderComponent::RenderComponent(const std::vector<float>& vertices, const std::vector<Uint32>& indices, Uint32 stride)
+RenderComponent::RenderComponent(const vector<float>& vertices, const vector<Uint32>& indices, Uint32 stride)
 {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -17,7 +17,7 @@ void RenderComponent::CreateVertexArray(Uint32 stride)
 	glGenBuffers(Amount, &vertexBufferId);
 	glGenBuffers(Amount, &elementBufferId);
 
-	glBindVertexArray(vertexArrayId);
+	BindVertexArray();
 
 	SendVertices(vertexBufferId, stride);
 	SendIndices(elementBufferId);

@@ -6,14 +6,15 @@
 #include <SDL_opengl.h>
 
 #include <vector>
+using std::vector;
 
 class RenderComponent : public Component
 {
 private:
 	Uint32 vertexArrayId = NULL;
 
-	std::vector<float> vertices;
-	std::vector<Uint32> indices;
+	vector<float> vertices;
+	vector<Uint32> indices;
 	Uint32 triangleCount;
 
 	struct VertexAttribute
@@ -34,7 +35,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	RenderComponent(const std::vector<float>& vertices, const std::vector<Uint32>& indices, Uint32 stride);
+	RenderComponent(const vector<float>& vertices, const vector<Uint32>& indices, Uint32 stride);
 	~RenderComponent();
 
 	void BindVertexArray();
