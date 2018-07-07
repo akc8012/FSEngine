@@ -5,7 +5,7 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
-#include <glm/glm.hpp>
+#include <glm\glm.hpp>
 using namespace glm;
 
 #include <string>
