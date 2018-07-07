@@ -14,7 +14,6 @@ class TextureComponent : public Component
 {
 private:
 	Uint32 textureId = NULL;
-	std::string shaderType;
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 

@@ -1,6 +1,9 @@
 #pragma once
 #include "Component.h"
-#include "TextureComponent.h"
+
+#include <SDL.h>
+#include <GL\glew.h>
+#include <SDL_opengl.h>
 
 #include <glm\glm.hpp>
 using namespace glm;
@@ -29,7 +32,6 @@ private:
 
 	vector<Vertex> vertices;
 	vector<Uint32> indices;
-	vector<TextureComponent> textures;
 
 	Uint32 vertexArrayId = NULL;
 
@@ -45,7 +47,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	MeshComponent(const vector<Vertex>& vertices, const vector<unsigned int>& indices, const vector<TextureComponent>& textures);
+	MeshComponent(const vector<Vertex>& vertices, const vector<unsigned int>& indices);
 	void BindVertexArray();
 
 	const type_info& GetType() const;
