@@ -13,8 +13,6 @@ void ShaderProgram::CompileShaders()
 	MapUniformValues();
 
 	Use();
-	SetVec3("material.ambientColor", vec3(1, 1, 1));
-	SetVec3("material.diffuseColor", vec3(1, 1, 1));
 	SetVec3("material.specularColor", vec3(1, 1, 1));
 	SetFloat("material.shininessModifier", 2);
 }
@@ -27,8 +25,6 @@ void ShaderProgram::MapUniformValues()
 	uniformLocations["renderPerspective"] = GetUniformLocationFromGl("renderPerspective");
 
 	uniformLocations["viewPosition"] = GetUniformLocationFromGl("viewPosition");
-	uniformLocations["material.ambientColor"] = GetUniformLocationFromGl("material.ambientColor");
-	uniformLocations["material.diffuseColor"] = GetUniformLocationFromGl("material.diffuseColor");
 	uniformLocations["material.specularColor"] = GetUniformLocationFromGl("material.specularColor");
 	uniformLocations["material.shininessModifier"] = GetUniformLocationFromGl("material.shininessModifier");
 }

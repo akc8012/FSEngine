@@ -2,12 +2,12 @@
 
 in vec3 Normal;
 in vec2 TexureCoord;
-in vec3 FragPos;
+in vec3 FragPosition;
+in float RenderPerspective;
 
 struct Material
 {
-	vec3 ambientColor;
-	vec3 diffuseColor;
+	sampler2D diffuseColor;
 	vec3 specularColor;
 	float shininessModifier;
 };
@@ -16,7 +16,7 @@ uniform vec3 viewPosition;
 
 out vec4 FragColor;
 
-float ambientStrength = 0.2;
+float ambientStrength = 0.8;
 float diffuseStrength = 0.5;
 float defaultShininess = 32;
 float specularStrength = 0.25;
@@ -26,18 +26,18 @@ vec3 lightColor = vec3(1, 1, 1);
 
 vec3 CalcAmbient()
 {
-	return (lightColor * material.ambientColor) * ambientStrength;
+	return lightColor * ambientStrength * vec3(texture(material.diffuseColor, TexureCoord));
 }
 
 vec3 CalcDiffuse(vec3 normal, vec3 lightDir)
 {
 	float diffuse = max(dot(normal, lightDir), 0.0);
-	return (lightColor * material.diffuseColor) * (diffuse * diffuseStrength);
+	return lightColor * (diffuse * diffuseStrength) * vec3(texture(material.diffuseColor, TexureCoord));
 }
 
 vec3 CalcSpecular(vec3 normal, vec3 lightDir)
 {
-	vec3 viewDir = normalize((-viewPosition) - FragPos);
+	vec3 viewDir = normalize((-viewPosition) - FragPosition);
 	vec3 reflectDir = reflect(-lightDir, normal);
 
 	float shininess = defaultShininess * material.shininessModifier;
@@ -49,7 +49,13 @@ vec3 CalcSpecular(vec3 normal, vec3 lightDir)
 void main()
 {
 	vec3 normal = normalize(Normal);
-	vec3 lightDir = normalize(lightPosition - FragPos);
+	vec3 lightDir = normalize(lightPosition - FragPosition);
 
-	FragColor = vec4(CalcAmbient() + CalcDiffuse(normal, lightDir) + CalcSpecular(normal, lightDir), 1.0);
+	vec4 fragColor;
+	if (RenderPerspective == 1)
+		fragColor = vec4(CalcAmbient() + CalcDiffuse(normal, lightDir) + CalcSpecular(normal, lightDir), 1.0);
+	else
+		fragColor = texture(material.diffuseColor, TexureCoord);
+
+	FragColor = fragColor;
 }
