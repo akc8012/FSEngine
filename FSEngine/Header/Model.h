@@ -6,20 +6,22 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+using Assimp::Importer;
 
 #include <string>
 #include <vector>
 #include <memory>
+#include <tuple>
 using std::string;
 using std::vector;
 using std::unique_ptr;
-using Assimp::Importer;
+using std::tuple;
 
 class Model
 {
 private:
 	vector<MeshComponent*> meshComponents;
-	vector<TextureComponent*> textureComponents;
+	vector<tuple<Uint32, TextureComponent*>> textureComponents;
 	string directory;
 
 	unique_ptr<Importer> LoadModelImporter(const char* filepath);
@@ -27,7 +29,7 @@ private:
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 
 	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);
-	vector<TextureComponent*> ConvertMaterialToTextures(const aiMaterial* material);
+	vector<tuple<Uint32, TextureComponent*>> ConvertMaterialToTextures(int meshIndex, const aiMaterial* material);
 
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
@@ -38,5 +40,5 @@ public:
 	~Model();
 
 	vector<MeshComponent*> GetMeshComponents() const;
-	vector<TextureComponent*> GetTextureComponents() const;
+	vector<tuple<Uint32, TextureComponent*>> GetTextureComponents() const;
 };

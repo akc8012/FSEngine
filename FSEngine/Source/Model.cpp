@@ -30,7 +30,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
 		{
-			vector<TextureComponent*> textures = ConvertMaterialToTextures(scene->mMaterials[mesh->mMaterialIndex]);
+			vector<tuple<Uint32, TextureComponent*>> textures = ConvertMaterialToTextures(i, scene->mMaterials[mesh->mMaterialIndex]);
 			textureComponents.insert(textureComponents.begin(), textures.begin(), textures.end());
 		}
 	}
@@ -47,15 +47,18 @@ MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
 	return new MeshComponent(vertices, indices);
 }
 
-vector<TextureComponent*> Model::ConvertMaterialToTextures(const aiMaterial* material)
+vector<tuple<Uint32, TextureComponent*>> Model::ConvertMaterialToTextures(int meshIndex, const aiMaterial* material)
 {
-	vector<TextureComponent*> textures;
+	vector<tuple<Uint32, TextureComponent*>> textures;
 
 	vector<TextureComponent*> diffuseTextures = ConvertTextures(material, aiTextureType_DIFFUSE);
 	vector<TextureComponent*> specularTextures = ConvertTextures(material, aiTextureType_SPECULAR);
 
-	textures.insert(textures.end(), diffuseTextures.begin(), diffuseTextures.end());
-	textures.insert(textures.end(), specularTextures.begin(), specularTextures.end());
+	for (const auto& textureComponent : diffuseTextures)
+		textures.push_back(std::make_tuple(meshIndex, textureComponent));
+
+	for (const auto& textureComponent : specularTextures)
+		textures.push_back(std::make_tuple(meshIndex, textureComponent));
 
 	return textures;
 }
@@ -111,7 +114,7 @@ vector<MeshComponent*> Model::GetMeshComponents() const
 	return meshComponents;
 }
 
-vector<TextureComponent*> Model::GetTextureComponents() const
+vector<tuple<Uint32, TextureComponent*>> Model::GetTextureComponents() const
 {
 	return textureComponents;
 }
@@ -122,5 +125,5 @@ Model::~Model()
 		delete meshComponent;
 
 	for (auto& textureComponent : textureComponents)
-		delete textureComponent;
+		delete std::get<1>(textureComponent);
 }
