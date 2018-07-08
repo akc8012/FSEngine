@@ -26,10 +26,10 @@ private:
 
 public:
 	TextureComponent(const char* filepath);
-	TextureComponent(SDL_Surface* surface);
+	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
 	~TextureComponent();
 
-	void GenerateTexture(SDL_Surface* surface);
+	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 	void BindTexture();
 
 	const type_info& GetType() const;

@@ -15,8 +15,8 @@ private:
 	float textAspect;
 
 	void LoadFont(const char* fontName);
-	void CreateTexture(const char* text);
-	void CreateRenderComponent();
+	void CreateTextureComponent(const char* text);
+	void CreateMeshComponent();
 
 	void SetText(const string& text);
 

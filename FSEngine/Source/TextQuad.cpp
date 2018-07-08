@@ -8,7 +8,7 @@ TextQuad::TextQuad(FileSystem* fileSystem, Input* input)
 	LoadFont("arial.ttf");
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
 
-	CreateRenderComponent();
+	CreateMeshComponent();
 }
 
 void TextQuad::LoadFont(const char* fontName)
@@ -19,21 +19,32 @@ void TextQuad::LoadFont(const char* fontName)
 		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
 }
 
-void TextQuad::CreateTexture(const char* text)
+void TextQuad::SetText(const string& text)
+{
+	if (renderText != text)
+	{
+		CreateTextureComponent(text.c_str());
+
+		const float ScaleFactor = 0.2f;
+		GetComponent<TransformComponent>()->SetScale(vec3(ScaleFactor, ScaleFactor * textAspect, 1));
+	}
+}
+
+void TextQuad::CreateTextureComponent(const char* text)
 {
 	renderText = text;
 	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), SDL_Color { 0, 0, 0, 255 });
 	textAspect = (float)surface->h / (float)surface->w;
 
 	if (GetComponent<TextureComponent>() == nullptr)
-		AddComponent(new TextureComponent(surface));
+		AddComponent(new TextureComponent(surface, true));
 	else
-		GetComponent<TextureComponent>()->GenerateTexture(surface);
+		GetComponent<TextureComponent>()->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }
 
-void TextQuad::CreateRenderComponent()
+void TextQuad::CreateMeshComponent()
 {
 	vector<float> rawVertices =
 	{
@@ -69,17 +80,6 @@ void TextQuad::CreateRenderComponent()
 void TextQuad::Update(float deltaTime)
 {
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
-}
-
-void TextQuad::SetText(const string& text)
-{
-	if (renderText != text)
-	{
-		CreateTexture(text.c_str());
-
-		const float ScaleFactor = 0.2f;
-		GetComponent<TransformComponent>()->SetScale(vec3(ScaleFactor, ScaleFactor * textAspect, 1));
-	}
 }
 
 TextQuad::~TextQuad()

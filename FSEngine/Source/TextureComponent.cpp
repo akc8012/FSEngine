@@ -2,7 +2,7 @@
 
 TextureComponent::TextureComponent(const char* filepath)
 {
-	SDL_Surface* surface = IMG_Load(((string)"Resource/Image/" + filepath).c_str());
+	SDL_Surface* surface = IMG_Load(filepath);
 	if (surface == nullptr)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 
@@ -10,12 +10,12 @@ TextureComponent::TextureComponent(const char* filepath)
 	SDL_FreeSurface(surface);
 }
 
-TextureComponent::TextureComponent(SDL_Surface* surface)
+TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
 {
-	GenerateTexture(surface);
+	GenerateTexture(surface, flipSurface);
 }
 
-void TextureComponent::GenerateTexture(SDL_Surface* surface)
+void TextureComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 {
 	DeleteTexture();
 
@@ -28,11 +28,13 @@ void TextureComponent::GenerateTexture(SDL_Surface* surface)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	if (flipSurface)
+		FlipSurface(surface);
+
 	const int MipmapLevel = 0, Border = 0;
 	Uint32 colors = surface->format->BytesPerPixel;
 	GLenum textureFormat = GetTextureFormat(colors, surface->format->Rmask);
 
-	FlipSurface(surface);
 	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, colors, surface->w, surface->h, Border, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 	glGenerateMipmap(GL_TEXTURE_2D);
 }

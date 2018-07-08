@@ -20,12 +20,13 @@ class Model
 private:
 	vector<MeshComponent*> meshComponents;
 	vector<TextureComponent*> textureComponents;
-	string filepath;
+	string directory;
 
-	unique_ptr<Importer> LoadModelImporter(const string& filepath);
+	unique_ptr<Importer> LoadModelImporter(const char* filepath);
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);
+	vector<TextureComponent*> ConvertMaterialToTextures(const aiMaterial* material, const aiTextureType& textureType);
 
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
@@ -35,4 +36,5 @@ public:
 	~Model();
 
 	vector<MeshComponent*> GetMeshComponents() const;
+	vector<TextureComponent*> GetTextureComponents() const;
 };

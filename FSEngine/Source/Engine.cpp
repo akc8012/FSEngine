@@ -26,8 +26,8 @@ bool Engine::Init()
 		textQuad = new TextQuad(fileSystem, input);
 		model = new Model("C:/Model/nanosuit/nanosuit.obj");
 
-		rotatingCrateFace->AddComponent(new TextureComponent("awesomeface.png"));
-		rotatingCrateBrick->AddComponent(new TextureComponent("wall.png"));
+		rotatingCrateFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
+		rotatingCrateBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));
 
 		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(0.5f, 0.2f, 0));
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));

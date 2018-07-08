@@ -2,14 +2,14 @@
 
 Model::Model(const string& filepath)
 {
-	unique_ptr<Importer> importer = LoadModelImporter(filepath);
-	this->filepath = filepath.substr(0, filepath.find_last_of('/'));
+	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
+	this->directory = filepath.substr(0, filepath.find_last_of('/')+1);
 
 	const aiScene* scene = importer->GetScene();
 	ConvertMeshesOnNode(scene->mRootNode, scene);
 }
 
-unique_ptr<Importer> Model::LoadModelImporter(const string& filepath)
+unique_ptr<Importer> Model::LoadModelImporter(const char* filepath)
 {
 	unique_ptr<Importer> importer(new Importer());
 	const aiScene* scene = importer->ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -26,6 +26,18 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		meshComponents.push_back(ConvertMeshToComponent(mesh));
+
+		bool hasMaterials = mesh->mMaterialIndex >= 0;
+		if (hasMaterials)
+		{
+			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+
+			vector<TextureComponent*> diffuseTextures = ConvertMaterialToTextures(material, aiTextureType_DIFFUSE);
+			vector<TextureComponent*> specularTextures = ConvertMaterialToTextures(material, aiTextureType_SPECULAR);
+
+			textureComponents.insert(textureComponents.end(), diffuseTextures.begin(), diffuseTextures.end());
+			textureComponents.insert(textureComponents.end(), specularTextures.begin(), specularTextures.end());
+		}
 	}
 
 	for (Uint32 i = 0; i < node->mNumChildren; i++)
@@ -38,6 +50,20 @@ MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
 	vector<Uint32> indices = ConvertIndices(mesh);
 
 	return new MeshComponent(vertices, indices);
+}
+
+vector<TextureComponent*> Model::ConvertMaterialToTextures(const aiMaterial* material, const aiTextureType& textureType)
+{
+	vector<TextureComponent*> textures;
+	for (Uint32 i = 0; i < material->GetTextureCount(textureType); i++)
+	{
+		aiString texturePath;
+		material->GetTexture(textureType, i, &texturePath);
+
+		textures.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
+	}
+
+	return textures;
 }
 
 vector<Vertex> Model::ConvertVertices(const aiMesh* mesh)
@@ -75,6 +101,11 @@ vector<Uint32> Model::ConvertIndices(const aiMesh* mesh)
 vector<MeshComponent*> Model::GetMeshComponents() const
 {
 	return meshComponents;
+}
+
+vector<TextureComponent*> Model::GetTextureComponents() const
+{
+	return textureComponents;
 }
 
 Model::~Model()
