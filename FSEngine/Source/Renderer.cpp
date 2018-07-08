@@ -30,18 +30,34 @@ void Renderer::RenderModel(Model* model)
 {
 	SetCameraMatrices();
 
-	for (const auto& meshComponent : model->GetMeshComponents())
+	auto meshComponents = model->GetMeshComponents();
+	for (int i = 0; i < meshComponents.size(); i++)
 	{
-		// to-do: bind texture
-		meshComponent->BindVertexArray();
+		ActivateAndBindTextures(i, model);
+		meshComponents[i]->BindVertexArray();
 
 		TransformComponent transform;
 		transform.SetPosition(vec3(0.4f, -0.8f, 1.5f));
 		transform.SetScale(vec3(0.1f, 0.1f, 0.1f));
 		shaderProgram->SetMatrix("model", transform.GetMatrix());
 
-		DrawTriangleElements(meshComponent->GetIndiceCount());
+		DrawTriangleElements(meshComponents[i]->GetIndiceCount());
 	}
+}
+
+void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
+{
+	auto textureComponents = model->GetTextureComponents();
+	for (int i = 0; i < textureComponents.size(); i++)
+	{
+		if (std::get<0>(textureComponents[i]) != meshIndex)
+			continue;
+
+		glActiveTexture(GL_TEXTURE0 + i);
+		std::get<1>(textureComponents[i])->BindTexture();
+	}
+
+	glActiveTexture(GL_TEXTURE0);
 }
 
 void Renderer::EndRender()

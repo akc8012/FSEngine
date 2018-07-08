@@ -30,7 +30,8 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
 		{
-			vector<tuple<Uint32, TextureComponent*>> textures = ConvertMaterialToTextures(i, scene->mMaterials[mesh->mMaterialIndex]);
+			const int MeshIndex = (int)meshComponents.size() - 1;
+			vector<tuple<Uint32, TextureComponent*>> textures = ConvertMaterialToTextures(MeshIndex, scene->mMaterials[mesh->mMaterialIndex]);
 			textureComponents.insert(textureComponents.begin(), textures.begin(), textures.end());
 		}
 	}

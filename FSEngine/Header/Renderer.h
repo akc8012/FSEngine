@@ -25,6 +25,7 @@ private:
 
 	void ClearScreen();
 	void SetCameraMatrices();
+	void ActivateAndBindTextures(int meshIndex, const Model* model);
 
 	void DrawTriangleArrays(Uint32 verticeCount);
 	void DrawTriangleElements(Uint32 indiceCount);
@@ -34,7 +35,9 @@ public:
 	~Renderer();
 
 	void StartRender(float deltaTime);
+
 	void RenderGameObject(GameObject* gameObject);
 	void RenderModel(Model* model);
+
 	void EndRender();
 };
