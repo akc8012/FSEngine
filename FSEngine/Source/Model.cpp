@@ -30,13 +30,8 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
 		{
-			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
-			vector<TextureComponent*> diffuseTextures = ConvertMaterialToTextures(material, aiTextureType_DIFFUSE);
-			vector<TextureComponent*> specularTextures = ConvertMaterialToTextures(material, aiTextureType_SPECULAR);
-
-			textureComponents.insert(textureComponents.end(), diffuseTextures.begin(), diffuseTextures.end());
-			textureComponents.insert(textureComponents.end(), specularTextures.begin(), specularTextures.end());
+			vector<TextureComponent*> textures = ConvertMaterialToTextures(scene->mMaterials[mesh->mMaterialIndex]);
+			textureComponents.insert(textureComponents.begin(), textures.begin(), textures.end());
 		}
 	}
 
@@ -52,16 +47,15 @@ MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
 	return new MeshComponent(vertices, indices);
 }
 
-vector<TextureComponent*> Model::ConvertMaterialToTextures(const aiMaterial* material, const aiTextureType& textureType)
+vector<TextureComponent*> Model::ConvertMaterialToTextures(const aiMaterial* material)
 {
 	vector<TextureComponent*> textures;
-	for (Uint32 i = 0; i < material->GetTextureCount(textureType); i++)
-	{
-		aiString texturePath;
-		material->GetTexture(textureType, i, &texturePath);
 
-		textures.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
-	}
+	vector<TextureComponent*> diffuseTextures = ConvertTextures(material, aiTextureType_DIFFUSE);
+	vector<TextureComponent*> specularTextures = ConvertTextures(material, aiTextureType_SPECULAR);
+
+	textures.insert(textures.end(), diffuseTextures.begin(), diffuseTextures.end());
+	textures.insert(textures.end(), specularTextures.begin(), specularTextures.end());
 
 	return textures;
 }
@@ -96,6 +90,20 @@ vector<Uint32> Model::ConvertIndices(const aiMesh* mesh)
 	}
 
 	return indices;
+}
+
+vector<TextureComponent*> Model::ConvertTextures(const aiMaterial* material, const aiTextureType& textureType)
+{
+	vector<TextureComponent*> textures;
+	for (Uint32 i = 0; i < material->GetTextureCount(textureType); i++)
+	{
+		aiString texturePath;
+		material->GetTexture(textureType, i, &texturePath);
+
+		textures.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
+	}
+
+	return textures;
 }
 
 vector<MeshComponent*> Model::GetMeshComponents() const

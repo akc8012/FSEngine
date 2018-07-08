@@ -25,11 +25,13 @@ private:
 	unique_ptr<Importer> LoadModelImporter(const char* filepath);
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
+
 	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);
-	vector<TextureComponent*> ConvertMaterialToTextures(const aiMaterial* material, const aiTextureType& textureType);
+	vector<TextureComponent*> ConvertMaterialToTextures(const aiMaterial* material);
 
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
+	vector<TextureComponent*> ConvertTextures(const aiMaterial* material, const aiTextureType& textureType);
 
 public:
 	Model(const string& filepath);
