@@ -1,7 +1,7 @@
 #pragma once
 #include "FileSystem.h"
 #include "Input.h"
-#include "RenderComponent.h"
+#include "MeshComponent.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
 

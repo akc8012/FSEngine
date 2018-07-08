@@ -42,9 +42,12 @@ private:
 
 public:
 	MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices);
+	~MeshComponent();
+
 	void BindVertexArray();
 
 	int GetIndiceCount() const;
+	int GetVerticeCount() const;
 
 	const type_info& GetType() const;
 };

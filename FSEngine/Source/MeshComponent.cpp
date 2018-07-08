@@ -90,7 +90,18 @@ int MeshComponent::GetIndiceCount() const
 	return (int)indices.size();
 }
 
+int MeshComponent::GetVerticeCount() const
+{
+	return (int)vertices.size();
+}
+
 const type_info& MeshComponent::GetType() const
 {
 	return typeid(this);
+}
+
+MeshComponent::~MeshComponent()
+{
+	const int Amount = 1;
+	glDeleteVertexArrays(Amount, &vertexArrayId);
 }

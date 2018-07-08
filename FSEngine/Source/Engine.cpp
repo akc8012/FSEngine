@@ -209,15 +209,15 @@ void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
 
-	//glEnable(GL_DEPTH_TEST);
-	//shaderProgram->SetBool("renderPerspective", true);
-	//renderer->RenderGameObject(rotatingCrateFace);
-	//renderer->RenderGameObject(rotatingCrateBrick);
+	glEnable(GL_DEPTH_TEST);
+	shaderProgram->SetBool("renderPerspective", true);
+	renderer->RenderGameObject(rotatingCrateFace);
+	renderer->RenderGameObject(rotatingCrateBrick);
 	renderer->RenderModel(model);
 
-	//glDisable(GL_DEPTH_TEST);
-	//shaderProgram->SetBool("renderPerspective", false);
-	//renderer->RenderGameObject(textQuad);
+	glDisable(GL_DEPTH_TEST);
+	shaderProgram->SetBool("renderPerspective", false);
+	renderer->RenderGameObject(textQuad);
 
 	renderer->EndRender();
 }

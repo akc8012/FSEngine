@@ -4,18 +4,21 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+using std::vector;
+using std::string;
+
 class TextQuad : public GameObject
 {
 private:
 	TTF_Font* font = nullptr;
-	std::string renderText;
+	string renderText;
 	float textAspect;
 
 	void LoadFont(const char* fontName);
 	void CreateTexture(const char* text);
 	void CreateRenderComponent();
 
-	void SetText(std::string text);
+	void SetText(const string& text);
 
 public:
 	TextQuad(FileSystem* fileSystem, Input* input);

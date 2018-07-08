@@ -3,8 +3,6 @@
 TextQuad::TextQuad(FileSystem* fileSystem, Input* input)
  : GameObject(fileSystem, input)
 {
-	using std::string;
-
 	AddComponent(new TransformComponent());
 
 	LoadFont("arial.ttf");
@@ -15,8 +13,6 @@ TextQuad::TextQuad(FileSystem* fileSystem, Input* input)
 
 void TextQuad::LoadFont(const char* fontName)
 {
-	using std::string;
-
 	const int FontSize = 32;
 	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
 	if (font == nullptr)
@@ -39,9 +35,7 @@ void TextQuad::CreateTexture(const char* text)
 
 void TextQuad::CreateRenderComponent()
 {
-	using std::vector;
-
-	vector<float> vertices =
+	vector<float> rawVertices =
 	{
 		 // positions        // texture coords
 		-1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
@@ -52,22 +46,32 @@ void TextQuad::CreateRenderComponent()
 		-1.0f, -1.0f, 0.0f,  0.0f, 0.0f
 	};
 
+	vector<Vertex> vertices;
+	const int Stride = 5;
+	for (int i = 0; i < rawVertices.size(); i += Stride)
+	{
+		Vertex vertex;
+		vertex.position = vec3(rawVertices[i], rawVertices[i + 1], rawVertices[i + 2]);
+		vertex.textureCoord = vec2(rawVertices[i + 3], rawVertices[i + 4]);
+
+		vertices.push_back(vertex);
+	}
+
 	vector<Uint32> indices =
 	{
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
 
-	const Uint32 Stride = 5;
-	AddComponent(new RenderComponent(vertices, indices, Stride));
+	AddComponent(new MeshComponent(vertices, indices));
 }
 
 void TextQuad::Update(float deltaTime)
 {
-	SetText(fileSystem->GetSettingsValue("RenderText").get<std::string>());
+	SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
 }
 
-void TextQuad::SetText(std::string text)
+void TextQuad::SetText(const string& text)
 {
 	if (renderText != text)
 	{

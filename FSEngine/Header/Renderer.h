@@ -26,8 +26,8 @@ private:
 	void ClearScreen();
 	void SetCameraMatrices();
 
-	void DrawTriangleArrays(Uint32 triangleCount);
-	void DrawTriangleElements(Uint32 triangleCount);
+	void DrawTriangleArrays(Uint32 verticeCount);
+	void DrawTriangleElements(Uint32 indiceCount);
 
 public:
 	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram, Input* input);

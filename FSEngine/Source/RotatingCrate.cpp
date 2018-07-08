@@ -3,9 +3,21 @@
 RotatingCrate::RotatingCrate(FileSystem* fileSystem, Input* input)
  : GameObject(fileSystem, input)
 {
-	using std::vector;
+	vector<Vertex> vertices = CreateVertexList();
 
-	vector<float> vertices =
+	vector<Uint32> indices =
+	{
+		0, 1, 3,   // first triangle
+		1, 2, 3    // second triangle
+	};
+
+	AddComponent(new MeshComponent(vertices, indices));
+	AddComponent(new TransformComponent());
+}
+
+vector<Vertex> RotatingCrate::CreateVertexList() const
+{
+	vector<float> rawVertices =
 	{
 		 // positions         // texture coords
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -51,15 +63,18 @@ RotatingCrate::RotatingCrate(FileSystem* fileSystem, Input* input)
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	vector<Uint32> indices =
+	vector<Vertex> vertices;
+	const int Stride = 5;
+	for (int i = 0; i < rawVertices.size(); i += Stride)
 	{
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+		Vertex vertex;
+		vertex.position = vec3(rawVertices[i], rawVertices[i+1], rawVertices[i+2]);
+		vertex.textureCoord = vec2(rawVertices[i+3], rawVertices[i+4]);
 
-	const Uint32 Stride = 5;
-	AddComponent(new RenderComponent(vertices, indices, Stride));
-	AddComponent(new TransformComponent());
+		vertices.push_back(vertex);
+	}
+
+	return vertices;
 }
 
 void RotatingCrate::Update(float deltaTime)
