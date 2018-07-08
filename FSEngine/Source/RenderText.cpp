@@ -1,6 +1,6 @@
-#include "../Header/TextQuad.h"
+#include "../Header/RenderText.h"
 
-TextQuad::TextQuad(FileSystem* fileSystem, Input* input)
+RenderText::RenderText(FileSystem* fileSystem, Input* input)
  : GameObject(fileSystem, input)
 {
 	AddComponent(new TransformComponent());
@@ -11,7 +11,7 @@ TextQuad::TextQuad(FileSystem* fileSystem, Input* input)
 	CreateMeshComponent();
 }
 
-void TextQuad::LoadFont(const char* fontName)
+void RenderText::LoadFont(const char* fontName)
 {
 	const int FontSize = 32;
 	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
@@ -19,7 +19,7 @@ void TextQuad::LoadFont(const char* fontName)
 		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
 }
 
-void TextQuad::SetText(const string& text)
+void RenderText::SetText(const string& text)
 {
 	if (renderText != text)
 	{
@@ -30,7 +30,7 @@ void TextQuad::SetText(const string& text)
 	}
 }
 
-void TextQuad::CreateTextureComponent(const char* text)
+void RenderText::CreateTextureComponent(const char* text)
 {
 	renderText = text;
 	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), SDL_Color { 0, 0, 0, 255 });
@@ -44,7 +44,7 @@ void TextQuad::CreateTextureComponent(const char* text)
 	SDL_FreeSurface(surface);
 }
 
-void TextQuad::CreateMeshComponent()
+void RenderText::CreateMeshComponent()
 {
 	vector<float> rawVertices =
 	{
@@ -77,12 +77,12 @@ void TextQuad::CreateMeshComponent()
 	AddComponent(new MeshComponent(vertices, indices));
 }
 
-void TextQuad::Update(float deltaTime)
+void RenderText::Update(float deltaTime)
 {
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
 }
 
-TextQuad::~TextQuad()
+RenderText::~RenderText()
 {
 	TTF_CloseFont(font);
 }

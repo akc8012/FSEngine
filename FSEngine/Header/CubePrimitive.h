@@ -5,12 +5,12 @@
 #include <vector>
 using std::vector;
 
-class RotatingCrate : public GameObject
+class CubePrimitive : public GameObject
 {
 private:
 	vector<Vertex> CreateVertexList() const;
 
 public:
-	RotatingCrate(FileSystem* fileSystem, Input* input);
+	CubePrimitive(FileSystem* fileSystem, Input* input);
 	void Update(float deltaTime);
 };

@@ -5,8 +5,8 @@
 #include "Renderer.h"
 #include "Timer.h"
 #include "GameObject.h"
-#include "RotatingCrate.h"
-#include "TextQuad.h"
+#include "CubePrimitive.h"
+#include "RenderText.h"
 #include "Model.h"
 
 #include <SDL.h>
