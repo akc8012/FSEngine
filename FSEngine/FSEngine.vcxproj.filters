@@ -10,14 +10,14 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
-    <ClCompile Include="Source\RotatingCrate.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
-    <ClCompile Include="Source\TextQuad.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
     <ClCompile Include="Source\TextureComponent.cpp" />
     <ClCompile Include="Source\MeshComponent.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\CubePrimitive.cpp" />
+    <ClCompile Include="Source\RenderText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -28,21 +28,22 @@
     <ClInclude Include="Header\Timer.h" />
     <ClInclude Include="Header\Camera.h" />
     <ClInclude Include="Header\GameObject.h" />
-    <ClInclude Include="Header\RotatingCrate.h" />
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\TransformComponent.h" />
-    <ClInclude Include="Header\TextQuad.h" />
     <ClInclude Include="Header\FileSystem.h" />
     <ClInclude Include="Header\TextureComponent.h" />
     <ClInclude Include="Header\MeshComponent.h" />
     <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\Vertex.h" />
+    <ClInclude Include="Header\CubePrimitive.h" />
+    <ClInclude Include="Header\RenderText.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
     <None Include="Resource\Shader\VertexShader.vshader" />
     <None Include="Resource\Shader\FragmentShader.fshader" />
     <None Include="Resource\Shader\FragmentMixShader.fshader" />
+    <None Include="Resource\Shader\FragmentMaterialShader.fshader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />

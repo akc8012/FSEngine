@@ -17,13 +17,14 @@ bool Engine::Init()
 		InitOpenGl();
 		InitGlew();
 
-		shaderProgram = new ShaderProgram();
 		input = new Input();
+
+		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(fileSystem, window, shaderProgram, input);
 
-		rotatingCrateFace = new RotatingCrate(fileSystem, input);
-		rotatingCrateBrick = new RotatingCrate(fileSystem, input);
-		textQuad = new TextQuad(fileSystem, input);
+		rotatingCrateFace = new CubePrimitive(fileSystem, input);
+		rotatingCrateBrick = new CubePrimitive(fileSystem, input);
+		textQuad = new RenderText(fileSystem, input);
 		model = new Model("C:/Model/nanosuit/nanosuit.obj");
 
 		rotatingCrateFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));

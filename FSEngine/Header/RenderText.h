@@ -7,7 +7,7 @@
 using std::vector;
 using std::string;
 
-class TextQuad : public GameObject
+class RenderText : public GameObject
 {
 private:
 	TTF_Font* font = nullptr;
@@ -21,8 +21,8 @@ private:
 	void SetText(const string& text);
 
 public:
-	TextQuad(FileSystem* fileSystem, Input* input);
-	~TextQuad();
+	RenderText(FileSystem* fileSystem, Input* input);
+	~RenderText();
 
 	void Update(float deltaTime);
 };

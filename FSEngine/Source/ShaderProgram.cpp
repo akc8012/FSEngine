@@ -8,8 +8,13 @@ ShaderProgram::ShaderProgram()
 
 void ShaderProgram::CompileShaders()
 {
+	setUse = false;
 	CreateShaderProgram();
 	MapUniformValues();
+
+	Use();
+	SetVec3("material.specularColor", vec3(1, 1, 1));
+	SetFloat("material.shininessModifier", 2);
 }
 
 void ShaderProgram::MapUniformValues()
@@ -18,6 +23,10 @@ void ShaderProgram::MapUniformValues()
 	uniformLocations["view"] = GetUniformLocationFromGl("view");
 	uniformLocations["projection"] = GetUniformLocationFromGl("projection");
 	uniformLocations["renderPerspective"] = GetUniformLocationFromGl("renderPerspective");
+
+	uniformLocations["viewPosition"] = GetUniformLocationFromGl("viewPosition");
+	uniformLocations["material.specularColor"] = GetUniformLocationFromGl("material.specularColor");
+	uniformLocations["material.shininessModifier"] = GetUniformLocationFromGl("material.shininessModifier");
 }
 
 void ShaderProgram::CreateShaderProgram()
@@ -59,7 +68,7 @@ Uint32 ShaderProgram::CreateFragmentShader()
 		"}\n"
 	};
 
-	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentShader.fshader", fragmentShaderFallbackSource);
+	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMaterialShader.fshader", fragmentShaderFallbackSource);
 }
 
 Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource)
@@ -117,11 +126,14 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 
 void ShaderProgram::Use()
 {
+	setUse = true;
 	glUseProgram(shaderProgramId);
 }
 
 void ShaderProgram::SetBool(const char* name, bool value)
 {
+	ShowUseWarning();
+
 	if (name == "renderPerspective")
 		renderPerspective = value;
 
@@ -130,16 +142,28 @@ void ShaderProgram::SetBool(const char* name, bool value)
 
 void ShaderProgram::SetInt(const char* name, int value)
 {
+	ShowUseWarning();
 	glUniform1i(GetUniformLocation(name), value);
 }
 
 void ShaderProgram::SetFloat(const char* name, float value)
 {
+	ShowUseWarning();
 	glUniform1f(GetUniformLocation(name), value);
+}
+
+void ShaderProgram::SetVec3(const char* name, const vec3& value)
+{
+	ShowUseWarning();
+
+	const int Count = 1;
+	glUniform3fv(GetUniformLocation(name), Count, value_ptr(value));
 }
 
 void ShaderProgram::SetMatrix(const char* name, const mat4& value)
 {
+	ShowUseWarning();
+
 	const int Count = 1;
 	const bool Transpose = false;
 
@@ -148,6 +172,7 @@ void ShaderProgram::SetMatrix(const char* name, const mat4& value)
 
 void ShaderProgram::SetRenderPerspective(bool renderPerspective)
 {
+	ShowUseWarning();
 	this->renderPerspective = renderPerspective;
 }
 
@@ -175,6 +200,12 @@ Uint32 ShaderProgram::GetUniformLocation(const char* name) const
 Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
 {
 	return glGetUniformLocation(shaderProgramId, name);
+}
+
+void ShaderProgram::ShowUseWarning() const
+{
+	if (!setUse)
+		printf("Warning: Use() has not been called on this shader\n");
 }
 
 ShaderProgram::~ShaderProgram()
