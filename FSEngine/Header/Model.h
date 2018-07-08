@@ -36,6 +36,9 @@ private:
 	vector<TextureComponent*> ConvertTextures(const aiMaterial* material, const aiTextureType& textureType);
 
 public:
+	static const int MeshIndex = 0;
+	static const int TextureIndex = 1;
+
 	Model(const string& filepath);
 	~Model();
 

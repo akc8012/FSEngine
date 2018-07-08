@@ -126,5 +126,5 @@ Model::~Model()
 		delete meshComponent;
 
 	for (auto& textureComponent : textureComponents)
-		delete std::get<1>(textureComponent);
+		delete std::get<TextureIndex>(textureComponent);
 }
