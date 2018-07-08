@@ -1,9 +1,7 @@
 #include "../Header/TransformComponent.h"
 
-std::string TransformComponent::GetFormattedMatrixString(const mat4& matrix)
+string TransformComponent::GetFormattedMatrixString(const mat4& matrix)
 {
-	using std::string;
-
 	string matrixString = "";
 
 	const int ColumnAmount = 4, RowAmount = ColumnAmount;

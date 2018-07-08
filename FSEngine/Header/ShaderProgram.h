@@ -12,12 +12,13 @@ using namespace glm;
 
 #include <string>
 #include <unordered_map>
+using std::unordered_map;
 
 class ShaderProgram
 {
 private:
 	Uint32 shaderProgramId = NULL;
-	std::unordered_map<std::string, Uint32> uniformLocations;
+	unordered_map<string, Uint32> uniformLocations;
 	bool renderPerspective = true;
 
 	void CreateShaderProgram();
@@ -33,7 +34,7 @@ private:
 	Uint32 GetUniformLocation(const char* name) const;
 	Uint32 GetUniformLocationFromGl(const char* name) const;
 
-	static std::string GetShaderTypeText(Uint32 type);
+	static string GetShaderTypeText(Uint32 type);
 
 public:
 	ShaderProgram();

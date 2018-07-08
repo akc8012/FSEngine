@@ -2,8 +2,6 @@
 
 TextureComponent::TextureComponent(const char* filepath)
 {
-	using std::string;
-
 	SDL_Surface* surface = IMG_Load(((string)"Resource/Image/" + filepath).c_str());
 	if (surface == nullptr)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
@@ -52,11 +50,9 @@ GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 
 void TextureComponent::FlipSurface(SDL_Surface* surface)
 {
-	using std::unique_ptr;
-
 	const int ExpectedColorDepth = 4;
 	if (surface->format->BytesPerPixel != ExpectedColorDepth)
-		throw (std::string)"Error loading texture: Cannot flip surface because it does not have 32 bits of color depth";
+		throw (string)"Error loading texture: Cannot flip surface because it does not have 32 bits of color depth";
 
 	const int PixelCount = surface->w * surface->h;
 	Uint32* sourcePixels = (Uint32*)surface->pixels;

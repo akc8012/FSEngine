@@ -10,7 +10,7 @@
 class GameObject
 {
 private:
-	std::vector<Component*> components;
+	vector<Component*> components;
 
 protected:
 	FileSystem* fileSystem = nullptr;

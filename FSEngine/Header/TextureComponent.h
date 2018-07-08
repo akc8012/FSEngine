@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <string>
 #include <memory>
+using std::string;
+using std::unique_ptr;
 
 class TextureComponent : public Component
 {

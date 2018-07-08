@@ -11,6 +11,7 @@
 using namespace glm;
 
 #include <string>
+using std::string;
 
 class TransformComponent : public Component
 {
@@ -27,7 +28,7 @@ private:
 	mat4 transform = mat4(1.0f);
 
 public:
-	static std::string GetFormattedMatrixString(const mat4& matrix);
+	static string GetFormattedMatrixString(const mat4& matrix);
 
 	mat4 GetMatrix() const;
 

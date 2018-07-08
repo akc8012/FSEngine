@@ -34,7 +34,7 @@ bool Engine::Init()
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 		textQuad->GetComponent<TransformComponent>()->SetPosition(vec3(-0.78f, 0.94f, 1));
 	}
-	catch (std::string errorMessage)
+	catch (string errorMessage)
 	{
 		printf("%s\n", errorMessage.c_str());
 		getchar();
@@ -49,8 +49,6 @@ bool Engine::Init()
 
 void Engine::InitSDL()
 {
-	using std::string;
-
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0)
 		throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
 
@@ -77,7 +75,7 @@ void Engine::InitOpenGl()
 void Engine::SetSwapInterval(int interval)
 {
 	if (SDL_GL_SetSwapInterval(interval) != 0)
-		throw (std::string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
+		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
 }
 
 void Engine::InitGlew()
@@ -85,7 +83,7 @@ void Engine::InitGlew()
 	glewExperimental = GL_TRUE;
 	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
-		throw (std::string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
+		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
 }
 
 void Engine::GameLoop()
@@ -141,7 +139,7 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 			shaderProgram->CompileShaders();
 			printf("Rebuilt shader program\n");
 		}
-		catch (std::string errorMessage)
+		catch (string errorMessage)
 		{
 			printf("%s\n", errorMessage.c_str());
 		}

@@ -2,6 +2,7 @@
 #include <SDL.h>
 
 #include <algorithm>
+using std::clamp;
 
 class Input
 {

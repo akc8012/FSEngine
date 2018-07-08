@@ -27,7 +27,7 @@ void Window::CreateWindow(const tvec2<int>& resolution, bool fullscreen)
 	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowSize.x, WindowSize.y, WindowFlags);
 
 	if (window == nullptr)
-		throw (std::string)"Window could not be created: " + SDL_GetError();
+		throw (string)"Window could not be created: " + SDL_GetError();
 }
 
 void Window::CreateContext()
@@ -35,7 +35,7 @@ void Window::CreateContext()
 	SDL_GL_DeleteContext(context);
 	context = SDL_GL_CreateContext(window);
 	if (context == nullptr)
-		throw (std::string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
+		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 }
 
 void Window::ToggleFullscreen()
