@@ -17,8 +17,9 @@ bool Engine::Init()
 		InitOpenGl();
 		InitGlew();
 
-		shaderProgram = new ShaderProgram();
 		input = new Input();
+
+		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(fileSystem, window, shaderProgram, input);
 
 		rotatingCrateFace = new RotatingCrate(fileSystem, input);

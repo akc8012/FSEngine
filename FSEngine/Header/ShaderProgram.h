@@ -17,6 +17,7 @@ using std::unordered_map;
 class ShaderProgram
 {
 private:
+	bool setUse = false;
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
 	bool renderPerspective = true;
@@ -46,8 +47,12 @@ public:
 	void SetBool(const char* name, bool value);
 	void SetInt(const char* name, int value);
 	void SetFloat(const char* name, float value);
+
+	void SetVec3(const char* name, const vec3& value);
 	void SetMatrix(const char* name, const mat4& value);
 
 	void SetRenderPerspective(bool renderPerspective);
 	bool RenderPerspective() const;
+
+	void ShowUseWarning() const;
 };
