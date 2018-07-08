@@ -6,44 +6,44 @@ in vec3 FragPos;
 
 struct Material
 {
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
-	float shininess;
+	vec3 ambientColor;
+	vec3 diffuseColor;
+	vec3 specularColor;
+	float shininessModifier;
 };
 uniform Material material;
 uniform vec3 viewPosition;
 
 out vec4 FragColor;
 
+float ambientStrength = 0.2;
+float diffuseStrength = 0.5;
+float defaultShininess = 32;
+float specularStrength = 0.25;
+
 vec3 lightPosition = vec3(5, 5, 5);
 vec3 lightColor = vec3(1, 1, 1);
 
-
 vec3 CalcAmbient()
 {
-	float ambientStrength = 0.2;
-	return lightColor * ambientStrength;
+	return (lightColor * material.ambientColor) * ambientStrength;
 }
 
 vec3 CalcDiffuse(vec3 normal, vec3 lightDir)
 {
 	float diffuse = max(dot(normal, lightDir), 0.0);
-
-	float diffuseStrength = 0.5;
-	return lightColor * (diffuse * diffuseStrength);
+	return (lightColor * material.diffuseColor) * (diffuse * diffuseStrength);
 }
 
 vec3 CalcSpecular(vec3 normal, vec3 lightDir)
 {
-	vec3 viewDir = normalize(-viewPosition - FragPos);
+	vec3 viewDir = normalize((-viewPosition) - FragPos);
 	vec3 reflectDir = reflect(-lightDir, normal);
 
-	float shininess = 32;
+	float shininess = defaultShininess * material.shininessModifier;
 	float specular = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
 
-	float specularStrength = 0.25;
-	return specularStrength * specular * lightColor;
+	return specularStrength * specular * (lightColor * material.specularColor);
 }
 
 void main()
