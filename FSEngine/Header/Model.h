@@ -22,7 +22,7 @@ private:
 	vector<TextureComponent*> textureComponents;
 	string filepath;
 
-	aiScene* LoadModel(const string& filepath);
+	unique_ptr<Importer> LoadModelImporter(const string& filepath);
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);

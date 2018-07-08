@@ -2,20 +2,22 @@
 
 Model::Model(const string& filepath)
 {
-	unique_ptr<aiScene> scene(LoadModel(filepath));
-	ConvertMeshesOnNode(scene->mRootNode, scene.get());
+	unique_ptr<Importer> importer = LoadModelImporter(filepath);
+	this->filepath = filepath.substr(0, filepath.find_last_of('/'));
+
+	const aiScene* scene = importer->GetScene();
+	ConvertMeshesOnNode(scene->mRootNode, scene);
 }
 
-aiScene* Model::LoadModel(const string& filepath)
+unique_ptr<Importer> Model::LoadModelImporter(const string& filepath)
 {
-	Importer importer;
-	const aiScene* scene = importer.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
+	unique_ptr<Importer> importer(new Importer());
+	const aiScene* scene = importer->ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 	if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
-		throw "Assimp error: " + (string)(importer.GetErrorString());
+		throw "Assimp error: " + (string)(importer->GetErrorString());
 
-	this->filepath = filepath.substr(0, filepath.find_last_of('/'));
-	return importer.GetOrphanedScene();
+	return importer;
 }
 
 void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
