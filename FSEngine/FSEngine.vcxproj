@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\MeshComponent.cpp" />
+    <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\RotatingCrate.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\MeshComponent.h" />
+    <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\RenderComponent.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\RotatingCrate.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="Header\TextureComponent.h" />
     <ClInclude Include="Header\Timer.h" />
     <ClInclude Include="Header\TransformComponent.h" />
+    <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\TextQuad.h" />
   </ItemGroup>

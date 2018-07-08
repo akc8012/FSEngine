@@ -1,6 +1,6 @@
 #include "..\Header\MeshComponent.h"
 
-MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<unsigned int>& indices)
+MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices)
 {
 	this->vertices = vertices;
 	this->indices = indices;

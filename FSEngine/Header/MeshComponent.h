@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Vertex.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -14,13 +15,6 @@ using std::vector;
 class MeshComponent : public Component
 {
 private:
-	struct Vertex
-	{
-		vec3 position;
-		vec3 normal;
-		vec2 textureCoord;
-	};
-
 	struct VertexAttribute
 	{
 		int location;
@@ -47,7 +41,7 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
-	MeshComponent(const vector<Vertex>& vertices, const vector<unsigned int>& indices);
+	MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices);
 	void BindVertexArray();
 
 	const type_info& GetType() const;
