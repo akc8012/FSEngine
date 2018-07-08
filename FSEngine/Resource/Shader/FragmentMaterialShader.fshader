@@ -12,12 +12,12 @@ struct Material
 	float shininess;
 };
 uniform Material material;
+uniform vec3 viewPosition;
 
 out vec4 FragColor;
 
-vec3 lightPos = vec3(20, 20, 0);
-vec3 lightColor = vec3(0.1f, 0.4f, 1);
-vec3 viewPos = vec3(50, -230, 0);
+vec3 lightPos = vec3(20, 20, 20);
+vec3 lightColor = vec3(0.3, 0.4, 1);
 
 
 vec3 CalcAmbient()
@@ -33,11 +33,11 @@ vec3 CalcDiffuse(vec3 normal, vec3 lightDir)
 
 vec3 CalcSpecular(vec3 normal, vec3 lightDir)
 {
-	vec3 viewDir = normalize(viewPos - FragPos);
+	vec3 viewDir = normalize(-viewPosition - FragPos);
 	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	float specular = pow(max(dot(viewDir, reflectDir), 0.0), 32);
 
-	return lightColor * (spec * material.specular);  
+	return material.specular * specular * lightColor;
 }
 
 void main()

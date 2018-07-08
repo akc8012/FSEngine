@@ -78,6 +78,8 @@ void Renderer::SetCameraMatrices()
 
 	mat4 projection = shaderProgram->RenderPerspective() ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
 	shaderProgram->SetMatrix("projection", projection);
+
+	shaderProgram->SetVec3("viewPosition", camera->GetComponent<TransformComponent>()->GetPosition());
 }
 
 void Renderer::DrawTriangleArrays(Uint32 verticeCount)

@@ -26,6 +26,7 @@ void ShaderProgram::MapUniformValues()
 	uniformLocations["projection"] = GetUniformLocationFromGl("projection");
 	uniformLocations["renderPerspective"] = GetUniformLocationFromGl("renderPerspective");
 
+	uniformLocations["viewPosition"] = GetUniformLocationFromGl("viewPosition");
 	uniformLocations["material.ambient"] = GetUniformLocationFromGl("material.ambient");
 	uniformLocations["material.diffuse"] = GetUniformLocationFromGl("material.diffuse");
 	uniformLocations["material.specular"] = GetUniformLocationFromGl("material.specular");
