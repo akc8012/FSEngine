@@ -21,7 +21,7 @@ private:
 	const aiScene* LoadModel(const string& filepath);
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
-	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh, const aiScene* scene);
+	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);
 
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);

@@ -23,14 +23,14 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	for (Uint32 i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshComponents.push_back(ConvertMeshToComponent(mesh, scene));
+		meshComponents.push_back(ConvertMeshToComponent(mesh));
 	}
 
 	for (Uint32 i = 0; i < node->mNumChildren; i++)
 		ConvertMeshesOnNode(node->mChildren[i], scene);
 }
 
-MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh, const aiScene* scene)
+MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
 {
 	vector<Vertex> vertices = ConvertVertices(mesh);
 	vector<Uint32> indices = ConvertIndices(mesh);
