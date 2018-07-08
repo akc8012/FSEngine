@@ -2,20 +2,20 @@
 
 Model::Model(const string& filepath)
 {
-	const aiScene* scene = LoadModel(filepath);
-	ConvertMeshesOnNode(scene->mRootNode, scene);
+	unique_ptr<aiScene> scene(LoadModel(filepath));
+	ConvertMeshesOnNode(scene->mRootNode, scene.get());
 }
 
-const aiScene* Model::LoadModel(const string& filepath)
+aiScene* Model::LoadModel(const string& filepath)
 {
-	Assimp::Importer importer;
+	Importer importer;
 	const aiScene* scene = importer.ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
 		throw "Assimp error: " + (string)(importer.GetErrorString());
 
 	this->filepath = filepath.substr(0, filepath.find_last_of('/'));
-	return scene;
+	return importer.GetOrphanedScene();
 }
 
 void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
@@ -40,8 +40,8 @@ MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
 
 vector<Vertex> Model::ConvertVertices(const aiMesh* mesh)
 {
-	vector<Vertex> vertices(mesh->mNumVertices);
-	for (Uint32 i = 0; i < vertices.size(); i++)
+	vector<Vertex> vertices;
+	for (Uint32 i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
 		vertex.position = vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
@@ -74,4 +74,7 @@ Model::~Model()
 {
 	for (auto& meshComponent : meshComponents)
 		delete meshComponent;
+
+	for (auto& textureComponent : textureComponents)
+		delete textureComponent;
 }

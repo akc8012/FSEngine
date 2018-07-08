@@ -32,6 +32,9 @@ bool Engine::Init()
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 		textQuad->GetComponent<TransformComponent>()->SetPosition(vec3(-0.78f, 0.94f, 1));
+
+
+		Model model("C:/Users/Andrew/Desktop/Model/nanosuit/nanosuit.obj");
 	}
 	catch (std::string errorMessage)
 	{

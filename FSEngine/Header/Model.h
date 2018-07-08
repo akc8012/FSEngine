@@ -9,16 +9,20 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 using std::string;
 using std::vector;
+using std::unique_ptr;
+using Assimp::Importer;
 
 class Model
 {
 private:
 	vector<MeshComponent*> meshComponents;
+	vector<TextureComponent*> textureComponents;
 	string filepath;
 
-	const aiScene* LoadModel(const string& filepath);
+	aiScene* LoadModel(const string& filepath);
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);

@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "RotatingCrate.h"
 #include "TextQuad.h"
+#include "Model.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
