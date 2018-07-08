@@ -44,5 +44,7 @@ public:
 	MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices);
 	void BindVertexArray();
 
+	int GetIndiceCount() const;
+
 	const type_info& GetType() const;
 };

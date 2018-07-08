@@ -70,6 +70,11 @@ vector<Uint32> Model::ConvertIndices(const aiMesh* mesh)
 	return indices;
 }
 
+vector<MeshComponent*> Model::GetMeshComponents() const
+{
+	return meshComponents;
+}
+
 Model::~Model()
 {
 	for (auto& meshComponent : meshComponents)

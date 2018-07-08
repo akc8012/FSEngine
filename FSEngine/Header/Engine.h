@@ -32,6 +32,7 @@ private:
 	GameObject* rotatingCrateFace = nullptr;
 	GameObject* rotatingCrateBrick = nullptr;
 	GameObject* textQuad = nullptr;
+	Model* model = nullptr;
 
 	void InitSDL();
 	void InitOpenGl();

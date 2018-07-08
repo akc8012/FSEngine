@@ -33,4 +33,6 @@ private:
 public:
 	Model(const string& filepath);
 	~Model();
+
+	vector<MeshComponent*> GetMeshComponents() const;
 };

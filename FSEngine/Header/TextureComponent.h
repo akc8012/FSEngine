@@ -28,7 +28,7 @@ public:
 	~TextureComponent();
 
 	void GenerateTexture(SDL_Surface* surface);
-	void Bind();
+	void BindTexture();
 
 	const type_info& GetType() const;
 };

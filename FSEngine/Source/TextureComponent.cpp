@@ -82,7 +82,7 @@ int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 	return (y * surfaceWidth) + x;
 }
 
-void TextureComponent::Bind()
+void TextureComponent::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }

@@ -85,6 +85,11 @@ void MeshComponent::BindVertexArray()
 	glBindVertexArray(vertexArrayId);
 }
 
+int MeshComponent::GetIndiceCount() const
+{
+	return (int)indices.size();
+}
+
 const type_info& MeshComponent::GetType() const
 {
 	return typeid(this);
