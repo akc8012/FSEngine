@@ -24,6 +24,7 @@ bool Engine::Init()
 		rotatingCrateFace = new RotatingCrate(fileSystem, input);
 		rotatingCrateBrick = new RotatingCrate(fileSystem, input);
 		textQuad = new TextQuad(fileSystem, input);
+		model = new Model("C:/Model/nanosuit/nanosuit.obj");
 
 		rotatingCrateFace->AddComponent(new TextureComponent("awesomeface.png"));
 		rotatingCrateBrick->AddComponent(new TextureComponent("wall.png"));
@@ -212,6 +213,7 @@ void Engine::Draw(float deltaTime)
 	shaderProgram->SetBool("renderPerspective", true);
 	renderer->RenderGameObject(rotatingCrateFace);
 	renderer->RenderGameObject(rotatingCrateBrick);
+	renderer->RenderModel(model);
 
 	glDisable(GL_DEPTH_TEST);
 	shaderProgram->SetBool("renderPerspective", false);
@@ -222,6 +224,7 @@ void Engine::Draw(float deltaTime)
 
 Engine::~Engine()
 {
+	delete model;
 	delete textQuad;
 	delete rotatingCrateFace;
 	delete rotatingCrateBrick;

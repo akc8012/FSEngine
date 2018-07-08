@@ -6,7 +6,7 @@ Camera::Camera(FileSystem* fileSystem, Input* input, Window* window)
 	this->window = window;
 
 	AddComponent(new TransformComponent());
-	GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, -3));
+	GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, -4));
 }
 
 void Camera::Update(float deltaTime)

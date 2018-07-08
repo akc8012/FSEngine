@@ -3,11 +3,12 @@
 #include "Timer.h"
 
 #include <vector>
+using std::vector;
 
 class RotatingCrate : public GameObject
 {
 private:
-
+	vector<Vertex> CreateVertexList() const;
 
 public:
 	RotatingCrate(FileSystem* fileSystem, Input* input);

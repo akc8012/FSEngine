@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "RotatingCrate.h"
 #include "TextQuad.h"
+#include "Model.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -31,6 +32,7 @@ private:
 	GameObject* rotatingCrateFace = nullptr;
 	GameObject* rotatingCrateBrick = nullptr;
 	GameObject* textQuad = nullptr;
+	Model* model = nullptr;
 
 	void InitSDL();
 	void InitOpenGl();

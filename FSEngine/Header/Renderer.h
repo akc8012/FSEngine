@@ -2,6 +2,7 @@
 #include "ShaderProgram.h"
 #include "Window.h"
 #include "GameObject.h"
+#include "Model.h"
 #include "Camera.h"
 
 #include <SDL.h>
@@ -24,7 +25,9 @@ private:
 
 	void ClearScreen();
 	void SetCameraMatrices();
-	void DrawTriangles(Uint32 triangleCount);
+
+	void DrawTriangleArrays(Uint32 verticeCount);
+	void DrawTriangleElements(Uint32 indiceCount);
 
 public:
 	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram, Input* input);
@@ -32,5 +35,6 @@ public:
 
 	void StartRender(float deltaTime);
 	void RenderGameObject(GameObject* gameObject);
+	void RenderModel(Model* model);
 	void EndRender();
 };

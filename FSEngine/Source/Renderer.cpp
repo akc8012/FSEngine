@@ -19,11 +19,29 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
-	gameObject->GetComponent<TextureComponent>()->Bind();
-	gameObject->GetComponent<RenderComponent>()->BindVertexArray();
+	gameObject->GetComponent<TextureComponent>()->BindTexture();
+	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
 	shaderProgram->SetMatrix("model", gameObject->GetComponent<TransformComponent>()->GetMatrix());
 
-	DrawTriangles(gameObject->GetComponent<RenderComponent>()->GetTriangleCount());
+	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
+}
+
+void Renderer::RenderModel(Model* model)
+{
+	SetCameraMatrices();
+
+	for (const auto& meshComponent : model->GetMeshComponents())
+	{
+		// to-do: bind texture
+		meshComponent->BindVertexArray();
+
+		TransformComponent transform;
+		transform.SetPosition(vec3(0.4f, -0.8f, 1.5f));
+		transform.SetScale(vec3(0.1f, 0.1f, 0.1f));
+		shaderProgram->SetMatrix("model", transform.GetMatrix());
+
+		DrawTriangleElements(meshComponent->GetIndiceCount());
+	}
 }
 
 void Renderer::EndRender()
@@ -46,10 +64,16 @@ void Renderer::SetCameraMatrices()
 	shaderProgram->SetMatrix("projection", projection);
 }
 
-void Renderer::DrawTriangles(Uint32 triangleCount)
+void Renderer::DrawTriangleArrays(Uint32 verticeCount)
 {
 	const int First = 0;
-	glDrawArrays(GL_TRIANGLES, First, triangleCount);
+	glDrawArrays(GL_TRIANGLES, First, verticeCount);
+}
+
+void Renderer::DrawTriangleElements(Uint32 indiceCount)
+{
+	const int Offset = 0;
+	glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_INT, Offset);
 }
 
 Renderer::~Renderer()

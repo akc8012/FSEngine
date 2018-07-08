@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+using std::string;
 
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;
@@ -11,13 +12,13 @@ class FileSystem
 private:
 	json settingsJson = nullptr;
 
-	static std::string InternalTryLoadTextFromFile(const char* filepath, bool& success);
+	static string InternalTryLoadTextFromFile(const char* filepath, bool& success);
 
 public:
 	FileSystem();
 
-	static std::string LoadTextFromFile(const char* filepath);
-	static std::string TryLoadTextFromFile(const char* filepath);
+	static string LoadTextFromFile(const char* filepath);
+	static string TryLoadTextFromFile(const char* filepath);
 
 	void LoadSettingsFile();
 	json GetSettingsValue(const char* key) const;
