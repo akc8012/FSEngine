@@ -14,7 +14,7 @@ void ShaderProgram::CompileShaders()
 
 	Use();
 	SetVec3("material.specularColor", vec3(1, 1, 1));
-	SetFloat("material.shininessModifier", 2);
+	SetFloat("material.shininessModifier", 1);
 }
 
 void ShaderProgram::MapUniformValues()

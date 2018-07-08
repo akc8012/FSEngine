@@ -53,7 +53,7 @@ void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
 		if (std::get<Model::MeshIndex>(textureComponents[i]) != meshIndex)
 			continue;
 
-		glActiveTexture(GL_TEXTURE0 + i);
+		glActiveTexture(GL_TEXTURE0 + meshIndex);
 		std::get<Model::TextureIndex>(textureComponents[i])->BindTexture();
 	}
 
