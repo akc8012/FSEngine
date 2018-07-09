@@ -24,6 +24,11 @@ mat4 TransformComponent::GetMatrix() const
 	return transform;
 }
 
+mat3 TransformComponent::CalculateNormalMatrix() const
+{
+	return mat3(transpose(inverse(transform)));
+}
+
 vec3 TransformComponent::GetScale() const
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();

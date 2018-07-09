@@ -7,6 +7,7 @@ layout(location = 2) in vec2 textureCoord;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform mat3 normalMatrix;
 uniform bool renderPerspective;
 
 out vec3 FragmentPosition;
@@ -20,7 +21,7 @@ void main()
 	gl_Position = projection * viewMatrix * model * vec4(position, 1.0);
 
 	FragmentPosition = vec3(model * vec4(position, 1.0));
-	Normal = mat3(transpose(inverse(model))) * normal; // to-do: should be done on CPU
+	Normal = normalMatrix * normal;
 	TexureCoord = textureCoord;
 
 	RenderPerspective = renderPerspective ? 1 : 0;

@@ -10,8 +10,6 @@ Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shader
 void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
-	shaderProgram->Use();
-
 	camera->Update(deltaTime);
 }
 
@@ -19,13 +17,14 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
-	glActiveTexture(GL_TEXTURE0);
 	gameObject->GetComponent<TextureComponent>()->BindTexture();
 
-	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
-	shaderProgram->SetMatrix("model", gameObject->GetComponent<TransformComponent>()->GetMatrix());
+	MeshComponent* mesh = gameObject->GetComponent<MeshComponent>();
+	mesh->BindVertexArray();
 
-	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
+	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
+
+	DrawTriangleArrays(mesh->GetVerticeCount());
 }
 
 void Renderer::RenderModel(Model* model)
@@ -41,9 +40,9 @@ void Renderer::RenderModel(Model* model)
 		TransformComponent transform;
 		transform.SetPosition(vec3(0.4f, -0.8f, 1.5f));
 		transform.SetScale(vec3(0.1f, 0.1f, 0.1f));
+		transform.SetRotation(Timer::GetSeconds() * radians(25.f), vec3(0, 1, 0));\
 
-		transform.SetRotation(Timer::GetSeconds() * radians(25.f), vec3(0, 1, 0));
-		shaderProgram->SetMatrix("model", transform.GetMatrix());
+		SetModelMatrices(&transform);
 
 		DrawTriangleElements(meshComponents[i]->GetIndiceCount());
 	}
@@ -93,7 +92,13 @@ void Renderer::SetCameraMatrices()
 	mat4 projection = shaderProgram->RenderPerspective() ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
 	shaderProgram->SetMatrix("projection", projection);
 
-	shaderProgram->SetVec3("viewPosition", camera->GetComponent<TransformComponent>()->GetPosition());
+	shaderProgram->SetVector("viewPosition", camera->GetComponent<TransformComponent>()->GetPosition());
+}
+
+void Renderer::SetModelMatrices(TransformComponent* transform)
+{
+	shaderProgram->SetMatrix("model", transform->GetMatrix());
+	shaderProgram->SetMatrix("normalMatrix", transform->CalculateNormalMatrix());
 }
 
 void Renderer::DrawTriangleArrays(Uint32 verticeCount)

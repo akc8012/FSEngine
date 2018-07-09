@@ -25,7 +25,10 @@ private:
 	Camera* camera = nullptr;
 
 	void ClearScreen();
+	
 	void SetCameraMatrices();
+	void SetModelMatrices(TransformComponent * transform);
+
 	void ActivateAndBindTextures(int meshIndex, const Model* model);
 
 	void DrawTriangleArrays(Uint32 verticeCount);

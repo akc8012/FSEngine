@@ -31,6 +31,7 @@ public:
 	static string GetFormattedMatrixString(const mat4& matrix);
 
 	mat4 GetMatrix() const;
+	mat3 CalculateNormalMatrix() const;
 
 	vec3 GetScale() const;
 	quat GetRotation() const;

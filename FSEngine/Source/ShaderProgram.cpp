@@ -138,12 +138,22 @@ void ShaderProgram::SetFloat(const char* name, float value)
 	glUniform1f(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetVec3(const char* name, const vec3& value)
+void ShaderProgram::SetVector(const char* name, const vec3& value)
 {
 	ShowUseWarning();
 
 	const int Count = 1;
 	glUniform3fv(GetUniformLocation(name), Count, value_ptr(value));
+}
+
+void ShaderProgram::SetMatrix(const char* name, const mat3& value)
+{
+	ShowUseWarning();
+
+	const int Count = 1;
+	const bool Transpose = false;
+
+	glUniformMatrix3fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
 void ShaderProgram::SetMatrix(const char* name, const mat4& value)

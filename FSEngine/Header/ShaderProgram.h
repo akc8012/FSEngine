@@ -47,7 +47,8 @@ public:
 	void SetInt(const char* name, int value);
 	void SetFloat(const char* name, float value);
 
-	void SetVec3(const char* name, const vec3& value);
+	void SetVector(const char* name, const vec3& value);
+	void SetMatrix(const char* name, const mat3& value);
 	void SetMatrix(const char* name, const mat4& value);
 
 	void SetRenderPerspective(bool renderPerspective);
