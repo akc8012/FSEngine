@@ -20,7 +20,7 @@ void main()
 	gl_Position = projection * viewMatrix * model * vec4(position, 1.0);
 
 	FragmentPosition = vec3(model * vec4(position, 1.0));
-	Normal = normal;
+	Normal = mat3(transpose(inverse(model))) * normal; // to-do: should be done on CPU
 	TexureCoord = textureCoord;
 
 	RenderPerspective = renderPerspective ? 1 : 0;
