@@ -43,7 +43,7 @@
     <None Include="Resource\Shader\VertexShader.vshader" />
     <None Include="Resource\Shader\FragmentShader.fshader" />
     <None Include="Resource\Shader\FragmentMixShader.fshader" />
-    <None Include="Resource\Shader\FragmentMaterialShader.fshader" />
+    <None Include="Resource\Shader\FragmentPhongShader.fshader" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />

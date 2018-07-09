@@ -13,8 +13,6 @@ void ShaderProgram::CompileShaders()
 
 	uniformLocations.clear();
 	Use();
-
-	SetInt("diffuseTexture", 0);
 }
 
 void ShaderProgram::CreateShaderProgram()
@@ -56,7 +54,7 @@ Uint32 ShaderProgram::CreateFragmentShader()
 		"}\n"
 	};
 
-	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentMaterialShader.fshader", fragmentShaderFallbackSource);
+	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentPhongShader.fshader", fragmentShaderFallbackSource);
 }
 
 Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource)
