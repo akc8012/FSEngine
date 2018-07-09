@@ -11,8 +11,11 @@ struct Material
 	float shininessModifier;
 };
 uniform Material material;
-uniform sampler2D diffuseTexture0;
 uniform vec3 viewPosition;
+
+uniform sampler2D diffuseTexture0;
+uniform sampler2D diffuseTexture1;
+uniform sampler2D diffuseTexture2;
 
 out vec4 FragmentColor;
 
@@ -56,7 +59,7 @@ void main()
 
 	vec3 normal = normalize(Normal);
 	vec3 lightDir = normalize(lightPosition - FragmentPosition);
-	vec3 diffuseColor = vec3(texture(diffuseTexture0, TexureCoord));
+	vec3 diffuseColor = vec3(texture2D(diffuseTexture0, TexureCoord));
 
 	vec3 ambient = CalcAmbient(diffuseColor);
 	vec3 diffuse = CalcDiffuse(normal, lightDir, diffuseColor);

@@ -10,23 +10,14 @@ void ShaderProgram::CompileShaders()
 {
 	setUse = false;
 	CreateShaderProgram();
-	MapUniformValues();
 
 	Use();
 	SetVec3("material.specularColor", vec3(1, 1, 1));
 	SetFloat("material.shininessModifier", 1);
-}
 
-void ShaderProgram::MapUniformValues()
-{
-	uniformLocations["model"] = GetUniformLocationFromGl("model");
-	uniformLocations["view"] = GetUniformLocationFromGl("view");
-	uniformLocations["projection"] = GetUniformLocationFromGl("projection");
-	uniformLocations["renderPerspective"] = GetUniformLocationFromGl("renderPerspective");
-
-	uniformLocations["viewPosition"] = GetUniformLocationFromGl("viewPosition");
-	uniformLocations["material.specularColor"] = GetUniformLocationFromGl("material.specularColor");
-	uniformLocations["material.shininessModifier"] = GetUniformLocationFromGl("material.shininessModifier");
+	SetInt("diffuseTexture0", 0);
+	SetInt("diffuseTexture1", 1);
+	SetInt("diffuseTexture2", 2);
 }
 
 void ShaderProgram::CreateShaderProgram()
@@ -181,7 +172,7 @@ bool ShaderProgram::RenderPerspective() const
 	return renderPerspective;
 }
 
-Uint32 ShaderProgram::GetUniformLocation(const char* name) const
+Uint32 ShaderProgram::GetUniformLocation(const char* name)
 {
 	Uint32 location = -1;
 	try
@@ -190,8 +181,9 @@ Uint32 ShaderProgram::GetUniformLocation(const char* name) const
 	}
 	catch (std::out_of_range)
 	{
-		location = GetUniformLocationFromGl(name);
-		printf("Warning: Could not find stored uniform location with name: %s. Using GetUniformLocationFromGl().\n", name);
+		uniformLocations[name] = GetUniformLocationFromGl(name);
+		location = uniformLocations[name];
+		//printf("Warning: Could not find stored uniform location with name: %s. Created new map entry.\n", name);
 	}
 
 	return location;

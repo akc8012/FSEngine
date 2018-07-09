@@ -31,8 +31,7 @@ private:
 	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
 	int TryCompileShaderSource(Uint32 type, const char* filepath);
 
-	void MapUniformValues();
-	Uint32 GetUniformLocation(const char* name) const;
+	Uint32 GetUniformLocation(const char* name);
 	Uint32 GetUniformLocationFromGl(const char* name) const;
 
 	static string GetShaderTypeText(Uint32 type);
