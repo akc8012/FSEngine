@@ -11,13 +11,10 @@ void ShaderProgram::CompileShaders()
 	setUse = false;
 	CreateShaderProgram();
 
+	uniformLocations.clear();
 	Use();
-	SetVec3("material.specularColor", vec3(1, 1, 1));
-	SetFloat("material.shininessModifier", 1);
 
-	SetInt("diffuseTexture0", 0);
-	SetInt("diffuseTexture1", 1);
-	SetInt("diffuseTexture2", 2);
+	SetInt("diffuseTexture", 0);
 }
 
 void ShaderProgram::CreateShaderProgram()

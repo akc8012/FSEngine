@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Model.h"
 #include "Camera.h"
+#include "Timer.h"
 
 #include <SDL.h>
 #include <GL\glew.h>

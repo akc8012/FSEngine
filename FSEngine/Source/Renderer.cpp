@@ -19,7 +19,9 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
+	glActiveTexture(GL_TEXTURE0);
 	gameObject->GetComponent<TextureComponent>()->BindTexture();
+
 	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
 	shaderProgram->SetMatrix("model", gameObject->GetComponent<TransformComponent>()->GetMatrix());
 
@@ -39,6 +41,8 @@ void Renderer::RenderModel(Model* model)
 		TransformComponent transform;
 		transform.SetPosition(vec3(0.4f, -0.8f, 1.5f));
 		transform.SetScale(vec3(0.1f, 0.1f, 0.1f));
+
+		transform.SetRotation(Timer::GetSeconds() * radians(25.f), vec3(0, 1, 0));
 		shaderProgram->SetMatrix("model", transform.GetMatrix());
 
 		DrawTriangleElements(meshComponents[i]->GetIndiceCount());
@@ -47,14 +51,24 @@ void Renderer::RenderModel(Model* model)
 
 void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
 {
+	using std::get;
+
 	auto textureComponents = model->GetTextureComponents();
 	for (int i = 0; i < textureComponents.size(); i++)
 	{
-		if (std::get<Model::MeshIndex>(textureComponents[i]) != meshIndex)
+		TextureComponent* texture = get<Model::TextureIndex>(textureComponents[i]);
+
+		bool isOnMeshIndex = get<Model::MeshIndex>(textureComponents[i]) == meshIndex;
+		if (!isOnMeshIndex)
 			continue;
 
-		glActiveTexture(GL_TEXTURE0 + meshIndex);
-		std::get<Model::TextureIndex>(textureComponents[i])->BindTexture();
+		bool isDiffuse = texture->GetFilepath().find("dif") != string::npos;
+		bool isSpecular = texture->GetFilepath().find("spec") != string::npos;
+		if (!isDiffuse)// && !isSpecular)
+			continue;
+
+		glActiveTexture(GL_TEXTURE0 + isDiffuse ? 0 : 1);
+		texture->BindTexture();
 	}
 
 	glActiveTexture(GL_TEXTURE0);

@@ -22,7 +22,7 @@ class Model
 private:
 	vector<MeshComponent*> meshComponents;
 	vector<tuple<Uint32, TextureComponent*>> textureComponents;
-	string directory;
+	string directory = "";
 
 	unique_ptr<Importer> LoadModelImporter(const char* filepath);
 

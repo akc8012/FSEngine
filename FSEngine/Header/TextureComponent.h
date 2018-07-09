@@ -16,6 +16,7 @@ class TextureComponent : public Component
 {
 private:
 	Uint32 textureId = NULL;
+	string filepath = "";
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 
@@ -32,5 +33,6 @@ public:
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 	void BindTexture();
 
+	string GetFilepath() const;
 	const type_info& GetType() const;
 };
