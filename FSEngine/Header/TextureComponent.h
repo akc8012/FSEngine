@@ -14,9 +14,12 @@ using std::unique_ptr;
 
 class TextureComponent : public Component
 {
+public:
+	enum TextureType { Diffuse, Specular };
+
 private:
 	Uint32 textureId = NULL;
-	string filepath = "";
+	TextureType textureType = Diffuse;
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 
@@ -32,7 +35,8 @@ public:
 
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 	void BindTexture();
+	void SetTextureType(TextureType textureType);
 
-	string GetFilepath() const;
+	TextureType GetTextureType() const;
 	const type_info& GetType() const;
 };

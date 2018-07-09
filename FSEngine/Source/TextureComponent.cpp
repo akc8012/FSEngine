@@ -2,7 +2,6 @@
 
 TextureComponent::TextureComponent(const char* filepath)
 {
-	this->filepath = filepath;
 	SDL_Surface* surface = IMG_Load(filepath);
 	if (surface == nullptr)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
@@ -86,9 +85,14 @@ void TextureComponent::BindTexture()
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-string TextureComponent::GetFilepath() const
+void TextureComponent::SetTextureType(TextureType textureType)
 {
-	return filepath;
+	this->textureType = textureType;
+}
+
+TextureComponent::TextureType TextureComponent::GetTextureType() const
+{
+	return textureType;
 }
 
 const type_info& TextureComponent::GetType() const

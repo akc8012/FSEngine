@@ -55,18 +55,16 @@ void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
 	auto textureComponents = model->GetTextureComponents();
 	for (int i = 0; i < textureComponents.size(); i++)
 	{
-		TextureComponent* texture = get<Model::TextureIndex>(textureComponents[i]);
-
 		bool isOnMeshIndex = get<Model::MeshIndex>(textureComponents[i]) == meshIndex;
 		if (!isOnMeshIndex)
 			continue;
 
-		bool isDiffuse = texture->GetFilepath().find("dif") != string::npos;
-		bool isSpecular = texture->GetFilepath().find("spec") != string::npos;
-		if (!isDiffuse)// && !isSpecular)
+		TextureComponent* texture = get<Model::TextureIndex>(textureComponents[i]);
+		TextureComponent::TextureType textureType = texture->GetTextureType();
+		if (textureType == TextureComponent::Specular)
 			continue;
 
-		glActiveTexture(GL_TEXTURE0 + isDiffuse ? 0 : 1);
+		glActiveTexture(GL_TEXTURE0 + textureType == TextureComponent::Diffuse ? 0 : 1);
 		texture->BindTexture();
 	}
 

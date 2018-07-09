@@ -56,10 +56,16 @@ vector<tuple<Uint32, TextureComponent*>> Model::ConvertMaterialToTextures(int me
 	vector<TextureComponent*> specularTextures = ConvertTextures(material, aiTextureType_SPECULAR);
 
 	for (const auto& textureComponent : diffuseTextures)
+	{
+		textureComponent->SetTextureType(TextureComponent::Diffuse);
 		textures.push_back(std::make_tuple(meshIndex, textureComponent));
+	}
 
 	for (const auto& textureComponent : specularTextures)
+	{
+		textureComponent->SetTextureType(TextureComponent::Specular);
 		textures.push_back(std::make_tuple(meshIndex, textureComponent));
+	}
 
 	return textures;
 }
