@@ -61,14 +61,11 @@ void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
 
 		TextureComponent* texture = get<Model::TextureIndex>(textureComponents[i]);
 		TextureComponent::TextureType textureType = texture->GetTextureType();
-		if (textureType == TextureComponent::Specular)
+		if (textureType != TextureComponent::Diffuse)
 			continue;
 
-		glActiveTexture(GL_TEXTURE0 + textureType == TextureComponent::Diffuse ? 0 : 1);
 		texture->BindTexture();
 	}
-
-	glActiveTexture(GL_TEXTURE0);
 }
 
 void Renderer::EndRender()
