@@ -1,8 +1,10 @@
 #include "../Header/TextureComponent.h"
 
-TextureComponent::TextureComponent(const char* filepath)
+TextureComponent::TextureComponent(const string& filepath)
 {
-	SDL_Surface* surface = IMG_Load(filepath);
+	this->filename = filepath.substr(filepath.find_last_of('/')+1, filepath.length());
+
+	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 
@@ -88,6 +90,11 @@ void TextureComponent::BindTexture()
 void TextureComponent::SetTextureType(TextureType textureType)
 {
 	this->textureType = textureType;
+}
+
+string TextureComponent::GetFilename() const
+{
+	return filename;
 }
 
 TextureComponent::TextureType TextureComponent::GetTextureType() const

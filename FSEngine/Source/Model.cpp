@@ -102,10 +102,26 @@ vector<TextureComponent*> Model::ConvertTextures(const aiMaterial* material, con
 		aiString texturePath;
 		material->GetTexture(textureType, i, &texturePath);
 
-		textures.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
+		TextureComponent* loadedTexture = FindAlreadyLoadedTexture((string)texturePath.C_Str());
+		if (loadedTexture == nullptr)
+			loadedTexture = new TextureComponent((directory + texturePath.C_Str()).c_str());
+
+		textures.push_back(loadedTexture);
 	}
 
 	return textures;
+}
+
+TextureComponent* Model::FindAlreadyLoadedTexture(const string& texturePath) const
+{
+	for (const auto& textureComponent : textureComponents)
+	{
+		TextureComponent* loadedTexture = std::get<TextureIndex>(textureComponent);
+		if (texturePath == loadedTexture->GetFilename())
+			return loadedTexture;
+	}
+
+	return nullptr;
 }
 
 vector<MeshComponent*> Model::GetMeshComponents() const

@@ -20,6 +20,7 @@ public:
 private:
 	Uint32 textureId = NULL;
 	TextureType textureType = Diffuse;
+	string filename = "";
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 
@@ -29,7 +30,7 @@ private:
 	void DeleteTexture();
 
 public:
-	TextureComponent(const char* filepath);
+	TextureComponent(const string& filepath);
 	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
 	~TextureComponent();
 
@@ -37,6 +38,7 @@ public:
 	void BindTexture();
 	void SetTextureType(TextureType textureType);
 
+	string GetFilename() const;
 	TextureType GetTextureType() const;
 	const type_info& GetType() const;
 };

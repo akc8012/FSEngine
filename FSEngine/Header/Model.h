@@ -33,7 +33,9 @@ private:
 
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
+
 	vector<TextureComponent*> ConvertTextures(const aiMaterial* material, const aiTextureType& textureType);
+	TextureComponent* FindAlreadyLoadedTexture(const string& texturePath) const;
 
 public:
 	static const int MeshIndex = 0;
