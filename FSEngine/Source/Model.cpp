@@ -2,10 +2,11 @@
 
 Model::Model(const string& filepath)
 {
-	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	this->directory = filepath.substr(0, filepath.find_last_of('/')+1);
 
+	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	const aiScene* scene = importer->GetScene();
+
 	ConvertMeshesOnNode(scene->mRootNode, scene);
 }
 
@@ -140,5 +141,12 @@ Model::~Model()
 		delete meshComponent;
 
 	for (auto& textureComponent : textureComponents)
-		delete std::get<TextureIndex>(textureComponent);
+	{
+		TextureComponent* texture = std::get<TextureIndex>(textureComponent);
+		if (texture == nullptr)
+			continue;
+
+		delete texture;
+		texture = nullptr;
+	}
 }
