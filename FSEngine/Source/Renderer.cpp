@@ -31,10 +31,8 @@ void Renderer::RenderModel(Model* model)
 {
 	SetCameraMatrices();
 
-	vector<MeshComponent*> meshComponents = model->GetMeshComponents();
-	for (int i = 0; i < meshComponents.size(); i++)
+	for (auto& meshComponent : model->GetMeshComponents())
 	{
-		MeshComponent* meshComponent = meshComponents[i];
 		ActivateAndBindTextures(meshComponent, model->GetTextureComponents());
 
 		meshComponent->BindVertexArray();
@@ -52,10 +50,9 @@ void Renderer::RenderModel(Model* model)
 
 void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const vector<TextureComponent*> textureComponents)
 {
-	vector<int> textureIndices = meshComponent->GetAssociatedTextureIndices();
-	for (int i = 0; i < textureIndices.size(); i++)
+	for (const auto& associatedTextureIndex : meshComponent->GetAssociatedTextureIndices())
 	{
-		TextureComponent* texture = textureComponents[i];
+		TextureComponent* texture = textureComponents[associatedTextureIndex];
 		if (texture->GetTextureType() != TextureComponent::Diffuse)
 			continue;
 
