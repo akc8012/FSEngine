@@ -15,6 +15,7 @@ out vec3 Normal;
 out vec2 TexureCoord;
 out float RenderPerspective;
 
+
 void main()
 {
 	mat4 viewMatrix = renderPerspective ? view : mat4(1);

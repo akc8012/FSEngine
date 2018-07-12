@@ -25,14 +25,15 @@ bool Engine::Init()
 		rotatingCrateFace = new CubePrimitive(fileSystem, input);
 		rotatingCrateBrick = new CubePrimitive(fileSystem, input);
 		textQuad = new RenderText(fileSystem, input);
-		model = new Model("C:/Model/nanosuit/nanosuit.obj");
+		model = new Model("C:/Model/Arwing/arwing.dae");
 
 		rotatingCrateFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 		rotatingCrateBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));
 
-		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(0.5f, 0.2f, 0));
-		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(-0.5f, -0.2f, 0.1f));
+		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
+		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+
 		textQuad->GetComponent<TransformComponent>()->SetPosition(vec3(-0.78f, 0.94f, 1));
 	}
 	catch (string errorMessage)

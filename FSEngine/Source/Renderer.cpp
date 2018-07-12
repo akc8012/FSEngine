@@ -31,44 +31,33 @@ void Renderer::RenderModel(Model* model)
 {
 	SetCameraMatrices();
 
-	auto meshComponents = model->GetMeshComponents();
-	for (int i = 0; i < meshComponents.size(); i++)
+	for (auto& meshComponent : model->GetMeshComponents())
 	{
-		ActivateAndBindTextures(i, model);
-		meshComponents[i]->BindVertexArray();
+		ActivateAndBindTextures(meshComponent, model->GetTextureComponents());
+
+		meshComponent->BindVertexArray();
 
 		TransformComponent transform;
-		transform.SetPosition(vec3(0.4f, -0.8f, 1.5f));
-		transform.SetScale(vec3(0.1f, 0.1f, 0.1f));
-		transform.SetRotation(Timer::GetSeconds() * radians(25.f), vec3(0, 1, 0));\
+		transform.SetScale(vec3(0.025f, 0.025f, 0.025f));
+		transform.SetRotation(Timer::GetSeconds() * 0.4f, vec3(0.3f, 1, 0));
+		transform.SetPosition(vec3(0, -0, 0));
 
 		SetModelMatrices(&transform);
 
-		DrawTriangleElements(meshComponents[i]->GetIndiceCount());
+		DrawTriangleElements(meshComponent->GetIndiceCount());
 	}
 }
 
-void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
+void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const vector<TextureComponent*> textureComponents)
 {
-	using std::get;
-
-	auto textureComponents = model->GetTextureComponents();
-	for (int i = 0; i < textureComponents.size(); i++)
+	for (const auto& associatedTextureIndex : meshComponent->GetAssociatedTextureIndices())
 	{
-		bool isOnMeshIndex = get<Model::MeshIndex>(textureComponents[i]) == meshIndex;
-		if (!isOnMeshIndex)
+		TextureComponent* texture = textureComponents[associatedTextureIndex];
+		if (texture->GetTextureType() != TextureComponent::Diffuse)
 			continue;
 
-		TextureComponent* texture = get<Model::TextureIndex>(textureComponents[i]);
-		TextureComponent::TextureType textureType = texture->GetTextureType();
-		if (textureType == TextureComponent::Specular)
-			continue;
-
-		glActiveTexture(GL_TEXTURE0 + textureType == TextureComponent::Diffuse ? 0 : 1);
 		texture->BindTexture();
 	}
-
-	glActiveTexture(GL_TEXTURE0);
 }
 
 void Renderer::EndRender()
@@ -78,7 +67,10 @@ void Renderer::EndRender()
 
 void Renderer::ClearScreen()
 {
-	glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
+	vec3 color = vec3(41, 48, 61);
+	color /= 255;
+
+	glClearColor(color.x, color.y, color.z, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

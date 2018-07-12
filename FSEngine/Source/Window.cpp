@@ -23,7 +23,7 @@ void Window::CreateWindow(const tvec2<int>& resolution, bool fullscreen)
 
 	const tvec2<int> WindowSize = fullscreen ? GetScreenResolution() : resolution;
 	const int FullscreenFlag = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
-	const int WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | FullscreenFlag;
+	const int WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALWAYS_ON_TOP | FullscreenFlag;
 	window = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowSize.x, WindowSize.y, WindowFlags);
 
 	if (window == nullptr)

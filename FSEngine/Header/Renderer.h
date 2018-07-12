@@ -27,9 +27,9 @@ private:
 	void ClearScreen();
 	
 	void SetCameraMatrices();
-	void SetModelMatrices(TransformComponent * transform);
+	void SetModelMatrices(TransformComponent* transform);
 
-	void ActivateAndBindTextures(int meshIndex, const Model* model);
+	void ActivateAndBindTextures(const MeshComponent* meshComponent, const vector<TextureComponent*> textureComponents);
 
 	void DrawTriangleArrays(Uint32 verticeCount);
 	void DrawTriangleElements(Uint32 indiceCount);
