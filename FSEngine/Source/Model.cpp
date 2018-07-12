@@ -140,13 +140,13 @@ Model::~Model()
 	for (auto& meshComponent : meshComponents)
 		delete meshComponent;
 
-	for (auto& textureComponent : textureComponents)
-	{
-		TextureComponent* texture = std::get<TextureIndex>(textureComponent);
-		if (texture == nullptr)
-			continue;
+	//for (auto& textureComponent : textureComponents)
+	//{
+	//	TextureComponent* texture = std::get<TextureIndex>(textureComponent);
+	//	if (texture == nullptr)
+	//		continue;
 
-		delete texture;
-		texture = nullptr;
-	}
+	//	delete texture;
+	//	texture = nullptr;
+	//}
 }
