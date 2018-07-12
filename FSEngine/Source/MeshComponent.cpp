@@ -95,6 +95,21 @@ int MeshComponent::GetVerticeCount() const
 	return (int)vertices.size();
 }
 
+void MeshComponent::AddAssociatedTextureIndex(int textureIndex)
+{
+	associatedTextureIndices.push_back(textureIndex);
+}
+
+void MeshComponent::AddAssociatedTextureIndices(vector<int> textureIndices)
+{
+	associatedTextureIndices.insert(associatedTextureIndices.end(), textureIndices.begin(), textureIndices.end());
+}
+
+vector<int> MeshComponent::GetAssociatedTextureIndices() const
+{
+	return associatedTextureIndices;
+}
+
 const type_info& MeshComponent::GetType() const
 {
 	return typeid(this);

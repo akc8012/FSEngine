@@ -31,11 +31,13 @@ void Renderer::RenderModel(Model* model)
 {
 	SetCameraMatrices();
 
-	auto meshComponents = model->GetMeshComponents();
+	vector<MeshComponent*> meshComponents = model->GetMeshComponents();
 	for (int i = 0; i < meshComponents.size(); i++)
 	{
-		ActivateAndBindTextures(i, model);
-		meshComponents[i]->BindVertexArray();
+		MeshComponent* meshComponent = meshComponents[i];
+		ActivateAndBindTextures(meshComponent, model->GetTextureComponents());
+
+		meshComponent->BindVertexArray();
 
 		TransformComponent transform;
 		transform.SetScale(vec3(0.025f, 0.025f, 0.025f));
@@ -44,24 +46,17 @@ void Renderer::RenderModel(Model* model)
 
 		SetModelMatrices(&transform);
 
-		DrawTriangleElements(meshComponents[i]->GetIndiceCount());
+		DrawTriangleElements(meshComponent->GetIndiceCount());
 	}
 }
 
-void Renderer::ActivateAndBindTextures(int meshIndex, const Model* model)
+void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const vector<TextureComponent*> textureComponents)
 {
-	using std::get;
-
-	auto textureComponents = model->GetTextureComponents();
-	for (int i = 0; i < textureComponents.size(); i++)
+	vector<int> textureIndices = meshComponent->GetAssociatedTextureIndices();
+	for (int i = 0; i < textureIndices.size(); i++)
 	{
-		bool isOnMeshIndex = get<Model::MeshIndex>(textureComponents[i]) == meshIndex;
-		if (!isOnMeshIndex)
-			continue;
-
-		TextureComponent* texture = get<Model::TextureIndex>(textureComponents[i]);
-		TextureComponent::TextureType textureType = texture->GetTextureType();
-		if (textureType != TextureComponent::Diffuse)
+		TextureComponent* texture = textureComponents[i];
+		if (texture->GetTextureType() != TextureComponent::Diffuse)
 			continue;
 
 		texture->BindTexture();

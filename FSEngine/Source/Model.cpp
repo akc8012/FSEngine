@@ -26,15 +26,12 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	for (Uint32 i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshComponents.push_back(ConvertMeshToComponent(mesh));
+		MeshComponent* meshComponent = ConvertMeshToComponent(mesh);
+		meshComponents.push_back(meshComponent);
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
-		{
-			const int MeshIndex = (int)meshComponents.size() - 1;
-			vector<tuple<Uint32, TextureComponent*>> textures = ConvertMaterialToTextures(MeshIndex, scene->mMaterials[mesh->mMaterialIndex]);
-			textureComponents.insert(textureComponents.begin(), textures.begin(), textures.end());
-		}
+			ConvertMaterialToTextures(meshComponent, scene->mMaterials[mesh->mMaterialIndex]);
 	}
 
 	for (Uint32 i = 0; i < node->mNumChildren; i++)
@@ -47,20 +44,6 @@ MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
 	vector<Uint32> indices = ConvertIndices(mesh);
 
 	return new MeshComponent(vertices, indices);
-}
-
-vector<tuple<Uint32, TextureComponent*>> Model::ConvertMaterialToTextures(int meshIndex, const aiMaterial* material)
-{
-	vector<tuple<Uint32, TextureComponent*>> textures;
-
-	vector<TextureComponent*> diffuseTextures = ConvertTextures(material, aiTextureType_DIFFUSE);
-	for (const auto& textureComponent : diffuseTextures)
-	{
-		textureComponent->SetTextureType(TextureComponent::Diffuse);
-		textures.push_back(std::make_tuple(meshIndex, textureComponent));
-	}
-
-	return textures;
 }
 
 vector<Vertex> Model::ConvertVertices(const aiMesh* mesh)
@@ -95,31 +78,32 @@ vector<Uint32> Model::ConvertIndices(const aiMesh* mesh)
 	return indices;
 }
 
-vector<TextureComponent*> Model::ConvertTextures(const aiMaterial* material, const aiTextureType& textureType)
+void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMaterial* material)
 {
-	vector<TextureComponent*> textures;
+	const aiTextureType textureType = aiTextureType_DIFFUSE;
 	for (Uint32 i = 0; i < material->GetTextureCount(textureType); i++)
 	{
 		aiString texturePath;
 		material->GetTexture(textureType, i, &texturePath);
 
-		TextureComponent* loadedTexture = FindAlreadyLoadedTexture((string)texturePath.C_Str());
-		if (loadedTexture == nullptr)
-			loadedTexture = new TextureComponent((directory + texturePath.C_Str()).c_str());
+		int* loadedTextureIndex = GetLoadedTextureIndex((string)texturePath.C_Str());
+		if (loadedTextureIndex == nullptr)
+		{
+			loadedTextureIndex = new int((int)textureComponents.size());
+			textureComponents.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
+		}
 
-		textures.push_back(loadedTexture);
+		meshComponent->AddAssociatedTextureIndex(*loadedTextureIndex);
+		delete loadedTextureIndex;
 	}
-
-	return textures;
 }
 
-TextureComponent* Model::FindAlreadyLoadedTexture(const string& texturePath) const
+int* Model::GetLoadedTextureIndex(const string& texturePath) const
 {
-	for (const auto& textureComponent : textureComponents)
+	for (int i = 0; i < textureComponents.size(); i++)
 	{
-		TextureComponent* loadedTexture = std::get<TextureIndex>(textureComponent);
-		if (texturePath == loadedTexture->GetFilename())
-			return loadedTexture;
+		if (texturePath == textureComponents[i]->GetFilename())
+			return new int(i);
 	}
 
 	return nullptr;
@@ -130,7 +114,7 @@ vector<MeshComponent*> Model::GetMeshComponents() const
 	return meshComponents;
 }
 
-vector<tuple<Uint32, TextureComponent*>> Model::GetTextureComponents() const
+vector<TextureComponent*> Model::GetTextureComponents() const
 {
 	return textureComponents;
 }
@@ -140,13 +124,6 @@ Model::~Model()
 	for (auto& meshComponent : meshComponents)
 		delete meshComponent;
 
-	//for (auto& textureComponent : textureComponents)
-	//{
-	//	TextureComponent* texture = std::get<TextureIndex>(textureComponent);
-	//	if (texture == nullptr)
-	//		continue;
-
-	//	delete texture;
-	//	texture = nullptr;
-	//}
+	for (auto& textureComponent : textureComponents)
+		delete textureComponent;
 }
