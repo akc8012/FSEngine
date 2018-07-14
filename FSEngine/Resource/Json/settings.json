@@ -1,9 +1,7 @@
 {
   "SwapInterval": -1,
-  "Resolution": [600, 400],
+  "Resolution": [900, 600],
   "Fullscreen": false,
 
-  "RenderText": "Debug text",
-  "TextPosition": [0, 0],
-  "TextScale": [1, 1]
+  "RenderText": "Debug text"
 }

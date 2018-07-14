@@ -85,17 +85,43 @@ void RenderText::Update(float deltaTime)
 {
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
 
-	SetScaleFromWindowSize();
-	GetComponent<TransformComponent>()->Scale(pixelScaleFactor);
+	vec2 windowSize = window->GetWindowSize();
+	SetScaleFromWindowSize(windowSize);
+	SetPositionFromWindowSize(windowSize);
 }
 
-void RenderText::SetScaleFromWindowSize()
+void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
 {
-	vec2 windowSize = window->GetWindowSize();
 	float width = (aspectRatio.x * (1 / aspectRatio.y)) / windowSize.x;
 	float height = 1 / windowSize.y;
 
 	GetComponent<TransformComponent>()->SetScale(vec2(width, height));
+	GetComponent<TransformComponent>()->Scale(pixelScaleFactor);
+}
+
+void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
+{
+	vec2 renderPosition = GetRenderPosition(windowSize);
+	GetComponent<TransformComponent>()->SetPosition(vec2(renderPosition.x / windowSize.x, renderPosition.y / windowSize.y));
+}
+
+vec2 RenderText::GetRenderPosition(const vec2& windowSize) const
+{
+	switch (anchorPosition)
+	{
+	case Center:
+		return pixelPosition;
+	case TopLeft:
+		return vec2(pixelPosition.x - windowSize.x, pixelPosition.y + windowSize.y);
+	case TopRight:
+		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y + windowSize.y);
+	case BottomLeft:
+		return vec2(pixelPosition.x - windowSize.x, pixelPosition.y - windowSize.y);
+	case BottomRight:
+		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y - windowSize.y);
+	default:
+		throw "We should never be here";
+	}
 }
 
 void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
@@ -106,6 +132,16 @@ void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
 void RenderText::SetPixelScale(float pixelScaleFactor)
 {
 	this->pixelScaleFactor = vec2(pixelScaleFactor, pixelScaleFactor);
+}
+
+void RenderText::SetPixelPosition(const vec2& pixelPosition)
+{
+	this->pixelPosition = pixelPosition;
+}
+
+void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
+{
+	this->anchorPosition = anchorPoint;
 }
 
 RenderText::~RenderText()

@@ -34,8 +34,9 @@ bool Engine::Init()
 		cubeBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 		cubeBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 
-		renderText->GetComponent<TransformComponent>()->SetPosition(vec2(-0.81f, 0.9f));
 		renderText->SetPixelScale(26);
+		renderText->SetScreenAnchorPoint(RenderText::TopLeft);
+		renderText->SetPixelPosition(vec2(120.f, -30.f));
 	}
 	catch (string errorMessage)
 	{
