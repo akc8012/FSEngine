@@ -24,7 +24,7 @@ bool Engine::Init()
 
 		rotatingCrateFace = new CubePrimitive(fileSystem, input);
 		rotatingCrateBrick = new CubePrimitive(fileSystem, input);
-		textQuad = new RenderText(fileSystem, input);
+		renderText = new RenderText(fileSystem, input);
 		model = new Model("C:/Model/Arwing/arwing.dae");
 
 		rotatingCrateFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
@@ -33,8 +33,6 @@ bool Engine::Init()
 		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 		rotatingCrateBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
-
-		textQuad->GetComponent<TransformComponent>()->SetPosition(vec3(-0.78f, 0.94f, 1));
 	}
 	catch (string errorMessage)
 	{
@@ -202,22 +200,25 @@ void Engine::Update(float deltaTime)
 {
 	rotatingCrateFace->Update(deltaTime);
 	rotatingCrateBrick->Update(deltaTime);
-	textQuad->Update(deltaTime);
+
+	renderText->Update(deltaTime);
+	renderText->GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, 1));
+	renderText->GetComponent<TransformComponent>()->SetScale(vec3(0.5f, 0.5f, 1));
 }
 
 void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
 
-	glEnable(GL_DEPTH_TEST);
-	shaderProgram->SetBool("renderPerspective", true);
-	renderer->RenderGameObject(rotatingCrateFace);
-	renderer->RenderGameObject(rotatingCrateBrick);
-	renderer->RenderModel(model);
+	//glEnable(GL_DEPTH_TEST);
+	//shaderProgram->SetBool("renderPerspective", true);
+	//renderer->RenderGameObject(rotatingCrateFace);
+	//renderer->RenderGameObject(rotatingCrateBrick);
+	//renderer->RenderModel(model);
 
 	glDisable(GL_DEPTH_TEST);
 	shaderProgram->SetBool("renderPerspective", false);
-	renderer->RenderGameObject(textQuad);
+	renderer->RenderGameObject(renderText);
 
 	renderer->EndRender();
 }
@@ -225,7 +226,7 @@ void Engine::Draw(float deltaTime)
 Engine::~Engine()
 {
 	delete model;
-	delete textQuad;
+	delete renderText;
 	delete rotatingCrateFace;
 	delete rotatingCrateBrick;
 

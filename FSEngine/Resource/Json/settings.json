@@ -1,7 +1,7 @@
 {
   "SwapInterval": -1,
-  "Resolution": [800, 600],
+  "Resolution": [400, 400],
   "Fullscreen": false,
 
-  "RenderText": "example text"
+  "RenderText": "T"
 }
