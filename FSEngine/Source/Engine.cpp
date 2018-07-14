@@ -22,17 +22,20 @@ bool Engine::Init()
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(fileSystem, window, shaderProgram, input);
 
-		rotatingCrateFace = new CubePrimitive(fileSystem, input);
-		rotatingCrateBrick = new CubePrimitive(fileSystem, input);
-		renderText = new RenderText(fileSystem, input);
+		cubeFace = new CubePrimitive(fileSystem, input, window);
+		cubeBrick = new CubePrimitive(fileSystem, input, window);
+		renderText = new RenderText(fileSystem, input, window);
 		model = new Model("C:/Model/Arwing/arwing.dae");
 
-		rotatingCrateFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
-		rotatingCrateBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));
+		cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
+		cubeBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));
 
-		rotatingCrateFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
-		rotatingCrateBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
-		rotatingCrateBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+		cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
+		cubeBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
+		cubeBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+
+		renderText->GetComponent<TransformComponent>()->SetPosition(vec2(-0.81f, 0.9f));
+		renderText->SetPixelScale(26);
 	}
 	catch (string errorMessage)
 	{
@@ -198,12 +201,10 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update(float deltaTime)
 {
-	rotatingCrateFace->Update(deltaTime);
-	rotatingCrateBrick->Update(deltaTime);
+	cubeFace->Update(deltaTime);
+	cubeBrick->Update(deltaTime);
 
 	renderText->Update(deltaTime);
-	renderText->GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, 1));
-	renderText->GetComponent<TransformComponent>()->SetScale(vec3(0.5f, 0.5f, 1));
 }
 
 void Engine::Draw(float deltaTime)
@@ -212,8 +213,8 @@ void Engine::Draw(float deltaTime)
 
 	//glEnable(GL_DEPTH_TEST);
 	//shaderProgram->SetBool("renderPerspective", true);
-	//renderer->RenderGameObject(rotatingCrateFace);
-	//renderer->RenderGameObject(rotatingCrateBrick);
+	//renderer->RenderGameObject(cubeFace);
+	//renderer->RenderGameObject(cubeBrick);
 	//renderer->RenderModel(model);
 
 	glDisable(GL_DEPTH_TEST);
@@ -227,8 +228,8 @@ Engine::~Engine()
 {
 	delete model;
 	delete renderText;
-	delete rotatingCrateFace;
-	delete rotatingCrateBrick;
+	delete cubeFace;
+	delete cubeBrick;
 
 	delete renderer;
 	delete input;

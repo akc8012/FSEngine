@@ -1,16 +1,16 @@
 #include "../Header/RenderText.h"
 
-RenderText::RenderText(FileSystem* fileSystem, Input* input)
- : GameObject(fileSystem, input)
+RenderText::RenderText(FileSystem* fileSystem, Input* input, Window* window)
+ : GameObject(fileSystem, input, window)
 {
 	AddComponent(new TransformComponent());
-	CreateMeshComponent();
+	AddComponent(CreateMeshComponent());
 
 	LoadFont("arial.ttf");
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
 }
 
-void RenderText::CreateMeshComponent()
+MeshComponent* RenderText::CreateMeshComponent()
 {
 	vector<float> rawVertices =
 	{
@@ -40,7 +40,7 @@ void RenderText::CreateMeshComponent()
 		1, 2, 3    // second triangle
 	};
 
-	AddComponent(new MeshComponent(vertices, indices));
+	return new MeshComponent(vertices, indices);
 }
 
 void RenderText::LoadFont(const char* fontName)
@@ -53,20 +53,17 @@ void RenderText::LoadFont(const char* fontName)
 
 void RenderText::SetText(const string& text)
 {
-	if (renderText != text)
-	{
-		CreateTextureComponent(text.c_str());
-
-		const float ScaleFactor = 0.2f;
-		//GetComponent<TransformComponent>()->SetScale(vec3(ScaleFactor, ScaleFactor * textAspect, 1));
-	}
+	if (renderText != text || GetComponent<TextureComponent>() == nullptr)
+		CreateTextureComponent(text);
 }
 
-void RenderText::CreateTextureComponent(const char* text)
+void RenderText::CreateTextureComponent(const string& text)
 {
 	renderText = text;
-	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), SDL_Color { 255, 255, 255, 255 });
-	textAspect = (float)surface->h / (float)surface->w;
+
+	SDL_Color textColor = SDL_Color { 255, 255, 255, 255 };
+	SDL_Surface* surface = TTF_RenderText_Blended(font, text == "" ? " " : text.c_str(), textColor);
+	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
 	if (GetComponent<TextureComponent>() == nullptr)
 		AddComponent(new TextureComponent(surface, true));
@@ -76,9 +73,39 @@ void RenderText::CreateTextureComponent(const char* text)
 	SDL_FreeSurface(surface);
 }
 
+vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
+{
+	float width = std::max((float)surfaceSize.x / (float)surfaceSize.y, 1.f);
+	float height = std::max((float)surfaceSize.y / (float)surfaceSize.x, 1.f);
+
+	return vec2(width, height);
+}
+
 void RenderText::Update(float deltaTime)
 {
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
+
+	SetScaleFromWindowSize();
+	GetComponent<TransformComponent>()->Scale(pixelScaleFactor);
+}
+
+void RenderText::SetScaleFromWindowSize()
+{
+	vec2 windowSize = window->GetWindowSize();
+	float width = (aspectRatio.x * (1 / aspectRatio.y)) / windowSize.x;
+	float height = 1 / windowSize.y;
+
+	GetComponent<TransformComponent>()->SetScale(vec2(width, height));
+}
+
+void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
+{
+	this->pixelScaleFactor = pixelScaleFactor;
+}
+
+void RenderText::SetPixelScale(float pixelScaleFactor)
+{
+	this->pixelScaleFactor = vec2(pixelScaleFactor, pixelScaleFactor);
 }
 
 RenderText::~RenderText()

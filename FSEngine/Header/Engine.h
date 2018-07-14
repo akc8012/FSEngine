@@ -29,9 +29,9 @@ private:
 	Input* input = nullptr;
 	Renderer* renderer = nullptr;
 
-	GameObject* rotatingCrateFace = nullptr;
-	GameObject* rotatingCrateBrick = nullptr;
-	GameObject* renderText = nullptr;
+	GameObject* cubeFace = nullptr;
+	GameObject* cubeBrick = nullptr;
+	RenderText* renderText = nullptr;
 	Model* model = nullptr;
 
 	void InitSDL();

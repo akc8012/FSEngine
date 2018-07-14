@@ -1,10 +1,8 @@
 #include "../Header/Camera.h"
 
 Camera::Camera(FileSystem* fileSystem, Input* input, Window* window)
- : GameObject(fileSystem, input)
+ : GameObject(fileSystem, input, window)
 {
-	this->window = window;
-
 	AddComponent(new TransformComponent());
 	GetComponent<TransformComponent>()->SetPosition(vec3(0, 0, -4));
 }
