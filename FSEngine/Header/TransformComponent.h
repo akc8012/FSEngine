@@ -40,12 +40,17 @@ public:
 	MatrixValues DecomposeTransformMatrix() const;
 
 	void Scale(const vec3& scaleVector);
+	void Scale(const vec2& scaleVector);
+	void Scale(float scaleFactor);
 	void Rotate(float angle, const vec3& axis);
 	void Translate(const vec3& translation);
 
 	void SetScale(const vec3& scaleVector);
+	void SetScale(const vec2& scaleVector);
+	void SetScale(float scaleFactor);
 	void SetRotation(float angle, const vec3& axis);
 	void SetPosition(const vec3& position);
+	void SetPosition(const vec2& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
 

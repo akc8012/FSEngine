@@ -13,7 +13,6 @@ using namespace glm;
 class Camera : public GameObject
 {
 private:
-	Window* window = nullptr;
 	mat4 projectionPerspective = mat4(1.0f);
 	mat4 projectionOrthographic = mat4(1.0f);
 

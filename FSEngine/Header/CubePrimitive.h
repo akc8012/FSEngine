@@ -11,6 +11,6 @@ private:
 	vector<Vertex> CreateVertexList() const;
 
 public:
-	CubePrimitive(FileSystem* fileSystem, Input* input);
+	CubePrimitive(FileSystem* fileSystem, Input* input, Window* window);
 	void Update(float deltaTime);
 };

@@ -65,6 +65,16 @@ void TransformComponent::Scale(const vec3& scaleVector)
 	transform = scale(transform, scaleVector);
 }
 
+void TransformComponent::Scale(const vec2& scaleVector)
+{
+	transform = scale(transform, vec3(scaleVector.x, scaleVector.y, 1.f));
+}
+
+void TransformComponent::Scale(float scaleFactor)
+{
+	transform = scale(transform, vec3(scaleFactor, scaleFactor, scaleFactor));
+}
+
 void TransformComponent::Rotate(float angle, const vec3& axis)
 {
 	transform = rotate(transform, angle, axis);
@@ -83,6 +93,23 @@ void TransformComponent::SetScale(const vec3& scaleVector)
 	transform = translate(identity, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identity, scaleVector);
 }
 
+void TransformComponent::SetScale(const vec2& scaleVector)
+{
+	mat4 identity = mat4(1.0f);
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	vec3 scaleVector3 = vec3(scaleVector.x, scaleVector.y, 1.f);
+
+	transform = translate(identity, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identity, scaleVector3);
+}
+
+void TransformComponent::SetScale(float scaleFactor)
+{
+	mat4 identity = mat4(1.0f);
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+
+	transform = translate(identity, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identity, vec3(scaleFactor, scaleFactor, scaleFactor));
+}
+
 void TransformComponent::SetRotation(float angle, const vec3& axis)
 {
 	mat4 identity = mat4(1.0f);
@@ -97,6 +124,15 @@ void TransformComponent::SetPosition(const vec3& position)
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 
 	transform = translate(identity, position) * toMat4(matrixValues.rotation) * scale(identity, matrixValues.scale);
+}
+
+void TransformComponent::SetPosition(const vec2& position)
+{
+	mat4 identity = mat4(1.0f);
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	vec3 position3 = vec3(position.x, position.y, 1);
+
+	transform = translate(identity, position3) * toMat4(matrixValues.rotation) * scale(identity, matrixValues.scale);
 }
 
 void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector)

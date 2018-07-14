@@ -1,7 +1,7 @@
 #include "../Header/CubePrimitive.h"
 
-CubePrimitive::CubePrimitive(FileSystem* fileSystem, Input* input)
- : GameObject(fileSystem, input)
+CubePrimitive::CubePrimitive(FileSystem* fileSystem, Input* input, Window* window)
+ : GameObject(fileSystem, input, window)
 {
 	vector<Vertex> vertices = CreateVertexList();
 

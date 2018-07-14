@@ -1,6 +1,7 @@
 #pragma once
 #include "FileSystem.h"
 #include "Input.h"
+#include "Window.h"
 #include "MeshComponent.h"
 #include "TransformComponent.h"
 #include "TextureComponent.h"
@@ -15,9 +16,10 @@ private:
 protected:
 	FileSystem* fileSystem = nullptr;
 	Input* input = nullptr;
+	Window* window = nullptr;
 
 public:
-	GameObject(FileSystem* fileSystem, Input* input);
+	GameObject(FileSystem* fileSystem, Input* input, Window* window);
 	~GameObject();
 
 	void AddComponent(Component* component);
