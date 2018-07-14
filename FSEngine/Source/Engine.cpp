@@ -211,11 +211,11 @@ void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
 
-	//glEnable(GL_DEPTH_TEST);
-	//shaderProgram->SetBool("renderPerspective", true);
-	//renderer->RenderGameObject(cubeFace);
-	//renderer->RenderGameObject(cubeBrick);
-	//renderer->RenderModel(model);
+	glEnable(GL_DEPTH_TEST);
+	shaderProgram->SetBool("renderPerspective", true);
+	renderer->RenderGameObject(cubeFace);
+	renderer->RenderGameObject(cubeBrick);
+	renderer->RenderModel(model);
 
 	glDisable(GL_DEPTH_TEST);
 	shaderProgram->SetBool("renderPerspective", false);
