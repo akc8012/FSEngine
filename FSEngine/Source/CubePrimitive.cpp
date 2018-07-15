@@ -3,19 +3,11 @@
 CubePrimitive::CubePrimitive(FileSystem* fileSystem, Input* input, Window* window)
  : GameObject(fileSystem, input, window)
 {
-	vector<Vertex> vertices = CreateVertexList();
-
-	vector<Uint32> indices =
-	{
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
-
-	AddComponent(new MeshComponent(vertices, indices));
+	AddComponent(CreateMeshComponent());
 	AddComponent(new TransformComponent());
 }
 
-vector<Vertex> CubePrimitive::CreateVertexList() const
+MeshComponent* CubePrimitive::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
@@ -63,19 +55,14 @@ vector<Vertex> CubePrimitive::CreateVertexList() const
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
 
-	vector<Vertex> vertices;
-	const int Stride = 8;
-	for (int i = 0; i < rawVertices.size(); i += Stride)
+	vector<Uint32> indices =
 	{
-		Vertex vertex;
-		vertex.position = vec3(rawVertices[i], rawVertices[i+1], rawVertices[i+2]);
-		vertex.normal = vec3(rawVertices[i+3], rawVertices[i+4], rawVertices[i+5]);
-		vertex.textureCoord = vec2(rawVertices[i+6], rawVertices[i+7]);
+		0, 1, 3,   // first triangle
+		1, 2, 3    // second triangle
+	};
 
-		vertices.push_back(vertex);
-	}
-
-	return vertices;
+	const int Stride = 8;
+	return new MeshComponent(rawVertices, Stride, indices);
 }
 
 void CubePrimitive::Update(float deltaTime)

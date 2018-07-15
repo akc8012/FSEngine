@@ -30,6 +30,8 @@ private:
 
 	Uint32 vertexArrayId = NULL;
 
+	vector<Vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
+
 	void CreateVertexArray();
 
 	void SendVertices(Uint32 vertexBufferId);
@@ -43,6 +45,7 @@ private:
 
 public:
 	MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices);
+	MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
 	~MeshComponent();
 
 	void BindVertexArray();
@@ -51,7 +54,7 @@ public:
 	int GetVerticeCount() const;
 
 	void AddAssociatedTextureIndex(int textureIndex);
-	void AddAssociatedTextureIndices(vector<int> textureIndices);
+	void AddAssociatedTextureIndices(const vector<int>& textureIndices);
 	vector<int> GetAssociatedTextureIndices() const;
 
 	const type_info& GetType() const;

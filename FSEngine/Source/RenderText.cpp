@@ -10,7 +10,7 @@ RenderText::RenderText(FileSystem* fileSystem, Input* input, Window* window)
 	SetText(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
 }
 
-MeshComponent* RenderText::CreateMeshComponent()
+MeshComponent* RenderText::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
@@ -23,24 +23,14 @@ MeshComponent* RenderText::CreateMeshComponent()
 		-1.0f, -1.0f, 0.0f,  0.0f, 0.0f
 	};
 
-	vector<Vertex> vertices;
-	const int Stride = 5;
-	for (int i = 0; i < rawVertices.size(); i += Stride)
-	{
-		Vertex vertex;
-		vertex.position = vec3(rawVertices[i], rawVertices[i + 1], rawVertices[i + 2]);
-		vertex.textureCoord = vec2(rawVertices[i + 3], rawVertices[i + 4]);
-
-		vertices.push_back(vertex);
-	}
-
 	vector<Uint32> indices =
 	{
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
 
-	return new MeshComponent(vertices, indices);
+	const int Stride = 5;
+	return new MeshComponent(rawVertices, Stride, indices);
 }
 
 void RenderText::LoadFont(const char* fontName)

@@ -8,6 +8,43 @@ MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32
 	CreateVertexArray();
 }
 
+MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
+{
+	this->vertices = ConvertRawVertices(rawVertices, stride);
+	this->indices = indices;
+
+	CreateVertexArray();
+}
+
+vector<Vertex> MeshComponent::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
+{
+	vector<Vertex> vertices;
+	for (int i = 0; i < rawVertices.size(); i += stride)
+	{
+		Vertex vertex;
+		int j = 0;
+
+		vertex.position.x = rawVertices[i + j++];
+		vertex.position.y = rawVertices[i + j++];
+		vertex.position.z = rawVertices[i + j++];
+
+		const int StrideNeededToHaveNormals = 5;
+		if (stride > StrideNeededToHaveNormals)
+		{
+			vertex.normal.x = rawVertices[i + j++];
+			vertex.normal.y = rawVertices[i + j++];
+			vertex.normal.z = rawVertices[i + j++];
+		}
+
+		vertex.textureCoord.x = rawVertices[i + j++];
+		vertex.textureCoord.y = rawVertices[i + j++];
+
+		vertices.push_back(vertex);
+	}
+
+	return vertices;
+}
+
 void MeshComponent::CreateVertexArray()
 {
 	Uint32 vertexBufferId, elementBufferId;
@@ -100,7 +137,7 @@ void MeshComponent::AddAssociatedTextureIndex(int textureIndex)
 	associatedTextureIndices.push_back(textureIndex);
 }
 
-void MeshComponent::AddAssociatedTextureIndices(vector<int> textureIndices)
+void MeshComponent::AddAssociatedTextureIndices(const vector<int>& textureIndices)
 {
 	associatedTextureIndices.insert(associatedTextureIndices.end(), textureIndices.begin(), textureIndices.end());
 }

@@ -8,7 +8,7 @@ using std::vector;
 class CubePrimitive : public GameObject
 {
 private:
-	vector<Vertex> CreateVertexList() const;
+	MeshComponent* CreateMeshComponent() const;
 
 public:
 	CubePrimitive(FileSystem* fileSystem, Input* input, Window* window);
