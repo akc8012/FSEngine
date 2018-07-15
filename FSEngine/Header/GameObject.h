@@ -17,13 +17,9 @@ protected:
 	Window* window = nullptr;
 
 private:
-	vector<vector<Component*>*> componentLists;
-
 	vector<MeshComponent*> meshComponents;
 	vector<TextureComponent*> textureComponents;
 	vector<TransformComponent*> transformComponents;
-
-	//vector<Component*> GetList(ComponentType componentType) const;
 
 public:
 	GameObject(FileSystem* fileSystem, Input* input, Window* window);

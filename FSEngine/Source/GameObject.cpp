@@ -5,10 +5,6 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 	this->fileSystem = fileSystem;
 	this->input= input;
 	this->window = window;
-
-	//componentLists.push_back(&meshComponents);
-	//componentLists.push_back(&textureComponents);
-	//componentLists.push_back(&transformComponents);
 }
 
 void GameObject::AddComponent(MeshComponent* component)
@@ -26,21 +22,6 @@ void GameObject::AddComponent(TransformComponent* component)
 	transformComponents.push_back(component);
 }
 
-//vector<Component*> GameObject::GetList(ComponentType componentType) const
-//{
-//	switch (componentType)
-//	{
-//	case Mesh:
-//		return meshComponents;
-//	case Texture:
-//		return textureComponents;
-//	case Transform:
-//		return transformComponents;
-//	default:
-//		throw "Could not find component list: " + std::to_string(componentType);
-//	}
-//}
-
 void GameObject::Update(float deltaTime)
 {
 
@@ -48,9 +29,21 @@ void GameObject::Update(float deltaTime)
 
 GameObject::~GameObject()
 {
-	for (auto& componentList : componentLists)
+	for (auto& meshComponent : meshComponents)
 	{
-		for (auto& component : *componentList)
-			delete component;
+		if (!meshComponent->IsShared())
+			delete meshComponent;
+	}
+
+	for (auto& textureComponent : textureComponents)
+	{
+		if (!textureComponent->IsShared())
+			delete textureComponent;
+	}
+
+	for (auto& transformComponent : transformComponents)
+	{
+		if (!transformComponent->IsShared())
+			delete transformComponent;
 	}
 }
