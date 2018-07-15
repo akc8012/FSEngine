@@ -9,17 +9,17 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 
 void GameObject::AddComponent(MeshComponent* component)
 {
-	meshComponents.push_back(component);
+	meshComponents.emplace("", component);
 }
 
 void GameObject::AddComponent(TextureComponent* component)
 {
-	textureComponents.push_back(component);
+	textureComponents.emplace("", component);
 }
 
 void GameObject::AddComponent(TransformComponent* component)
 {
-	transformComponents.push_back(component);
+	transformComponents.emplace("", component);
 }
 
 void GameObject::Update(float deltaTime)
@@ -31,19 +31,19 @@ GameObject::~GameObject()
 {
 	for (auto& meshComponent : meshComponents)
 	{
-		if (!meshComponent->IsShared())
-			delete meshComponent;
+		if (!meshComponent.second->IsShared())
+			delete meshComponent.second;
 	}
 
 	for (auto& textureComponent : textureComponents)
 	{
-		if (!textureComponent->IsShared())
-			delete textureComponent;
+		if (!textureComponent.second->IsShared())
+			delete textureComponent.second;
 	}
 
 	for (auto& transformComponent : transformComponents)
 	{
-		if (!transformComponent->IsShared())
-			delete transformComponent;
+		if (!transformComponent.second->IsShared())
+			delete transformComponent.second;
 	}
 }

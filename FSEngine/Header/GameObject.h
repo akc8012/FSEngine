@@ -7,7 +7,8 @@
 #include "TransformComponent.h"
 
 #include <vector>
-using std::vector;
+#include <unordered_map>
+using std::unordered_map;
 
 class GameObject
 {
@@ -17,9 +18,9 @@ protected:
 	Window* window = nullptr;
 
 private:
-	vector<MeshComponent*> meshComponents;
-	vector<TextureComponent*> textureComponents;
-	vector<TransformComponent*> transformComponents;
+	unordered_map<string, MeshComponent*> meshComponents;
+	unordered_map<string, TextureComponent*> textureComponents;
+	unordered_map<string, TransformComponent*> transformComponents;
 
 public:
 	GameObject(FileSystem* fileSystem, Input* input, Window* window);
@@ -29,22 +30,22 @@ public:
 	void AddComponent(TextureComponent* component);
 	void AddComponent(TransformComponent* component);
 
-	template <typename T> T* GetComponent() const;
+	template <typename T> T* GetComponent(string name = "") const;
 	virtual void Update(float deltaTime);
 };
 
-template <typename T> inline T* GameObject::GetComponent() const
+template <typename T> inline T* GameObject::GetComponent(string name) const
 {
 	T* component = nullptr;
 
 	if (meshComponents.size() > 0 && typeid(T) == typeid(MeshComponent))
-		component = reinterpret_cast<T*>(meshComponents[0]);
+		component = reinterpret_cast<T*>(meshComponents.at(name));
 
 	if (textureComponents.size() > 0 && typeid(T) == typeid(TextureComponent))
-		component = reinterpret_cast<T*>(textureComponents[0]);
+		component = reinterpret_cast<T*>(textureComponents.at(name));
 
 	if (transformComponents.size() > 0 && typeid(T) == typeid(TransformComponent))
-		component = reinterpret_cast<T*>(transformComponents[0]);
+		component = reinterpret_cast<T*>(transformComponents.at(name));
 
 	return component;
 }
