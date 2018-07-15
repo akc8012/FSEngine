@@ -30,7 +30,9 @@ private:
 	void SetScaleFromWindowSize(const vec2& windowSize);
 
 	void SetPositionFromWindowSize(const vec2& windowSize);
-	vec2 GetRenderPosition(const vec2& windowSize) const;
+	vec2 GetPixelAnchoredPosition(const vec2& windowSize) const;
+
+	void SetPixelPositionToTopLeftOrigin();
 
 public:
 	RenderText(FileSystem* fileSystem, Input* input, Window* window);

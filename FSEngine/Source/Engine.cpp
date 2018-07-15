@@ -36,7 +36,7 @@ bool Engine::Init()
 
 		renderText->SetPixelScale(26);
 		renderText->SetScreenAnchorPoint(RenderText::TopLeft);
-		renderText->SetPixelPosition(vec2(120.f, -30.f));
+		renderText->SetPixelPosition(vec2(30, -20));
 	}
 	catch (string errorMessage)
 	{

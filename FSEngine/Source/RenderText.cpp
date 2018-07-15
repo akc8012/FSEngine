@@ -101,11 +101,11 @@ void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
 
 void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
 {
-	vec2 renderPosition = GetRenderPosition(windowSize);
-	GetComponent<TransformComponent>()->SetPosition(vec2(renderPosition.x / windowSize.x, renderPosition.y / windowSize.y));
+	vec2 anchorPixelPosition = GetPixelAnchoredPosition(windowSize);
+	GetComponent<TransformComponent>()->SetPosition(vec2(anchorPixelPosition.x / windowSize.x, anchorPixelPosition.y / windowSize.y));
 }
 
-vec2 RenderText::GetRenderPosition(const vec2& windowSize) const
+vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
 {
 	switch (anchorPosition)
 	{
@@ -120,7 +120,7 @@ vec2 RenderText::GetRenderPosition(const vec2& windowSize) const
 	case BottomRight:
 		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y - windowSize.y);
 	default:
-		throw "We should never be here";
+		throw "RenderText error: Could not recognize anchorPosition: " + std::to_string(anchorPosition);
 	}
 }
 
@@ -137,6 +137,12 @@ void RenderText::SetPixelScale(float pixelScaleFactor)
 void RenderText::SetPixelPosition(const vec2& pixelPosition)
 {
 	this->pixelPosition = pixelPosition;
+	SetPixelPositionToTopLeftOrigin();
+}
+
+void RenderText::SetPixelPositionToTopLeftOrigin()
+{
+	pixelPosition *= 2.f;
 }
 
 void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
