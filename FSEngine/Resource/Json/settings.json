@@ -3,5 +3,5 @@
   "Resolution": [900, 600],
   "Fullscreen": false,
 
-  "RenderText": "Text"
+  "RenderText": "Debug text"
 }

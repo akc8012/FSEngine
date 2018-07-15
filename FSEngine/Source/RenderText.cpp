@@ -83,8 +83,6 @@ vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
 
 void RenderText::Update(float deltaTime)
 {
-	SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
-
 	vec2 windowSize = window->GetWindowSize();
 	SetScaleFromWindowSize(windowSize);
 	SetPositionFromWindowSize(windowSize);
@@ -101,8 +99,8 @@ void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
 
 void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
 {
-	vec2 anchorPixelPosition = GetPixelAnchoredPosition(windowSize);
-	GetComponent<TransformComponent>()->SetPosition(vec2(anchorPixelPosition.x / windowSize.x, anchorPixelPosition.y / windowSize.y));
+	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(windowSize), windowSize);
+	GetComponent<TransformComponent>()->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
 }
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
@@ -122,6 +120,32 @@ vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
 	default:
 		throw "RenderText error: Could not recognize anchorPosition: " + std::to_string(anchorPosition);
 	}
+}
+
+vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowSize)
+{
+	vec2 pixelScale = GetPixelScale(windowSize);
+	switch (alignPosition)
+	{
+	case Center:
+		return position;
+	case TopLeft:
+		return vec2(position.x + pixelScale.x, position.y - pixelScale.y);
+	case TopRight:
+		return vec2(position.x - pixelScale.x, position.y - pixelScale.y);
+	case BottomLeft:
+		return vec2(position.x + pixelScale.x, position.y + pixelScale.y);
+	case BottomRight:
+		return vec2(position.x - pixelScale.x, position.y + pixelScale.y);
+	default:
+		throw "RenderText error: Could not recognize alignPosition: " + std::to_string(alignPosition);
+	}
+}
+
+vec2 RenderText::GetPixelScale(const vec2& windowSize)
+{
+	TransformComponent* transform = GetComponent<TransformComponent>();
+	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
 }
 
 void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
@@ -148,6 +172,11 @@ void RenderText::SetPixelPositionToTopLeftOrigin()
 void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
 {
 	this->anchorPosition = anchorPoint;
+}
+
+void RenderText::SetTextAlignment(AnchorPosition alignPosition)
+{
+	this->alignPosition = alignPosition;
 }
 
 RenderText::~RenderText()

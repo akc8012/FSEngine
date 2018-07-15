@@ -36,7 +36,8 @@ bool Engine::Init()
 
 		renderText->SetPixelScale(26);
 		renderText->SetScreenAnchorPoint(RenderText::TopLeft);
-		renderText->SetPixelPosition(vec2(30, -20));
+		renderText->SetTextAlignment(RenderText::TopLeft);
+		renderText->SetPixelPosition(vec2(5, -5));
 	}
 	catch (string errorMessage)
 	{
@@ -206,6 +207,7 @@ void Engine::Update(float deltaTime)
 	cubeBrick->Update(deltaTime);
 
 	renderText->Update(deltaTime);
+	renderText->SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
 }
 
 void Engine::Draw(float deltaTime)

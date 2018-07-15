@@ -21,6 +21,7 @@ private:
 	vec2 pixelScaleFactor = vec2(1.f, 1.f);
 	vec2 pixelPosition = vec2(0, 0);
 	AnchorPosition anchorPosition = Center;
+	AnchorPosition alignPosition = Center;
 
 	MeshComponent* CreateMeshComponent();
 	void LoadFont(const char* fontName);
@@ -31,6 +32,8 @@ private:
 
 	void SetPositionFromWindowSize(const vec2& windowSize);
 	vec2 GetPixelAnchoredPosition(const vec2& windowSize) const;
+	vec2 GetPixelAlignPosition(const vec2& position, const vec2& windowSize);
+	vec2 GetPixelScale(const vec2& windowSize);
 
 	void SetPixelPositionToTopLeftOrigin();
 
@@ -45,4 +48,5 @@ public:
 	void SetPixelScale(float pixelScaleFactor);
 	void SetPixelPosition(const vec2& pixelPosition);
 	void SetScreenAnchorPoint(AnchorPosition anchorPoint);
+	void SetTextAlignment(AnchorPosition alignPosition);
 };
