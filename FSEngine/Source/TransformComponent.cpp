@@ -1,10 +1,5 @@
 #include "../Header/TransformComponent.h"
 
-TransformComponent::TransformComponent()
-{
-	componentType = Transform;
-}
-
 string TransformComponent::GetFormattedMatrixString(const mat4& matrix)
 {
 	string matrixString = "";

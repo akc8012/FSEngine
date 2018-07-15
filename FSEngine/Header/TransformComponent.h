@@ -28,7 +28,7 @@ private:
 	mat4 transform = mat4(1.0f);
 
 public:
-	TransformComponent();
+	static const ComponentType ComponentTypeId = Transform;
 
 	static string GetFormattedMatrixString(const mat4& matrix);
 

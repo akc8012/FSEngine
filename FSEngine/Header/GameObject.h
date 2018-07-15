@@ -30,7 +30,7 @@ public:
 	void AddComponent(TextureComponent* component);
 	void AddComponent(TransformComponent* component);
 
-	template <typename T> T* GetComponent(string name = "") const;
+	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	virtual void Update(float deltaTime);
 };
 

@@ -30,6 +30,8 @@ private:
 	void DeleteTexture();
 
 public:
+	static const ComponentType ComponentTypeId = Texture;
+
 	TextureComponent(const string& filepath);
 	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
 	~TextureComponent();

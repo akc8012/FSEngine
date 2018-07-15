@@ -44,6 +44,8 @@ private:
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
 public:
+	static const ComponentType ComponentTypeId = Mesh;
+
 	MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices);
 	MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
 	~MeshComponent();

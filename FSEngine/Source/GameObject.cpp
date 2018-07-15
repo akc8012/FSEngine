@@ -9,17 +9,17 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 
 void GameObject::AddComponent(MeshComponent* component)
 {
-	meshComponents.emplace("", component);
+	meshComponents.emplace(ComponentTypeString[MeshComponent::ComponentTypeId], component);
 }
 
 void GameObject::AddComponent(TextureComponent* component)
 {
-	textureComponents.emplace("", component);
+	textureComponents.emplace(ComponentTypeString[TextureComponent::ComponentTypeId], component);
 }
 
 void GameObject::AddComponent(TransformComponent* component)
 {
-	transformComponents.emplace("", component);
+	transformComponents.emplace(ComponentTypeString[TransformComponent::ComponentTypeId], component);
 }
 
 void GameObject::Update(float deltaTime)
