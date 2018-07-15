@@ -32,8 +32,8 @@ private:
 
 	void SetPositionFromWindowSize(const vec2& windowSize);
 	vec2 GetPixelAnchoredPosition(const vec2& windowSize) const;
-	vec2 GetPixelAlignPosition(const vec2& position, const vec2& windowSize);
-	vec2 GetPixelScale(const vec2& windowSize);
+	vec2 GetPixelAlignPosition(const vec2& position, const vec2& windowSize) const;
+	vec2 GetPixelScale(const vec2& windowSize) const;
 
 	void SetPixelPositionToTopLeftOrigin();
 

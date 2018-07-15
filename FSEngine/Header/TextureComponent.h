@@ -40,5 +40,4 @@ public:
 
 	string GetFilename() const;
 	TextureType GetTextureType() const;
-	const type_info& GetType() const;
 };

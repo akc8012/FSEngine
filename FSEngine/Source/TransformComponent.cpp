@@ -1,5 +1,10 @@
 #include "../Header/TransformComponent.h"
 
+TransformComponent::TransformComponent()
+{
+	componentType = Transform;
+}
+
 string TransformComponent::GetFormattedMatrixString(const mat4& matrix)
 {
 	string matrixString = "";
@@ -143,9 +148,4 @@ void TransformComponent::SetPosition(const vec2& position)
 void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector)
 {
 	transform = lookAt(position, position + forwardVector, upVector);
-}
-
-const type_info& TransformComponent::GetType() const
-{
-	return typeid(this);
 }

@@ -112,7 +112,7 @@ vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
 	}
 }
 
-vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowSize)
+vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowSize) const
 {
 	vec2 pixelScale = GetPixelScale(windowSize);
 	switch (alignPosition)
@@ -132,7 +132,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 	}
 }
 
-vec2 RenderText::GetPixelScale(const vec2& windowSize)
+vec2 RenderText::GetPixelScale(const vec2& windowSize) const
 {
 	TransformComponent* transform = GetComponent<TransformComponent>();
 	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
