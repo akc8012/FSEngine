@@ -44,6 +44,7 @@ public:
 	void Scale(float scaleFactor);
 	void Rotate(float angle, const vec3& axis);
 	void Translate(const vec3& translation);
+	void Translate(const vec2& translation);
 
 	void SetScale(const vec3& scaleVector);
 	void SetScale(const vec2& scaleVector);

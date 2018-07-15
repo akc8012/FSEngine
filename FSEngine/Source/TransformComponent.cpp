@@ -85,6 +85,11 @@ void TransformComponent::Translate(const vec3& translation)
 	transform = translate(transform, translation);
 }
 
+void TransformComponent::Translate(const vec2& translation)
+{
+	transform = translate(transform, vec3(translation.x, translation.y, 0.f));
+}
+
 void TransformComponent::SetScale(const vec3& scaleVector)
 {
 	mat4 identity = mat4(1.0f);
