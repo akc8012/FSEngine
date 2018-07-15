@@ -70,7 +70,7 @@ void Engine::InitOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	SetSwapInterval(fileSystem->GetSettingsValue("SwapInterval").get<int>());
+	SetSwapInterval(fileSystem->GetSettingsValue<int>("SwapInterval"));
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_BLEND);
@@ -207,7 +207,7 @@ void Engine::Update(float deltaTime)
 	cubeBrick->Update(deltaTime);
 
 	renderText->Update(deltaTime);
-	renderText->SetText(fileSystem->GetSettingsValue("RenderText").get<string>());
+	renderText->SetText(fileSystem->GetSettingsValue<string>("RenderText"));
 }
 
 void Engine::Draw(float deltaTime)

@@ -7,7 +7,7 @@ RenderText::RenderText(FileSystem* fileSystem, Input* input, Window* window)
 	AddComponent(CreateMeshComponent());
 
 	LoadFont("arial.ttf");
-	SetText(fileSystem->GetSettingsValue("RenderText").get<string>().c_str());
+	SetText(renderText);
 }
 
 MeshComponent* RenderText::CreateMeshComponent() const

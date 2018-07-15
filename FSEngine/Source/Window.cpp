@@ -4,7 +4,7 @@ Window::Window(FileSystem* fileSystem)
 {
 	this->fileSystem = fileSystem;
 
-	CreateWindow(GetResolutionSetting(), fileSystem->GetSettingsValue("Fullscreen").get<bool>());
+	CreateWindow(GetResolutionSetting(), fileSystem->GetSettingsValue<bool>("Fullscreen"));
 	CreateContext();
 }
 
