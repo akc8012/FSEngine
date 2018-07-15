@@ -5,9 +5,9 @@ Component::~Component()
 
 }
 
-bool Component::IsType(const type_info& typeInfo)
+ComponentType Component::GetType() const
 {
-	return this->GetType() == typeInfo;
+	return componentType;
 }
 
 bool Component::IsShared() const

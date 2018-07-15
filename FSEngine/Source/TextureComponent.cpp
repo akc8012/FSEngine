@@ -2,6 +2,7 @@
 
 TextureComponent::TextureComponent(const string& filepath)
 {
+	componentType = Texture;
 	this->filename = filepath.substr(filepath.find_last_of('/')+1, filepath.length());
 
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
@@ -14,6 +15,7 @@ TextureComponent::TextureComponent(const string& filepath)
 
 TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
 {
+	componentType = Texture;
 	GenerateTexture(surface, flipSurface);
 }
 
@@ -100,11 +102,6 @@ string TextureComponent::GetFilename() const
 TextureComponent::TextureType TextureComponent::GetTextureType() const
 {
 	return textureType;
-}
-
-const type_info& TextureComponent::GetType() const
-{
-	return typeid(this);
 }
 
 TextureComponent::~TextureComponent()

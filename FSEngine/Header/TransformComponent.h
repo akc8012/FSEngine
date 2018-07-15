@@ -28,6 +28,8 @@ private:
 	mat4 transform = mat4(1.0f);
 
 public:
+	TransformComponent();
+
 	static string GetFormattedMatrixString(const mat4& matrix);
 
 	mat4 GetMatrix() const;
@@ -54,6 +56,4 @@ public:
 	void SetPosition(const vec2& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
-
-	const type_info& GetType() const;
 };

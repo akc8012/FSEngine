@@ -157,6 +157,7 @@
     <ClCompile Include="Source\RenderText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\ComponentType.h" />
     <ClInclude Include="Header\FileSystem.h" />
     <ClInclude Include="Header\Camera.h" />
     <ClInclude Include="Header\Component.h" />

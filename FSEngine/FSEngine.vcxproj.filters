@@ -37,6 +37,7 @@
     <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\CubePrimitive.h" />
     <ClInclude Include="Header\RenderText.h" />
+    <ClInclude Include="Header\ComponentType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

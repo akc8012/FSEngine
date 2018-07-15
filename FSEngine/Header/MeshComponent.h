@@ -56,6 +56,4 @@ public:
 	void AddAssociatedTextureIndex(int textureIndex);
 	void AddAssociatedTextureIndices(const vector<int>& textureIndices);
 	vector<int> GetAssociatedTextureIndices() const;
-
-	const type_info& GetType() const;
 };

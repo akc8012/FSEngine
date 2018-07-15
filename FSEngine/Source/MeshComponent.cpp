@@ -2,6 +2,7 @@
 
 MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices)
 {
+	componentType = Mesh;
 	this->vertices = vertices;
 	this->indices = indices;
 
@@ -10,6 +11,7 @@ MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32
 
 MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
 {
+	componentType = Mesh;
 	this->vertices = ConvertRawVertices(rawVertices, stride);
 	this->indices = indices;
 
@@ -145,11 +147,6 @@ void MeshComponent::AddAssociatedTextureIndices(const vector<int>& textureIndice
 vector<int> MeshComponent::GetAssociatedTextureIndices() const
 {
 	return associatedTextureIndices;
-}
-
-const type_info& MeshComponent::GetType() const
-{
-	return typeid(this);
 }
 
 MeshComponent::~MeshComponent()
