@@ -27,13 +27,13 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	DrawTriangleArrays(mesh->GetVerticeCount());
 }
 
-void Renderer::RenderModel(Model* model)
+void Renderer::RenderModel(GameObject* model)
 {
 	SetCameraMatrices();
 
-	for (auto& meshComponent : model->GetMeshComponents())
+	for (auto& meshComponent : model->GetComponents<MeshComponent>())
 	{
-		ActivateAndBindTextures(meshComponent, model->GetTextureComponents());
+		ActivateAndBindTextures(meshComponent, model->GetComponents<TextureComponent>());
 
 		meshComponent->BindVertexArray();
 

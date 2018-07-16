@@ -32,6 +32,7 @@ public:
 	void AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> vector<T*> GetComponents() const;
 	virtual void Update(float deltaTime);
 };
 
@@ -49,4 +50,29 @@ template <typename T> inline T* GameObject::GetComponent(string name) const
 		component = reinterpret_cast<T*>(transformComponents.at(name));
 
 	return component;
+}
+
+template <typename T> inline vector<T*> GameObject::GetComponents() const
+{
+	vector<T*> components;
+
+	if (typeid(T) == typeid(MeshComponent))
+	{
+		for (const auto& meshComponent : meshComponents)
+			components.push_back(reinterpret_cast<T*>(meshComponent.second));
+	}
+
+	if (typeid(T) == typeid(TextureComponent))
+	{
+		for (const auto& textureComponent : textureComponents)
+			components.push_back(reinterpret_cast<T*>(textureComponent.second));
+	}
+
+	if (typeid(T) == typeid(TransformComponent))
+	{
+		for (const auto& transformComponent : transformComponents)
+			components.push_back(reinterpret_cast<T*>(transformComponent.second));
+	}
+
+	return components;
 }

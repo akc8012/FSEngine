@@ -32,7 +32,7 @@ private:
 	GameObject* cubeFace = nullptr;
 	GameObject* cubeBrick = nullptr;
 	RenderText* renderText = nullptr;
-	Model* model = nullptr;
+	GameObject* model = nullptr;
 
 	void InitSDL();
 	void InitOpenGl();

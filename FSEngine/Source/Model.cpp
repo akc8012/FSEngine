@@ -1,6 +1,7 @@
 #include "..\Header\Model.h"
 
-Model::Model(const string& filepath)
+Model::Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window)
+ : GameObject(fileSystem, input, window)
 {
 	this->directory = filepath.substr(0, filepath.find_last_of('/')+1);
 
@@ -27,7 +28,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshComponent* meshComponent = ConvertMeshToComponent(mesh);
-		meshComponents.push_back(meshComponent);
+		AddComponent(meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
@@ -89,8 +90,8 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 		int* loadedTextureIndex = GetLoadedTextureIndex((string)texturePath.C_Str());
 		if (loadedTextureIndex == nullptr)
 		{
-			loadedTextureIndex = new int((int)textureComponents.size());
-			textureComponents.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
+			loadedTextureIndex = new int((int)GetComponents<TextureComponent>().size());
+			AddComponent(new TextureComponent((directory + texturePath.C_Str()).c_str()), texturePath.C_Str());
 		}
 
 		meshComponent->AddAssociatedTextureIndex(*loadedTextureIndex);
@@ -100,6 +101,7 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 
 int* Model::GetLoadedTextureIndex(const string& texturePath) const
 {
+	auto textureComponents = GetComponents<TextureComponent>();
 	for (int i = 0; i < textureComponents.size(); i++)
 	{
 		if (texturePath == textureComponents[i]->GetFilename())
@@ -107,23 +109,4 @@ int* Model::GetLoadedTextureIndex(const string& texturePath) const
 	}
 
 	return nullptr;
-}
-
-vector<MeshComponent*> Model::GetMeshComponents() const
-{
-	return meshComponents;
-}
-
-vector<TextureComponent*> Model::GetTextureComponents() const
-{
-	return textureComponents;
-}
-
-Model::~Model()
-{
-	for (auto& meshComponent : meshComponents)
-		delete meshComponent;
-
-	for (auto& textureComponent : textureComponents)
-		delete textureComponent;
 }

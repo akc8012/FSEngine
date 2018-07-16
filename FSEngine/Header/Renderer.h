@@ -2,7 +2,6 @@
 #include "ShaderProgram.h"
 #include "Window.h"
 #include "GameObject.h"
-#include "Model.h"
 #include "Camera.h"
 #include "Timer.h"
 
@@ -41,7 +40,7 @@ public:
 	void StartRender(float deltaTime);
 
 	void RenderGameObject(GameObject* gameObject);
-	void RenderModel(Model* model);
+	void RenderModel(GameObject* model);
 
 	void EndRender();
 };
