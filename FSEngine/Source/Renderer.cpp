@@ -77,12 +77,12 @@ void Renderer::ClearScreen()
 void Renderer::SetCameraMatrices()
 {
 	if (shaderProgram->RenderPerspective())
-		shaderProgram->SetMatrix("view", camera->GetComponent<TransformComponent>()->GetMatrix());
+		shaderProgram->SetMatrix("view", camera->GetComponent<TransformComponent>("View")->GetMatrix());
 
-	mat4 projection = shaderProgram->RenderPerspective() ? camera->GetProjectionPerspective() : camera->GetProjectionOrthographic();
+	mat4 projection = shaderProgram->RenderPerspective() ? camera->GetComponent<TransformComponent>("Perspective")->GetMatrix() : camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix();
 	shaderProgram->SetMatrix("projection", projection);
 
-	shaderProgram->SetVector("viewPosition", camera->GetComponent<TransformComponent>()->GetPosition());
+	shaderProgram->SetVector("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }
 
 void Renderer::SetModelMatrices(TransformComponent* transform)

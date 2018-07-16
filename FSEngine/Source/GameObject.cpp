@@ -7,19 +7,30 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 	this->window = window;
 }
 
-void GameObject::AddComponent(MeshComponent* component)
+void GameObject::AddComponent(MeshComponent* component, string name)
 {
-	meshComponents.emplace(ComponentTypeString[MeshComponent::ComponentTypeId], component);
+	auto result = meshComponents.emplace(name, component);
+	if (!result.second)
+		ThrowDuplicateNameException(name);
 }
 
-void GameObject::AddComponent(TextureComponent* component)
+void GameObject::AddComponent(TextureComponent* component, string name)
 {
-	textureComponents.emplace(ComponentTypeString[TextureComponent::ComponentTypeId], component);
+	auto result = textureComponents.emplace(name, component);
+	if (!result.second)
+		ThrowDuplicateNameException(name);
 }
 
-void GameObject::AddComponent(TransformComponent* component)
+void GameObject::AddComponent(TransformComponent* component, string name)
 {
-	transformComponents.emplace(ComponentTypeString[TransformComponent::ComponentTypeId], component);
+	auto result = transformComponents.emplace(name, component);
+	if (!result.second)
+		ThrowDuplicateNameException(name);
+}
+
+void GameObject::ThrowDuplicateNameException(const string& name) const
+{
+	throw "Component with name " + name + " already exists";
 }
 
 void GameObject::Update(float deltaTime)

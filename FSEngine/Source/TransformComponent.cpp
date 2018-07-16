@@ -60,6 +60,11 @@ TransformComponent::MatrixValues TransformComponent::DecomposeTransformMatrix() 
 	return matrixValues;
 }
 
+void TransformComponent::SetMatrix(const mat4& matrix)
+{
+	transform = matrix;
+}
+
 void TransformComponent::Scale(const vec3& scaleVector)
 {
 	transform = scale(transform, scaleVector);

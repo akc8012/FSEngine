@@ -22,7 +22,7 @@ class Renderer
 private:
 	Window* window = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
-	Camera* camera = nullptr;
+	GameObject* camera = nullptr;
 
 	void ClearScreen();
 	

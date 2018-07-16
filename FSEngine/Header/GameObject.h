@@ -6,7 +6,6 @@
 #include "TextureComponent.h"
 #include "TransformComponent.h"
 
-#include <vector>
 #include <unordered_map>
 using std::unordered_map;
 
@@ -22,13 +21,15 @@ private:
 	unordered_map<string, TextureComponent*> textureComponents;
 	unordered_map<string, TransformComponent*> transformComponents;
 
+	void ThrowDuplicateNameException(const string& name) const;
+
 public:
 	GameObject(FileSystem* fileSystem, Input* input, Window* window);
 	~GameObject();
 
-	void AddComponent(MeshComponent* component);
-	void AddComponent(TextureComponent* component);
-	void AddComponent(TransformComponent* component);
+	void AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
+	void AddComponent(TextureComponent* component, string name = ComponentTypeString[TextureComponent::ComponentTypeId]);
+	void AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	virtual void Update(float deltaTime);

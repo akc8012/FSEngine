@@ -41,6 +41,7 @@ public:
 	vec3 GetPosition() const;
 	MatrixValues DecomposeTransformMatrix() const;
 
+	void SetMatrix(const mat4& matrix);
 	void Scale(const vec3& scaleVector);
 	void Scale(const vec2& scaleVector);
 	void Scale(float scaleFactor);
