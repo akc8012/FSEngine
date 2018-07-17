@@ -29,7 +29,7 @@ private:
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
 
-	int* GetLoadedTextureIndex(const string& texturePath) const;
+	string* GetLoadedTextureName(const string& texturePath) const;
 
 public:
 	static const int MeshIndex = 0;

@@ -33,9 +33,9 @@ void Renderer::RenderModel(GameObject* model)
 
 	for (auto& meshComponent : model->GetComponents<MeshComponent>())
 	{
-		ActivateAndBindTextures(meshComponent, model->GetComponents<TextureComponent>());
+		ActivateAndBindTextures(meshComponent.second, model->GetComponents<TextureComponent>());
 
-		meshComponent->BindVertexArray();
+		meshComponent.second->BindVertexArray();
 
 		TransformComponent transform;
 		transform.SetScale(vec3(0.025f, 0.025f, 0.025f));
@@ -44,15 +44,15 @@ void Renderer::RenderModel(GameObject* model)
 
 		SetModelMatrices(&transform);
 
-		DrawTriangleElements(meshComponent->GetIndiceCount());
+		DrawTriangleElements(meshComponent.second->GetIndiceCount());
 	}
 }
 
-void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const vector<TextureComponent*> textureComponents)
+void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, TextureComponent*>& textureComponents)
 {
-	for (const auto& associatedTextureIndex : meshComponent->GetAssociatedTextureIndices())
+	for (const auto& associatedTextureName : meshComponent->GetAssociatedTextureNames())
 	{
-		TextureComponent* texture = textureComponents[associatedTextureIndex];
+		TextureComponent* texture = textureComponents.at(associatedTextureName);
 		if (texture->GetTextureType() != TextureComponent::Diffuse)
 			continue;
 

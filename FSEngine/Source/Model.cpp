@@ -87,25 +87,29 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 		aiString texturePath;
 		material->GetTexture(textureType, i, &texturePath);
 
-		int* loadedTextureIndex = GetLoadedTextureIndex((string)texturePath.C_Str());
-		if (loadedTextureIndex == nullptr)
+		string* loadedTextureName = GetLoadedTextureName((string)texturePath.C_Str());
+		if (loadedTextureName == nullptr)
 		{
-			loadedTextureIndex = new int((int)GetComponents<TextureComponent>().size());
-			AddComponent(new TextureComponent((directory + texturePath.C_Str()).c_str()), texturePath.C_Str());
-		}
+			string textureName = texturePath.C_Str();
+			meshComponent->AddAssociatedTextureName(textureName);
 
-		meshComponent->AddAssociatedTextureIndex(*loadedTextureIndex);
-		delete loadedTextureIndex;
+			AddComponent(new TextureComponent(directory + textureName, textureName), textureName);
+		}
+		else
+		{
+			meshComponent->AddAssociatedTextureName(*loadedTextureName);
+			delete loadedTextureName;
+		}
 	}
 }
 
-int* Model::GetLoadedTextureIndex(const string& texturePath) const
+string* Model::GetLoadedTextureName(const string& texturePath) const
 {
-	auto textureComponents = GetComponents<TextureComponent>();
-	for (int i = 0; i < textureComponents.size(); i++)
+	for (const auto& textureComponent : GetComponents<TextureComponent>())
 	{
-		if (texturePath == textureComponents[i]->GetFilename())
-			return new int(i);
+		string name = textureComponent.second->GetName();
+		if (texturePath == name)
+			return new string(name);
 	}
 
 	return nullptr;

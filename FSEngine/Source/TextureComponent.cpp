@@ -1,8 +1,8 @@
 #include "../Header/TextureComponent.h"
 
-TextureComponent::TextureComponent(const string& filepath)
+TextureComponent::TextureComponent(const string& filepath, const string& name)
 {
-	this->filename = filepath.substr(filepath.find_last_of('/')+1, filepath.length());
+	this->name = name == "" ? filepath.substr(filepath.find_last_of('/') + 1, filepath.length()) : name;
 
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
@@ -92,9 +92,9 @@ void TextureComponent::SetTextureType(TextureType textureType)
 	this->textureType = textureType;
 }
 
-string TextureComponent::GetFilename() const
+string TextureComponent::GetName() const
 {
-	return filename;
+	return name;
 }
 
 TextureComponent::TextureType TextureComponent::GetTextureType() const

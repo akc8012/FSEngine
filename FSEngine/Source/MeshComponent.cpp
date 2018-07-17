@@ -132,19 +132,19 @@ int MeshComponent::GetVerticeCount() const
 	return (int)vertices.size();
 }
 
-void MeshComponent::AddAssociatedTextureIndex(int textureIndex)
+void MeshComponent::AddAssociatedTextureName(string textureName)
 {
-	associatedTextureIndices.push_back(textureIndex);
+	associatedTextureNames.push_back(textureName);
 }
 
-void MeshComponent::AddAssociatedTextureIndices(const vector<int>& textureIndices)
+void MeshComponent::AddAssociatedTextureIndices(const vector<string>& textureNames)
 {
-	associatedTextureIndices.insert(associatedTextureIndices.end(), textureIndices.begin(), textureIndices.end());
+	associatedTextureNames.insert(associatedTextureNames.end(), textureNames.begin(), textureNames.end());
 }
 
-vector<int> MeshComponent::GetAssociatedTextureIndices() const
+vector<string> MeshComponent::GetAssociatedTextureNames() const
 {
-	return associatedTextureIndices;
+	return associatedTextureNames;
 }
 
 MeshComponent::~MeshComponent()
