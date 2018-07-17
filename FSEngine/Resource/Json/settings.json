@@ -1,4 +1,7 @@
 {
+  "LoadSettingsOnFocus" : true,
+  "LoadShadersOnFocus" : false,
+
   "SwapInterval": -1,
   "Resolution": [900, 600],
   "Fullscreen": false,
