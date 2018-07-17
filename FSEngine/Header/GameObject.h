@@ -38,41 +38,28 @@ public:
 
 template <typename T> inline T* GameObject::GetComponent(string name) const
 {
-	T* component = nullptr;
-
 	if (meshComponents.size() > 0 && typeid(T) == typeid(MeshComponent))
-		component = reinterpret_cast<T*>(meshComponents.at(name));
+		return reinterpret_cast<T*>(meshComponents.at(name));
 
 	if (textureComponents.size() > 0 && typeid(T) == typeid(TextureComponent))
-		component = reinterpret_cast<T*>(textureComponents.at(name));
+		return reinterpret_cast<T*>(textureComponents.at(name));
 
 	if (transformComponents.size() > 0 && typeid(T) == typeid(TransformComponent))
-		component = reinterpret_cast<T*>(transformComponents.at(name));
+		return reinterpret_cast<T*>(transformComponents.at(name));
 
-	return component;
+	return nullptr;
 }
 
 template <typename T> inline unordered_map<string, T*> GameObject::GetComponents() const
 {
-	unordered_map<string, T*> components;
-
 	if (typeid(T) == typeid(MeshComponent))
-	{
-		for (const auto& meshComponent : meshComponents)
-			components.emplace(meshComponent.first, reinterpret_cast<T*>(meshComponent.second));
-	}
+		return *reinterpret_cast<const unordered_map<string, T*>*>(&meshComponents);
 
 	if (typeid(T) == typeid(TextureComponent))
-	{
-		for (const auto& textureComponent : textureComponents)
-			components.emplace(textureComponent.first, reinterpret_cast<T*>(textureComponent.second));
-	}
+		return *reinterpret_cast<const unordered_map<string, T*>*>(&textureComponents);
 
 	if (typeid(T) == typeid(TransformComponent))
-	{
-		for (const auto& transformComponent : transformComponents)
-			components.emplace(transformComponent.first, reinterpret_cast<T*>(transformComponent.second));
-	}
+		return *reinterpret_cast<const unordered_map<string, T*>*>(&transformComponents);
 
-	return components;
+	throw "Unrecognized type";
 }
