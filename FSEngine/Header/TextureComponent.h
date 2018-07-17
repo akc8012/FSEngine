@@ -22,6 +22,7 @@ private:
 	TextureType textureType = Diffuse;
 	string name = "";
 
+	void SetName(const string& filepath, const string& name);
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 
 	void FlipSurface(SDL_Surface* surface);
@@ -38,7 +39,6 @@ public:
 
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 	void BindTexture();
-	void SetTextureType(TextureType textureType);
 
 	string GetName() const;
 	TextureType GetTextureType() const;

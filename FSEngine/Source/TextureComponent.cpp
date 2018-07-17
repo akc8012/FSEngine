@@ -2,7 +2,7 @@
 
 TextureComponent::TextureComponent(const string& filepath, const string& name)
 {
-	this->name = name == "" ? filepath.substr(filepath.find_last_of('/') + 1, filepath.length()) : name;
+	SetName(filepath, name);
 
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
@@ -10,6 +10,14 @@ TextureComponent::TextureComponent(const string& filepath, const string& name)
 
 	GenerateTexture(surface);
 	SDL_FreeSurface(surface);
+}
+
+void TextureComponent::SetName(const string& filepath, const string& name)
+{
+	if (name == "")
+		this->name = filepath.substr(filepath.find_last_of('/') + 1, filepath.length());
+	else
+		this->name = name;
 }
 
 TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
@@ -85,11 +93,6 @@ int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 void TextureComponent::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-void TextureComponent::SetTextureType(TextureType textureType)
-{
-	this->textureType = textureType;
 }
 
 string TextureComponent::GetName() const
