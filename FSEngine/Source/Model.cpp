@@ -1,6 +1,7 @@
 #include "..\Header\Model.h"
 
-Model::Model(const string& filepath)
+Model::Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window)
+ : GameObject(fileSystem, input, window)
 {
 	this->directory = filepath.substr(0, filepath.find_last_of('/')+1);
 
@@ -27,7 +28,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		MeshComponent* meshComponent = ConvertMeshToComponent(mesh);
-		meshComponents.push_back(meshComponent);
+		AddComponent(meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
@@ -86,44 +87,30 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 		aiString texturePath;
 		material->GetTexture(textureType, i, &texturePath);
 
-		int* loadedTextureIndex = GetLoadedTextureIndex((string)texturePath.C_Str());
-		if (loadedTextureIndex == nullptr)
+		string* loadedTextureName = GetLoadedTextureName((string)texturePath.C_Str());
+		if (loadedTextureName == nullptr)
 		{
-			loadedTextureIndex = new int((int)textureComponents.size());
-			textureComponents.push_back(new TextureComponent((directory + texturePath.C_Str()).c_str()));
-		}
+			string textureName = texturePath.C_Str();
+			meshComponent->AddAssociatedTextureName(textureName);
 
-		meshComponent->AddAssociatedTextureIndex(*loadedTextureIndex);
-		delete loadedTextureIndex;
+			AddComponent(new TextureComponent(directory + textureName, textureName), textureName);
+		}
+		else
+		{
+			meshComponent->AddAssociatedTextureName(*loadedTextureName);
+			delete loadedTextureName;
+		}
 	}
 }
 
-int* Model::GetLoadedTextureIndex(const string& texturePath) const
+string* Model::GetLoadedTextureName(const string& texturePath) const
 {
-	for (int i = 0; i < textureComponents.size(); i++)
+	for (const auto& textureComponent : *GetComponents<TextureComponent>())
 	{
-		if (texturePath == textureComponents[i]->GetFilename())
-			return new int(i);
+		string name = textureComponent.second->GetName();
+		if (texturePath == name)
+			return new string(name);
 	}
 
 	return nullptr;
-}
-
-vector<MeshComponent*> Model::GetMeshComponents() const
-{
-	return meshComponents;
-}
-
-vector<TextureComponent*> Model::GetTextureComponents() const
-{
-	return textureComponents;
-}
-
-Model::~Model()
-{
-	for (auto& meshComponent : meshComponents)
-		delete meshComponent;
-
-	for (auto& textureComponent : textureComponents)
-		delete textureComponent;
 }

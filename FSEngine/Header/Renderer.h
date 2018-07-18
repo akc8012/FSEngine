@@ -2,7 +2,6 @@
 #include "ShaderProgram.h"
 #include "Window.h"
 #include "GameObject.h"
-#include "Model.h"
 #include "Camera.h"
 #include "Timer.h"
 
@@ -29,7 +28,7 @@ private:
 	void SetCameraMatrices();
 	void SetModelMatrices(TransformComponent* transform);
 
-	void ActivateAndBindTextures(const MeshComponent* meshComponent, const vector<TextureComponent*> textureComponents);
+	void ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, TextureComponent*>& textureComponents);
 
 	void DrawTriangleArrays(Uint32 verticeCount);
 	void DrawTriangleElements(Uint32 indiceCount);
@@ -41,7 +40,7 @@ public:
 	void StartRender(float deltaTime);
 
 	void RenderGameObject(GameObject* gameObject);
-	void RenderModel(Model* model);
+	void RenderModel(GameObject* model);
 
 	void EndRender();
 };

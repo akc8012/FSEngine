@@ -25,7 +25,7 @@ bool Engine::Init()
 		cubeFace = new CubePrimitive(fileSystem, input, window);
 		cubeBrick = new CubePrimitive(fileSystem, input, window);
 		renderText = new RenderText(fileSystem, input, window);
-		model = new Model("C:/Model/Arwing/arwing.dae");
+		model = new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window);
 
 		cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 		cubeBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));

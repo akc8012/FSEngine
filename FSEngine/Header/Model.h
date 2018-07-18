@@ -1,7 +1,6 @@
 #pragma once
+#include "GameObject.h"
 #include "Vertex.h"
-#include "MeshComponent.h"
-#include "TextureComponent.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -15,11 +14,9 @@ using std::string;
 using std::vector;
 using std::unique_ptr;
 
-class Model
+class Model : public GameObject
 {
 private:
-	vector<MeshComponent*> meshComponents;
-	vector<TextureComponent*> textureComponents;
 	string directory = "";
 
 	unique_ptr<Importer> LoadModelImporter(const char* filepath);
@@ -32,15 +29,11 @@ private:
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
 
-	int* GetLoadedTextureIndex(const string& texturePath) const;
+	string* GetLoadedTextureName(const string& texturePath) const;
 
 public:
 	static const int MeshIndex = 0;
 	static const int TextureIndex = 1;
 
-	Model(const string& filepath);
-	~Model();
-
-	vector<MeshComponent*> GetMeshComponents() const;
-	vector<TextureComponent*> GetTextureComponents() const;
+	Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window);
 };

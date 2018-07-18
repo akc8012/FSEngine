@@ -26,7 +26,7 @@ private:
 
 	vector<Vertex> vertices;
 	vector<Uint32> indices;
-	vector<int> associatedTextureIndices;
+	vector<string> associatedTextureNames;
 
 	Uint32 vertexArrayId = NULL;
 
@@ -55,7 +55,7 @@ public:
 	int GetIndiceCount() const;
 	int GetVerticeCount() const;
 
-	void AddAssociatedTextureIndex(int textureIndex);
-	void AddAssociatedTextureIndices(const vector<int>& textureIndices);
-	vector<int> GetAssociatedTextureIndices() const;
+	void AddAssociatedTextureName(string textureName);
+	void AddAssociatedTextureIndices(const vector<string>& textureNames);
+	vector<string> GetAssociatedTextureNames() const;
 };
