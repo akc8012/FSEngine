@@ -105,7 +105,7 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 
 string* Model::GetLoadedTextureName(const string& texturePath) const
 {
-	for (const auto& textureComponent : GetComponents<TextureComponent>())
+	for (const auto& textureComponent : *GetComponents<TextureComponent>())
 	{
 		string name = textureComponent.second->GetName();
 		if (texturePath == name)

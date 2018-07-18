@@ -5,25 +5,29 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 	this->fileSystem = fileSystem;
 	this->input= input;
 	this->window = window;
+
+	meshComponents = new unordered_map<string, MeshComponent*>();
+	textureComponents = new unordered_map<string, TextureComponent*>();
+	transformComponents = new unordered_map<string, TransformComponent*>();
 }
 
 void GameObject::AddComponent(MeshComponent* component, string name)
 {
-	auto result = meshComponents.emplace(name, component);
+	auto result = meshComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 }
 
 void GameObject::AddComponent(TextureComponent* component, string name)
 {
-	auto result = textureComponents.emplace(name, component);
+	auto result = textureComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 }
 
 void GameObject::AddComponent(TransformComponent* component, string name)
 {
-	auto result = transformComponents.emplace(name, component);
+	auto result = transformComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 }
@@ -40,21 +44,25 @@ void GameObject::Update(float deltaTime)
 
 GameObject::~GameObject()
 {
-	for (auto& meshComponent : meshComponents)
+	for (auto& meshComponent : *meshComponents)
 	{
 		if (!meshComponent.second->IsShared())
 			delete meshComponent.second;
 	}
 
-	for (auto& textureComponent : textureComponents)
+	for (auto& textureComponent : *textureComponents)
 	{
 		if (!textureComponent.second->IsShared())
 			delete textureComponent.second;
 	}
 
-	for (auto& transformComponent : transformComponents)
+	for (auto& transformComponent : *transformComponents)
 	{
 		if (!transformComponent.second->IsShared())
 			delete transformComponent.second;
 	}
+
+	delete transformComponents;
+	delete textureComponents;
+	delete meshComponents;
 }

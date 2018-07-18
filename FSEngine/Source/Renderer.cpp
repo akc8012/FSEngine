@@ -31,9 +31,9 @@ void Renderer::RenderModel(GameObject* model)
 {
 	SetCameraMatrices();
 
-	for (auto& meshComponent : model->GetComponents<MeshComponent>())
+	for (auto& meshComponent : *model->GetComponents<MeshComponent>())
 	{
-		ActivateAndBindTextures(meshComponent.second, model->GetComponents<TextureComponent>());
+		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<TextureComponent>());
 
 		meshComponent.second->BindVertexArray();
 
