@@ -53,13 +53,13 @@ template <typename T> inline T* GameObject::GetComponent(string name) const
 template <typename T> inline unordered_map<string, T*>* GameObject::GetComponents() const
 {
 	if (typeid(T) == typeid(MeshComponent))
-		return const_cast<unordered_map<string, T*>*>(reinterpret_cast<const unordered_map<string, T*>*>(meshComponents));
+		return reinterpret_cast<unordered_map<string, T*>*>(meshComponents);
 
 	if (typeid(T) == typeid(TextureComponent))
-		return const_cast<unordered_map<string, T*>*>(reinterpret_cast<const unordered_map<string, T*>*>(textureComponents));
+		return reinterpret_cast<unordered_map<string, T*>*>(textureComponents);
 
 	if (typeid(T) == typeid(TransformComponent))
-		return const_cast<unordered_map<string, T*>*>(reinterpret_cast<const unordered_map<string, T*>*>(transformComponents));
+		return reinterpret_cast<unordered_map<string, T*>*>(transformComponents);
 
 	throw "Unrecognized type";
 }
