@@ -31,6 +31,7 @@ void Renderer::RenderModel(GameObject* model)
 {
 	SetCameraMatrices();
 
+	glEnable(GL_CULL_FACE);
 	for (auto& meshComponent : *model->GetComponents<MeshComponent>())
 	{
 		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<TextureComponent>());
@@ -46,6 +47,8 @@ void Renderer::RenderModel(GameObject* model)
 
 		DrawTriangleElements(meshComponent.second->GetIndiceCount());
 	}
+
+	glDisable(GL_CULL_FACE);
 }
 
 void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, TextureComponent*>& textureComponents)
