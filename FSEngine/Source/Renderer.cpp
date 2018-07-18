@@ -35,16 +35,9 @@ void Renderer::RenderModel(GameObject* model)
 	for (auto& meshComponent : *model->GetComponents<MeshComponent>())
 	{
 		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<TextureComponent>());
-
 		meshComponent.second->BindVertexArray();
 
-		TransformComponent transform;
-		transform.SetScale(vec3(0.025f, 0.025f, 0.025f));
-		transform.SetRotation(Timer::GetSeconds() * 0.4f, vec3(0.3f, 1, 0));
-		transform.SetPosition(vec3(0, -0, 0));
-
-		SetModelMatrices(&transform);
-
+		SetModelMatrices(model->GetComponent<TransformComponent>());
 		DrawTriangleElements(meshComponent.second->GetIndiceCount());
 	}
 

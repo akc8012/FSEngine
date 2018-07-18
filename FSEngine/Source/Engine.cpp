@@ -29,10 +29,12 @@ bool Engine::Init()
 
 		cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 		cubeBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));
+		model->AddComponent(new TransformComponent());
 
 		cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
 		cubeBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 		cubeBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+		model->GetComponent<TransformComponent>()->SetScale(vec3(0.025f, 0.025f, 0.025f));
 
 		renderText->SetPixelScale(26);
 		renderText->SetScreenAnchorPoint(RenderText::TopLeft);
@@ -219,6 +221,8 @@ void Engine::Update(float deltaTime)
 {
 	cubeFace->Update(deltaTime);
 	cubeBrick->Update(deltaTime);
+
+	model->GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds() * 0.4f, vec3(0.3f, 1, 0));
 
 	renderText->Update(deltaTime);
 	renderText->SetText(fileSystem->GetSettingsValue<string>("RenderText"));
