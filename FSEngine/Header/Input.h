@@ -2,7 +2,6 @@
 #include <SDL.h>
 
 #include <algorithm>
-using std::clamp;
 
 class Input
 {
@@ -12,6 +11,8 @@ private:
 	float GetAnalogAxis(const SDL_GameControllerAxis& axis);
 	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput);
 	float ClampAnalogInput(Sint16 input);
+
+	float Clamp(float value, float low, float high) const;
 
 public:
 	Input();
