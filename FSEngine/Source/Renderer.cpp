@@ -18,13 +18,10 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	SetCameraMatrices();
 
 	gameObject->GetComponent<TextureComponent>()->BindTexture();
-
-	MeshComponent* mesh = gameObject->GetComponent<MeshComponent>();
-	mesh->BindVertexArray();
+	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
 
 	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
-
-	DrawTriangleArrays(mesh->GetVerticeCount());
+	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
 }
 
 void Renderer::RenderModel(GameObject* model)

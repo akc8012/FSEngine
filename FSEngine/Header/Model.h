@@ -32,8 +32,6 @@ private:
 	string* GetLoadedTextureName(const string& texturePath) const;
 
 public:
-	static const int MeshIndex = 0;
-	static const int TextureIndex = 1;
-
 	Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window);
+
 };

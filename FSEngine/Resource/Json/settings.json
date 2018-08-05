@@ -1,7 +1,7 @@
 {
-  "LoadSettingsOnFocus" : true,
-  "LoadShadersOnFocus" : false,
-  "ShowWindowOnTop" : true,
+  "LoadSettingsOnFocus": true,
+  "LoadShadersOnFocus": true,
+  "ShowWindowOnTop": false,
 
   "SwapInterval": -1,
   "Resolution": [900, 600],

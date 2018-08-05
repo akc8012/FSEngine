@@ -203,16 +203,11 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 	case SDL_WINDOWEVENT_FOCUS_GAINED:
 		if (fileSystem->GetSettingsValue<bool>("LoadSettingsOnFocus"))
-		{
 			fileSystem->LoadSettingsFile();
-			printf("Reloaded settings file\n");
-		}
 
 		if (fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
-		{
 			shaderProgram->CompileShaders();
-			printf("Rebuilt shader program\n");
-		}
+
 		break;
 	}
 }

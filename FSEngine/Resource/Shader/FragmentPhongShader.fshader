@@ -38,6 +38,18 @@ vec3 CalcSpecular(vec3 normal, vec3 lightDirection)
 	return specularStrength * specular * lightColor;
 }
 
+vec3 CalcLighting()
+{
+	vec3 normal = normalize(Normal);
+	vec3 lightDirection = normalize(lightPosition - FragmentPosition);
+
+	vec3 ambient = CalcAmbient();
+	vec3 diffuse = CalcDiffuse(normal, lightDirection);
+	vec3 specular = CalcSpecular(normal, lightDirection);
+
+	return ambient + diffuse + specular;
+}
+
 void main()
 {
 	if (RenderPerspective == 0)
@@ -46,12 +58,6 @@ void main()
 		return;
 	}
 
-	vec3 normal = normalize(Normal);
-	vec3 lightDirection = normalize(lightPosition - FragmentPosition);
-
-	vec3 ambient = CalcAmbient();
-	vec3 diffuse = CalcDiffuse(normal, lightDirection);
-	vec3 specular = CalcSpecular(normal, lightDirection);
-
-	FragmentColor = vec4((ambient + diffuse + specular) * vec3(texture2D(diffuseTexture, TexureCoord)), 1.0);
+	vec3 color = vec3(texture2D(diffuseTexture, TexureCoord));
+	FragmentColor = vec4(CalcLighting() * color, 1.0);
 }
