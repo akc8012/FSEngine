@@ -40,7 +40,7 @@ Uint32 ShaderProgram::CreateVertexShader()
 		"}\n"
 	};
 
-	return CreateShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.vshader", vertexShaderFallbackSource);
+	return CreateShaderFromFilepath(GL_VERTEX_SHADER, "Resource/Shader/VertexShader.glsl", vertexShaderFallbackSource);
 }
 
 Uint32 ShaderProgram::CreateFragmentShader()
@@ -54,7 +54,7 @@ Uint32 ShaderProgram::CreateFragmentShader()
 		"}\n"
 	};
 
-	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentPhongShader.fshader", fragmentShaderFallbackSource);
+	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentPhongShader.glsl", fragmentShaderFallbackSource);
 }
 
 Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource)

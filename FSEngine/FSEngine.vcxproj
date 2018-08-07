@@ -178,10 +178,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
-    <None Include="Resource\Shader\FragmentPhongShader.fshader" />
-    <None Include="Resource\Shader\FragmentMixShader.fshader" />
-    <None Include="Resource\Shader\FragmentShader.fshader" />
-    <None Include="Resource\Shader\VertexShader.vshader" />
+    <None Include="Resource\Shader\FragmentPhongShader.glsl" />
+    <None Include="Resource\Shader\VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\awesomeface.png" />
