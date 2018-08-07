@@ -24,7 +24,7 @@ private:
 	GameObject* camera = nullptr;
 
 	void ClearScreen();
-	
+
 	void SetCameraMatrices();
 	void SetModelMatrices(TransformComponent* transform);
 
