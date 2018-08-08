@@ -146,6 +146,14 @@ void ShaderProgram::SetVector(const char* name, const vec3& value)
 	glUniform3fv(GetUniformLocation(name), Count, value_ptr(value));
 }
 
+void ShaderProgram::SetVector(const char* name, const vec4& value)
+{
+	ShowUseWarning();
+
+	const int Count = 1;
+	glUniform4fv(GetUniformLocation(name), Count, value_ptr(value));
+}
+
 void ShaderProgram::SetMatrix(const char* name, const mat3& value)
 {
 	ShowUseWarning();

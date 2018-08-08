@@ -48,6 +48,8 @@ public:
 	void SetFloat(const char* name, float value);
 
 	void SetVector(const char* name, const vec3& value);
+	void SetVector(const char* name, const vec4& value);
+
 	void SetMatrix(const char* name, const mat3& value);
 	void SetMatrix(const char* name, const mat4& value);
 

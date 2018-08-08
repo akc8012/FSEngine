@@ -5,7 +5,7 @@ in vec2 TexureCoord;
 in vec3 FragmentPosition;
 
 uniform sampler2D diffuseTexture;
-uniform vec3 flatColor;
+uniform vec4 flatColor;
 uniform vec3 viewPosition;
 uniform bool renderPerspective;
 
@@ -19,7 +19,7 @@ vec3 CalcSpecular(vec3 normal, vec3 lightDirection, vec3 lightColor);
 
 void main()
 {
-	vec4 fragmentColor = texture(diffuseTexture, TexureCoord);
+	vec4 fragmentColor = flatColor != vec4(0) ? flatColor : texture(diffuseTexture, TexureCoord);
 	if (!renderPerspective)
 	{
 		FragmentColor = fragmentColor;
