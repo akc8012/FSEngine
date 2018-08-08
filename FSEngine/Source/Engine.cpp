@@ -166,6 +166,10 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		fileSystem->LoadSettingsFile();
 		printf("Reloaded settings file\n");
 		break;
+
+	case SDLK_c:
+		system("CLS");
+		break;
 	}
 }
 

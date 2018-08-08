@@ -1,29 +1,27 @@
 #version 330 core
 
-layout(location = 0) in vec3 position;
-layout(location = 1) in vec3 normal;
-layout(location = 2) in vec2 textureCoord;
+layout(location = 0) in vec3 positionVector;
+layout(location = 1) in vec3 normalVector;
+layout(location = 2) in vec2 textureCoordVector;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
+
 uniform mat3 normalMatrix;
-uniform bool renderPerspective;
 
 out vec3 FragmentPosition;
 out vec3 Normal;
 out vec2 TexureCoord;
-out float RenderPerspective;
 
 
 void main()
 {
-	mat4 viewMatrix = renderPerspective ? view : mat4(1);
-	gl_Position = projection * viewMatrix * model * vec4(position, 1.0);
+	vec4 fragmentPositionVector = modelMatrix * vec4(positionVector, 1);
 
-	FragmentPosition = vec3(model * vec4(position, 1.0));
-	Normal = normalMatrix * normal;
-	TexureCoord = textureCoord;
+	FragmentPosition = vec3(fragmentPositionVector);
+	Normal = normalMatrix * normalVector;
+	TexureCoord = textureCoordVector;
 
-	RenderPerspective = renderPerspective ? 1 : 0;
+	gl_Position = projectionMatrix * viewMatrix * fragmentPositionVector;
 }

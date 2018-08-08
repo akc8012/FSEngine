@@ -3,11 +3,11 @@
 in vec3 Normal;
 in vec2 TexureCoord;
 in vec3 FragmentPosition;
-in float RenderPerspective;
 
 uniform sampler2D diffuseTexture;
 uniform vec3 flatColor;
 uniform vec3 viewPosition;
+uniform bool renderPerspective;
 
 out vec4 FragmentColor;
 
@@ -19,14 +19,14 @@ vec3 CalcSpecular(vec3 normal, vec3 lightDirection, vec3 lightColor);
 
 void main()
 {
-	if (RenderPerspective == 0)
+	vec4 fragmentColor = texture(diffuseTexture, TexureCoord);
+	if (!renderPerspective)
 	{
-		FragmentColor = texture(diffuseTexture, TexureCoord);
+		FragmentColor = fragmentColor;
 		return;
 	}
 
-	vec3 color = vec3(texture2D(diffuseTexture, TexureCoord));
-	FragmentColor = vec4(CalcLighting() * color, 1.0);
+	FragmentColor = vec4(CalcLighting(), 1) * fragmentColor;
 }
 
 vec3 CalcLighting()
@@ -52,7 +52,7 @@ vec3 CalcAmbient(vec3 lightColor)
 
 vec3 CalcDiffuse(vec3 normal, vec3 lightDirection, vec3 lightColor)
 {
-	float diffuse = max(dot(normal, lightDirection), 0.0);
+	float diffuse = max(dot(normal, lightDirection), 0);
 	return diffuse * lightColor;
 }
 
@@ -62,8 +62,7 @@ vec3 CalcSpecular(vec3 normal, vec3 lightDirection, vec3 lightColor)
 	vec3 reflectDirection = reflect(-lightDirection, normal);
 
 	float shininess = 32;
-	float specular = pow(max(dot(viewDirection, reflectDirection), 0.0), shininess);
+	float specular = pow(max(dot(viewDirection, reflectDirection), 0), shininess);
 
-	float specularStrength = 1;
-	return specularStrength * specular * lightColor;
+	return specular * lightColor;
 }
