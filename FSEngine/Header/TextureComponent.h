@@ -12,6 +12,9 @@
 using std::string;
 using std::unique_ptr;
 
+#include <glm\glm.hpp>
+using namespace glm;
+
 class TextureComponent : public Component
 {
 public:
@@ -21,6 +24,7 @@ private:
 	Uint32 textureId = NULL;
 	TextureType textureType = Diffuse;
 	string name = "";
+	vec4 flatColor = vec4(0);
 
 	void SetName(const string& filepath, const string& name);
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
@@ -38,8 +42,12 @@ public:
 	~TextureComponent();
 
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
+	void SetFlatColor(vec4 flatColor);
 	void BindTexture();
 
 	string GetName() const;
 	TextureType GetTextureType() const;
+
+	bool HasFlatColor() const;
+	vec4 GetFlatColor() const;
 };

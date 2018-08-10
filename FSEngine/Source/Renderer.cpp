@@ -17,6 +17,11 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
+	if (gameObject->GetComponent<TextureComponent>()->HasFlatColor())
+		shaderProgram->SetVector("flatColor", gameObject->GetComponent<TextureComponent>()->GetFlatColor());
+	else
+		shaderProgram->SetVector("flatColor", vec4(0));
+
 	gameObject->GetComponent<TextureComponent>()->BindTexture();
 	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
 
@@ -48,6 +53,11 @@ void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const
 		TextureComponent* texture = textureComponents.at(associatedTextureName);
 		if (texture->GetTextureType() != TextureComponent::Diffuse)
 			continue;
+
+		if (texture->HasFlatColor())
+			shaderProgram->SetVector("flatColor", texture->GetFlatColor());
+		else
+			shaderProgram->SetVector("flatColor", vec4(0));
 
 		texture->BindTexture();
 	}

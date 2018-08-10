@@ -29,6 +29,7 @@ bool Engine::Init()
 
 		cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 		cubeBrick->AddComponent(new TextureComponent("Resource/Image/wall.png"));
+		cubeBrick->GetComponent<TextureComponent>()->SetFlatColor(vec4(0.1, 0.6, 0.3, 1));
 		model->AddComponent(new TransformComponent());
 
 		cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));

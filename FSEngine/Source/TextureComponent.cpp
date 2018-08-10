@@ -90,6 +90,11 @@ int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 	return (y * surfaceWidth) + x;
 }
 
+void TextureComponent::SetFlatColor(vec4 flatColor)
+{
+	this->flatColor = flatColor;
+}
+
 void TextureComponent::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -103,6 +108,16 @@ string TextureComponent::GetName() const
 TextureComponent::TextureType TextureComponent::GetTextureType() const
 {
 	return textureType;
+}
+
+bool TextureComponent::HasFlatColor() const
+{
+	return flatColor != vec4(0);
+}
+
+vec4 TextureComponent::GetFlatColor() const
+{
+	return flatColor;
 }
 
 TextureComponent::~TextureComponent()
