@@ -79,18 +79,18 @@ void Engine::InitGlew()
 
 void Engine::AddGameObjects()
 {
-	GameObject* cubeFace = sceneManager->AddGameObject("CubeFace", new CubePrimitive(fileSystem, input, window));
-	cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
-	cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
-	cubeFace->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
-	cubeFace->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
+	GameObject* memeFaceCube = sceneManager->AddGameObject("MemeFaceCube", new CubePrimitive(fileSystem, input, window));
+	memeFaceCube->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
+	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
+	memeFaceCube->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	memeFaceCube->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 
-	GameObject* cubeBrick = sceneManager->AddGameObject("CubeBrick", new CubePrimitive(fileSystem, input, window));
-	cubeBrick->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
-	cubeBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
-	cubeBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
-	cubeBrick->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
-	cubeBrick->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
+	GameObject* greenCube = sceneManager->AddGameObject("BrickCube", new CubePrimitive(fileSystem, input, window));
+	greenCube->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
+	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
+	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+	greenCube->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	greenCube->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 
 	GameObject* shipModel = sceneManager->AddGameObject("ShipModel", new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window));
 	shipModel->AddComponent(new TransformComponent());

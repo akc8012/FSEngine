@@ -114,3 +114,8 @@ string* Model::GetLoadedTextureName(const string& texturePath) const
 
 	return nullptr;
 }
+
+void Model::Update(float deltaTime)
+{
+	GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds() * 0.4f, vec3(0.3f, 1, 0));
+}
