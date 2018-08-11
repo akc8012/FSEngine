@@ -2,7 +2,10 @@
 
 CubePrimitive::CubePrimitive()
 {
-	AddComponent(CreateMeshComponent());
+	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
+	meshComponent->SetDrawingMode(MeshComponent::Arrays);
+	meshComponent->SetRenderBackfaces(true);
+
 	AddComponent(new TransformComponent());
 }
 

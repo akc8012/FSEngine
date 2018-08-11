@@ -8,6 +8,7 @@ Model::Model(const string& filepath)
 	const aiScene* scene = importer->GetScene();
 
 	ConvertMeshesOnNode(scene->mRootNode, scene);
+	AddComponent(new TransformComponent());
 }
 
 unique_ptr<Importer> Model::LoadModelImporter(const char* filepath)

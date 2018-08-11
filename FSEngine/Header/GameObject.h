@@ -29,9 +29,9 @@ public:
 	~GameObject();
 
 	void SetSystems(FileSystem* fileSystem, Input* input, Window* window);
-	void AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
-	void AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
-	void AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
+	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
+	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
+	TransformComponent* AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> unordered_map<string, T*>* GetComponents() const;

@@ -14,25 +14,31 @@ void GameObject::SetSystems(FileSystem* fileSystem, Input* input, Window* window
 	this->window = window;
 }
 
-void GameObject::AddComponent(MeshComponent* component, string name)
+MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 {
 	auto result = meshComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
+
+	return component;
 }
 
-void GameObject::AddComponent(ShadingComponent* component, string name)
+ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string name)
 {
 	auto result = shadingComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
+
+	return component;
 }
 
-void GameObject::AddComponent(TransformComponent* component, string name)
+TransformComponent* GameObject::AddComponent(TransformComponent* component, string name)
 {
 	auto result = transformComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
+
+	return component;
 }
 
 void GameObject::ThrowDuplicateNameException(const string& name) const
