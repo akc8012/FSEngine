@@ -27,9 +27,8 @@ bool Engine::Init()
 		renderText = new RenderText(fileSystem, input, window);
 		model = new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window);
 
-		cubeFace->AddComponent(new ShadingComponent("Resource/Image/awesomeface.png"));
-		cubeBrick->AddComponent(new ShadingComponent("Resource/Image/wall.png"));
-		cubeBrick->GetComponent<ShadingComponent>()->SetFlatColor(vec4(0.1, 0.6, 0.3, 1));
+		cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
+		cubeBrick->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
 		model->AddComponent(new TransformComponent());
 
 		cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));

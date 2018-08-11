@@ -1,4 +1,4 @@
 #pragma once
 
-enum ComponentType { Mesh, Texture, Transform };
-static const char*  ComponentTypeString[] = { "Mesh", "Texture", "Transform" };
+enum ComponentType { Mesh, Shading, Transform };
+static const char*  ComponentTypeString[] = { "Mesh", "Shading", "Transform" };

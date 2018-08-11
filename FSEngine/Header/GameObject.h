@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "MeshComponent.h"
 #include "ShadingComponent.h"
+#include "TextureComponent.h"
 #include "TransformComponent.h"
 
 #include <unordered_map>
@@ -18,7 +19,7 @@ protected:
 
 private:
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
-	unordered_map<string, ShadingComponent*>* textureComponents = nullptr;
+	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
 	unordered_map<string, TransformComponent*>* transformComponents = nullptr;
 
 	void ThrowDuplicateNameException(const string& name) const;
@@ -41,8 +42,8 @@ template <typename T> inline T* GameObject::GetComponent(string name) const
 	if (meshComponents->size() > 0 && typeid(T) == typeid(MeshComponent))
 		return reinterpret_cast<T*>(meshComponents->at(name));
 
-	if (textureComponents->size() > 0 && typeid(T) == typeid(ShadingComponent))
-		return reinterpret_cast<T*>(textureComponents->at(name));
+	if (shadingComponents->size() > 0 && typeid(T) == typeid(ShadingComponent))
+		return reinterpret_cast<T*>(shadingComponents->at(name));
 
 	if (transformComponents->size() > 0 && typeid(T) == typeid(TransformComponent))
 		return reinterpret_cast<T*>(transformComponents->at(name));
@@ -56,7 +57,7 @@ template <typename T> inline unordered_map<string, T*>* GameObject::GetComponent
 		return reinterpret_cast<unordered_map<string, T*>*>(meshComponents);
 
 	if (typeid(T) == typeid(ShadingComponent))
-		return reinterpret_cast<unordered_map<string, T*>*>(textureComponents);
+		return reinterpret_cast<unordered_map<string, T*>*>(shadingComponents);
 
 	if (typeid(T) == typeid(TransformComponent))
 		return reinterpret_cast<unordered_map<string, T*>*>(transformComponents);

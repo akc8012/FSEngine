@@ -7,7 +7,7 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 	this->window = window;
 
 	meshComponents = new unordered_map<string, MeshComponent*>();
-	textureComponents = new unordered_map<string, ShadingComponent*>();
+	shadingComponents = new unordered_map<string, ShadingComponent*>();
 	transformComponents = new unordered_map<string, TransformComponent*>();
 }
 
@@ -20,7 +20,7 @@ void GameObject::AddComponent(MeshComponent* component, string name)
 
 void GameObject::AddComponent(ShadingComponent* component, string name)
 {
-	auto result = textureComponents->emplace(name, component);
+	auto result = shadingComponents->emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 }
@@ -50,7 +50,7 @@ GameObject::~GameObject()
 			delete meshComponent.second;
 	}
 
-	for (auto& textureComponent : *textureComponents)
+	for (auto& textureComponent : *shadingComponents)
 	{
 		if (!textureComponent.second->IsShared())
 			delete textureComponent.second;
@@ -63,6 +63,6 @@ GameObject::~GameObject()
 	}
 
 	delete transformComponents;
-	delete textureComponents;
+	delete shadingComponents;
 	delete meshComponents;
 }

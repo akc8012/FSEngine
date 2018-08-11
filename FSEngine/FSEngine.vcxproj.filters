@@ -18,6 +18,7 @@
     <ClCompile Include="Source\CubePrimitive.cpp" />
     <ClCompile Include="Source\RenderText.cpp" />
     <ClCompile Include="Source\ShadingComponent.cpp" />
+    <ClCompile Include="Source\TextureComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="Header\RenderText.h" />
     <ClInclude Include="Header\ComponentType.h" />
     <ClInclude Include="Header\ShadingComponent.h" />
+    <ClInclude Include="Header\TextureComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

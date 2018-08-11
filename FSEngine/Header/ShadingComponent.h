@@ -1,53 +1,26 @@
 #pragma once
 #include "Component.h"
-
-#include <SDL.h>
-#include <SDL_image.h>
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-
-#include <cstdlib>
-#include <string>
-#include <memory>
-using std::string;
-using std::unique_ptr;
+#include "ShaderProgram.h"
 
 #include <glm\glm.hpp>
 using namespace glm;
 
 class ShadingComponent : public Component
 {
-public:
-	enum TextureType { Diffuse, Specular };
-
 private:
-	Uint32 textureId = NULL;
-	TextureType textureType = Diffuse;
-	string name = "";
 	vec4 flatColor = vec4(0);
 
-	void SetName(const string& filepath, const string& name);
-	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
-
-	void FlipSurface(SDL_Surface* surface);
-	int GetPixelIndex(int x, int y, int surfaceWidth) const;
-
-	void DeleteTexture();
-
 public:
-	static const ComponentType ComponentTypeId = Texture;
+	static const ComponentType ComponentTypeId = Shading;
 
-	ShadingComponent(const string& filepath, const string& name = "");
-	ShadingComponent(SDL_Surface* surface, bool flipSurface = false);
-	~ShadingComponent();
+	ShadingComponent();
+	ShadingComponent(const vec4& flatColor);
+	virtual ~ShadingComponent();
 
-	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
-	void SetFlatColor(vec4 flatColor);
-	void BindTexture();
+	virtual bool CanUse() const;
+	virtual void Use(ShaderProgram* shaderProgram);
 
-	string GetName() const;
-	TextureType GetTextureType() const;
+	void SetFlatColor(const vec4& flatColor);
 
-	bool HasFlatColor() const;
 	vec4 GetFlatColor() const;
 };
