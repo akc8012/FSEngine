@@ -1,7 +1,6 @@
 #include "../Header/Camera.h"
 
-Camera::Camera(FileSystem* fileSystem, Input* input, Window* window)
- : GameObject(fileSystem, input, window)
+Camera::Camera()
 {
 	AddComponent(new TransformComponent(), "View");
 	AddComponent(new TransformComponent(), "Perspective");

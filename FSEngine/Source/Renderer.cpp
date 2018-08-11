@@ -1,16 +1,19 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram, Input* input)
+Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram)
 {
 	this->window = window;
 	this->shaderProgram = shaderProgram;
-	camera = new Camera(fileSystem, input, window);
+}
+
+void Renderer::SetCamera(GameObject* camera)
+{
+	this->camera = camera;
 }
 
 void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
-	camera->Update(deltaTime);
 }
 
 void Renderer::RenderGameObject(GameObject* gameObject)
@@ -96,5 +99,5 @@ void Renderer::DrawTriangleElements(Uint32 indiceCount)
 
 Renderer::~Renderer()
 {
-	delete camera;
+
 }

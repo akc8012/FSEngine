@@ -29,7 +29,7 @@ private:
 	ShaderProgram* shaderProgram = nullptr;
 	Input* input = nullptr;
 	Renderer* renderer = nullptr;
-	SceneManager* sceneManager;
+	SceneManager* sceneManager = nullptr;
 
 	void InitSDL();
 	void InitOpenGl();

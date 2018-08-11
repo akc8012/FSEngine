@@ -1,8 +1,17 @@
 #include "../Header/SceneManager.h"
 
+SceneManager::SceneManager(FileSystem* fileSystem, Input* input, Window* window)
+{
+	this->fileSystem = fileSystem;
+	this->input = input;
+	this->window = window;
+}
+
 GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject)
 {
+	gameObject->SetSystems(fileSystem, input, window);
 	gameObjects.emplace(name, gameObject);
+
 	return gameObject;
 }
 

@@ -25,9 +25,10 @@ private:
 	void ThrowDuplicateNameException(const string& name) const;
 
 public:
-	GameObject(FileSystem* fileSystem, Input* input, Window* window);
+	GameObject();
 	~GameObject();
 
+	void SetSystems(FileSystem* fileSystem, Input* input, Window* window);
 	void AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
 	void AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
 	void AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);

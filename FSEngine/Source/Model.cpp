@@ -1,7 +1,6 @@
 #include "..\Header\Model.h"
 
-Model::Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window)
- : GameObject(fileSystem, input, window)
+Model::Model(const string& filepath)
 {
 	this->directory = filepath.substr(0, filepath.find_last_of('/')+1);
 

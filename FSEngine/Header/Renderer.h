@@ -34,9 +34,10 @@ private:
 	void DrawTriangleElements(Uint32 indiceCount);
 
 public:
-	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram, Input* input);
+	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram);
 	~Renderer();
 
+	void SetCamera(GameObject* camera);
 	void StartRender(float deltaTime);
 	void RenderGameObject(GameObject* gameObject);
 	void EndRender();

@@ -1,7 +1,6 @@
 #include "../Header/RenderText.h"
 
-RenderText::RenderText(FileSystem* fileSystem, Input* input, Window* window)
- : GameObject(fileSystem, input, window)
+RenderText::RenderText()
 {
 	AddComponent(new TransformComponent());
 	AddComponent(CreateMeshComponent());

@@ -1,14 +1,17 @@
 #include "../Header/GameObject.h"
 
-GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
+GameObject::GameObject()
 {
-	this->fileSystem = fileSystem;
-	this->input= input;
-	this->window = window;
-
 	meshComponents = new unordered_map<string, MeshComponent*>();
 	shadingComponents = new unordered_map<string, ShadingComponent*>();
 	transformComponents = new unordered_map<string, TransformComponent*>();
+}
+
+void GameObject::SetSystems(FileSystem* fileSystem, Input* input, Window* window)
+{
+	this->fileSystem = fileSystem;
+	this->input = input;
+	this->window = window;
 }
 
 void GameObject::AddComponent(MeshComponent* component, string name)

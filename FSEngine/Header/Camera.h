@@ -18,6 +18,6 @@ private:
 	void CalculateProjectionMatrixOrthographic();
 
 public:
-	Camera(FileSystem* fileSystem, Input* input, Window* window);
+	Camera();
 	void Update(float deltaTime);
 };

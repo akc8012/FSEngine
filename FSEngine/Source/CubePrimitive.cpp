@@ -1,7 +1,6 @@
 #include "../Header/CubePrimitive.h"
 
-CubePrimitive::CubePrimitive(FileSystem* fileSystem, Input* input, Window* window)
- : GameObject(fileSystem, input, window)
+CubePrimitive::CubePrimitive()
 {
 	AddComponent(CreateMeshComponent());
 	AddComponent(new TransformComponent());

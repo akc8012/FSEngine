@@ -33,7 +33,7 @@ private:
 	string* GetLoadedTextureName(const string& texturePath) const;
 
 public:
-	Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window);
+	Model(const string& filepath);
 
 	void Update(float deltaTime);
 };

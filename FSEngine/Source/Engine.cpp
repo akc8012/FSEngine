@@ -20,9 +20,9 @@ bool Engine::Init()
 		input = new Input();
 
 		shaderProgram = new ShaderProgram();
-		renderer = new Renderer(fileSystem, window, shaderProgram, input);
+		renderer = new Renderer(fileSystem, window, shaderProgram);
 
-		sceneManager = new SceneManager();
+		sceneManager = new SceneManager(fileSystem, input, window);
 		AddGameObjects();
 	}
 	catch (string errorMessage)
@@ -79,24 +79,24 @@ void Engine::InitGlew()
 
 void Engine::AddGameObjects()
 {
-	GameObject* memeFaceCube = sceneManager->AddGameObject("MemeFaceCube", new CubePrimitive(fileSystem, input, window));
+	GameObject* memeFaceCube = sceneManager->AddGameObject("MemeFaceCube", new CubePrimitive());
 	memeFaceCube->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
 	memeFaceCube->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
 	memeFaceCube->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 
-	GameObject* greenCube = sceneManager->AddGameObject("BrickCube", new CubePrimitive(fileSystem, input, window));
+	GameObject* greenCube = sceneManager->AddGameObject("BrickCube", new CubePrimitive());
 	greenCube->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 	greenCube->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
 	greenCube->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 
-	GameObject* shipModel = sceneManager->AddGameObject("ShipModel", new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window));
+	GameObject* shipModel = sceneManager->AddGameObject("ShipModel", new Model("C:/Model/Arwing/arwing.dae"));
 	shipModel->AddComponent(new TransformComponent());
 	shipModel->GetComponent<TransformComponent>()->SetScale(vec3(0.025f, 0.025f, 0.025f));
 
-	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText(fileSystem, input, window)));
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText()));
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
@@ -105,6 +105,9 @@ void Engine::AddGameObjects()
 	debugText->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 	debugText->GetComponent<ShadingComponent>()->SetRenderPerspective(false);
 	debugText->GetComponent<ShadingComponent>()->SetDepthTest(false);
+
+	GameObject* camera = sceneManager->AddGameObject("Camera", new Camera());
+	renderer->SetCamera(camera);
 }
 
 void Engine::GameLoop()

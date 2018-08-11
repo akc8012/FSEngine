@@ -38,7 +38,7 @@ private:
 	void SetPixelPositionToTopLeftOrigin();
 
 public:
-	RenderText(FileSystem* fileSystem, Input* input, Window* window);
+	RenderText();
 	~RenderText();
 
 	void Update(float deltaTime);

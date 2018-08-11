@@ -11,6 +11,6 @@ private:
 	MeshComponent* CreateMeshComponent() const;
 
 public:
-	CubePrimitive(FileSystem* fileSystem, Input* input, Window* window);
+	CubePrimitive();
 	void Update(float deltaTime);
 };
