@@ -17,7 +17,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
-	gameObject->GetComponent<TextureComponent>()->BindTexture();
+	gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
 	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
 
 	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
@@ -31,7 +31,7 @@ void Renderer::RenderModel(GameObject* model)
 	glEnable(GL_CULL_FACE);
 	for (auto& meshComponent : *model->GetComponents<MeshComponent>())
 	{
-		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<TextureComponent>());
+		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<ShadingComponent>());
 		meshComponent.second->BindVertexArray();
 
 		SetModelMatrices(model->GetComponent<TransformComponent>());
@@ -41,15 +41,15 @@ void Renderer::RenderModel(GameObject* model)
 	glDisable(GL_CULL_FACE);
 }
 
-void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, TextureComponent*>& textureComponents)
+void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents)
 {
 	for (const auto& associatedTextureName : meshComponent->GetAssociatedTextureNames())
 	{
-		TextureComponent* texture = textureComponents.at(associatedTextureName);
-		if (texture->GetTextureType() != TextureComponent::Diffuse)
+		ShadingComponent* texture = shadingComponents.at(associatedTextureName);
+		if (!texture->CanUse())
 			continue;
 
-		texture->BindTexture();
+		texture->Use(shaderProgram);
 	}
 }
 

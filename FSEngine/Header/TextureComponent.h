@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "ShadingComponent.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -12,7 +12,7 @@
 using std::string;
 using std::unique_ptr;
 
-class TextureComponent : public Component
+class TextureComponent : public ShadingComponent
 {
 public:
 	enum TextureType { Diffuse, Specular };
@@ -31,14 +31,13 @@ private:
 	void DeleteTexture();
 
 public:
-	static const ComponentType ComponentTypeId = Texture;
-
 	TextureComponent(const string& filepath, const string& name = "");
 	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
 	~TextureComponent();
 
+	bool CanUse() const;
+	void Use(ShaderProgram* shaderProgram);
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
-	void BindTexture();
 
 	string GetName() const;
 	TextureType GetTextureType() const;

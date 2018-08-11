@@ -25,6 +25,17 @@ TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
 	GenerateTexture(surface, flipSurface);
 }
 
+bool TextureComponent::CanUse() const
+{
+	return textureType == Diffuse;
+}
+
+void TextureComponent::Use(ShaderProgram* shaderProgram)
+{
+	shaderProgram->SetVector("flatColor", vec4(0));
+	glBindTexture(GL_TEXTURE_2D, textureId);
+}
+
 void TextureComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 {
 	DeleteTexture();
@@ -72,7 +83,7 @@ void TextureComponent::FlipSurface(SDL_Surface* surface)
 
 	for (int row = 0; row < surface->h; row++)
 	{
-		int flippedRowIndex = abs(row - (surface->h-1));
+		int flippedRowIndex = abs(row - (surface->h - 1));
 
 		for (int column = 0; column < surface->w; column++)
 		{
@@ -88,11 +99,6 @@ void TextureComponent::FlipSurface(SDL_Surface* surface)
 int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 {
 	return (y * surfaceWidth) + x;
-}
-
-void TextureComponent::BindTexture()
-{
-	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
 string TextureComponent::GetName() const
