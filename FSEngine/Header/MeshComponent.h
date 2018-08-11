@@ -14,6 +14,9 @@ using std::vector;
 
 class MeshComponent : public Component
 {
+public:
+	enum DrawingMode { Arrays, Elements };
+
 private:
 	struct VertexAttribute
 	{
@@ -29,6 +32,8 @@ private:
 	vector<string> associatedTextureNames;
 
 	Uint32 vertexArrayId = NULL;
+	bool renderBackfaces = false;
+	DrawingMode drawingMode = Elements;
 
 	vector<Vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
 
@@ -54,6 +59,11 @@ public:
 
 	int GetIndiceCount() const;
 	int GetVerticeCount() const;
+
+	void SetRenderBackfaces(bool renderBackfaces);
+	bool RenderBackfaces() const;
+	void SetDrawingMode(DrawingMode drawingMode);
+	DrawingMode GetDrawingMode() const;
 
 	void AddAssociatedTextureName(string textureName);
 	void AddAssociatedTextureIndices(const vector<string>& textureNames);

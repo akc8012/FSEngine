@@ -23,11 +23,34 @@ bool ShadingComponent::CanUse() const
 void ShadingComponent::Use(ShaderProgram* shaderProgram)
 {
 	shaderProgram->SetVector("flatColor", flatColor);
+
+	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+	shaderProgram->SetBool("renderPerspective", renderPerspective);
 }
 
 vec4 ShadingComponent::GetFlatColor() const
 {
 	return flatColor;
+}
+
+void ShadingComponent::SetDepthTest(bool enableDepthTest)
+{
+	this->enableDepthTest = enableDepthTest;
+}
+
+bool ShadingComponent::GetDepthTest() const
+{
+	return enableDepthTest;
+}
+
+void ShadingComponent::SetRenderPerspective(bool renderPerspective)
+{
+	this->renderPerspective = renderPerspective;
+}
+
+bool ShadingComponent::GetRenderPerspective() const
+{
+	return renderPerspective;
 }
 
 ShadingComponent::~ShadingComponent()

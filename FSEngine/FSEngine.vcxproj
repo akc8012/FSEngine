@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="Source\MeshComponent.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\TextureComponent.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Component.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\CubePrimitive.h" />
+    <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
     <ClInclude Include="Header\ShadingComponent.h" />
     <ClInclude Include="Header\TextureComponent.h" />

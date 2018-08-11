@@ -132,6 +132,26 @@ int MeshComponent::GetVerticeCount() const
 	return (int)vertices.size();
 }
 
+void MeshComponent::SetRenderBackfaces(bool renderBackfaces)
+{
+	this->renderBackfaces = renderBackfaces;
+}
+
+bool MeshComponent::RenderBackfaces() const
+{
+	return renderBackfaces;
+}
+
+void MeshComponent::SetDrawingMode(DrawingMode drawingMode)
+{
+	this->drawingMode = drawingMode;
+}
+
+MeshComponent::DrawingMode MeshComponent::GetDrawingMode() const
+{
+	return drawingMode;
+}
+
 void MeshComponent::AddAssociatedTextureName(string textureName)
 {
 	associatedTextureNames.push_back(textureName);

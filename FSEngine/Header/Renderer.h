@@ -28,7 +28,7 @@ private:
 	void SetCameraMatrices();
 	void SetModelMatrices(TransformComponent* transform);
 
-	void ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents);
+	void UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents);
 
 	void DrawTriangleArrays(Uint32 verticeCount);
 	void DrawTriangleElements(Uint32 indiceCount);
@@ -38,9 +38,6 @@ public:
 	~Renderer();
 
 	void StartRender(float deltaTime);
-
 	void RenderGameObject(GameObject* gameObject);
-	void RenderModel(GameObject* model);
-
 	void EndRender();
 };
