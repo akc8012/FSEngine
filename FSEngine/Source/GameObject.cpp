@@ -7,7 +7,7 @@ GameObject::GameObject(FileSystem* fileSystem, Input* input, Window* window)
 	this->window = window;
 
 	meshComponents = new unordered_map<string, MeshComponent*>();
-	textureComponents = new unordered_map<string, TextureComponent*>();
+	textureComponents = new unordered_map<string, ShadingComponent*>();
 	transformComponents = new unordered_map<string, TransformComponent*>();
 }
 
@@ -18,7 +18,7 @@ void GameObject::AddComponent(MeshComponent* component, string name)
 		ThrowDuplicateNameException(name);
 }
 
-void GameObject::AddComponent(TextureComponent* component, string name)
+void GameObject::AddComponent(ShadingComponent* component, string name)
 {
 	auto result = textureComponents->emplace(name, component);
 	if (!result.second)

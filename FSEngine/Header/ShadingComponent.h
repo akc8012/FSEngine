@@ -15,7 +15,7 @@ using std::unique_ptr;
 #include <glm\glm.hpp>
 using namespace glm;
 
-class TextureComponent : public Component
+class ShadingComponent : public Component
 {
 public:
 	enum TextureType { Diffuse, Specular };
@@ -37,9 +37,9 @@ private:
 public:
 	static const ComponentType ComponentTypeId = Texture;
 
-	TextureComponent(const string& filepath, const string& name = "");
-	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
-	~TextureComponent();
+	ShadingComponent(const string& filepath, const string& name = "");
+	ShadingComponent(SDL_Surface* surface, bool flipSurface = false);
+	~ShadingComponent();
 
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 	void SetFlatColor(vec4 flatColor);

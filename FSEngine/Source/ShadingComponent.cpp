@@ -1,6 +1,6 @@
-#include "../Header/TextureComponent.h"
+#include "../Header/ShadingComponent.h"
 
-TextureComponent::TextureComponent(const string& filepath, const string& name)
+ShadingComponent::ShadingComponent(const string& filepath, const string& name)
 {
 	SetName(filepath, name);
 
@@ -12,7 +12,7 @@ TextureComponent::TextureComponent(const string& filepath, const string& name)
 	SDL_FreeSurface(surface);
 }
 
-void TextureComponent::SetName(const string& filepath, const string& name)
+void ShadingComponent::SetName(const string& filepath, const string& name)
 {
 	if (name == "")
 		this->name = filepath.substr(filepath.find_last_of('/') + 1, filepath.length());
@@ -20,12 +20,12 @@ void TextureComponent::SetName(const string& filepath, const string& name)
 		this->name = name;
 }
 
-TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
+ShadingComponent::ShadingComponent(SDL_Surface* surface, bool flipSurface)
 {
 	GenerateTexture(surface, flipSurface);
 }
 
-void TextureComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
+void ShadingComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 {
 	DeleteTexture();
 
@@ -49,7 +49,7 @@ void TextureComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
+GLenum ShadingComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 {
 	bool hasAlphaChannel = colors == 4;
 	bool isStandardRMask = rmask == 0x000000ff;
@@ -60,7 +60,7 @@ GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 		return isStandardRMask ? GL_RGB : GL_BGR;
 }
 
-void TextureComponent::FlipSurface(SDL_Surface* surface)
+void ShadingComponent::FlipSurface(SDL_Surface* surface)
 {
 	const int ExpectedColorDepth = 4;
 	if (surface->format->BytesPerPixel != ExpectedColorDepth)
@@ -85,47 +85,47 @@ void TextureComponent::FlipSurface(SDL_Surface* surface)
 		sourcePixels[i] = targetPixels[i];
 }
 
-int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
+int ShadingComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 {
 	return (y * surfaceWidth) + x;
 }
 
-void TextureComponent::SetFlatColor(vec4 flatColor)
+void ShadingComponent::SetFlatColor(vec4 flatColor)
 {
 	this->flatColor = flatColor;
 }
 
-void TextureComponent::BindTexture()
+void ShadingComponent::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-string TextureComponent::GetName() const
+string ShadingComponent::GetName() const
 {
 	return name;
 }
 
-TextureComponent::TextureType TextureComponent::GetTextureType() const
+ShadingComponent::TextureType ShadingComponent::GetTextureType() const
 {
 	return textureType;
 }
 
-bool TextureComponent::HasFlatColor() const
+bool ShadingComponent::HasFlatColor() const
 {
 	return flatColor != vec4(0);
 }
 
-vec4 TextureComponent::GetFlatColor() const
+vec4 ShadingComponent::GetFlatColor() const
 {
 	return flatColor;
 }
 
-TextureComponent::~TextureComponent()
+ShadingComponent::~ShadingComponent()
 {
 	DeleteTexture();
 }
 
-void TextureComponent::DeleteTexture()
+void ShadingComponent::DeleteTexture()
 {
 	if (textureId != NULL)
 	{

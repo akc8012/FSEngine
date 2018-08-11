@@ -93,7 +93,7 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 			string textureName = texturePath.C_Str();
 			meshComponent->AddAssociatedTextureName(textureName);
 
-			AddComponent(new TextureComponent(directory + textureName, textureName), textureName);
+			AddComponent(new ShadingComponent(directory + textureName, textureName), textureName);
 		}
 		else
 		{
@@ -105,7 +105,7 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 
 string* Model::GetLoadedTextureName(const string& texturePath) const
 {
-	for (const auto& textureComponent : *GetComponents<TextureComponent>())
+	for (const auto& textureComponent : *GetComponents<ShadingComponent>())
 	{
 		string name = textureComponent.second->GetName();
 		if (texturePath == name)

@@ -17,12 +17,12 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetCameraMatrices();
 
-	if (gameObject->GetComponent<TextureComponent>()->HasFlatColor())
-		shaderProgram->SetVector("flatColor", gameObject->GetComponent<TextureComponent>()->GetFlatColor());
+	if (gameObject->GetComponent<ShadingComponent>()->HasFlatColor())
+		shaderProgram->SetVector("flatColor", gameObject->GetComponent<ShadingComponent>()->GetFlatColor());
 	else
 		shaderProgram->SetVector("flatColor", vec4(0));
 
-	gameObject->GetComponent<TextureComponent>()->BindTexture();
+	gameObject->GetComponent<ShadingComponent>()->BindTexture();
 	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
 
 	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
@@ -36,7 +36,7 @@ void Renderer::RenderModel(GameObject* model)
 	glEnable(GL_CULL_FACE);
 	for (auto& meshComponent : *model->GetComponents<MeshComponent>())
 	{
-		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<TextureComponent>());
+		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<ShadingComponent>());
 		meshComponent.second->BindVertexArray();
 
 		SetModelMatrices(model->GetComponent<TransformComponent>());
@@ -46,12 +46,12 @@ void Renderer::RenderModel(GameObject* model)
 	glDisable(GL_CULL_FACE);
 }
 
-void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, TextureComponent*>& textureComponents)
+void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& textureComponents)
 {
 	for (const auto& associatedTextureName : meshComponent->GetAssociatedTextureNames())
 	{
-		TextureComponent* texture = textureComponents.at(associatedTextureName);
-		if (texture->GetTextureType() != TextureComponent::Diffuse)
+		ShadingComponent* texture = textureComponents.at(associatedTextureName);
+		if (texture->GetTextureType() != ShadingComponent::Diffuse)
 			continue;
 
 		if (texture->HasFlatColor())
