@@ -22,24 +22,8 @@ bool Engine::Init()
 		shaderProgram = new ShaderProgram();
 		renderer = new Renderer(fileSystem, window, shaderProgram, input);
 
-		cubeFace = new CubePrimitive(fileSystem, input, window);
-		cubeBrick = new CubePrimitive(fileSystem, input, window);
-		renderText = new RenderText(fileSystem, input, window);
-		model = new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window);
-
-		cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
-		cubeBrick->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
-		model->AddComponent(new TransformComponent());
-
-		cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
-		cubeBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
-		cubeBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
-		model->GetComponent<TransformComponent>()->SetScale(vec3(0.025f, 0.025f, 0.025f));
-
-		renderText->SetPixelScale(26);
-		renderText->SetScreenAnchorPoint(RenderText::TopLeft);
-		renderText->SetTextAlignment(RenderText::TopLeft);
-		renderText->SetPixelPosition(vec2(5, -5));
+		sceneManager = new SceneManager();
+		AddGameObjects();
 	}
 	catch (string errorMessage)
 	{
@@ -91,6 +75,36 @@ void Engine::InitGlew()
 	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
+}
+
+void Engine::AddGameObjects()
+{
+	GameObject* memeFaceCube = sceneManager->AddGameObject("MemeFaceCube", new CubePrimitive(fileSystem, input, window));
+	memeFaceCube->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
+	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
+	memeFaceCube->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	memeFaceCube->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
+
+	GameObject* greenCube = sceneManager->AddGameObject("BrickCube", new CubePrimitive(fileSystem, input, window));
+	greenCube->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
+	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
+	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+	greenCube->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	greenCube->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
+
+	GameObject* shipModel = sceneManager->AddGameObject("ShipModel", new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window));
+	shipModel->AddComponent(new TransformComponent());
+	shipModel->GetComponent<TransformComponent>()->SetScale(vec3(0.025f, 0.025f, 0.025f));
+
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText(fileSystem, input, window)));
+	debugText->SetPixelScale(26);
+	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
+	debugText->SetTextAlignment(RenderText::TopLeft);
+	debugText->SetPixelPosition(vec2(5, -5));
+	debugText->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	debugText->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
+	debugText->GetComponent<ShadingComponent>()->SetRenderPerspective(false);
+	debugText->GetComponent<ShadingComponent>()->SetDepthTest(false);
 }
 
 void Engine::GameLoop()
@@ -218,39 +232,19 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update(float deltaTime)
 {
-	cubeFace->Update(deltaTime);
-	cubeBrick->Update(deltaTime);
-
-	model->GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds() * 0.4f, vec3(0.3f, 1, 0));
-
-	renderText->Update(deltaTime);
-	renderText->SetText(fileSystem->GetSettingsValue<string>("RenderText"));
+	sceneManager->Update(deltaTime);
 }
 
 void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
-
-	glEnable(GL_DEPTH_TEST);
-	shaderProgram->SetBool("renderPerspective", true);
-	renderer->RenderGameObject(cubeFace);
-	renderer->RenderGameObject(cubeBrick);
-	renderer->RenderModel(model);
-
-	glDisable(GL_DEPTH_TEST);
-	shaderProgram->SetBool("renderPerspective", false);
-	renderer->RenderGameObject(renderText);
-
+	sceneManager->Draw(renderer);
 	renderer->EndRender();
 }
 
 Engine::~Engine()
 {
-	delete model;
-	delete renderText;
-	delete cubeFace;
-	delete cubeBrick;
-
+	delete sceneManager;
 	delete renderer;
 	delete input;
 	delete shaderProgram;

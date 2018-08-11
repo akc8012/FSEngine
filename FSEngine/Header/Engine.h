@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Timer.h"
 #include "GameObject.h"
+#include "SceneManager.h"
 #include "CubePrimitive.h"
 #include "RenderText.h"
 #include "Model.h"
@@ -28,15 +29,12 @@ private:
 	ShaderProgram* shaderProgram = nullptr;
 	Input* input = nullptr;
 	Renderer* renderer = nullptr;
-
-	GameObject* cubeFace = nullptr;
-	GameObject* cubeBrick = nullptr;
-	RenderText* renderText = nullptr;
-	GameObject* model = nullptr;
+	SceneManager* sceneManager;
 
 	void InitSDL();
 	void InitOpenGl();
 	void InitGlew();
+	void AddGameObjects();
 
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);

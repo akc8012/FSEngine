@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Timer.h"
 #include "Vertex.h"
 
 #include <assimp/Importer.hpp>
@@ -34,4 +35,5 @@ private:
 public:
 	Model(const string& filepath, FileSystem* fileSystem, Input* input, Window* window);
 
+	void Update(float deltaTime);
 };

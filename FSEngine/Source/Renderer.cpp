@@ -15,41 +15,37 @@ void Renderer::StartRender(float deltaTime)
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	SetCameraMatrices();
-
-	gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
-	gameObject->GetComponent<MeshComponent>()->BindVertexArray();
-
-	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
-	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
-}
-
-void Renderer::RenderModel(GameObject* model)
-{
-	SetCameraMatrices();
-
-	glEnable(GL_CULL_FACE);
-	for (auto& meshComponent : *model->GetComponents<MeshComponent>())
+	for (auto& meshComponentMap : *gameObject->GetComponents<MeshComponent>())
 	{
-		ActivateAndBindTextures(meshComponent.second, *model->GetComponents<ShadingComponent>());
-		meshComponent.second->BindVertexArray();
+		MeshComponent* meshComponent = meshComponentMap.second;
+		meshComponent->RenderBackfaces() ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
 
-		SetModelMatrices(model->GetComponent<TransformComponent>());
-		DrawTriangleElements(meshComponent.second->GetIndiceCount());
+		if (meshComponent->GetAssociatedTextureNames().size() > 0)
+			UseMeshAssociatedTextures(meshComponent, *gameObject->GetComponents<ShadingComponent>());
+		else
+			gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
+
+		SetCameraMatrices();
+
+		meshComponent->BindVertexArray();
+		SetModelMatrices(gameObject->GetComponent<TransformComponent>());
+
+		if (meshComponent->GetDrawingMode() == MeshComponent::Elements)
+			DrawTriangleElements(meshComponent->GetIndiceCount());
+		else
+			DrawTriangleArrays(meshComponent->GetVerticeCount());
 	}
-
-	glDisable(GL_CULL_FACE);
 }
 
-void Renderer::ActivateAndBindTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents)
+void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents)
 {
 	for (const auto& associatedTextureName : meshComponent->GetAssociatedTextureNames())
 	{
-		ShadingComponent* texture = shadingComponents.at(associatedTextureName);
-		if (!texture->CanUse())
+		ShadingComponent* shadingComponent = shadingComponents.at(associatedTextureName);
+		if (!shadingComponent->CanUse())
 			continue;
 
-		texture->Use(shaderProgram);
+		shadingComponent->Use(shaderProgram);
 	}
 }
 
@@ -75,10 +71,7 @@ void Renderer::SetCameraMatrices()
 		shaderProgram->SetMatrix("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
 	}
 	else
-	{
-		shaderProgram->SetMatrix("viewMatrix", mat4(1.0f));
-		shaderProgram->SetMatrix("projection", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
-	}
+		shaderProgram->SetMatrix("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
 
 	shaderProgram->SetVector("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }

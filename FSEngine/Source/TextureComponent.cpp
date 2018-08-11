@@ -32,7 +32,7 @@ bool TextureComponent::CanUse() const
 
 void TextureComponent::Use(ShaderProgram* shaderProgram)
 {
-	shaderProgram->SetVector("flatColor", vec4(0));
+	ShadingComponent::Use(shaderProgram);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
