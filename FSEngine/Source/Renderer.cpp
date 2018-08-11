@@ -15,17 +15,17 @@ void Renderer::StartRender(float deltaTime)
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	SetCameraMatrices();
-
 	for (auto& meshComponentMap : *gameObject->GetComponents<MeshComponent>())
 	{
 		MeshComponent* meshComponent = meshComponentMap.second;
-		meshComponent->RenderBackfaces() ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+		meshComponent->RenderBackfaces() ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
 
 		if (meshComponent->GetAssociatedTextureNames().size() > 0)
 			UseMeshAssociatedTextures(meshComponent, *gameObject->GetComponents<ShadingComponent>());
 		else
 			gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
+
+		SetCameraMatrices();
 
 		meshComponent->BindVertexArray();
 		SetModelMatrices(gameObject->GetComponent<TransformComponent>());
@@ -71,10 +71,7 @@ void Renderer::SetCameraMatrices()
 		shaderProgram->SetMatrix("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
 	}
 	else
-	{
-		shaderProgram->SetMatrix("viewMatrix", mat4(1.0f));
-		shaderProgram->SetMatrix("projection", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
-	}
+		shaderProgram->SetMatrix("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
 
 	shaderProgram->SetVector("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }

@@ -1,8 +1,9 @@
 #include "../Header/SceneManager.h"
 
-void SceneManager::AddGameObject(const string& name, GameObject* gameObject)
+GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject)
 {
 	gameObjects.emplace(name, gameObject);
+	return gameObject;
 }
 
 GameObject* SceneManager::GetGameObject(const string& name) const

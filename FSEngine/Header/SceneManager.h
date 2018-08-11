@@ -15,7 +15,7 @@ private:
 public:
 	~SceneManager();
 
-	void AddGameObject(const string& name, GameObject* gameObject);
+	GameObject* AddGameObject(const string& name, GameObject* gameObject);
 	GameObject* GetGameObject(const string& name) const;
 
 	void Update(float deltaTime);

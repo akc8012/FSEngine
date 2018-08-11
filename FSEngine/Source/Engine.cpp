@@ -79,25 +79,32 @@ void Engine::InitGlew()
 
 void Engine::AddGameObjects()
 {
-	sceneManager->AddGameObject("CubeFace", new CubePrimitive(fileSystem, input, window));
-	sceneManager->GetGameObject("CubeFace")->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
-	sceneManager->GetGameObject("CubeFace")->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
+	GameObject* cubeFace = sceneManager->AddGameObject("CubeFace", new CubePrimitive(fileSystem, input, window));
+	cubeFace->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
+	cubeFace->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
+	cubeFace->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	cubeFace->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 
-	sceneManager->AddGameObject("CubeBrick", new CubePrimitive(fileSystem, input, window));
-	sceneManager->GetGameObject("CubeBrick")->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
-	sceneManager->GetGameObject("CubeBrick")->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
-	sceneManager->GetGameObject("CubeBrick")->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+	GameObject* cubeBrick = sceneManager->AddGameObject("CubeBrick", new CubePrimitive(fileSystem, input, window));
+	cubeBrick->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
+	cubeBrick->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
+	cubeBrick->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
+	cubeBrick->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	cubeBrick->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
 
-	sceneManager->AddGameObject("ShipModel", new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window));
-	sceneManager->GetGameObject("ShipModel")->AddComponent(new TransformComponent());
-	sceneManager->GetGameObject("ShipModel")->GetComponent<TransformComponent>()->SetScale(vec3(0.025f, 0.025f, 0.025f));
+	GameObject* shipModel = sceneManager->AddGameObject("ShipModel", new Model("C:/Model/Arwing/arwing.dae", fileSystem, input, window));
+	shipModel->AddComponent(new TransformComponent());
+	shipModel->GetComponent<TransformComponent>()->SetScale(vec3(0.025f, 0.025f, 0.025f));
 
-	sceneManager->AddGameObject("DebugText", new RenderText(fileSystem, input, window));
-	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObject("DebugText"));
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText(fileSystem, input, window)));
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
+	debugText->GetComponent<MeshComponent>()->SetDrawingMode(MeshComponent::Arrays);
+	debugText->GetComponent<MeshComponent>()->SetRenderBackfaces(true);
+	debugText->GetComponent<ShadingComponent>()->SetRenderPerspective(false);
+	debugText->GetComponent<ShadingComponent>()->SetDepthTest(false);
 }
 
 void Engine::GameLoop()
