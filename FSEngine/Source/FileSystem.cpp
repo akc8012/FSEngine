@@ -14,11 +14,11 @@ void FileSystem::LoadSettingsFile()
 json FileSystem::GetSettingsValue(const char* key) const
 {
 	if (settingsJson == nullptr)
-		throw (string)"Error: Attempting to access settings json without loading it first";
+		throw (string)"Attempting to access settings json without loading it first";
 
 	auto jsonValue = settingsJson.find(key);
 	if (jsonValue == settingsJson.end())
-		throw (string)"Error: Could not retrieve settings value using key: " + key;
+		throw (string)"Could not retrieve settings value using key: " + key;
 
 	return jsonValue.value();
 }

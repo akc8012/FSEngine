@@ -114,7 +114,7 @@ vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
 	case BottomRight:
 		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y - windowSize.y);
 	default:
-		throw "RenderText error: Could not recognize anchorPosition: " + std::to_string(anchorPosition);
+		throw "Could not recognize anchorPosition: " + std::to_string(anchorPosition);
 	}
 }
 
@@ -134,7 +134,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 	case BottomRight:
 		return vec2(position.x - pixelScale.x, position.y + pixelScale.y);
 	default:
-		throw "RenderText error: Could not recognize alignPosition: " + std::to_string(alignPosition);
+		throw "Could not recognize alignPosition: " + std::to_string(alignPosition);
 	}
 }
 

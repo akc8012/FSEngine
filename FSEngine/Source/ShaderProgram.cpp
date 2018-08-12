@@ -202,7 +202,7 @@ Uint32 ShaderProgram::GetUniformLocation(const char* name)
 	}
 	catch (std::out_of_range)
 	{
-		throw (string)"Error: Could not find stored uniform location with name: " + name + (string)". Created new map entry.\n";
+		throw (string)"Could not find stored uniform location with name: " + name + (string)". Created new map entry.\n";
 	}
 
 	return location;

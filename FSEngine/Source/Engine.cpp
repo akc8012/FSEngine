@@ -55,7 +55,7 @@ void Engine::InitOpenGl()
 void Engine::SetSwapInterval(int interval)
 {
 	if (SDL_GL_SetSwapInterval(interval) != 0)
-		throw (string)"Error: Unable to set swap interval! SDL Error: " + SDL_GetError();
+		throw (string)"Unable to set swap interval! SDL Error: " + SDL_GetError();
 }
 
 void Engine::InitGlew()
