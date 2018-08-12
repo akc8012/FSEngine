@@ -10,5 +10,6 @@
 
   "RenderText": "Debug text",
 
-  "ShipPosition": [10, -10, -60]
+  "ShipPosition": [1, 0, 0],
+  "DoTranslate": true
 }

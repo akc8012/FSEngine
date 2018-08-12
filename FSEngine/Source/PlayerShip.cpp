@@ -10,14 +10,18 @@ void PlayerShip::Start()
 {
 	transform = GetComponent<TransformComponent>();
 
-	//transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
-	//transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));
+	/*transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
+	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));*/
 
 
 	transform->SetPosition(vec3(0));
 
 	json shipPosition = fileSystem->GetSettingsValue("ShipPosition");
-	transform->Translate(vec3(shipPosition[0], shipPosition[1], shipPosition[2]));
+
+	if (fileSystem->GetSettingsValue<bool>("DoTranslate"))
+		transform->Translate(vec3(shipPosition[0], shipPosition[1], shipPosition[2]));
+	else
+		transform->SetPosition(vec3(shipPosition[0], shipPosition[1], shipPosition[2]));
 
 	printf("%s\n", TransformComponent::GetFormattedVectorString(transform->GetPosition()).c_str());
 }

@@ -117,18 +117,14 @@ void TransformComponent::SetScale(float scaleFactor)
 
 void TransformComponent::SetScale(const vec3& scaleVector)
 {
-	mat4 identity = mat4(1.0f);
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-
-	transform = translate(identity, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identity, scaleVector);
+	transform = translate(identityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identityMatrix, scaleVector);
 }
 
 void TransformComponent::SetRotation(float angle, const vec3& axis)
 {
-	mat4 identity = mat4(1.0f);
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-
-	transform = translate(identity, matrixValues.translation) * rotate(identity, angle, axis) * scale(identity, matrixValues.scale);
+	transform = translate(identityMatrix, matrixValues.translation) * rotate(identityMatrix, angle, axis) * scale(identityMatrix, matrixValues.scale);
 }
 
 void TransformComponent::SetPosition(const vec2& position)
@@ -138,10 +134,8 @@ void TransformComponent::SetPosition(const vec2& position)
 
 void TransformComponent::SetPosition(const vec3& position)
 {
-	mat4 identity = mat4(1.0f);
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-
-	transform = translate(identity, position) * toMat4(matrixValues.rotation) * scale(identity, matrixValues.scale);
+	transform = translate(identityMatrix, position) * toMat4(matrixValues.rotation) * scale(identityMatrix, matrixValues.scale);
 }
 
 void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector)

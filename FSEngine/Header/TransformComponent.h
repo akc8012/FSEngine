@@ -16,6 +16,7 @@ using std::string;
 class TransformComponent : public Component
 {
 private:
+	const mat4 identityMatrix = mat4(1);
 	struct MatrixValues
 	{
 		vec3 scale;
