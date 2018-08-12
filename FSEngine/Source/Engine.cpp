@@ -212,6 +212,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		break;
 	}
 }
+
 void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
