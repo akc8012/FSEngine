@@ -14,6 +14,11 @@ void GameObject::SetSystems(FileSystem* fileSystem, Input* input, Window* window
 	this->window = window;
 }
 
+void GameObject::Start()
+{
+
+}
+
 MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 {
 	auto result = meshComponents->emplace(name, component);

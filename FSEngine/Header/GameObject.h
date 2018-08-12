@@ -12,11 +12,6 @@ using std::unordered_map;
 
 class GameObject
 {
-protected:
-	FileSystem* fileSystem = nullptr;
-	Input* input = nullptr;
-	Window* window = nullptr;
-
 private:
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
 	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
@@ -24,11 +19,18 @@ private:
 
 	void ThrowDuplicateNameException(const string& name) const;
 
+protected:
+	FileSystem * fileSystem = nullptr;
+	Input* input = nullptr;
+	Window* window = nullptr;
+
 public:
 	GameObject();
 	~GameObject();
 
 	void SetSystems(FileSystem* fileSystem, Input* input, Window* window);
+	virtual void Start();
+
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
 	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
 	TransformComponent* AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
@@ -50,14 +52,21 @@ template <typename T> inline T* GameObject::GetComponent(string name) const
 
 template <typename T> inline T* GameObject::TryGetComponent(string name) const
 {
-	if (meshComponents->size() > 0 && typeid(T) == typeid(MeshComponent))
-		return reinterpret_cast<T*>(meshComponents->at(name));
+	try
+	{
+		if (meshComponents->size() > 0 && typeid(T) == typeid(MeshComponent))
+			return reinterpret_cast<T*>(meshComponents->at(name));
 
-	if (shadingComponents->size() > 0 && typeid(T) == typeid(ShadingComponent))
-		return reinterpret_cast<T*>(shadingComponents->at(name));
+		if (shadingComponents->size() > 0 && typeid(T) == typeid(ShadingComponent))
+			return reinterpret_cast<T*>(shadingComponents->at(name));
 
-	if (transformComponents->size() > 0 && typeid(T) == typeid(TransformComponent))
-		return reinterpret_cast<T*>(transformComponents->at(name));
+		if (transformComponents->size() > 0 && typeid(T) == typeid(TransformComponent))
+			return reinterpret_cast<T*>(transformComponents->at(name));
+	}
+	catch (std::out_of_range)
+	{
+		return nullptr;
+	}
 
 	return nullptr;
 }

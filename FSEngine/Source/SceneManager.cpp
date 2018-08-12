@@ -9,10 +9,12 @@ SceneManager::SceneManager(FileSystem* fileSystem, Input* input, Window* window)
 
 GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject)
 {
-	gameObject->SetSystems(fileSystem, input, window);
 	auto result = gameObjects.emplace(name, gameObject);
 	if (!result.second)
 		throw "GameObject with name " + name + " already exists";
+
+	gameObject->SetSystems(fileSystem, input, window);
+	gameObject->Start();
 
 	return gameObject;
 }
