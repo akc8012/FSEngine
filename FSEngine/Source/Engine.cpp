@@ -212,7 +212,6 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		break;
 	}
 }
-
 void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
@@ -228,6 +227,11 @@ void Engine::Draw(float deltaTime)
 void Engine::Stop()
 {
 	running = false;
+}
+
+SDL_Window* Engine::GetWindow() const
+{
+	return window->GetWindow();
 }
 
 Engine::~Engine()

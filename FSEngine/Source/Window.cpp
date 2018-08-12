@@ -93,6 +93,11 @@ tvec2<int> Window::GetResolutionSetting() const
 	return tvec2<int>(resolution[0], resolution[1]);
 }
 
+SDL_Window* Window::GetWindow() const
+{
+	return window;
+}
+
 void Window::SwapWindow()
 {
 	SDL_GL_SwapWindow(window);

@@ -9,8 +9,7 @@ int main(int argc, char* args[])
 	}
 	catch (string errorMessage)
 	{
-		printf("%s\n", errorMessage.c_str());
-		getchar();
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "INIT ERROR", errorMessage.c_str(), nullptr);
 	}
 
 	while (engine->IsRunning())
@@ -21,8 +20,8 @@ int main(int argc, char* args[])
 		}
 		catch (string errorMessage)
 		{
-			printf("%s\n", errorMessage.c_str());
-			getchar();
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "GAMELOOP ERROR", errorMessage.c_str(), engine->GetWindow());
+			engine->Stop();
 		}
 	}
 

@@ -35,6 +35,7 @@ public:
 
 	void SetResolution(int width, int height);
 	tvec2<int> GetWindowSize() const;
+	SDL_Window* GetWindow() const;
 
 	void SwapWindow();
 

@@ -55,4 +55,6 @@ public:
 
 	void GameLoop();
 	void Stop();
+
+	SDL_Window* GetWindow() const;
 };
