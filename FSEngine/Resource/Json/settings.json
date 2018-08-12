@@ -2,11 +2,11 @@
   "LoadSettingsOnFocus": true,
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
-  "CameraControl": false,
 
   "SwapInterval": -1,
   "Resolution": [900, 600],
   "Fullscreen": false,
 
-  "RenderText": "Debug text"
+  "RenderText": "Debug text",
+  "CameraControl": false
 }

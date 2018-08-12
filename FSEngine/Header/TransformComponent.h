@@ -16,6 +16,7 @@ using std::string;
 class TransformComponent : public Component
 {
 private:
+	const mat4 identityMatrix = mat4(1);
 	struct MatrixValues
 	{
 		vec3 scale;
@@ -27,10 +28,14 @@ private:
 
 	mat4 transform = mat4(1.0f);
 
+	MatrixValues DecomposeTransformMatrix() const;
+
 public:
 	static const ComponentType ComponentTypeId = Transform;
 
 	static string GetFormattedMatrixString(const mat4& matrix);
+	static string GetFormattedVectorString(const vec3& vector);
+	static string GetFormattedVectorString(const vec2& vector);
 
 	mat4 GetMatrix() const;
 	mat3 CalculateNormalMatrix() const;
@@ -39,22 +44,21 @@ public:
 	quat GetRotation() const;
 	vec3 GetEulerAngles() const;
 	vec3 GetPosition() const;
-	MatrixValues DecomposeTransformMatrix() const;
 
 	void SetMatrix(const mat4& matrix);
-	void Scale(const vec3& scaleVector);
-	void Scale(const vec2& scaleVector);
-	void Scale(float scaleFactor);
-	void Rotate(float angle, const vec3& axis);
-	void Translate(const vec3& translation);
-	void Translate(const vec2& translation);
+	mat4 Scale(const vec2& scaleVector);
+	mat4 Scale(float scaleFactor);
+	mat4 Scale(const vec3& scaleVector);
+	mat4 Rotate(float angle, const vec3& axis);
+	mat4 Translate(const vec2& translation);
+	mat4 Translate(const vec3& translation);
 
-	void SetScale(const vec3& scaleVector);
-	void SetScale(const vec2& scaleVector);
-	void SetScale(float scaleFactor);
-	void SetRotation(float angle, const vec3& axis);
-	void SetPosition(const vec3& position);
-	void SetPosition(const vec2& position);
+	mat4 SetScale(const vec2& scaleVector);
+	mat4 SetScale(float scaleFactor);
+	mat4 SetScale(const vec3& scaleVector);
+	mat4 SetRotation(float angle, const vec3& axis);
+	mat4 SetPosition(const vec2& position);
+	mat4 SetPosition(const vec3& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
 };
