@@ -6,10 +6,7 @@
   "SwapInterval": -1,
   "Resolution": [900, 600],
   "Fullscreen": false,
-  "CameraControl": true,
 
   "RenderText": "Debug text",
-
-  "ShipPosition": [1, 0, 0],
-  "DoTranslate": true
+  "CameraControl": false
 }

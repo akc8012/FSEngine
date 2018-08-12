@@ -10,31 +10,16 @@ void PlayerShip::Start()
 {
 	transform = GetComponent<TransformComponent>();
 
-	/*transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
-	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));*/
-
-
-	transform->SetPosition(vec3(0));
-
-	json shipPosition = fileSystem->GetSettingsValue("ShipPosition");
-
-	if (fileSystem->GetSettingsValue<bool>("DoTranslate"))
-		transform->Translate(vec3(shipPosition[0], shipPosition[1], shipPosition[2]));
-	else
-		transform->SetPosition(vec3(shipPosition[0], shipPosition[1], shipPosition[2]));
-
-	printf("%s\n", TransformComponent::GetFormattedVectorString(transform->GetPosition()).c_str());
+	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
+	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));
 }
 
 void PlayerShip::Update(float deltaTime)
 {
-	//vec3 inputVector = vec3(input->GetHorizontalAxis(), 0, input->GetVerticalAxis());
-	//transform->Translate(inputVector);
+	vec3 inputVector = vec3(input->GetHorizontalAxis(), 0, input->GetVerticalAxis());
+	if (glm::length(inputVector) != 0)
+		inputVector = glm::normalize(inputVector);
 
-	//system("CLS");
-	//printf("%s", TransformComponent::GetFormattedMatrixString(transform->GetMatrix()).c_str());
-
-	//printf("\n");
-
-	//printf("(%f, %f)", inputVector.x, inputVector.z);
+	const float Speed = 3;
+	transform->Translate(inputVector * deltaTime * Speed);
 }

@@ -102,7 +102,8 @@ void TransformComponent::Translate(const vec2& translation)
 
 void TransformComponent::Translate(const vec3& translation)
 {
-	transform = translate(transform, translation);
+	vec3 currentPosition = DecomposeTransformMatrix().translation;
+	transform = SetPosition(currentPosition + translation);
 }
 
 void TransformComponent::SetScale(const vec2& scaleVector)
@@ -132,10 +133,11 @@ void TransformComponent::SetPosition(const vec2& position)
 	SetPosition(vec3(position, 0));
 }
 
-void TransformComponent::SetPosition(const vec3& position)
+mat4 TransformComponent::SetPosition(const vec3& position)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(identityMatrix, position) * toMat4(matrixValues.rotation) * scale(identityMatrix, matrixValues.scale);
+	return transform;
 }
 
 void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector)

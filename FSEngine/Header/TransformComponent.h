@@ -58,7 +58,7 @@ public:
 	void SetScale(const vec3& scaleVector);
 	void SetRotation(float angle, const vec3& axis);
 	void SetPosition(const vec2& position);
-	void SetPosition(const vec3& position);
+	mat4 SetPosition(const vec3& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
 };
