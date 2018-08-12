@@ -47,8 +47,8 @@ public:
 
 	void SetMatrix(const mat4& matrix);
 	void Scale(const vec2& scaleVector);
-	void Scale(const vec3& scaleVector);
 	void Scale(float scaleFactor);
+	void Scale(const vec3& scaleVector);
 	void Rotate(float angle, const vec3& axis);
 	void Translate(const vec2& translation);
 	void Translate(const vec3& translation);

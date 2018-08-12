@@ -80,14 +80,14 @@ void TransformComponent::Scale(const vec2& scaleVector)
 	Scale(vec3(scaleVector, 1));
 }
 
+void TransformComponent::Scale(float scaleFactor)
+{
+	Scale(vec3(scaleFactor, scaleFactor, scaleFactor));
+}
+
 void TransformComponent::Scale(const vec3& scaleVector)
 {
 	transform = scale(transform, scaleVector);
-}
-
-void TransformComponent::Scale(float scaleFactor)
-{
-	transform = scale(transform, vec3(scaleFactor, scaleFactor, scaleFactor));
 }
 
 void TransformComponent::Rotate(float angle, const vec3& axis)
