@@ -7,9 +7,8 @@ layout(location = 2) in vec2 textureCoordVector;
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
-uniform bool renderPerspective;
-
 uniform mat3 normalMatrix;
+uniform bool renderPerspective;
 
 out vec3 FragmentPosition;
 out vec3 Normal;

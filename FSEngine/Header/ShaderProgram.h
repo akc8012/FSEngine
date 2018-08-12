@@ -23,6 +23,7 @@ private:
 	bool renderPerspective = true;
 
 	void CreateShaderProgram();
+	void MapUniformValues();
 
 	Uint32 CreateVertexShader();
 	Uint32 CreateFragmentShader();
@@ -33,6 +34,7 @@ private:
 
 	Uint32 GetUniformLocation(const char* name);
 	Uint32 GetUniformLocationFromGl(const char* name) const;
+	void ShowUseWarning() const;
 
 	static string GetShaderTypeText(Uint32 type);
 
@@ -43,18 +45,16 @@ public:
 	void CompileShaders();
 	void Use();
 
-	void SetBool(const char* name, bool value);
-	void SetInt(const char* name, int value);
-	void SetFloat(const char* name, float value);
+	void SetBoolUniform(const char* name, bool value);
+	void SetIntUniform(const char* name, int value);
+	void SetFloatUniform(const char* name, float value);
 
-	void SetVector(const char* name, const vec3& value);
-	void SetVector(const char* name, const vec4& value);
+	void SetVectorUniform(const char* name, const vec3& value);
+	void SetVectorUniform(const char* name, const vec4& value);
 
-	void SetMatrix(const char* name, const mat3& value);
-	void SetMatrix(const char* name, const mat4& value);
+	void SetMatrixUniform(const char* name, const mat3& value);
+	void SetMatrixUniform(const char* name, const mat4& value);
 
 	void SetRenderPerspective(bool renderPerspective);
 	bool RenderPerspective() const;
-
-	void ShowUseWarning() const;
 };

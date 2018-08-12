@@ -70,19 +70,19 @@ void Renderer::SetCameraMatrices()
 {
 	if (shaderProgram->RenderPerspective())
 	{
-		shaderProgram->SetMatrix("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
-		shaderProgram->SetMatrix("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
+		shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
+		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
 	}
 	else
-		shaderProgram->SetMatrix("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
+		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
 
-	shaderProgram->SetVector("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
+	shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }
 
 void Renderer::SetModelMatrices(TransformComponent* transform)
 {
-	shaderProgram->SetMatrix("modelMatrix", transform->GetMatrix());
-	shaderProgram->SetMatrix("normalMatrix", transform->CalculateNormalMatrix());
+	shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
+	shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
 void Renderer::DrawTriangleArrays(Uint32 verticeCount)

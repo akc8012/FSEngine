@@ -22,10 +22,10 @@ bool ShadingComponent::CanUse() const
 
 void ShadingComponent::Use(ShaderProgram* shaderProgram)
 {
-	shaderProgram->SetVector("flatColor", flatColor);
+	shaderProgram->SetVectorUniform("flatColor", flatColor);
 
 	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-	shaderProgram->SetBool("renderPerspective", renderPerspective);
+	shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
 }
 
 vec4 ShadingComponent::GetFlatColor() const

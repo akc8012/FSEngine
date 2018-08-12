@@ -12,7 +12,15 @@ void ShaderProgram::CompileShaders()
 	CreateShaderProgram();
 
 	uniformLocations.clear();
+	MapUniformValues();
 	Use();
+}
+
+void ShaderProgram::MapUniformValues()
+{
+	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition", "renderPerspective" };
+	for (const auto& uniformName : uniformNames)
+		uniformLocations[uniformName] = GetUniformLocationFromGl(uniformName.c_str());
 }
 
 void ShaderProgram::CreateShaderProgram()
@@ -116,7 +124,7 @@ void ShaderProgram::Use()
 	glUseProgram(shaderProgramId);
 }
 
-void ShaderProgram::SetBool(const char* name, bool value)
+void ShaderProgram::SetBoolUniform(const char* name, bool value)
 {
 	ShowUseWarning();
 
@@ -126,19 +134,19 @@ void ShaderProgram::SetBool(const char* name, bool value)
 	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
-void ShaderProgram::SetInt(const char* name, int value)
+void ShaderProgram::SetIntUniform(const char* name, int value)
 {
 	ShowUseWarning();
 	glUniform1i(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetFloat(const char* name, float value)
+void ShaderProgram::SetFloatUniform(const char* name, float value)
 {
 	ShowUseWarning();
 	glUniform1f(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetVector(const char* name, const vec3& value)
+void ShaderProgram::SetVectorUniform(const char* name, const vec3& value)
 {
 	ShowUseWarning();
 
@@ -146,7 +154,7 @@ void ShaderProgram::SetVector(const char* name, const vec3& value)
 	glUniform3fv(GetUniformLocation(name), Count, value_ptr(value));
 }
 
-void ShaderProgram::SetVector(const char* name, const vec4& value)
+void ShaderProgram::SetVectorUniform(const char* name, const vec4& value)
 {
 	ShowUseWarning();
 
@@ -154,7 +162,7 @@ void ShaderProgram::SetVector(const char* name, const vec4& value)
 	glUniform4fv(GetUniformLocation(name), Count, value_ptr(value));
 }
 
-void ShaderProgram::SetMatrix(const char* name, const mat3& value)
+void ShaderProgram::SetMatrixUniform(const char* name, const mat3& value)
 {
 	ShowUseWarning();
 
@@ -164,7 +172,7 @@ void ShaderProgram::SetMatrix(const char* name, const mat3& value)
 	glUniformMatrix3fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
-void ShaderProgram::SetMatrix(const char* name, const mat4& value)
+void ShaderProgram::SetMatrixUniform(const char* name, const mat4& value)
 {
 	ShowUseWarning();
 
@@ -194,9 +202,7 @@ Uint32 ShaderProgram::GetUniformLocation(const char* name)
 	}
 	catch (std::out_of_range)
 	{
-		uniformLocations[name] = GetUniformLocationFromGl(name);
-		location = uniformLocations[name];
-		//printf("Warning: Could not find stored uniform location with name: %s. Created new map entry.\n", name);
+		throw (string)"Error: Could not find stored uniform location with name: " + name + (string)". Created new map entry.\n";
 	}
 
 	return location;
