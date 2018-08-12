@@ -2,6 +2,7 @@
   "LoadSettingsOnFocus": true,
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
+  "CameraControl": false,
 
   "SwapInterval": -1,
   "Resolution": [900, 600],

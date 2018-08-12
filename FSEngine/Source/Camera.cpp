@@ -21,10 +21,13 @@ void Camera::CalculateViewMatrix(float deltaTime)
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	const float SpeedMod = 4;
 	vec3 position = -GetComponent<TransformComponent>("View")->GetPosition();
-	position += normalize(cross(forwardVector, upVector)) * (input->GetHorizontalAxis() * SpeedMod * deltaTime);
-	position += forwardVector * (-input->GetVerticalAxis() * SpeedMod * deltaTime);
+	if (fileSystem->GetSettingsValue<bool>("CameraControl"))
+	{
+		const float SpeedMod = 4;
+		position += normalize(cross(forwardVector, upVector)) * (input->GetHorizontalAxis() * SpeedMod * deltaTime);
+		position += forwardVector * (-input->GetVerticalAxis() * SpeedMod * deltaTime);
+	}
 
 	GetComponent<TransformComponent>("View")->LookAt(position, forwardVector, upVector);
 }

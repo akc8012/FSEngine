@@ -34,6 +34,4 @@ private:
 
 public:
 	Model(const string& filepath);
-
-	void Update(float deltaTime);
 };

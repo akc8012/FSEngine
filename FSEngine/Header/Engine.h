@@ -9,6 +9,7 @@
 #include "CubePrimitive.h"
 #include "RenderText.h"
 #include "Model.h"
+#include "PlayerShip.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
