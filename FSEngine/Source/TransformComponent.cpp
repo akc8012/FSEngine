@@ -87,8 +87,7 @@ mat4 TransformComponent::Scale(float scaleFactor)
 
 mat4 TransformComponent::Scale(const vec3& scaleVector)
 {
-	vec3 currentScale = DecomposeTransformMatrix().scale;
-	transform = SetScale(currentScale + scaleVector);
+	transform = scale(transform, scaleVector);
 	return transform;
 }
 
