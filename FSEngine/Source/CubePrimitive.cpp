@@ -66,11 +66,3 @@ MeshComponent* CubePrimitive::CreateMeshComponent() const
 	const int Stride = 8;
 	return new MeshComponent(rawVertices, Stride, indices);
 }
-
-void CubePrimitive::Update(float deltaTime)
-{
-	float angle = Timer::GetSeconds() * radians(50.0f);
-	const vec3 Axis = vec3(0.5f, 1, 0);
-
-	GetComponent<TransformComponent>()->SetRotation(angle, Axis);
-}

@@ -12,5 +12,4 @@ private:
 
 public:
 	CubePrimitive();
-	void Update(float deltaTime);
 };
