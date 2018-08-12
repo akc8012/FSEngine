@@ -34,11 +34,21 @@ public:
 	TransformComponent* AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> unordered_map<string, T*>* GetComponents() const;
 	virtual void Update(float deltaTime);
 };
 
 template <typename T> inline T* GameObject::GetComponent(string name) const
+{
+	T* component = TryGetComponent<T>(name);
+	if (component == nullptr)
+		throw (string)"Could not find component with name " + name;
+
+	return component;
+}
+
+template <typename T> inline T* GameObject::TryGetComponent(string name) const
 {
 	if (meshComponents->size() > 0 && typeid(T) == typeid(MeshComponent))
 		return reinterpret_cast<T*>(meshComponents->at(name));
