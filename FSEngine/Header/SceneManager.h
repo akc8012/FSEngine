@@ -24,8 +24,9 @@ public:
 	~SceneManager();
 
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);
-	GameObject* TryGetGameObject(const string& name) const;
+
 	GameObject* GetGameObject(const string& name) const;
+	GameObject* TryGetGameObject(const string& name) const;
 
 	void Update(float deltaTime);
 	void Draw(Renderer* renderer);

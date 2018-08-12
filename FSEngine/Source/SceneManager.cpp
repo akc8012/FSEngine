@@ -17,6 +17,15 @@ GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObje
 	return gameObject;
 }
 
+GameObject* SceneManager::GetGameObject(const string& name) const
+{
+	GameObject* gameObject = TryGetGameObject(name);
+	if (gameObject == nullptr)
+		throw (string)"GameObject with name " + name + (string)" not found";
+
+	return gameObject;
+}
+
 GameObject* SceneManager::TryGetGameObject(const string& name) const
 {
 	try
@@ -26,18 +35,6 @@ GameObject* SceneManager::TryGetGameObject(const string& name) const
 	catch (std::out_of_range)
 	{
 		return nullptr;
-	}
-}
-
-GameObject* SceneManager::GetGameObject(const string& name) const
-{
-	try
-	{
-		return gameObjects.at(name);
-	}
-	catch (std::out_of_range)
-	{
-		throw "GameObject with name " + name + " not found";
 	}
 }
 
