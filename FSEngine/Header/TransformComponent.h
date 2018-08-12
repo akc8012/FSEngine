@@ -46,18 +46,18 @@ public:
 	vec3 GetPosition() const;
 
 	void SetMatrix(const mat4& matrix);
-	void Scale(const vec2& scaleVector);
-	void Scale(float scaleFactor);
-	void Scale(const vec3& scaleVector);
-	void Rotate(float angle, const vec3& axis);
-	void Translate(const vec2& translation);
-	void Translate(const vec3& translation);
+	mat4 Scale(const vec2& scaleVector);
+	mat4 Scale(float scaleFactor);
+	mat4 Scale(const vec3& scaleVector);
+	mat4 Rotate(float angle, const vec3& axis);
+	mat4 Translate(const vec2& translation);
+	mat4 Translate(const vec3& translation);
 
-	void SetScale(const vec2& scaleVector);
-	void SetScale(float scaleFactor);
+	mat4 SetScale(const vec2& scaleVector);
+	mat4 SetScale(float scaleFactor);
 	mat4 SetScale(const vec3& scaleVector);
-	void SetRotation(float angle, const vec3& axis);
-	void SetPosition(const vec2& position);
+	mat4 SetRotation(float angle, const vec3& axis);
+	mat4 SetPosition(const vec2& position);
 	mat4 SetPosition(const vec3& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);

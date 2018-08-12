@@ -75,46 +75,49 @@ void TransformComponent::SetMatrix(const mat4& matrix)
 	transform = matrix;
 }
 
-void TransformComponent::Scale(const vec2& scaleVector)
+mat4 TransformComponent::Scale(const vec2& scaleVector)
 {
-	Scale(vec3(scaleVector, 1));
+	return Scale(vec3(scaleVector, 1));
 }
 
-void TransformComponent::Scale(float scaleFactor)
+mat4 TransformComponent::Scale(float scaleFactor)
 {
-	Scale(vec3(scaleFactor, scaleFactor, scaleFactor));
+	return Scale(vec3(scaleFactor, scaleFactor, scaleFactor));
 }
 
-void TransformComponent::Scale(const vec3& scaleVector)
+mat4 TransformComponent::Scale(const vec3& scaleVector)
 {
 	vec3 currentScale = DecomposeTransformMatrix().scale;
 	transform = SetScale(currentScale + scaleVector);
+	return transform;
 }
 
-void TransformComponent::Rotate(float angle, const vec3& axis)
+mat4 TransformComponent::Rotate(float angle, const vec3& axis)
 {
 	transform = rotate(transform, angle, axis);
+	return transform;
 }
 
-void TransformComponent::Translate(const vec2& translation)
+mat4 TransformComponent::Translate(const vec2& translation)
 {
-	Translate(vec3(translation, 0));
+	return Translate(vec3(translation, 0));
 }
 
-void TransformComponent::Translate(const vec3& translation)
+mat4 TransformComponent::Translate(const vec3& translation)
 {
 	vec3 currentPosition = DecomposeTransformMatrix().translation;
 	transform = SetPosition(currentPosition + translation);
+	return transform;
 }
 
-void TransformComponent::SetScale(const vec2& scaleVector)
+mat4 TransformComponent::SetScale(const vec2& scaleVector)
 {
-	SetScale(vec3(scaleVector, 1));
+	return SetScale(vec3(scaleVector, 1));
 }
 
-void TransformComponent::SetScale(float scaleFactor)
+mat4 TransformComponent::SetScale(float scaleFactor)
 {
-	SetScale(vec3(scaleFactor, scaleFactor, scaleFactor));
+	return SetScale(vec3(scaleFactor, scaleFactor, scaleFactor));
 }
 
 mat4 TransformComponent::SetScale(const vec3& scaleVector)
@@ -124,15 +127,16 @@ mat4 TransformComponent::SetScale(const vec3& scaleVector)
 	return transform;
 }
 
-void TransformComponent::SetRotation(float angle, const vec3& axis)
+mat4 TransformComponent::SetRotation(float angle, const vec3& axis)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(identityMatrix, matrixValues.translation) * rotate(identityMatrix, angle, axis) * scale(identityMatrix, matrixValues.scale);
+	return transform;
 }
 
-void TransformComponent::SetPosition(const vec2& position)
+mat4 TransformComponent::SetPosition(const vec2& position)
 {
-	SetPosition(vec3(position, 0));
+	return SetPosition(vec3(position, 0));
 }
 
 mat4 TransformComponent::SetPosition(const vec3& position)
