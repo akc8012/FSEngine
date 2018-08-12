@@ -87,7 +87,8 @@ void TransformComponent::Scale(float scaleFactor)
 
 void TransformComponent::Scale(const vec3& scaleVector)
 {
-	transform = scale(transform, scaleVector);
+	vec3 currentScale = DecomposeTransformMatrix().scale;
+	transform = SetScale(currentScale + scaleVector);
 }
 
 void TransformComponent::Rotate(float angle, const vec3& axis)
@@ -116,10 +117,11 @@ void TransformComponent::SetScale(float scaleFactor)
 	SetScale(vec3(scaleFactor, scaleFactor, scaleFactor));
 }
 
-void TransformComponent::SetScale(const vec3& scaleVector)
+mat4 TransformComponent::SetScale(const vec3& scaleVector)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(identityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identityMatrix, scaleVector);
+	return transform;
 }
 
 void TransformComponent::SetRotation(float angle, const vec3& axis)

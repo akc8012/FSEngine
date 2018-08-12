@@ -55,7 +55,7 @@ public:
 
 	void SetScale(const vec2& scaleVector);
 	void SetScale(float scaleFactor);
-	void SetScale(const vec3& scaleVector);
+	mat4 SetScale(const vec3& scaleVector);
 	void SetRotation(float angle, const vec3& axis);
 	void SetPosition(const vec2& position);
 	mat4 SetPosition(const vec3& position);
