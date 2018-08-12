@@ -16,12 +16,13 @@ public:
 	static const ComponentType ComponentTypeId = Shading;
 
 	ShadingComponent();
-	ShadingComponent(const vec4& flatColor);
+	ShadingComponent(const vec3& flatColor);
 	virtual ~ShadingComponent();
 
 	virtual bool CanUse() const;
 	virtual void Use(ShaderProgram* shaderProgram);
 
+	void SetFlatColor(const vec3& flatColor);
 	void SetFlatColor(const vec4& flatColor);
 	vec4 GetFlatColor() const;
 

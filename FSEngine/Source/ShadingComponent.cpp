@@ -5,9 +5,14 @@ ShadingComponent::ShadingComponent()
 
 }
 
-ShadingComponent::ShadingComponent(const vec4& flatColor)
+ShadingComponent::ShadingComponent(const vec3& flatColor)
 {
 	SetFlatColor(flatColor);
+}
+
+void ShadingComponent::SetFlatColor(const vec3& flatColor)
+{
+	this->flatColor = vec4(flatColor, 1.0f);
 }
 
 void ShadingComponent::SetFlatColor(const vec4& flatColor)

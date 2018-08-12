@@ -5,37 +5,26 @@ bool Engine::IsRunning() const
 	return running;
 }
 
-bool Engine::Init()
+void Engine::Init()
 {
-	try
-	{
-		fileSystem = new FileSystem();
+	fileSystem = new FileSystem();
 
-		InitSDL();
-		window = new Window(fileSystem);
+	InitSDL();
+	window = new Window(fileSystem);
 
-		InitOpenGl();
-		InitGlew();
+	InitOpenGl();
+	InitGlew();
 
-		input = new Input();
+	input = new Input();
 
-		shaderProgram = new ShaderProgram();
-		renderer = new Renderer(fileSystem, window, shaderProgram);
+	shaderProgram = new ShaderProgram();
+	renderer = new Renderer(fileSystem, window, shaderProgram);
 
-		sceneManager = new SceneManager(fileSystem, input, window);
-		AddGameObjects();
-	}
-	catch (string errorMessage)
-	{
-		printf("%s\n", errorMessage.c_str());
-		getchar();
-		return false;
-	}
+	sceneManager = new SceneManager(fileSystem, input, window);
+	AddGameObjects();
 
 	printf("Success\n");
-
 	running = true;
-	return running;
 }
 
 void Engine::InitSDL()
@@ -84,7 +73,7 @@ void Engine::AddGameObjects()
 	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
 
 	GameObject* greenCube = sceneManager->AddGameObject("GreenCube", new CubePrimitive());
-	greenCube->AddComponent(new ShadingComponent(vec4(0.1, 0.6, 0.3, 1)));
+	greenCube->AddComponent(new ShadingComponent(vec3(0.1, 0.6, 0.3)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 
@@ -234,6 +223,11 @@ void Engine::Draw(float deltaTime)
 	renderer->StartRender(deltaTime);
 	sceneManager->Draw(renderer);
 	renderer->EndRender();
+}
+
+void Engine::Stop()
+{
+	running = false;
 }
 
 Engine::~Engine()

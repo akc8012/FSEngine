@@ -10,14 +10,35 @@ SceneManager::SceneManager(FileSystem* fileSystem, Input* input, Window* window)
 GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject)
 {
 	gameObject->SetSystems(fileSystem, input, window);
-	gameObjects.emplace(name, gameObject);
+	auto result = gameObjects.emplace(name, gameObject);
+	if (!result.second)
+		throw "GameObject with name " + name + " already exists";
 
 	return gameObject;
 }
 
+GameObject* SceneManager::TryGetGameObject(const string& name) const
+{
+	try
+	{
+		return gameObjects.at(name);
+	}
+	catch (std::out_of_range)
+	{
+		return nullptr;
+	}
+}
+
 GameObject* SceneManager::GetGameObject(const string& name) const
 {
-	return gameObjects.at(name);
+	try
+	{
+		return gameObjects.at(name);
+	}
+	catch (std::out_of_range)
+	{
+		throw "GameObject with name " + name + " not found";
+	}
 }
 
 void SceneManager::Update(float deltaTime)

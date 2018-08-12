@@ -51,7 +51,8 @@ public:
 	~Engine();
 
 	bool IsRunning() const;
-	bool Init();
+	void Init();
 
 	void GameLoop();
+	void Stop();
 };

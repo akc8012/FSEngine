@@ -3,14 +3,28 @@
 int main(int argc, char* args[])
 {
 	Engine* engine = new Engine();
-	if (!engine->Init())
+	try
 	{
-		delete engine;
-		return -1;
+		engine->Init();
+	}
+	catch (string errorMessage)
+	{
+		printf("%s\n", errorMessage.c_str());
+		getchar();
 	}
 
 	while (engine->IsRunning())
-		engine->GameLoop();
+	{
+		try
+		{
+			engine->GameLoop();
+		}
+		catch (string errorMessage)
+		{
+			printf("%s\n", errorMessage.c_str());
+			getchar();
+		}
+	}
 
 	delete engine;
 	return 0;
