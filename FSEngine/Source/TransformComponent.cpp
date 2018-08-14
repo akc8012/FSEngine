@@ -91,12 +91,6 @@ mat4 TransformComponent::Scale(const vec3& scaleVector)
 	return transform;
 }
 
-mat4 TransformComponent::Rotate(float angle, const vec3& axis)
-{
-	transform = rotate(transform, angle, axis);
-	return transform;
-}
-
 mat4 TransformComponent::Translate(const vec2& translation)
 {
 	return Translate(vec3(translation, 0));

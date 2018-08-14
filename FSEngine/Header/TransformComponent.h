@@ -49,7 +49,6 @@ public:
 	mat4 Scale(const vec2& scaleVector);
 	mat4 Scale(float scaleFactor);
 	mat4 Scale(const vec3& scaleVector);
-	mat4 Rotate(float angle, const vec3& axis);
 	mat4 Translate(const vec2& translation);
 	mat4 Translate(const vec3& translation);
 
