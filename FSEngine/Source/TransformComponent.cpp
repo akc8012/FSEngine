@@ -141,5 +141,5 @@ mat4 TransformComponent::SetPosition(const vec3& position)
 
 void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector)
 {
-	transform = lookAt(position, position + forwardVector, upVector);
+	transform = lookAt(position, forwardVector, upVector);
 }

@@ -16,6 +16,9 @@ void PlayerShip::Start()
 
 void PlayerShip::Update(float deltaTime)
 {
+	if (!fileSystem->GetSettingsValue<bool>("ShipControl"))
+		return;
+
 	vec3 inputVector = vec3(input->GetHorizontalAxis(), 0, input->GetVerticalAxis());
 	if (glm::length(inputVector) != 0)
 		inputVector = glm::normalize(inputVector);

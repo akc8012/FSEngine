@@ -13,6 +13,8 @@ using namespace glm;
 class Camera : public GameObject
 {
 private:
+	TransformComponent* viewTransform = nullptr;
+
 	void CalculateViewMatrix(float deltaTime);
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
@@ -20,4 +22,7 @@ private:
 public:
 	Camera();
 	void Update(float deltaTime);
+
+	void SetPosition(const vec3& position);
+	vec3 GetPosition() const;
 };

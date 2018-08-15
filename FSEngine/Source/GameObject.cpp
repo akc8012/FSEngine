@@ -61,7 +61,7 @@ void GameObject::SetLateRefresh(bool lateRefresh)
 	this->lateRefresh = lateRefresh;
 }
 
-bool GameObject::GetLateRefresh()
+bool GameObject::GetLateRefresh() const
 {
 	return lateRefresh;
 }

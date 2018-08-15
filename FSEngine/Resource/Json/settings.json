@@ -8,5 +8,6 @@
   "Fullscreen": false,
 
   "RenderText": "Debug text",
-  "CameraControl": false
+  "CameraControl": true,
+  "ShipControl": false
 }

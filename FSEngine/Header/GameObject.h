@@ -42,7 +42,7 @@ public:
 	virtual void Update(float deltaTime);
 
 	void SetLateRefresh(bool lateRefresh);
-	bool GetLateRefresh();
+	bool GetLateRefresh() const;
 };
 
 template <typename T> inline T* GameObject::GetComponent(string name) const

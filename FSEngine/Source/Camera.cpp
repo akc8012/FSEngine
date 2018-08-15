@@ -2,11 +2,11 @@
 
 Camera::Camera()
 {
-	AddComponent(new TransformComponent(), "View");
+	viewTransform = AddComponent(new TransformComponent(), "View");
+	SetPosition(vec3(0, 0, 4));
+
 	AddComponent(new TransformComponent(), "Perspective");
 	AddComponent(new TransformComponent(), "Orthographic");
-
-	GetComponent<TransformComponent>("View")->SetPosition(vec3(0, 0, -4));
 }
 
 void Camera::Update(float deltaTime)
@@ -21,7 +21,7 @@ void Camera::CalculateViewMatrix(float deltaTime)
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
 
-	vec3 position = -GetComponent<TransformComponent>("View")->GetPosition();
+	vec3 position = GetPosition();
 	if (fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
 		const float SpeedMod = 4;
@@ -29,7 +29,7 @@ void Camera::CalculateViewMatrix(float deltaTime)
 		position += forwardVector * (-input->GetVerticalAxis() * SpeedMod * deltaTime);
 	}
 
-	GetComponent<TransformComponent>("View")->LookAt(position, forwardVector, upVector);
+	viewTransform->LookAt(position, position + forwardVector, upVector);
 }
 
 void Camera::CalculateProjectionMatrixPerspective()
@@ -54,4 +54,14 @@ void Camera::CalculateProjectionMatrixOrthographic()
 	const float Top = Right;
 
 	GetComponent<TransformComponent>("Orthographic")->SetMatrix(ortho(Left, Right, Bottom, Top));
+}
+
+void Camera::SetPosition(const vec3& position)
+{
+	viewTransform->SetPosition(-position);
+}
+
+vec3 Camera::GetPosition() const
+{
+	return -viewTransform->GetPosition();
 }
