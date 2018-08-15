@@ -7,13 +7,14 @@ SceneManager::SceneManager(FileSystem* fileSystem, Input* input, Window* window)
 	this->window = window;
 }
 
-GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject)
+GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject, bool lateRefresh)
 {
 	auto result = gameObjects.emplace(name, gameObject);
 	if (!result.second)
 		throw "GameObject with name " + name + " already exists";
 
 	gameObject->SetSystems(fileSystem, input, window);
+	gameObject->SetLateRefresh(lateRefresh);
 	gameObject->Start();
 
 	return gameObject;
@@ -42,14 +43,32 @@ GameObject* SceneManager::TryGetGameObject(const string& name) const
 
 void SceneManager::Update(float deltaTime)
 {
+	UpdateGameObjects(deltaTime, false);
+	UpdateGameObjects(deltaTime, true);
+}
+
+void SceneManager::UpdateGameObjects(float deltaTime, bool refreshLateGameObjects)
+{
 	for (auto& gameObject : gameObjects)
-		gameObject.second->Update(deltaTime);
+	{
+		if (gameObject.second->GetLateRefresh() == refreshLateGameObjects)
+			gameObject.second->Update(deltaTime);
+	}
 }
 
 void SceneManager::Draw(Renderer* renderer)
 {
+	DrawGameObjects(renderer, false);
+	DrawGameObjects(renderer, true);
+}
+
+void SceneManager::DrawGameObjects(Renderer* renderer, bool refreshLateGameObjects)
+{
 	for (auto& gameObject : gameObjects)
-		renderer->RenderGameObject(gameObject.second);
+	{
+		if (gameObject.second->GetLateRefresh() == refreshLateGameObjects)
+			renderer->RenderGameObject(gameObject.second);
+	}
 }
 
 SceneManager::~SceneManager()

@@ -19,11 +19,14 @@ private:
 
 	map<string, GameObject*> gameObjects;
 
+	void UpdateGameObjects(float deltaTime, bool refreshLateGameObjects);
+	void DrawGameObjects(Renderer* renderer, bool refreshLateGameObjects);
+
 public:
 	SceneManager(FileSystem* fileSystem, Input* input, Window* window);
 	~SceneManager();
 
-	GameObject* AddGameObject(const string& name, GameObject* gameObject);
+	GameObject* AddGameObject(const string& name, GameObject* gameObject, bool lateRefresh = false);
 
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;

@@ -16,6 +16,7 @@ private:
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
 	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
 	unordered_map<string, TransformComponent*>* transformComponents = nullptr;
+	bool lateRefresh = false;
 
 	void ThrowDuplicateNameException(const string& name) const;
 
@@ -39,6 +40,9 @@ public:
 	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> unordered_map<string, T*>* GetComponents() const;
 	virtual void Update(float deltaTime);
+
+	void SetLateRefresh(bool lateRefresh);
+	bool GetLateRefresh();
 };
 
 template <typename T> inline T* GameObject::GetComponent(string name) const

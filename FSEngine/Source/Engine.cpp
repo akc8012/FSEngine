@@ -79,7 +79,7 @@ void Engine::AddGameObjects()
 
 	sceneManager->AddGameObject("PlayerShip", new PlayerShip());
 
-	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText()));
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText(), true));
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);

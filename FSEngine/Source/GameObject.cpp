@@ -56,6 +56,16 @@ void GameObject::Update(float deltaTime)
 
 }
 
+void GameObject::SetLateRefresh(bool lateRefresh)
+{
+	this->lateRefresh = lateRefresh;
+}
+
+bool GameObject::GetLateRefresh()
+{
+	return lateRefresh;
+}
+
 GameObject::~GameObject()
 {
 	for (auto& meshComponent : *meshComponents)
