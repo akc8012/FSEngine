@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObjectMapper.h"
 #include "FileSystem.h"
 #include "Input.h"
 #include "Window.h"
@@ -6,18 +7,18 @@
 #include "Renderer.h"
 
 #include <string>
-#include <map>
+#include <vector>
 using std::string;
-using std::map;
+using std::vector;
 
 class SceneManager
 {
 private:
+	GameObjectMapper* gameObjectMapper = nullptr;
+
 	FileSystem* fileSystem = nullptr;
 	Input* input = nullptr;
 	Window* window = nullptr;
-
-	map<string, GameObject*> gameObjects;
 
 	void UpdateGameObjects(float deltaTime, bool refreshLateGameObjects);
 	void DrawGameObjects(Renderer* renderer, bool refreshLateGameObjects);

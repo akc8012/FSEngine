@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObjectContainer.h"
 #include "FileSystem.h"
 #include "Input.h"
 #include "Window.h"
@@ -13,6 +14,10 @@ using std::unordered_map;
 class GameObject
 {
 private:
+	// should be a static reference to a class GameObjectContainer
+	// needs AddGameObject() (return index), RemoveGameObject(), etc
+	static GameObjectContainer* gameObjectContainer;
+
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
 	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
 	unordered_map<string, TransformComponent*>* transformComponents = nullptr;
@@ -26,6 +31,8 @@ protected:
 	Window* window = nullptr;
 
 public:
+	static GameObject* GetGameObjectAtIndex(int index);
+
 	GameObject();
 	~GameObject();
 
