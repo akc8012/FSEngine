@@ -6,11 +6,6 @@ GameObject::GameObjectContainer::GameObjectContainer()
 	gameObjectMapper = new GameObjectMapper();
 }
 
-GameObject::GameObjectContainer::~GameObjectContainer()
-{
-	delete gameObjectMapper;
-}
-
 GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
 	gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
@@ -41,6 +36,14 @@ vector<GameObject*> GameObject::GameObjectContainer::GetGameObjects() const
 {
 	return gameObjects;
 }
+
+GameObject::GameObjectContainer::~GameObjectContainer()
+{
+	delete gameObjectMapper;
+
+	for (auto& gameObject : gameObjects)
+		delete gameObject;
+}
 #pragma endregion
 
 #pragma region GameObject
@@ -51,8 +54,9 @@ GameObject::GameObject()
 	transformComponents = new unordered_map<string, TransformComponent*>();
 }
 
-void GameObject::SetSystems(FileSystem* fileSystem, Input* input, Window* window)
+void GameObject::SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input, Window* window)
 {
+	this->gameObjectContainer = gameObjectContainer;
 	this->fileSystem = fileSystem;
 	this->input = input;
 	this->window = window;

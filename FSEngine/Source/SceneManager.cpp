@@ -14,7 +14,7 @@ void SceneManager::Initialize(FileSystem* fileSystem, Input* input, Window* wind
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		gameObject->SetSystems(fileSystem, input, window);
+		gameObject->SetSystems(gameObjectContainer, fileSystem, input, window);
 		gameObject->Start();
 	}
 }

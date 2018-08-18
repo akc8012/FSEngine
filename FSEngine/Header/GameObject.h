@@ -51,7 +51,7 @@ public:
 	GameObject();
 	~GameObject();
 
-	void SetSystems(FileSystem* fileSystem, Input* input, Window* window);
+	void SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input, Window* window);
 	virtual void Start();
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
