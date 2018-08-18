@@ -27,5 +27,5 @@ void PlayerShip::Update(float deltaTime)
 	const float Speed = 3;
 	transform->Translate(inputVector * deltaTime * Speed);
 
-	camera->SetPosition(transform->GetPosition() + vec3(0, 0, 4));
+	camera->SetPosition(transform->GetPosition() + vec3(0, 0, fileSystem->GetSettingsValue<float>("CameraDistance")));
 }
