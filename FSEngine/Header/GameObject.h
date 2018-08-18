@@ -107,6 +107,8 @@ private:
 	GameObjectMapper* gameObjectMapper = nullptr;
 	vector<GameObject*> gameObjects;
 
+	GameObject* TryGetGameObjectAtIndex(int index) const;
+
 public:
 	GameObjectContainer();
 	~GameObjectContainer();
@@ -114,7 +116,8 @@ public:
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);
 
 	GameObject* GetGameObject(const string& name) const;
-	GameObject* GetGameObjectAtIndex(int index) const;
+	GameObject* TryGetGameObject(const string& name) const;
+
 	vector<GameObject*> GetGameObjects() const;
 };
 #pragma endregion

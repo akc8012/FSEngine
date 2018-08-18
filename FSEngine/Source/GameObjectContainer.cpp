@@ -15,11 +15,20 @@ GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, G
 
 GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const
 {
-	int index = gameObjectMapper->GetGameObjectIndex(name);
-	return GetGameObjectAtIndex(index);
+	GameObject* gameObject = TryGetGameObject(name);
+	if (gameObject == nullptr)
+		throw "Could not get GameObject with name: " + name;
+
+	return gameObject;
 }
 
-GameObject* GameObject::GameObjectContainer::GetGameObjectAtIndex(int index) const
+GameObject* GameObject::GameObjectContainer::TryGetGameObject(const string& name) const
+{
+	int index = gameObjectMapper->TryGetGameObjectIndex(name);
+	return TryGetGameObjectAtIndex(index);
+}
+
+GameObject* GameObject::GameObjectContainer::TryGetGameObjectAtIndex(int index) const
 {
 	try
 	{
@@ -27,7 +36,7 @@ GameObject* GameObject::GameObjectContainer::GetGameObjectAtIndex(int index) con
 	}
 	catch (std::out_of_range)
 	{
-		throw "Could not get game object at index: " + std::to_string(index);
+		return nullptr;
 	}
 }
 

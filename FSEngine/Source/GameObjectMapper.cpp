@@ -26,19 +26,10 @@ void GameObjectMapper::UnMapGameObject(const string& name)
 	}
 	catch (std::out_of_range)
 	{
-		throw "Could not find game object to unmap with name " + name;
+		throw "Could not find GameObject to unmap with name " + name;
 	}
 
 	gameObjectMap.erase(name);
-}
-
-int GameObjectMapper::GetGameObjectIndex(const string& name) const
-{
-	int index = TryGetGameObjectIndex(name);
-	if (index == -1)
-		throw "Could not find GameObject index with name: " + name;
-
-	return index;
 }
 
 int GameObjectMapper::TryGetGameObjectIndex(const string& name) const

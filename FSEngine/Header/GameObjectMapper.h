@@ -15,6 +15,5 @@ public:
 	void MapGameObject(const string& name, int index);
 	void UnMapGameObject(const string& name);
 
-	int GetGameObjectIndex(const string& name) const;
 	int TryGetGameObjectIndex(const string& name) const;
 };
