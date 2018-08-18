@@ -4,7 +4,7 @@
 using std::string;
 using std::unordered_map;
 
-class GameObjectContainer
+class GameObjectMapper
 {
 private:
 	unordered_map<string, int> gameObjectMap;

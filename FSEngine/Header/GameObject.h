@@ -1,5 +1,4 @@
 #pragma once
-#include "GameObjectContainer.h"
 #include "FileSystem.h"
 #include "Input.h"
 #include "Window.h"
@@ -7,17 +6,34 @@
 #include "ShadingComponent.h"
 #include "TextureComponent.h"
 #include "TransformComponent.h"
+#include "GameObjectMapper.h"
 
 #include <unordered_map>
+#include <vector>
 using std::unordered_map;
+using std::vector;
 
 class GameObject
 {
-private:
-	// should be a static reference to a class GameObjectContainer
-	// needs AddGameObject() (return index), RemoveGameObject(), etc
-	static GameObjectContainer* gameObjectContainer;
+public:
+	class GameObjectContainer
+	{
+	private:
+		GameObjectMapper* gameObjectMapper = nullptr;
+		vector<GameObject*> gameObjects;
 
+	public:
+		GameObjectContainer();
+		~GameObjectContainer();
+
+		GameObject* AddGameObject(const string& name, GameObject* gameObject);
+
+		GameObject* GetGameObject(const string& name) const;
+		GameObject* GetGameObjectAtIndex(int index) const;
+		vector<GameObject*> GetGameObjects() const;
+	};
+
+private:
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
 	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
 	unordered_map<string, TransformComponent*>* transformComponents = nullptr;
@@ -26,13 +42,12 @@ private:
 	void ThrowDuplicateNameException(const string& name) const;
 
 protected:
-	FileSystem * fileSystem = nullptr;
+	GameObjectContainer* gameObjectContainer = nullptr;
+	FileSystem* fileSystem = nullptr;
 	Input* input = nullptr;
 	Window* window = nullptr;
 
 public:
-	static GameObject* GetGameObjectAtIndex(int index);
-
 	GameObject();
 	~GameObject();
 

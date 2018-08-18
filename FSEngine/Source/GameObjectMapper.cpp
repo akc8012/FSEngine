@@ -1,6 +1,6 @@
-#include "../Header/GameObjectContainer.h"
+#include "../Header/GameObjectMapper.h"
 
-void GameObjectContainer::MapGameObject(const string& name, int index)
+void GameObjectMapper::MapGameObject(const string& name, int index)
 {
 	HandleDuplicateIndex(index);
 
@@ -9,7 +9,7 @@ void GameObjectContainer::MapGameObject(const string& name, int index)
 		throw "Mapped game object name with name " + name + " already exists";
 }
 
-void GameObjectContainer::HandleDuplicateIndex(int index) const
+void GameObjectMapper::HandleDuplicateIndex(int index) const
 {
 	for (const auto& gameObject : gameObjectMap)
 	{
@@ -18,7 +18,7 @@ void GameObjectContainer::HandleDuplicateIndex(int index) const
 	}
 }
 
-void GameObjectContainer::UnMapGameObject(const string& name)
+void GameObjectMapper::UnMapGameObject(const string& name)
 {
 	try
 	{
@@ -32,7 +32,7 @@ void GameObjectContainer::UnMapGameObject(const string& name)
 	gameObjectMap.erase(name);
 }
 
-int GameObjectContainer::GetGameObjectIndex(const string& name) const
+int GameObjectMapper::GetGameObjectIndex(const string& name) const
 {
 	int index = TryGetGameObjectIndex(name);
 	if (index == -1)
@@ -41,7 +41,7 @@ int GameObjectContainer::GetGameObjectIndex(const string& name) const
 	return index;
 }
 
-int GameObjectContainer::TryGetGameObjectIndex(const string& name) const
+int GameObjectMapper::TryGetGameObjectIndex(const string& name) const
 {
 	try
 	{
@@ -50,17 +50,5 @@ int GameObjectContainer::TryGetGameObjectIndex(const string& name) const
 	catch (std::out_of_range)
 	{
 		return -1;
-	}
-}
-
-GameObject* GameObjectContainer::GetGameObjectAtIndex(int index)
-{
-	try
-	{
-		return gameObjects.at(index);
-	}
-	catch (std::out_of_range)
-	{
-		throw "Could not get game object at index: " + std::to_string(index);
 	}
 }

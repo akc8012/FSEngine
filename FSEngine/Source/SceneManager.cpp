@@ -1,45 +1,21 @@
 #include "../Header/SceneManager.h"
 
-SceneManager::SceneManager(FileSystem* fileSystem, Input* input, Window* window)
+SceneManager::SceneManager()
 {
-	this->fileSystem = fileSystem;
-	this->input = input;
-	this->window = window;
+	gameObjectContainer = new GameObject::GameObjectContainer();
 }
 
-GameObject* SceneManager::AddGameObject(const string& name, GameObject* gameObject, bool lateRefresh)
+GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
 {
-	gameObjectMapper->MapGameObject(name, 0);
-
-	auto result = gameObjects.emplace(name, gameObject);
-	if (!result.second)
-		throw "GameObject with name " + name + " already exists";
-
-	gameObject->SetSystems(fileSystem, input, window);
-	gameObject->SetLateRefresh(lateRefresh);
-	gameObject->Start();
-
-	return gameObject;
+	return gameObjectContainer;
 }
 
-GameObject* SceneManager::GetGameObject(const string& name) const
+void SceneManager::Initialize(FileSystem* fileSystem, Input* input, Window* window)
 {
-	GameObject* gameObject = TryGetGameObject(name);
-	if (gameObject == nullptr)
-		throw (string)"GameObject with name " + name + (string)" not found";
-
-	return gameObject;
-}
-
-GameObject* SceneManager::TryGetGameObject(const string& name) const
-{
-	try
+	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		return gameObjects.at(name);
-	}
-	catch (std::out_of_range)
-	{
-		return nullptr;
+		gameObject->SetSystems(fileSystem, input, window);
+		gameObject->Start();
 	}
 }
 
@@ -51,7 +27,7 @@ void SceneManager::Update(float deltaTime)
 
 void SceneManager::UpdateGameObjects(float deltaTime, bool refreshLateGameObjects)
 {
-	for (auto& gameObject : gameObjects)
+	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
 		if (gameObject->GetLateRefresh() == refreshLateGameObjects)
 			gameObject->Update(deltaTime);
@@ -66,7 +42,7 @@ void SceneManager::Draw(Renderer* renderer)
 
 void SceneManager::DrawGameObjects(Renderer* renderer, bool refreshLateGameObjects)
 {
-	for (auto& gameObject : gameObjects)
+	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
 		if (gameObject->GetLateRefresh() == refreshLateGameObjects)
 			renderer->RenderGameObject(gameObject);
@@ -75,6 +51,5 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool refreshLateGameObjec
 
 SceneManager::~SceneManager()
 {
-	for (auto& gameObject : gameObjects)
-		delete gameObject;
+	delete gameObjectContainer;
 }

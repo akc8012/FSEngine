@@ -20,8 +20,9 @@ void Engine::Init()
 	shaderProgram = new ShaderProgram();
 	renderer = new Renderer(fileSystem, window, shaderProgram);
 
-	sceneManager = new SceneManager(fileSystem, input, window);
+	sceneManager = new SceneManager();
 	AddGameObjects();
+	sceneManager->Initialize(fileSystem, input, window);
 
 	printf("Success\n");
 	running = true;
@@ -68,24 +69,25 @@ void Engine::InitGlew()
 
 void Engine::AddGameObjects()
 {
-	GameObject* memeFaceCube = sceneManager->AddGameObject("MemeFaceCube", new CubePrimitive());
+	GameObject* memeFaceCube = sceneManager->GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive());
 	memeFaceCube->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
 
-	GameObject* greenCube = sceneManager->AddGameObject("GreenCube", new CubePrimitive());
+	GameObject* greenCube = sceneManager->GetGameObjectContainer()->AddGameObject("GreenCube", new CubePrimitive());
 	greenCube->AddComponent(new ShadingComponent(vec3(0.1, 0.6, 0.3)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 
-	sceneManager->AddGameObject("PlayerShip", new PlayerShip());
+	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
 
-	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText(), true));
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
+	debugText->SetLateRefresh(true);
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
 
-	GameObject* camera = sceneManager->AddGameObject("Camera", new Camera());
+	GameObject* camera = sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera());
 	renderer->SetCamera(camera);
 }
 
@@ -208,7 +210,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		if (fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			shaderProgram->CompileShaders();
 
-		sceneManager->GetGameObject("PlayerShip")->Start();
+		sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
 		break;
 	}
 }
