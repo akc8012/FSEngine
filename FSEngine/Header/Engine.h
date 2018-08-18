@@ -1,49 +1,13 @@
 #pragma once
-#include "FileSystem.h"
-#include "Window.h"
-#include "ShaderProgram.h"
-#include "Renderer.h"
-#include "Timer.h"
-#include "GameObject.h"
-#include "SceneManager.h"
+#include "Systems.h"
 #include "CubePrimitive.h"
 #include "RenderText.h"
 #include "Model.h"
 #include "PlayerShip.h"
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <GL\glew.h>
-#include <SDL_opengl.h>
-
 #include <string>
+using std::string;
 
-#pragma region Systems
-struct Systems
-{
-private:
-	void InitSDL();
-	void InitOpenGl();
-	void InitGlew();
-
-public:
-	FileSystem* fileSystem = nullptr;
-	Window* window = nullptr;
-	ShaderProgram* shaderProgram = nullptr;
-	Input* input = nullptr;
-	Renderer* renderer = nullptr;
-	SceneManager* sceneManager = nullptr;
-
-	Systems();
-	~Systems();
-
-	void ToggleSwapInterval();
-	void SetSwapInterval(int interval);
-};
-#pragma endregion
-
-#pragma region Engine
 class Engine
 {
 private:
@@ -72,4 +36,3 @@ public:
 
 	SDL_Window* GetWindow() const;
 };
-#pragma endregion

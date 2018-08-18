@@ -144,6 +144,7 @@
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
+    <ClCompile Include="Source\Systems.cpp" />
     <ClCompile Include="Source\TextureComponent.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\Component.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
     <ClInclude Include="Header\ShadingComponent.h" />
+    <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\TextureComponent.h" />
     <ClInclude Include="Header\Timer.h" />
     <ClInclude Include="Header\TransformComponent.h" />
