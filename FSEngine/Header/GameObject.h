@@ -6,12 +6,19 @@
 #include "ShadingComponent.h"
 #include "TextureComponent.h"
 #include "TransformComponent.h"
+#include "GameObjectMapper.h"
 
 #include <unordered_map>
+#include <vector>
 using std::unordered_map;
+using std::vector;
 
+#pragma region GameObject
 class GameObject
 {
+public:
+	class GameObjectContainer;
+
 private:
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
 	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
@@ -21,7 +28,8 @@ private:
 	void ThrowDuplicateNameException(const string& name) const;
 
 protected:
-	FileSystem * fileSystem = nullptr;
+	GameObjectContainer* gameObjectContainer = nullptr;
+	FileSystem* fileSystem = nullptr;
 	Input* input = nullptr;
 	Window* window = nullptr;
 
@@ -29,7 +37,7 @@ public:
 	GameObject();
 	~GameObject();
 
-	void SetSystems(FileSystem* fileSystem, Input* input, Window* window);
+	void SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input, Window* window);
 	virtual void Start();
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
@@ -44,7 +52,9 @@ public:
 	void SetLateRefresh(bool lateRefresh);
 	bool GetLateRefresh() const;
 };
+#pragma endregion
 
+#pragma region GetComponent
 template <typename T> inline T* GameObject::GetComponent(string name) const
 {
 	T* component = TryGetComponent<T>(name);
@@ -88,3 +98,26 @@ template <typename T> inline unordered_map<string, T*>* GameObject::GetComponent
 
 	throw "Unrecognized type";
 }
+#pragma endregion
+
+#pragma region GameObjectContainer
+class GameObject::GameObjectContainer
+{
+private:
+	GameObjectMapper* gameObjectMapper = nullptr;
+	vector<GameObject*> gameObjects;
+
+	GameObject* TryGetGameObjectAtIndex(int index) const;
+
+public:
+	GameObjectContainer();
+	~GameObjectContainer();
+
+	GameObject* AddGameObject(const string& name, GameObject* gameObject);
+
+	GameObject* GetGameObject(const string& name) const;
+	GameObject* TryGetGameObject(const string& name) const;
+
+	vector<GameObject*> GetGameObjects() const;
+};
+#pragma endregion

@@ -9,6 +9,7 @@ PlayerShip::PlayerShip()
 void PlayerShip::Start()
 {
 	transform = GetComponent<TransformComponent>();
+	camera = dynamic_cast<Camera*>(gameObjectContainer->GetGameObject("Camera"));
 
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
 	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));
@@ -25,4 +26,6 @@ void PlayerShip::Update(float deltaTime)
 
 	const float Speed = 3;
 	transform->Translate(inputVector * deltaTime * Speed);
+
+	camera->SetPosition(transform->GetPosition() + vec3(0, 0, fileSystem->GetSettingsValue<float>("CameraDistance")));
 }

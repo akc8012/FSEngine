@@ -1,27 +1,22 @@
 #include "../Header/Engine.h"
 
-bool Engine::IsRunning() const
+#pragma region Initialize
+void Engine::Initialize()
 {
-	return running;
-}
-
-void Engine::Init()
-{
-	fileSystem = new FileSystem();
+	systems = new Systems();
 
 	InitSDL();
-	window = new Window(fileSystem);
+	window = new Window(systems->fileSystem);
 
 	InitOpenGl();
 	InitGlew();
 
-	input = new Input();
-
 	shaderProgram = new ShaderProgram();
-	renderer = new Renderer(fileSystem, window, shaderProgram);
+	renderer = new Renderer(systems->fileSystem, window, shaderProgram);
 
-	sceneManager = new SceneManager(fileSystem, input, window);
+	sceneManager = new SceneManager();
 	AddGameObjects();
+	sceneManager->Initialize(systems->fileSystem, systems->input, window);
 
 	printf("Success\n");
 	running = true;
@@ -45,7 +40,7 @@ void Engine::InitOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	SetSwapInterval(fileSystem->GetSettingsValue<int>("SwapInterval"));
+	SetSwapInterval(systems->fileSystem->GetSettingsValue<int>("SwapInterval"));
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_BLEND);
@@ -68,26 +63,44 @@ void Engine::InitGlew()
 
 void Engine::AddGameObjects()
 {
-	GameObject* memeFaceCube = sceneManager->AddGameObject("MemeFaceCube", new CubePrimitive());
+	GameObject* memeFaceCube = sceneManager->GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive());
 	memeFaceCube->AddComponent(new TextureComponent("Resource/Image/awesomeface.png"));
 	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(vec3(4.5f, 0.2f, 0));
 
-	GameObject* greenCube = sceneManager->AddGameObject("GreenCube", new CubePrimitive());
+	GameObject* greenCube = sceneManager->GetGameObjectContainer()->AddGameObject("GreenCube", new CubePrimitive());
 	greenCube->AddComponent(new ShadingComponent(vec3(0.1, 0.6, 0.3)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 
-	sceneManager->AddGameObject("PlayerShip", new PlayerShip());
+	sceneManager->GetGameObjectContainer()->AddGameObject("1", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(0, 1, 3));
+	sceneManager->GetGameObjectContainer()->AddGameObject("2", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(1, -1, -1));
+	sceneManager->GetGameObjectContainer()->AddGameObject("3", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(-0.8f, 0, -2));
+	sceneManager->GetGameObjectContainer()->AddGameObject("4", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(-2, -1, 0));
 
-	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->AddGameObject("DebugText", new RenderText(), true));
+	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
+
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
+	debugText->SetLateRefresh(true);
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
 
-	GameObject* camera = sceneManager->AddGameObject("Camera", new Camera());
+	GameObject* camera = sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera());
+	camera->SetLateRefresh(true);
 	renderer->SetCamera(camera);
 }
+
+bool Engine::IsRunning() const
+{
+	return running;
+}
+
+void Engine::Stop()
+{
+	running = false;
+}
+#pragma endregion
 
 void Engine::GameLoop()
 {
@@ -107,6 +120,7 @@ float Engine::CalculateDeltaTime()
 	return deltaTime;
 }
 
+#pragma region Event Handling
 void Engine::PollEvents()
 {
 	SDL_Event sdlEvent;
@@ -159,7 +173,7 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		break;
 
 	case SDLK_k:
-		fileSystem->LoadSettingsFile();
+		systems->fileSystem->LoadSettingsFile();
 		printf("Reloaded settings file\n");
 		break;
 
@@ -202,20 +216,24 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		break;
 
 	case SDL_WINDOWEVENT_FOCUS_GAINED:
-		if (fileSystem->GetSettingsValue<bool>("LoadSettingsOnFocus"))
-			fileSystem->LoadSettingsFile();
+		if (systems->fileSystem->GetSettingsValue<bool>("LoadSettingsOnFocus"))
+			systems->fileSystem->LoadSettingsFile();
 
-		if (fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
+		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			shaderProgram->CompileShaders();
 
-		sceneManager->GetGameObject("PlayerShip")->Start();
+		sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
 		break;
 	}
 }
+#pragma endregion
 
 void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
+
+	if (Timer::GetSeconds() > 3 && sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") == nullptr)
+		sceneManager->GetGameObjectContainer()->AddGameObject("SpawnCube", new CubePrimitive());
 }
 
 void Engine::Draw(float deltaTime)
@@ -223,11 +241,6 @@ void Engine::Draw(float deltaTime)
 	renderer->StartRender(deltaTime);
 	sceneManager->Draw(renderer);
 	renderer->EndRender();
-}
-
-void Engine::Stop()
-{
-	running = false;
 }
 
 SDL_Window* Engine::GetWindow() const
@@ -239,10 +252,9 @@ Engine::~Engine()
 {
 	delete sceneManager;
 	delete renderer;
-	delete input;
 	delete shaderProgram;
 	delete window;
-	delete fileSystem;
+	delete systems;
 
 	TTF_Quit();
 	IMG_Quit();

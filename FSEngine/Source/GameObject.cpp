@@ -7,8 +7,9 @@ GameObject::GameObject()
 	transformComponents = new unordered_map<string, TransformComponent*>();
 }
 
-void GameObject::SetSystems(FileSystem* fileSystem, Input* input, Window* window)
+void GameObject::SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input, Window* window)
 {
+	this->gameObjectContainer = gameObjectContainer;
 	this->fileSystem = fileSystem;
 	this->input = input;
 	this->window = window;
