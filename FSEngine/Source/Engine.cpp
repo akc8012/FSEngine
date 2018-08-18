@@ -74,6 +74,11 @@ void Engine::AddGameObjects()
 	greenCube->GetComponent<TransformComponent>()->SetPosition(vec3(6, -0.2f, 0.1f));
 	greenCube->GetComponent<TransformComponent>()->SetScale(vec3(2, 0.8f, 2.8f));
 
+	sceneManager->GetGameObjectContainer()->AddGameObject("1", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(0, 1, 3));
+	sceneManager->GetGameObjectContainer()->AddGameObject("2", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(1, -1, -1));
+	sceneManager->GetGameObjectContainer()->AddGameObject("3", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(-0.8f, 0, -2));
+	sceneManager->GetGameObjectContainer()->AddGameObject("4", new CubePrimitive())->GetComponent<TransformComponent>()->SetPosition(vec3(-2, -1, 0));
+
 	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
 
 	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
@@ -84,6 +89,7 @@ void Engine::AddGameObjects()
 	debugText->SetPixelPosition(vec2(5, -5));
 
 	GameObject* camera = sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera());
+	camera->SetLateRefresh(true);
 	renderer->SetCamera(camera);
 }
 
@@ -227,6 +233,9 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
+
+	//if (Timer::GetSeconds() > 3 && sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") == nullptr)
+	//	sceneManager->GetGameObjectContainer()->AddGameObject("SpawnCube", new CubePrimitive());
 }
 
 void Engine::Draw(float deltaTime)
