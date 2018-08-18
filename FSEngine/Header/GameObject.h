@@ -13,25 +13,11 @@
 using std::unordered_map;
 using std::vector;
 
+#pragma region GameObject
 class GameObject
 {
 public:
-	class GameObjectContainer
-	{
-	private:
-		GameObjectMapper* gameObjectMapper = nullptr;
-		vector<GameObject*> gameObjects;
-
-	public:
-		GameObjectContainer();
-		~GameObjectContainer();
-
-		GameObject* AddGameObject(const string& name, GameObject* gameObject);
-
-		GameObject* GetGameObject(const string& name) const;
-		GameObject* GetGameObjectAtIndex(int index) const;
-		vector<GameObject*> GetGameObjects() const;
-	};
+	class GameObjectContainer;
 
 private:
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
@@ -66,7 +52,9 @@ public:
 	void SetLateRefresh(bool lateRefresh);
 	bool GetLateRefresh() const;
 };
+#pragma endregion
 
+#pragma region GetComponent
 template <typename T> inline T* GameObject::GetComponent(string name) const
 {
 	T* component = TryGetComponent<T>(name);
@@ -110,3 +98,23 @@ template <typename T> inline unordered_map<string, T*>* GameObject::GetComponent
 
 	throw "Unrecognized type";
 }
+#pragma endregion
+
+#pragma region GameObjectContainer
+class GameObject::GameObjectContainer
+{
+private:
+	GameObjectMapper* gameObjectMapper = nullptr;
+	vector<GameObject*> gameObjects;
+
+public:
+	GameObjectContainer();
+	~GameObjectContainer();
+
+	GameObject* AddGameObject(const string& name, GameObject* gameObject);
+
+	GameObject* GetGameObject(const string& name) const;
+	GameObject* GetGameObjectAtIndex(int index) const;
+	vector<GameObject*> GetGameObjects() const;
+};
+#pragma endregion

@@ -9,6 +9,12 @@ CubePrimitive::CubePrimitive()
 	AddComponent(new TransformComponent());
 }
 
+void CubePrimitive::Start()
+{
+	if (TryGetComponent<ShadingComponent>() == nullptr)
+		AddComponent(new ShadingComponent(vec3(1, 1, 1)));
+}
+
 MeshComponent* CubePrimitive::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
