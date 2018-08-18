@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "GameObjectContainer.h"
 #include "Renderer.h"
 #include "FileSystem.h"
 #include "Input.h"

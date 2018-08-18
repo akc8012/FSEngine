@@ -22,6 +22,7 @@
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\GameObjectMapper.cpp" />
+    <ClCompile Include="Source\GameObjectContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -46,6 +47,7 @@
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
+    <ClInclude Include="Header\GameObjectContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
