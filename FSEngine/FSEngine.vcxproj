@@ -168,7 +168,6 @@
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\Engine.h" />
     <ClInclude Include="Header\GameObject.h" />
-    <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\MeshComponent.h" />

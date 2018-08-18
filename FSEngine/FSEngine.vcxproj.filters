@@ -47,7 +47,6 @@
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
-    <ClInclude Include="Header\GameObjectContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
