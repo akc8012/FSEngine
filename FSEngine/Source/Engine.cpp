@@ -3,22 +3,20 @@
 #pragma region Initialize
 void Engine::Initialize()
 {
-	fileSystem = new FileSystem();
+	systems = new Systems();
 
 	InitSDL();
-	window = new Window(fileSystem);
+	window = new Window(systems->fileSystem);
 
 	InitOpenGl();
 	InitGlew();
 
-	input = new Input();
-
 	shaderProgram = new ShaderProgram();
-	renderer = new Renderer(fileSystem, window, shaderProgram);
+	renderer = new Renderer(systems->fileSystem, window, shaderProgram);
 
 	sceneManager = new SceneManager();
 	AddGameObjects();
-	sceneManager->Initialize(fileSystem, input, window);
+	sceneManager->Initialize(systems->fileSystem, systems->input, window);
 
 	printf("Success\n");
 	running = true;
@@ -42,7 +40,7 @@ void Engine::InitOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	SetSwapInterval(fileSystem->GetSettingsValue<int>("SwapInterval"));
+	SetSwapInterval(systems->fileSystem->GetSettingsValue<int>("SwapInterval"));
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_BLEND);
@@ -175,7 +173,7 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		break;
 
 	case SDLK_k:
-		fileSystem->LoadSettingsFile();
+		systems->fileSystem->LoadSettingsFile();
 		printf("Reloaded settings file\n");
 		break;
 
@@ -218,10 +216,10 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		break;
 
 	case SDL_WINDOWEVENT_FOCUS_GAINED:
-		if (fileSystem->GetSettingsValue<bool>("LoadSettingsOnFocus"))
-			fileSystem->LoadSettingsFile();
+		if (systems->fileSystem->GetSettingsValue<bool>("LoadSettingsOnFocus"))
+			systems->fileSystem->LoadSettingsFile();
 
-		if (fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
+		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			shaderProgram->CompileShaders();
 
 		sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
@@ -234,8 +232,8 @@ void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
 
-	//if (Timer::GetSeconds() > 3 && sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") == nullptr)
-	//	sceneManager->GetGameObjectContainer()->AddGameObject("SpawnCube", new CubePrimitive());
+	if (Timer::GetSeconds() > 3 && sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") == nullptr)
+		sceneManager->GetGameObjectContainer()->AddGameObject("SpawnCube", new CubePrimitive());
 }
 
 void Engine::Draw(float deltaTime)
@@ -254,10 +252,9 @@ Engine::~Engine()
 {
 	delete sceneManager;
 	delete renderer;
-	delete input;
 	delete shaderProgram;
 	delete window;
-	delete fileSystem;
+	delete systems;
 
 	TTF_Quit();
 	IMG_Quit();

@@ -1,5 +1,5 @@
 #pragma once
-#include "FileSystem.h"
+#include "Systems.h"
 #include "Window.h"
 #include "ShaderProgram.h"
 #include "Renderer.h"
@@ -25,10 +25,9 @@ private:
 	bool running = false;
 	float lastFrameTime = 0.0f;
 
-	FileSystem* fileSystem = nullptr;
+	Systems* systems = nullptr;
 	Window* window = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
-	Input* input = nullptr;
 	Renderer* renderer = nullptr;
 	SceneManager* sceneManager = nullptr;
 
