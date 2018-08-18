@@ -52,7 +52,7 @@ public:
 	~Engine();
 
 	bool IsRunning() const;
-	void Init();
+	void Initialize();
 
 	void GameLoop();
 	void Stop();

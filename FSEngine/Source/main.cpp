@@ -5,7 +5,7 @@ int main(int argc, char* args[])
 	Engine* engine = new Engine();
 	try
 	{
-		engine->Init();
+		engine->Initialize();
 	}
 	catch (string errorMessage)
 	{

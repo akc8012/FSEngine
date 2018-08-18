@@ -6,7 +6,7 @@ void GameObjectMapper::MapGameObject(const string& name, int index)
 
 	auto result = gameObjectMap.emplace(name, index);
 	if (!result.second)
-		throw "Mapped game object name with name " + name + " already exists";
+		throw "Mapped GameObject with name " + name + " already exists";
 }
 
 void GameObjectMapper::HandleDuplicateIndex(int index) const

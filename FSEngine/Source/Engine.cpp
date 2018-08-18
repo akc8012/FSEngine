@@ -1,11 +1,7 @@
 #include "../Header/Engine.h"
 
-bool Engine::IsRunning() const
-{
-	return running;
-}
-
-void Engine::Init()
+#pragma region Initialize
+void Engine::Initialize()
 {
 	fileSystem = new FileSystem();
 
@@ -91,6 +87,17 @@ void Engine::AddGameObjects()
 	renderer->SetCamera(camera);
 }
 
+bool Engine::IsRunning() const
+{
+	return running;
+}
+
+void Engine::Stop()
+{
+	running = false;
+}
+#pragma endregion
+
 void Engine::GameLoop()
 {
 	float deltaTime = CalculateDeltaTime();
@@ -109,6 +116,7 @@ float Engine::CalculateDeltaTime()
 	return deltaTime;
 }
 
+#pragma region Event Handling
 void Engine::PollEvents()
 {
 	SDL_Event sdlEvent;
@@ -214,6 +222,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		break;
 	}
 }
+#pragma endregion
 
 void Engine::Update(float deltaTime)
 {
@@ -225,11 +234,6 @@ void Engine::Draw(float deltaTime)
 	renderer->StartRender(deltaTime);
 	sceneManager->Draw(renderer);
 	renderer->EndRender();
-}
-
-void Engine::Stop()
-{
-	running = false;
 }
 
 SDL_Window* Engine::GetWindow() const
