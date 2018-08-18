@@ -19,15 +19,12 @@
 
 #include <string>
 
-#pragma region Systems
-struct Systems
+class Engine
 {
 private:
-	void InitSDL();
-	void InitOpenGl();
-	void InitGlew();
+	bool running = false;
+	float lastFrameTime = 0.0f;
 
-public:
 	FileSystem* fileSystem = nullptr;
 	Window* window = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
@@ -35,23 +32,13 @@ public:
 	Renderer* renderer = nullptr;
 	SceneManager* sceneManager = nullptr;
 
-	Systems();
-	~Systems();
+	void InitSDL();
+	void InitOpenGl();
+	void InitGlew();
+	void AddGameObjects();
 
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);
-};
-#pragma endregion
-
-#pragma region Engine
-class Engine
-{
-private:
-	Systems* systems = nullptr;
-	bool running = false;
-	float lastFrameTime = 0.0f;
-
-	void AddGameObjects();
 
 	float CalculateDeltaTime();
 	void PollEvents();
@@ -72,4 +59,3 @@ public:
 
 	SDL_Window* GetWindow() const;
 };
-#pragma endregion
