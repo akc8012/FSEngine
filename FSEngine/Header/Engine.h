@@ -25,6 +25,7 @@ private:
 	bool running = false;
 	float lastFrameTime = 0.0f;
 
+	SDL_GLContext openGlContext = nullptr;
 	Systems* systems = nullptr;
 	Window* window = nullptr;
 	ShaderProgram* shaderProgram = nullptr;
@@ -33,6 +34,7 @@ private:
 
 	void InitSDL();
 	void InitOpenGl();
+	void CreateOpenGlContext();
 	void InitGlew();
 	void AddGameObjects();
 
@@ -56,5 +58,5 @@ public:
 	void GameLoop();
 	void Stop();
 
-	SDL_Window* GetWindow() const;
+	SDL_Window* GetSDLWindow() const;
 };

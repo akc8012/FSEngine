@@ -20,7 +20,7 @@ int main(int argc, char* args[])
 		}
 		catch (string errorMessage)
 		{
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "GAMELOOP ERROR", errorMessage.c_str(), engine->GetWindow());
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "GAMELOOP ERROR", errorMessage.c_str(), engine->GetSDLWindow());
 			engine->Stop();
 		}
 	}

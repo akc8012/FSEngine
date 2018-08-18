@@ -15,29 +15,25 @@ class Window
 {
 private:
 	FileSystem* fileSystem = nullptr;
-	SDL_Window* window = nullptr;
-	SDL_GLContext context = nullptr;
+	SDL_Window* sdlWindow = nullptr;
 
 	void SetWindowed();
 	void SetFullscreen();
 
-	void CreateContext();
 	void CreateWindow(const tvec2<int>& resolution, bool fullscreen);
 	tvec2<int> GetResolutionSetting() const;
 	tvec2<int> GetScreenResolution() const;
 
 public:
 	Window(FileSystem* fileSystem);
-	Window(FileSystem* fileSystem, const tvec2<int>& resolution, bool fullscreen);
+	~Window();
 
 	void ToggleFullscreen();
 	void SetResolutionToWindowResolution();
 
 	void SetResolution(int width, int height);
 	tvec2<int> GetWindowSize() const;
-	SDL_Window* GetWindow() const;
+	SDL_Window* GetSDLWindow() const;
 
 	void SwapWindow();
-
-	~Window();
 };

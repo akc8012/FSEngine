@@ -6,8 +6,6 @@ void Engine::Initialize()
 	systems = new Systems();
 
 	InitSDL();
-	window = new Window(systems->fileSystem);
-
 	InitOpenGl();
 	InitGlew();
 
@@ -36,6 +34,8 @@ void Engine::InitSDL()
 
 void Engine::InitOpenGl()
 {
+	CreateOpenGlContext();
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -45,6 +45,16 @@ void Engine::InitOpenGl()
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void Engine::CreateOpenGlContext()
+{
+	window = new Window(systems->fileSystem);
+
+	SDL_GL_DeleteContext(openGlContext);
+	openGlContext = SDL_GL_CreateContext(window->GetSDLWindow());
+	if (openGlContext == nullptr)
+		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
 }
 
 void Engine::SetSwapInterval(int interval)
@@ -243,9 +253,9 @@ void Engine::Draw(float deltaTime)
 	renderer->EndRender();
 }
 
-SDL_Window* Engine::GetWindow() const
+SDL_Window* Engine::GetSDLWindow() const
 {
-	return window->GetWindow();
+	return window->GetSDLWindow();
 }
 
 Engine::~Engine()
@@ -256,6 +266,7 @@ Engine::~Engine()
 	delete window;
 	delete systems;
 
+	SDL_GL_DeleteContext(openGlContext);
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
