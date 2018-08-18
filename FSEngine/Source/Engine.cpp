@@ -14,7 +14,7 @@ void Engine::Initialize()
 
 	sceneManager = new SceneManager();
 	AddGameObjects();
-	sceneManager->Initialize(systems->fileSystem, systems->input, window);
+	sceneManager->Initialize(systems->fileSystem, systems->input);
 
 	printf("Success\n");
 	running = true;
@@ -90,15 +90,17 @@ void Engine::AddGameObjects()
 	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
 
 	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
+	debugText->SetWindow(window);
 	debugText->SetLateRefresh(true);
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
 
-	GameObject* camera = sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera());
+	Camera* camera = dynamic_cast<Camera*>(sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera()));
+	camera->SetWindow(window);
 	camera->SetLateRefresh(true);
-	renderer->SetCamera(camera);
+	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 }
 
 bool Engine::IsRunning() const

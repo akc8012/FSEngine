@@ -14,6 +14,7 @@ class Camera : public GameObject
 {
 private:
 	TransformComponent* viewTransform = nullptr;
+	Window* window = nullptr;
 
 	void CalculateViewMatrix(float deltaTime);
 	void CalculateProjectionMatrixPerspective();
@@ -24,5 +25,6 @@ public:
 	void Update(float deltaTime);
 
 	void SetPosition(const vec3& position);
+	void SetWindow(Window* window);
 	vec3 GetPosition() const;
 };

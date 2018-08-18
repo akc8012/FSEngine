@@ -46,8 +46,6 @@ void Camera::CalculateProjectionMatrixPerspective()
 
 void Camera::CalculateProjectionMatrixOrthographic()
 {
-	vec2 windowSize = window->GetWindowSize();
-
 	const float Left = -1.0f;
 	const float Right = 1.0f;
 	const float Bottom = Left;
@@ -59,6 +57,11 @@ void Camera::CalculateProjectionMatrixOrthographic()
 void Camera::SetPosition(const vec3& position)
 {
 	viewTransform->SetPosition(-position);
+}
+
+void Camera::SetWindow(Window* window)
+{
+	this->window = window;
 }
 
 vec3 Camera::GetPosition() const

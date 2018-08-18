@@ -51,6 +51,11 @@ void RenderText::SetText(const string& text)
 		CreateTextureComponent(text);
 }
 
+void RenderText::SetWindow(Window* window)
+{
+	this->window = window;
+}
+
 void RenderText::CreateTextureComponent(const string& text)
 {
 	renderText = text;

@@ -24,7 +24,7 @@ public:
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
 
-	void Initialize(FileSystem* fileSystem, Input* input, Window* window);
+	void Initialize(FileSystem* fileSystem, Input* input);
 	void Update(float deltaTime);
 	void Draw(Renderer* renderer);
 };

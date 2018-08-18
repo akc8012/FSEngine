@@ -10,11 +10,11 @@ GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
 	return gameObjectContainer;
 }
 
-void SceneManager::Initialize(FileSystem* fileSystem, Input* input, Window* window)
+void SceneManager::Initialize(FileSystem* fileSystem, Input* input)
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		gameObject->SetSystems(gameObjectContainer, fileSystem, input, window);
+		gameObject->SetSystems(gameObjectContainer, fileSystem, input);
 		gameObject->Start();
 	}
 }

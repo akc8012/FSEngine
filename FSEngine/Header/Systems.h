@@ -7,6 +7,6 @@ struct Systems
 	Systems();
 	~Systems();
 
-	FileSystem* fileSystem;
-	Input* input;
+	FileSystem* fileSystem = nullptr;
+	Input* input = nullptr;
 };

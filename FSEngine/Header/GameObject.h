@@ -1,7 +1,6 @@
 #pragma once
 #include "FileSystem.h"
 #include "Input.h"
-#include "Window.h"
 #include "MeshComponent.h"
 #include "ShadingComponent.h"
 #include "TextureComponent.h"
@@ -31,13 +30,12 @@ protected:
 	GameObjectContainer* gameObjectContainer = nullptr;
 	FileSystem* fileSystem = nullptr;
 	Input* input = nullptr;
-	Window* window = nullptr;
 
 public:
 	GameObject();
 	~GameObject();
 
-	void SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input, Window* window);
+	void SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input);
 	virtual void Start();
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);

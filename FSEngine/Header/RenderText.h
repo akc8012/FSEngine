@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Window.h"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -13,8 +14,9 @@ public:
 	enum AnchorPosition { Center, TopLeft, TopRight, BottomLeft, BottomRight };
 
 private:
-
 	TTF_Font* font = nullptr;
+	Window* window = nullptr;
+
 	string renderText;
 	vec2 aspectRatio;
 
@@ -43,6 +45,7 @@ public:
 
 	void Update(float deltaTime);
 	void SetText(const string& text);
+	void SetWindow(Window* window);
 
 	void SetPixelScale(const vec2& pixelScaleFactor);
 	void SetPixelScale(float pixelScaleFactor);
