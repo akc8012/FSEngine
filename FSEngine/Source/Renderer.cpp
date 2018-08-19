@@ -14,6 +14,19 @@ void Renderer::SetCamera(GameObject* camera)
 void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
+
+
+
+
+	if (shaderProgram->RenderPerspective())
+	{
+		shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
+		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
+	}
+	else
+		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
+
+	shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }
 
 void Renderer::ClearScreen()
@@ -27,12 +40,11 @@ void Renderer::ClearScreen()
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	SetCameraMatrices();
+	shaderProgram->SetMatrixUniform("modelMatrix", gameObject->GetComponent<TransformComponent>()->GetMatrix());
+	shaderProgram->SetMatrixUniform("normalMatrix", gameObject->GetComponent<TransformComponent>()->CalculateNormalMatrix());
 
 	gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
 	gameObject->GetComponent<MeshComponent>()->BindVertexArray(); // Use();
-	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
-
 	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
 }
 
@@ -46,25 +58,6 @@ void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, con
 
 		shadingComponent->Use(shaderProgram);
 	}
-}
-
-void Renderer::SetCameraMatrices()
-{
-	if (shaderProgram->RenderPerspective())
-	{
-		shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
-		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
-	}
-	else
-		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
-
-	shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
-}
-
-void Renderer::SetModelMatrices(TransformComponent* transform)
-{
-	shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
-	shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
 void Renderer::DrawTriangleArrays(Uint32 verticeCount)

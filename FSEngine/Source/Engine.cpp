@@ -72,8 +72,8 @@ void Engine::InitGlew()
 
 void Engine::AddGameObjects()
 {
-	//GameObject* memeFaceCube = sceneManager->GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
-	//memeFaceCube->GetComponent<TransformComponent>()->SetPosition(4.5f, 0.2f, 0);
+	GameObject* memeFaceCube = sceneManager->GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
+	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(2, 0.2f, 0);
 
 	GameObject* greenCube = sceneManager->GetGameObjectContainer()->AddGameObject("GreenCube", new CubePrimitive(new ShadingComponent(0.1f, 0.6f, 0.3f)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(0, -0.2f, 0.1f);
