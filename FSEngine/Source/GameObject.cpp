@@ -4,9 +4,9 @@ GameObject::GameObject()
 {
 	SetDefaultParameters();
 
-	meshComponents = new unordered_map<string, MeshComponent*>();
-	shadingComponents = new unordered_map<string, ShadingComponent*>();
-	transformComponents = new unordered_map<string, TransformComponent*>();
+	meshComponents = unordered_map<string, MeshComponent*>();
+	shadingComponents = unordered_map<string, ShadingComponent*>();
+	transformComponents = unordered_map<string, TransformComponent*>();
 }
 
 void GameObject::SetDefaultParameters()
@@ -34,7 +34,7 @@ void GameObject::Start()
 
 MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 {
-	auto result = meshComponents->emplace(name, component);
+	auto result = meshComponents.emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
@@ -43,7 +43,7 @@ MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 
 ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string name)
 {
-	auto result = shadingComponents->emplace(name, component);
+	auto result = shadingComponents.emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
@@ -52,7 +52,7 @@ ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string n
 
 TransformComponent* GameObject::AddComponent(TransformComponent* component, string name)
 {
-	auto result = transformComponents->emplace(name, component);
+	auto result = transformComponents.emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
@@ -81,25 +81,21 @@ bool GameObject::GetParameter(Parameters parameter) const
 
 GameObject::~GameObject()
 {
-	for (auto& meshComponent : *meshComponents)
+	for (auto& meshComponent : meshComponents)
 	{
 		if (!meshComponent.second->IsShared())
 			delete meshComponent.second;
 	}
 
-	for (auto& textureComponent : *shadingComponents)
+	for (auto& textureComponent : shadingComponents)
 	{
 		if (!textureComponent.second->IsShared())
 			delete textureComponent.second;
 	}
 
-	for (auto& transformComponent : *transformComponents)
+	for (auto& transformComponent : transformComponents)
 	{
 		if (!transformComponent.second->IsShared())
 			delete transformComponent.second;
 	}
-
-	delete transformComponents;
-	delete shadingComponents;
-	delete meshComponents;
 }

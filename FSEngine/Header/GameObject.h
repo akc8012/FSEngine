@@ -31,9 +31,9 @@ public:
 private:
 	bitset<Parameters::ParametersLength> parameters;
 
-	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
-	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
-	unordered_map<string, TransformComponent*>* transformComponents = nullptr;
+	unordered_map<string, MeshComponent*> meshComponents;
+	unordered_map<string, ShadingComponent*> shadingComponents;
+	unordered_map<string, TransformComponent*> transformComponents;
 
 	void SetDefaultParameters();
 	void ThrowDuplicateNameException(const string& name) const;
@@ -55,7 +55,7 @@ public:
 
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
-	template <typename T> unordered_map<string, T*>* GetComponents() const;
+	template <typename T> const unordered_map<string, T*>& GetComponents() const;
 	virtual void Update(float deltaTime);
 
 	void SetParameter(Parameters parameter, bool value);
@@ -77,14 +77,14 @@ template <typename T> inline T* GameObject::TryGetComponent(string name) const
 {
 	try
 	{
-		if (meshComponents->size() > 0 && typeid(T) == typeid(MeshComponent))
-			return reinterpret_cast<T*>(meshComponents->at(name));
+		if (meshComponents.size() > 0 && typeid(T) == typeid(MeshComponent))
+			return reinterpret_cast<T*>(meshComponents.at(name));
 
-		if (shadingComponents->size() > 0 && typeid(T) == typeid(ShadingComponent))
-			return reinterpret_cast<T*>(shadingComponents->at(name));
+		if (shadingComponents.size() > 0 && typeid(T) == typeid(ShadingComponent))
+			return reinterpret_cast<T*>(shadingComponents.at(name));
 
-		if (transformComponents->size() > 0 && typeid(T) == typeid(TransformComponent))
-			return reinterpret_cast<T*>(transformComponents->at(name));
+		if (transformComponents.size() > 0 && typeid(T) == typeid(TransformComponent))
+			return reinterpret_cast<T*>(transformComponents.at(name));
 	}
 	catch (std::out_of_range)
 	{
@@ -94,16 +94,16 @@ template <typename T> inline T* GameObject::TryGetComponent(string name) const
 	return nullptr;
 }
 
-template <typename T> inline unordered_map<string, T*>* GameObject::GetComponents() const
+template <typename T> inline const unordered_map<string, T*>& GameObject::GetComponents() const
 {
 	if (typeid(T) == typeid(MeshComponent))
-		return reinterpret_cast<unordered_map<string, T*>*>(meshComponents);
+		return reinterpret_cast<const unordered_map<string, T*>&>(meshComponents);
 
 	if (typeid(T) == typeid(ShadingComponent))
-		return reinterpret_cast<unordered_map<string, T*>*>(shadingComponents);
+		return reinterpret_cast<const unordered_map<string, T*>&>(shadingComponents);
 
 	if (typeid(T) == typeid(TransformComponent))
-		return reinterpret_cast<unordered_map<string, T*>*>(transformComponents);
+		return reinterpret_cast<const unordered_map<string, T*>&>(transformComponents);
 
 	throw "Unrecognized type";
 }
