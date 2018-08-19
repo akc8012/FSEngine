@@ -67,3 +67,8 @@ MeshComponent* CubePrimitive::CreateMeshComponent() const
 	const int Stride = 8;
 	return new MeshComponent(rawVertices, Stride, indices);
 }
+
+void CubePrimitive::Update(float deltaTime)
+{
+	GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds(), glm::normalize(vec3(1, 1, 0)));
+}

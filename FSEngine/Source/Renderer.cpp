@@ -16,28 +16,27 @@ void Renderer::StartRender(float deltaTime)
 	ClearScreen();
 }
 
+void Renderer::ClearScreen()
+{
+	vec3 color = vec3(41, 48, 61);
+	color /= 255;
+
+	glClearColor(color.x, color.y, color.z, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	for (auto& meshComponentMap : *gameObject->GetComponents<MeshComponent>())
-	{
-		MeshComponent* meshComponent = meshComponentMap.second;
-		meshComponent->RenderBackfaces() ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
+	if (gameObject->TryGetComponent<ShadingComponent>() == nullptr)
+		return;
 
-		if (meshComponent->GetAssociatedTextureNames().size() > 0)
-			UseMeshAssociatedTextures(meshComponent, *gameObject->GetComponents<ShadingComponent>());
-		else
-			gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
+	SetCameraMatrices();
 
-		SetCameraMatrices();
+	gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
+	gameObject->GetComponent<MeshComponent>()->BindVertexArray(); // Use();
+	SetModelMatrices(gameObject->GetComponent<TransformComponent>());
 
-		meshComponent->BindVertexArray();
-		SetModelMatrices(gameObject->GetComponent<TransformComponent>());
-
-		if (meshComponent->GetDrawingMode() == MeshComponent::Elements)
-			DrawTriangleElements(meshComponent->GetIndiceCount());
-		else
-			DrawTriangleArrays(meshComponent->GetVerticeCount());
-	}
+	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
 }
 
 void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents)
@@ -50,20 +49,6 @@ void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, con
 
 		shadingComponent->Use(shaderProgram);
 	}
-}
-
-void Renderer::EndRender()
-{
-	window->SwapWindow();
-}
-
-void Renderer::ClearScreen()
-{
-	vec3 color = vec3(41, 48, 61);
-	color /= 255;
-
-	glClearColor(color.x, color.y, color.z, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::SetCameraMatrices()
@@ -95,6 +80,11 @@ void Renderer::DrawTriangleElements(Uint32 indiceCount)
 {
 	const int Offset = 0;
 	glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_INT, Offset);
+}
+
+void Renderer::EndRender()
+{
+	window->SwapWindow();
 }
 
 Renderer::~Renderer()
