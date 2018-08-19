@@ -18,13 +18,13 @@ void Renderer::StartRender(float deltaTime)
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	for (auto& meshComponentMap : *gameObject->GetComponents<MeshComponent>())
+	for (auto& meshComponentMap : gameObject->GetComponents<MeshComponent>())
 	{
 		MeshComponent* meshComponent = meshComponentMap.second;
 		meshComponent->RenderBackfaces() ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
 
 		if (meshComponent->GetAssociatedTextureNames().size() > 0)
-			UseMeshAssociatedTextures(meshComponent, *gameObject->GetComponents<ShadingComponent>());
+			UseMeshAssociatedTextures(meshComponent, gameObject->GetComponents<ShadingComponent>());
 		else
 			gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
 
