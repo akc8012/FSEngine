@@ -29,6 +29,8 @@ void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 
 	int index = gameObjectMapper->UnMapGameObject(name);
 	gameObjects.erase(gameObjects.begin() + index);
+
+	delete gameObject;
 }
 
 GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const
