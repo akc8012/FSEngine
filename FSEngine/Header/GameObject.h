@@ -130,6 +130,6 @@ public:
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;
 
-	vector<GameObject*> GetGameObjects() const;
+	const vector<GameObject*>& GetGameObjects() const;
 };
 #pragma endregion
