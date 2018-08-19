@@ -17,13 +17,13 @@ public:
 
 	ShadingComponent();
 	ShadingComponent(const vec3& flatColor);
+	ShadingComponent(float r, float g, float b);
 	virtual ~ShadingComponent();
 
 	virtual bool CanUse() const;
 	virtual void Use(ShaderProgram* shaderProgram);
 
 	void SetFlatColor(const vec3& flatColor);
-	void SetFlatColor(const vec4& flatColor);
 	vec4 GetFlatColor() const;
 
 	void SetDepthTest(bool enableDepthTest);

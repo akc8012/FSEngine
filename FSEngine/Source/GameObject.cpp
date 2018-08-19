@@ -7,11 +7,10 @@ GameObject::GameObject()
 	transformComponents = new unordered_map<string, TransformComponent*>();
 }
 
-void GameObject::SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input)
+void GameObject::SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer)
 {
+	this->systems = systems;
 	this->gameObjectContainer = gameObjectContainer;
-	this->fileSystem = fileSystem;
-	this->input = input;
 }
 
 void GameObject::Start()
@@ -61,7 +60,7 @@ void GameObject::SetLateRefresh(bool lateRefresh)
 	this->lateRefresh = lateRefresh;
 }
 
-bool GameObject::GetLateRefresh() const
+bool GameObject::IsLateRefresh() const
 {
 	return lateRefresh;
 }

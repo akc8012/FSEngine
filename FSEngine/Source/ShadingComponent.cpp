@@ -10,14 +10,14 @@ ShadingComponent::ShadingComponent(const vec3& flatColor)
 	SetFlatColor(flatColor);
 }
 
+ShadingComponent::ShadingComponent(float r, float g, float b)
+{
+	SetFlatColor(vec3(r, g, b));
+}
+
 void ShadingComponent::SetFlatColor(const vec3& flatColor)
 {
 	this->flatColor = vec4(flatColor, 1.0f);
-}
-
-void ShadingComponent::SetFlatColor(const vec4& flatColor)
-{
-	this->flatColor = flatColor;
 }
 
 bool ShadingComponent::CanUse() const

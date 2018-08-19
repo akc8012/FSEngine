@@ -17,15 +17,15 @@ void PlayerShip::Start()
 
 void PlayerShip::Update(float deltaTime)
 {
-	if (!fileSystem->GetSettingsValue<bool>("ShipControl"))
+	if (!systems->fileSystem->GetSettingsValue<bool>("ShipControl"))
 		return;
 
-	vec3 inputVector = vec3(input->GetHorizontalAxis(), 0, input->GetVerticalAxis());
+	vec3 inputVector = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
 	if (glm::length(inputVector) != 0)
 		inputVector = glm::normalize(inputVector);
 
 	const float Speed = 3;
 	transform->Translate(inputVector * deltaTime * Speed);
 
-	camera->SetPosition(transform->GetPosition() + vec3(0, 0, fileSystem->GetSettingsValue<float>("CameraDistance")));
+	camera->SetPosition(transform->GetPosition() + vec3(0, 0, systems->fileSystem->GetSettingsValue<float>("CameraDistance")));
 }

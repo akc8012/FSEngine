@@ -1,18 +1,13 @@
 #include "../Header/CubePrimitive.h"
 
-CubePrimitive::CubePrimitive()
+CubePrimitive::CubePrimitive(ShadingComponent* shadingComponent)
 {
 	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->SetDrawingMode(MeshComponent::Arrays);
 	meshComponent->SetRenderBackfaces(true);
 
 	AddComponent(new TransformComponent());
-}
-
-void CubePrimitive::Start()
-{
-	if (TryGetComponent<ShadingComponent>() == nullptr)
-		AddComponent(new ShadingComponent(vec3(1, 1, 1)));
+	AddComponent(shadingComponent);
 }
 
 MeshComponent* CubePrimitive::CreateMeshComponent() const

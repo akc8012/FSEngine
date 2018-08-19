@@ -1,7 +1,8 @@
 #include "../Header/GameObject.h"
 
-GameObject::GameObjectContainer::GameObjectContainer()
+GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
 {
+	this->systems = systems;
 	gameObjectMapper = new GameObjectMapper();
 }
 
@@ -9,8 +10,15 @@ GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, G
 {
 	gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
 	gameObjects.push_back(gameObject);
+	InitializeGameObject(gameObject);
 
 	return gameObject;
+}
+
+void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject)
+{
+	gameObject->SetSystems(systems, this);
+	gameObject->Start();
 }
 
 GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const

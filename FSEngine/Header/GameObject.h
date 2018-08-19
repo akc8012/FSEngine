@@ -1,6 +1,5 @@
 #pragma once
-#include "FileSystem.h"
-#include "Input.h"
+#include "Systems.h"
 #include "MeshComponent.h"
 #include "ShadingComponent.h"
 #include "TextureComponent.h"
@@ -27,15 +26,14 @@ private:
 	void ThrowDuplicateNameException(const string& name) const;
 
 protected:
+	Systems* systems = nullptr;
 	GameObjectContainer* gameObjectContainer = nullptr;
-	FileSystem* fileSystem = nullptr;
-	Input* input = nullptr;
 
 public:
 	GameObject();
 	~GameObject();
 
-	void SetSystems(GameObject::GameObjectContainer* gameObjectContainer, FileSystem* fileSystem, Input* input);
+	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
 	virtual void Start();
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
@@ -48,7 +46,7 @@ public:
 	virtual void Update(float deltaTime);
 
 	void SetLateRefresh(bool lateRefresh);
-	bool GetLateRefresh() const;
+	bool IsLateRefresh() const;
 };
 #pragma endregion
 
@@ -102,13 +100,15 @@ template <typename T> inline unordered_map<string, T*>* GameObject::GetComponent
 class GameObject::GameObjectContainer
 {
 private:
+	Systems* systems = nullptr;
 	GameObjectMapper* gameObjectMapper = nullptr;
 	vector<GameObject*> gameObjects;
 
+	void InitializeGameObject(GameObject* gameObject);
 	GameObject* TryGetGameObjectAtIndex(int index) const;
 
 public:
-	GameObjectContainer();
+	GameObjectContainer(Systems* systems);
 	~GameObjectContainer();
 
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);

@@ -113,6 +113,11 @@ mat4 TransformComponent::SetScale(float scaleFactor)
 	return SetScale(vec3(scaleFactor, scaleFactor, scaleFactor));
 }
 
+mat4 TransformComponent::SetScale(float x, float y, float z)
+{
+	return SetScale(vec3(x, y, z));
+}
+
 mat4 TransformComponent::SetScale(const vec3& scaleVector)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
@@ -130,6 +135,11 @@ mat4 TransformComponent::SetRotation(float angle, const vec3& axis)
 mat4 TransformComponent::SetPosition(const vec2& position)
 {
 	return SetPosition(vec3(position, 0));
+}
+
+mat4 TransformComponent::SetPosition(float x, float y, float z)
+{
+	return SetPosition(vec3(x, y, z));
 }
 
 mat4 TransformComponent::SetPosition(const vec3& position)

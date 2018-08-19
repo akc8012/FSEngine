@@ -86,7 +86,7 @@ void RenderText::Update(float deltaTime)
 	SetScaleFromWindowSize(windowSize);
 	SetPositionFromWindowSize(windowSize);
 
-	SetText(fileSystem->GetSettingsValue<string>("RenderText"));
+	SetText(systems->fileSystem->GetSettingsValue<string>("RenderText"));
 }
 
 void RenderText::SetScaleFromWindowSize(const vec2& windowSize)

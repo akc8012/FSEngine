@@ -11,6 +11,5 @@ private:
 	MeshComponent* CreateMeshComponent() const;
 
 public:
-	CubePrimitive();
-	void Start();
+	CubePrimitive(ShadingComponent* shadingComponent);
 };

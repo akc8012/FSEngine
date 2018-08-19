@@ -1,22 +1,13 @@
 #include "../Header/SceneManager.h"
 
-SceneManager::SceneManager()
+SceneManager::SceneManager(Systems* systems)
 {
-	gameObjectContainer = new GameObject::GameObjectContainer();
+	gameObjectContainer = new GameObject::GameObjectContainer(systems);
 }
 
 GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
 {
 	return gameObjectContainer;
-}
-
-void SceneManager::Initialize(FileSystem* fileSystem, Input* input)
-{
-	for (auto& gameObject : gameObjectContainer->GetGameObjects())
-	{
-		gameObject->SetSystems(gameObjectContainer, fileSystem, input);
-		gameObject->Start();
-	}
 }
 
 void SceneManager::Update(float deltaTime)
@@ -29,7 +20,7 @@ void SceneManager::UpdateGameObjects(float deltaTime, bool refreshLateGameObject
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		if (gameObject->GetLateRefresh() == refreshLateGameObjects)
+		if (gameObject->IsLateRefresh() == refreshLateGameObjects)
 			gameObject->Update(deltaTime);
 	}
 }
@@ -44,7 +35,7 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool refreshLateGameObjec
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		if (gameObject->GetLateRefresh() == refreshLateGameObjects)
+		if (gameObject->IsLateRefresh() == refreshLateGameObjects)
 			renderer->RenderGameObject(gameObject);
 	}
 }

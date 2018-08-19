@@ -1,9 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "Renderer.h"
-#include "FileSystem.h"
-#include "Input.h"
-#include "Window.h"
 
 #include <string>
 #include <vector>
@@ -19,12 +16,11 @@ private:
 	void DrawGameObjects(Renderer* renderer, bool refreshLateGameObjects);
 
 public:
-	SceneManager();
+	SceneManager(Systems* systems);
 	~SceneManager();
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
 
-	void Initialize(FileSystem* fileSystem, Input* input);
 	void Update(float deltaTime);
 	void Draw(Renderer* renderer);
 };

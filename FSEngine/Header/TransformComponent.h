@@ -54,9 +54,11 @@ public:
 
 	mat4 SetScale(const vec2& scaleVector);
 	mat4 SetScale(float scaleFactor);
+	mat4 SetScale(float x, float y, float z);
 	mat4 SetScale(const vec3& scaleVector);
 	mat4 SetRotation(float angle, const vec3& axis);
 	mat4 SetPosition(const vec2& position);
+	mat4 SetPosition(float x, float y, float z);
 	mat4 SetPosition(const vec3& position);
 
 	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
