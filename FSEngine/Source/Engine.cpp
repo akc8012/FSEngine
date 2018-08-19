@@ -4,13 +4,15 @@
 void Engine::Initialize()
 {
 	systems = new Systems();
+	systems->fileSystem = new FileSystem();
+	systems->input = new Input();
 
 	InitSDL();
 	InitOpenGl();
 	InitGlew();
 
-	shaderProgram = new ShaderProgram();
-	renderer = new Renderer(systems->fileSystem, window, shaderProgram);
+	systems->shaderProgram = new ShaderProgram();
+	renderer = new Renderer(systems, window);
 
 	sceneManager = new SceneManager(systems);
 	AddGameObjects();
@@ -163,7 +165,7 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 	case SDLK_x:
 		try
 		{
-			shaderProgram->CompileShaders();
+			systems->shaderProgram->CompileShaders();
 			printf("Rebuilt shader program\n");
 		}
 		catch (string errorMessage)
@@ -230,7 +232,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 			systems->fileSystem->LoadSettingsFile();
 
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
-			shaderProgram->CompileShaders();
+			systems->shaderProgram->CompileShaders();
 
 		//sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
 		break;
@@ -259,8 +261,10 @@ Engine::~Engine()
 {
 	delete sceneManager;
 	delete renderer;
-	delete shaderProgram;
+	delete systems->shaderProgram;
 	delete window;
+	delete systems->input;
+	delete systems->fileSystem;
 	delete systems;
 
 	SDL_GL_DeleteContext(openGlContext);

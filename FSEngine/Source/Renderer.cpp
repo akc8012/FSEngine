@@ -1,9 +1,9 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram)
+Renderer::Renderer(Systems* systems, Window* window)
 {
+	this->systems = systems;
 	this->window = window;
-	this->shaderProgram = shaderProgram;
 }
 
 void Renderer::SetCamera(GameObject* camera)
@@ -18,15 +18,15 @@ void Renderer::StartRender(float deltaTime)
 
 
 
-	if (shaderProgram->RenderPerspective())
+	if (systems->shaderProgram->RenderPerspective())
 	{
-		shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
-		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
+		systems->shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
+		systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
 	}
 	else
-		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
+		systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
 
-	shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
+	systems->shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }
 
 void Renderer::ClearScreen()
@@ -40,10 +40,10 @@ void Renderer::ClearScreen()
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	shaderProgram->SetMatrixUniform("modelMatrix", gameObject->GetComponent<TransformComponent>()->GetMatrix());
-	shaderProgram->SetMatrixUniform("normalMatrix", gameObject->GetComponent<TransformComponent>()->CalculateNormalMatrix());
+	systems->shaderProgram->SetMatrixUniform("modelMatrix", gameObject->GetComponent<TransformComponent>()->GetMatrix());
+	systems->shaderProgram->SetMatrixUniform("normalMatrix", gameObject->GetComponent<TransformComponent>()->CalculateNormalMatrix());
 
-	gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
+	gameObject->GetComponent<ShadingComponent>()->Use(systems->shaderProgram);
 	gameObject->GetComponent<MeshComponent>()->BindVertexArray(); // Use();
 	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
 }
@@ -56,7 +56,7 @@ void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, con
 		if (!shadingComponent->CanUse())
 			continue;
 
-		shadingComponent->Use(shaderProgram);
+		shadingComponent->Use(systems->shaderProgram);
 	}
 }
 

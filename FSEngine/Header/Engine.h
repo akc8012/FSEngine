@@ -1,7 +1,6 @@
 #pragma once
 #include "Systems.h"
 #include "Window.h"
-#include "ShaderProgram.h"
 #include "Renderer.h"
 #include "Timer.h"
 #include "GameObject.h"
@@ -28,7 +27,6 @@ private:
 	SDL_GLContext openGlContext = nullptr;
 	Systems* systems = nullptr;
 	Window* window = nullptr;
-	ShaderProgram* shaderProgram = nullptr;
 	Renderer* renderer = nullptr;
 	SceneManager* sceneManager = nullptr;
 

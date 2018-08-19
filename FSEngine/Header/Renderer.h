@@ -1,9 +1,7 @@
 #pragma once
-#include "ShaderProgram.h"
+#include "Systems.h"
 #include "Window.h"
 #include "GameObject.h"
-#include "Camera.h"
-#include "Timer.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -19,8 +17,8 @@ using namespace glm;
 class Renderer
 {
 private:
+	Systems* systems = nullptr;
 	Window* window = nullptr;
-	ShaderProgram* shaderProgram = nullptr;
 	GameObject* camera = nullptr;
 
 	void ClearScreen();
@@ -31,7 +29,7 @@ private:
 	void DrawTriangleElements(Uint32 indiceCount);
 
 public:
-	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram);
+	Renderer(Systems* systems, Window* window);
 	~Renderer();
 
 	void SetCamera(GameObject* camera);
