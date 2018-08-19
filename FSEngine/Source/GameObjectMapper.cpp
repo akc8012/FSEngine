@@ -18,18 +18,14 @@ void GameObjectMapper::HandleDuplicateIndex(int index) const
 	}
 }
 
-void GameObjectMapper::UnMapGameObject(const string& name)
+int GameObjectMapper::UnMapGameObject(const string& name)
 {
-	try
-	{
-		gameObjectMap.at(name);
-	}
-	catch (std::out_of_range)
-	{
-		throw "Could not find GameObject to unmap with name " + name;
-	}
+	int index = TryGetGameObjectIndex(name);
+	if (index == -1)
+		throw "Could not find GameObject to UnMap with name: " + name;
 
 	gameObjectMap.erase(name);
+	return index;
 }
 
 int GameObjectMapper::TryGetGameObjectIndex(const string& name) const

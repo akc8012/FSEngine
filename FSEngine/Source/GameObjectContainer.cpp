@@ -6,6 +6,12 @@ GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
 	gameObjectMapper = new GameObjectMapper();
 }
 
+void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject)
+{
+	gameObject->SetSystems(systems, this);
+	gameObject->Start();
+}
+
 GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
 	gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
@@ -15,10 +21,14 @@ GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, G
 	return gameObject;
 }
 
-void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject)
+void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 {
-	gameObject->SetSystems(systems, this);
-	gameObject->Start();
+	GameObject* gameObject = TryGetGameObject(name);
+	if (gameObject == nullptr)
+		throw "Could not remove GameObject with name: " + name;
+
+	int index = gameObjectMapper->UnMapGameObject(name);
+	gameObjects.erase(gameObjects.begin() + index);
 }
 
 GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const

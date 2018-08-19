@@ -112,6 +112,7 @@ public:
 	~GameObjectContainer();
 
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);
+	void RemoveGameObject(const string& name);
 
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;

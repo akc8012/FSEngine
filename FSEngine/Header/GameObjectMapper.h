@@ -13,7 +13,7 @@ private:
 
 public:
 	void MapGameObject(const string& name, int index);
-	void UnMapGameObject(const string& name);
+	int UnMapGameObject(const string& name);
 
 	int TryGetGameObjectIndex(const string& name) const;
 };

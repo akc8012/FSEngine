@@ -241,8 +241,13 @@ void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
 
-	if (Timer::GetSeconds() > 3 && sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") == nullptr)
+	bool cubeExists = sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") != nullptr;
+
+	if ((Timer::GetSeconds() > 3 && Timer::GetSeconds() < 6) && !cubeExists)
 		sceneManager->GetGameObjectContainer()->AddGameObject("SpawnCube", new CubePrimitive(new ShadingComponent(0.6f, 0, 0.2f)));
+
+	if (Timer::GetSeconds() > 6 && cubeExists)
+		sceneManager->GetGameObjectContainer()->RemoveGameObject("SpawnCube");
 }
 
 void Engine::Draw(float deltaTime)
