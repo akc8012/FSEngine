@@ -2,9 +2,23 @@
 
 GameObject::GameObject()
 {
+	SetDefaultParameters();
+
 	meshComponents = new unordered_map<string, MeshComponent*>();
 	shadingComponents = new unordered_map<string, ShadingComponent*>();
 	transformComponents = new unordered_map<string, TransformComponent*>();
+}
+
+void GameObject::SetDefaultParameters()
+{
+	Parameters defaultTrue[] = { DoUpdate, DoDraw };
+	Parameters defaultFalse[] = { DoLateUpdate, DoLateDraw };
+
+	for (Parameters parameter : defaultTrue)
+		SetParameter(parameter, true);
+
+	for (Parameters parameter : defaultFalse)
+		SetParameter(parameter, false);
 }
 
 void GameObject::SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer)
@@ -55,14 +69,14 @@ void GameObject::Update(float deltaTime)
 
 }
 
-void GameObject::SetLateRefresh(bool lateRefresh)
+void GameObject::SetParameter(Parameters parameter, bool value)
 {
-	this->lateRefresh = lateRefresh;
+	parameters[parameter] = value;
 }
 
-bool GameObject::IsLateRefresh() const
+bool GameObject::GetParameter(Parameters parameter) const
 {
-	return lateRefresh;
+	return parameters[parameter];
 }
 
 GameObject::~GameObject()

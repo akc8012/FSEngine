@@ -86,7 +86,7 @@ void Engine::AddGameObjects()
 
 	//RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
 	//debugText->SetWindow(window);
-	//debugText->SetLateRefresh(true);
+	//debugText->SetParameter(GameObject::DoLateDraw, true);
 	//debugText->SetPixelScale(26);
 	//debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	//debugText->SetTextAlignment(RenderText::TopLeft);
@@ -94,7 +94,8 @@ void Engine::AddGameObjects()
 
 	Camera* camera = dynamic_cast<Camera*>(sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera()));
 	camera->SetWindow(window);
-	camera->SetLateRefresh(true);
+	camera->SetParameter(GameObject::DoLateUpdate, true);
+	camera->SetParameter(GameObject::DoDraw, false);
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
 	//sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());

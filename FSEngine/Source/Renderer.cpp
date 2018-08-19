@@ -27,9 +27,6 @@ void Renderer::ClearScreen()
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	if (gameObject->TryGetComponent<ShadingComponent>() == nullptr)
-		return;
-
 	SetCameraMatrices();
 
 	gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);

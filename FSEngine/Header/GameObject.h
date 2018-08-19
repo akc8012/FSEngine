@@ -8,21 +8,34 @@
 
 #include <unordered_map>
 #include <vector>
+#include <bitset>
 using std::unordered_map;
 using std::vector;
+using std::bitset;
 
 #pragma region GameObject
 class GameObject
 {
 public:
 	class GameObjectContainer;
+	enum Parameters
+	{
+		DoUpdate,
+		DoDraw,
+		DoLateUpdate,
+		DoLateDraw,
+
+		ParametersLength
+	};
 
 private:
+	bitset<Parameters::ParametersLength> parameters;
+
 	unordered_map<string, MeshComponent*>* meshComponents = nullptr;
 	unordered_map<string, ShadingComponent*>* shadingComponents = nullptr;
 	unordered_map<string, TransformComponent*>* transformComponents = nullptr;
-	bool lateRefresh = false;
 
+	void SetDefaultParameters();
 	void ThrowDuplicateNameException(const string& name) const;
 
 protected:
@@ -45,8 +58,8 @@ public:
 	template <typename T> unordered_map<string, T*>* GetComponents() const;
 	virtual void Update(float deltaTime);
 
-	void SetLateRefresh(bool lateRefresh);
-	bool IsLateRefresh() const;
+	void SetParameter(Parameters parameter, bool value);
+	bool GetParameter(Parameters parameter) const;
 };
 #pragma endregion
 

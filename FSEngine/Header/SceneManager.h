@@ -12,8 +12,8 @@ class SceneManager
 private:
 	GameObject::GameObjectContainer* gameObjectContainer = nullptr;
 
-	void UpdateGameObjects(float deltaTime, bool refreshLateGameObjects);
-	void DrawGameObjects(Renderer* renderer, bool refreshLateGameObjects);
+	void UpdateGameObjects(float deltaTime, bool doLateUpdate);
+	void DrawGameObjects(Renderer* renderer, bool doLateDraw);
 
 public:
 	SceneManager(Systems* systems);
