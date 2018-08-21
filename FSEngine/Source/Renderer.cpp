@@ -1,9 +1,8 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(Systems* systems, Window* window)
+Renderer::Renderer(Systems* systems)
 {
 	this->systems = systems;
-	this->window = window;
 }
 
 void Renderer::SetCamera(GameObject* camera)
@@ -69,7 +68,7 @@ void Renderer::DrawTriangleElements(Uint32 indiceCount)
 	glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_INT, Offset);
 }
 
-void Renderer::EndRender()
+void Renderer::EndRender(Window* window)
 {
 	window->SwapWindow();
 }

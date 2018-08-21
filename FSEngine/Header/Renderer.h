@@ -18,7 +18,6 @@ class Renderer
 {
 private:
 	Systems* systems = nullptr;
-	Window* window = nullptr;
 	GameObject* camera = nullptr;
 
 	void ClearScreen();
@@ -29,12 +28,12 @@ private:
 	void DrawTriangleElements(Uint32 indiceCount);
 
 public:
-	Renderer(Systems* systems, Window* window);
+	Renderer(Systems* systems);
 	~Renderer();
 
 	void SetCamera(GameObject* camera);
 
 	void StartRender(float deltaTime);
 	void RenderGameObject(GameObject* gameObject);
-	void EndRender();
+	void EndRender(Window* window);
 };

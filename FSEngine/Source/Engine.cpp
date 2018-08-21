@@ -12,7 +12,7 @@ void Engine::Initialize()
 	InitGlew();
 
 	systems->shaderProgram = new ShaderProgram();
-	renderer = new Renderer(systems, window);
+	renderer = new Renderer(systems);
 
 	sceneManager = new SceneManager(systems);
 	AddGameObjects();
@@ -249,7 +249,7 @@ void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
 	sceneManager->Draw(renderer);
-	renderer->EndRender();
+	renderer->EndRender(window);
 }
 
 SDL_Window* Engine::GetSDLWindow() const
