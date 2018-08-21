@@ -15,22 +15,14 @@ ShadingComponent::ShadingComponent(float r, float g, float b)
 	SetFlatColor(vec3(r, g, b));
 }
 
+void ShadingComponent::BindTexture()
+{
+
+}
+
 void ShadingComponent::SetFlatColor(const vec3& flatColor)
 {
 	this->flatColor = vec4(flatColor, 1.0f);
-}
-
-bool ShadingComponent::CanUse() const
-{
-	return true;
-}
-
-void ShadingComponent::Use(ShaderProgram* shaderProgram)
-{
-	shaderProgram->SetVectorUniform("flatColor", flatColor);
-
-	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-	shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
 }
 
 vec4 ShadingComponent::GetFlatColor() const
@@ -43,7 +35,7 @@ void ShadingComponent::SetDepthTest(bool enableDepthTest)
 	this->enableDepthTest = enableDepthTest;
 }
 
-bool ShadingComponent::GetDepthTest() const
+bool ShadingComponent::EnableDepthTest() const
 {
 	return enableDepthTest;
 }

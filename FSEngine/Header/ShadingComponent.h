@@ -20,14 +20,14 @@ public:
 	ShadingComponent(float r, float g, float b);
 	virtual ~ShadingComponent();
 
-	virtual bool CanUse() const;
-	virtual void Use(ShaderProgram* shaderProgram);
+	virtual void BindTexture();
 
 	void SetFlatColor(const vec3& flatColor);
 	vec4 GetFlatColor() const;
 
 	void SetDepthTest(bool enableDepthTest);
-	bool GetDepthTest() const;
+	bool EnableDepthTest() const;
+
 	void SetRenderPerspective(bool renderPerspective);
 	bool GetRenderPerspective() const;
 };

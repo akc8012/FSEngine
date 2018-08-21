@@ -36,24 +36,24 @@ void Renderer::ClearScreen()
 
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	systems->shaderProgram->SetMatrixUniform("modelMatrix", gameObject->GetComponent<TransformComponent>()->GetMatrix());
-	systems->shaderProgram->SetMatrixUniform("normalMatrix", gameObject->GetComponent<TransformComponent>()->CalculateNormalMatrix());
+	TransformComponent* transform = gameObject->GetComponent<TransformComponent>();
+	ShadingComponent* shading = gameObject->GetComponent<ShadingComponent>();
+	MeshComponent* mesh = gameObject->GetComponent<MeshComponent>();
 
-	gameObject->GetComponent<ShadingComponent>()->Use(systems->shaderProgram);
-	gameObject->GetComponent<MeshComponent>()->BindVertexArray(); // Use();
-	DrawTriangleArrays(gameObject->GetComponent<MeshComponent>()->GetVerticeCount());
-}
+	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
+	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 
-void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents)
-{
-	for (const auto& associatedTextureName : meshComponent->GetAssociatedTextureNames())
+	// EXPENSIVE!!! Should only call these when a change has been registered. Also, we need to set camera stuff here.
 	{
-		ShadingComponent* shadingComponent = shadingComponents.at(associatedTextureName);
-		if (!shadingComponent->CanUse())
-			continue;
-
-		shadingComponent->Use(systems->shaderProgram);
+		shading->EnableDepthTest() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+		systems->shaderProgram->SetBoolUniform("renderPerspective", shading->GetRenderPerspective());
 	}
+
+	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
+	shading->BindTexture();
+
+	mesh->BindVertexArray();
+	DrawTriangleArrays(mesh->GetVerticeCount()); // make this polymorphic / works also for model
 }
 
 void Renderer::DrawTriangleArrays(Uint32 verticeCount)

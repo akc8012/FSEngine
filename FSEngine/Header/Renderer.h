@@ -22,8 +22,6 @@ private:
 
 	void ClearScreen();
 
-	void UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents);
-
 	void DrawTriangleArrays(Uint32 verticeCount);
 	void DrawTriangleElements(Uint32 indiceCount);
 

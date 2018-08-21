@@ -35,8 +35,8 @@ public:
 	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
 	~TextureComponent();
 
-	bool CanUse() const;
-	void Use(ShaderProgram* shaderProgram);
+	void BindTexture();
+
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 
 	string GetName() const;
