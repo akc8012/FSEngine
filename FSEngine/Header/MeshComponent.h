@@ -48,6 +48,9 @@ private:
 
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
+	void DrawTriangleArrays();
+	void DrawTriangleElements();
+
 public:
 	static const ComponentType ComponentTypeId = Mesh;
 
@@ -56,6 +59,7 @@ public:
 	~MeshComponent();
 
 	void BindVertexArray();
+	void DrawMesh();
 
 	int GetIndiceCount() const;
 	int GetVerticeCount() const;

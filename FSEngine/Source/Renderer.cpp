@@ -53,19 +53,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	shading->BindTexture();
 
 	mesh->BindVertexArray();
-	DrawTriangleArrays(mesh->GetVerticeCount()); // make this polymorphic / works also for model
-}
-
-void Renderer::DrawTriangleArrays(Uint32 verticeCount)
-{
-	const int First = 0;
-	glDrawArrays(GL_TRIANGLES, First, verticeCount);
-}
-
-void Renderer::DrawTriangleElements(Uint32 indiceCount)
-{
-	const int Offset = 0;
-	glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_INT, Offset);
+	mesh->DrawMesh();
 }
 
 void Renderer::EndRender(Window* window)

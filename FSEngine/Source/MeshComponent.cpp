@@ -122,6 +122,23 @@ void MeshComponent::BindVertexArray()
 	glBindVertexArray(vertexArrayId);
 }
 
+void MeshComponent::DrawMesh()
+{
+	(drawingMode == Arrays) ? DrawTriangleArrays() : DrawTriangleElements();
+}
+
+void MeshComponent::DrawTriangleArrays()
+{
+	const int First = 0;
+	glDrawArrays(GL_TRIANGLES, First, GetVerticeCount());
+}
+
+void MeshComponent::DrawTriangleElements()
+{
+	const int Offset = 0;
+	glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, Offset);
+}
+
 int MeshComponent::GetIndiceCount() const
 {
 	return (int)indices.size();

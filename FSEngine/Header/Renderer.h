@@ -22,9 +22,6 @@ private:
 
 	void ClearScreen();
 
-	void DrawTriangleArrays(Uint32 verticeCount);
-	void DrawTriangleElements(Uint32 indiceCount);
-
 public:
 	Renderer(Systems* systems);
 	~Renderer();
