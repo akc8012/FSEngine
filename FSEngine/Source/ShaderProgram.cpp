@@ -8,7 +8,7 @@ ShaderProgram::ShaderProgram()
 
 void ShaderProgram::CompileShaders()
 {
-	setUse = false;
+	isUsing = false;
 	CreateShaderProgram();
 
 	uniformLocations.clear();
@@ -18,7 +18,7 @@ void ShaderProgram::CompileShaders()
 
 void ShaderProgram::MapUniformValues()
 {
-	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition", "renderPerspective" };
+	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition" };
 	for (const auto& uniformName : uniformNames)
 		uniformLocations[uniformName] = GetUniformLocationFromGl(uniformName.c_str());
 }
@@ -120,7 +120,7 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 
 void ShaderProgram::Use()
 {
-	setUse = true;
+	isUsing = true;
 	glUseProgram(shaderProgramId);
 }
 
@@ -215,7 +215,7 @@ Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
 
 void ShaderProgram::ShowUseWarning() const
 {
-	if (!setUse)
+	if (!isUsing)
 		printf("Warning: Use() has not been called on this shader\n");
 }
 

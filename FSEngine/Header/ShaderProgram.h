@@ -17,10 +17,10 @@ using std::unordered_map;
 class ShaderProgram
 {
 private:
-	bool setUse = false;
+	bool isUsing = false;
+	bool renderPerspective = true;
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
-	bool renderPerspective = true;
 
 	void CreateShaderProgram();
 	void MapUniformValues();

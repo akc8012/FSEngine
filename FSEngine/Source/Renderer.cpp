@@ -15,9 +15,6 @@ void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
 
-
-
-
 	if (systems->shaderProgram->RenderPerspective())
 	{
 		systems->shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
