@@ -9,8 +9,8 @@ ShaderProgram::ShaderProgram()
 void ShaderProgram::CompileShaders()
 {
 	SetParameter(IsUsing, false);
-	//SetParameter(RenderPerspective, true);
-	//SetParameter(EnableDepthTest, true);
+	SetParameter(RenderPerspective, true);
+	SetParameter(EnableDepthTest, true);
 
 	CreateShaderProgram();
 
