@@ -14,15 +14,9 @@ void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
 
-	if (systems->shaderProgram->RenderPerspective())
-	{
-		systems->shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
-		systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
-	}
-	else
-		systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
-
-	systems->shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
+	TransformComponent* viewComponent = camera->GetComponent<TransformComponent>("View");
+	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewComponent->GetMatrix());
+	systems->shaderProgram->SetVectorUniform("viewPosition", viewComponent->GetPosition());
 }
 
 void Renderer::ClearScreen()
@@ -46,6 +40,10 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	// EXPENSIVE!!! Should only call these when a change has been registered. Also, we need to set camera stuff here.
 	{
 		shading->EnableDepthTest() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+
+		TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>("Perspective");
+		systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
+
 		systems->shaderProgram->SetBoolUniform("renderPerspective", shading->GetRenderPerspective());
 	}
 
