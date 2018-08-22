@@ -12,13 +12,26 @@ using namespace glm;
 
 #include <string>
 #include <unordered_map>
+#include <bitset>
+using std::string;
 using std::unordered_map;
+using std::bitset;
 
 class ShaderProgram
 {
+public:
+	enum Parameters
+	{
+		IsUsing,
+		RenderPerspective,
+		EnableDepthTest,
+
+		ParametersLength
+	};
+
 private:
-	bool isUsing = false;
-	bool renderPerspective = true;
+	bitset<Parameters::ParametersLength> parameters;
+
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
 
@@ -55,6 +68,6 @@ public:
 	void SetMatrixUniform(const char* name, const mat3& value);
 	void SetMatrixUniform(const char* name, const mat4& value);
 
-	void SetRenderPerspective(bool renderPerspective);
-	bool RenderPerspective() const;
+	void SetParameter(Parameters parameter, bool value);
+	bool GetParameter(Parameters parameter) const;
 };

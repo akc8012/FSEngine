@@ -86,13 +86,13 @@ void Engine::AddGameObjects()
 	//sceneManager->GetGameObjectContainer()->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
 	//sceneManager->GetGameObjectContainer()->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
-	//RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
-	//debugText->SetWindow(window);
-	//debugText->SetParameter(GameObject::DoLateDraw, true);
-	//debugText->SetPixelScale(26);
-	//debugText->SetScreenAnchorPoint(RenderText::TopLeft);
-	//debugText->SetTextAlignment(RenderText::TopLeft);
-	//debugText->SetPixelPosition(vec2(5, -5));
+	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
+	debugText->SetWindow(window);
+	debugText->SetParameter(GameObject::DoLateDraw, true);
+	debugText->SetPixelScale(26);
+	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
+	debugText->SetTextAlignment(RenderText::TopLeft);
+	debugText->SetPixelPosition(vec2(5, -5));
 
 	Camera* camera = dynamic_cast<Camera*>(sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera()));
 	camera->SetWindow(window);

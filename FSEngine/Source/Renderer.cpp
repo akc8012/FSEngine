@@ -37,14 +37,21 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 
-	// EXPENSIVE!!! Should only call these when a change has been registered. Also, we need to set camera stuff here.
+	bool enableDepthTest = shading->EnableDepthTest();
+	if (enableDepthTest != systems->shaderProgram->GetParameter(ShaderProgram::Parameters::EnableDepthTest))
 	{
-		shading->EnableDepthTest() ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+		enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+		systems->shaderProgram->SetParameter(ShaderProgram::Parameters::EnableDepthTest, enableDepthTest);
+	}
 
-		TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>("Perspective");
+	bool renderPerspective = shading->GetRenderPerspective();
+	if (renderPerspective != systems->shaderProgram->GetParameter(ShaderProgram::Parameters::RenderPerspective))
+	{
+		TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
 		systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
-		systems->shaderProgram->SetBoolUniform("renderPerspective", shading->GetRenderPerspective());
+		systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
+		systems->shaderProgram->SetParameter(ShaderProgram::Parameters::RenderPerspective, renderPerspective);
 	}
 
 	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());

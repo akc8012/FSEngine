@@ -8,7 +8,10 @@ ShaderProgram::ShaderProgram()
 
 void ShaderProgram::CompileShaders()
 {
-	isUsing = false;
+	SetParameter(IsUsing, false);
+	//SetParameter(RenderPerspective, true);
+	//SetParameter(EnableDepthTest, true);
+
 	CreateShaderProgram();
 
 	uniformLocations.clear();
@@ -120,17 +123,13 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 
 void ShaderProgram::Use()
 {
-	isUsing = true;
+	SetParameter(IsUsing, true);
 	glUseProgram(shaderProgramId);
 }
 
 void ShaderProgram::SetBoolUniform(const char* name, bool value)
 {
 	ShowUseWarning();
-
-	if (name == "renderPerspective")
-		renderPerspective = value;
-
 	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
@@ -182,17 +181,6 @@ void ShaderProgram::SetMatrixUniform(const char* name, const mat4& value)
 	glUniformMatrix4fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
-void ShaderProgram::SetRenderPerspective(bool renderPerspective)
-{
-	ShowUseWarning();
-	this->renderPerspective = renderPerspective;
-}
-
-bool ShaderProgram::RenderPerspective() const
-{
-	return renderPerspective;
-}
-
 Uint32 ShaderProgram::GetUniformLocation(const char* name)
 {
 	Uint32 location = -1;
@@ -215,8 +203,18 @@ Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
 
 void ShaderProgram::ShowUseWarning() const
 {
-	if (!isUsing)
+	if (!GetParameter(IsUsing))
 		printf("Warning: Use() has not been called on this shader\n");
+}
+
+void ShaderProgram::SetParameter(Parameters parameter, bool value)
+{
+	parameters[parameter] = value;
+}
+
+bool ShaderProgram::GetParameter(Parameters parameter) const
+{
+	return parameters[parameter];
 }
 
 ShaderProgram::~ShaderProgram()
