@@ -77,14 +77,8 @@ template <typename T> inline T* GameObject::TryGetComponent(string name) const
 {
 	try
 	{
-		if (meshComponents.size() > 0 && typeid(T) == typeid(MeshComponent))
-			return reinterpret_cast<T*>(meshComponents.at(name));
-
-		if (shadingComponents.size() > 0 && typeid(T) == typeid(ShadingComponent))
-			return reinterpret_cast<T*>(shadingComponents.at(name));
-
-		if (transformComponents.size() > 0 && typeid(T) == typeid(TransformComponent))
-			return reinterpret_cast<T*>(transformComponents.at(name));
+		unordered_map<string, T*> components = GetComponents<T>();
+		return components.at(name);
 	}
 	catch (std::out_of_range)
 	{
@@ -105,7 +99,7 @@ template <typename T> inline const unordered_map<string, T*>& GameObject::GetCom
 	if (typeid(T) == typeid(TransformComponent))
 		return reinterpret_cast<const unordered_map<string, T*>&>(transformComponents);
 
-	throw "Unrecognized type";
+	throw (string)"Unrecognized component type";
 }
 #pragma endregion
 
