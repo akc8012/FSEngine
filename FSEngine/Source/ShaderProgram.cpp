@@ -9,8 +9,8 @@ ShaderProgram::ShaderProgram()
 void ShaderProgram::CompileShaders()
 {
 	SetParameter(IsUsing, false);
-	SetParameter(RenderPerspective, true);
-	SetParameter(EnableDepthTest, true);
+	SetParameter(RenderPerspective, (short)-1);
+	SetParameter(EnableDepthTest, (short)-1);
 
 	CreateShaderProgram();
 
@@ -209,12 +209,22 @@ void ShaderProgram::ShowUseWarning() const
 
 void ShaderProgram::SetParameter(Parameters parameter, bool value)
 {
+	SetParameter(parameter, (short)value);
+}
+
+void ShaderProgram::SetParameter(Parameters parameter, short value)
+{
 	parameters[parameter] = value;
 }
 
 bool ShaderProgram::GetParameter(Parameters parameter) const
 {
-	return parameters[parameter];
+	return GetParameterInitialized(parameter) && (bool)parameters[parameter];
+}
+
+bool ShaderProgram::GetParameterInitialized(Parameters parameter) const
+{
+	return parameters[parameter] != (short)-1;
 }
 
 ShaderProgram::~ShaderProgram()

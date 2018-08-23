@@ -12,10 +12,8 @@ using namespace glm;
 
 #include <string>
 #include <unordered_map>
-#include <bitset>
 using std::string;
 using std::unordered_map;
-using std::bitset;
 
 class ShaderProgram
 {
@@ -30,7 +28,7 @@ public:
 	};
 
 private:
-	bitset<Parameters::ParametersLength> parameters;
+	short parameters[Parameters::ParametersLength];
 
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
@@ -50,6 +48,8 @@ private:
 	void ShowUseWarning() const;
 
 	static string GetShaderTypeText(Uint32 type);
+	void SetParameter(Parameters parameter, short value);
+	bool GetParameterInitialized(Parameters parameter) const;
 
 public:
 	ShaderProgram();
