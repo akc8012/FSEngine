@@ -142,6 +142,7 @@
     <ClCompile Include="Source\GameObjectMapper.cpp" />
     <ClCompile Include="Source\MeshComponent.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\ParameterCollection.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Systems.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\MeshComponent.h" />
     <ClInclude Include="Header\Model.h" />
+    <ClInclude Include="Header\ParameterCollection.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\CubePrimitive.h" />

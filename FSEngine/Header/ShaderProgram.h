@@ -1,5 +1,6 @@
 #pragma once
 #include "FileSystem.h"
+#include "ParameterCollection.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -28,7 +29,7 @@ public:
 	};
 
 private:
-	short parameters[Parameters::ParametersLength];
+	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
 
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
@@ -48,7 +49,6 @@ private:
 	void ShowUseWarning() const;
 
 	static string GetShaderTypeText(Uint32 type);
-	void SetParameter(Parameters parameter, short value);
 
 public:
 	ShaderProgram();
@@ -67,9 +67,5 @@ public:
 	void SetMatrixUniform(const char* name, const mat3& value);
 	void SetMatrixUniform(const char* name, const mat4& value);
 
-	void SetParameter(Parameters parameter, bool value);
-	bool GetParameter(Parameters parameter) const;
-
-	bool IsInitializedAndEqualTo(Parameters parameter, bool value) const;
-	bool IsParameterInitialized(Parameters parameter) const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameters() const;
 };

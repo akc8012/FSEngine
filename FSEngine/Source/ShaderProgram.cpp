@@ -8,9 +8,7 @@ ShaderProgram::ShaderProgram()
 
 void ShaderProgram::CompileShaders()
 {
-	SetParameter(IsUsing, false);
-	SetParameter(RenderPerspective, (short)-1);
-	SetParameter(EnableDepthTest, (short)-1);
+	parameterCollection->SetParameter(IsUsing, false);
 
 	CreateShaderProgram();
 
@@ -123,7 +121,7 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 
 void ShaderProgram::Use()
 {
-	SetParameter(IsUsing, true);
+	parameterCollection->SetParameter(IsUsing, true);
 	glUseProgram(shaderProgramId);
 }
 
@@ -203,36 +201,13 @@ Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
 
 void ShaderProgram::ShowUseWarning() const
 {
-	if (!GetParameter(IsUsing))
+	if (!parameterCollection->GetParameter(IsUsing))
 		printf("Warning: Use() has not been called on this shader\n");
 }
 
-void ShaderProgram::SetParameter(Parameters parameter, bool value)
+ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameters() const
 {
-	SetParameter(parameter, (short)value);
-}
-
-void ShaderProgram::SetParameter(Parameters parameter, short value)
-{
-	parameters[parameter] = value;
-}
-
-bool ShaderProgram::GetParameter(Parameters parameter) const
-{
-	if (!IsParameterInitialized(parameter))
-		throw (string)"Trying to access uninitialized parameter: " + std::to_string(parameter);
-
-	return (bool)parameters[parameter];
-}
-
-bool ShaderProgram::IsInitializedAndEqualTo(Parameters parameter, bool value) const
-{
-	return IsParameterInitialized(parameter) && GetParameter(parameter) == value;
-}
-
-bool ShaderProgram::IsParameterInitialized(Parameters parameter) const
-{
-	return parameters[parameter] != (short)-1;
+	return parameterCollection;
 }
 
 ShaderProgram::~ShaderProgram()
