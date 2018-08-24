@@ -49,7 +49,6 @@ private:
 
 	static string GetShaderTypeText(Uint32 type);
 	void SetParameter(Parameters parameter, short value);
-	bool GetParameterInitialized(Parameters parameter) const;
 
 public:
 	ShaderProgram();
@@ -70,4 +69,7 @@ public:
 
 	void SetParameter(Parameters parameter, bool value);
 	bool GetParameter(Parameters parameter) const;
+
+	bool IsInitializedAndEqualTo(Parameters parameter, bool value) const;
+	bool IsParameterInitialized(Parameters parameter) const;
 };

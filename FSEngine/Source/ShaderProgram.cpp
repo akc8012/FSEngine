@@ -219,10 +219,18 @@ void ShaderProgram::SetParameter(Parameters parameter, short value)
 
 bool ShaderProgram::GetParameter(Parameters parameter) const
 {
-	return GetParameterInitialized(parameter) && (bool)parameters[parameter];
+	if (!IsParameterInitialized(parameter))
+		throw (string)"Trying to access uninitialized parameter: " + std::to_string(parameter);
+
+	return (bool)parameters[parameter];
 }
 
-bool ShaderProgram::GetParameterInitialized(Parameters parameter) const
+bool ShaderProgram::IsInitializedAndEqualTo(Parameters parameter, bool value) const
+{
+	return IsParameterInitialized(parameter) && GetParameter(parameter) == value;
+}
+
+bool ShaderProgram::IsParameterInitialized(Parameters parameter) const
 {
 	return parameters[parameter] != (short)-1;
 }
