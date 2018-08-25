@@ -12,8 +12,6 @@
 #include <glm\gtc\type_ptr.hpp>
 using namespace glm;
 
-#include <string>
-
 class Renderer
 {
 private:
@@ -21,6 +19,15 @@ private:
 	GameObject* camera = nullptr;
 
 	void ClearScreen();
+	void SetViewMatrices(TransformComponent* viewTransform);
+
+	void SetTransformMatrices(TransformComponent* transform);
+
+	void SetShadingParameters(ShadingComponent* shading);
+	void SetDepthTest(bool enableDepthTest);
+	void SetRenderPerspective(bool enableDepthTest);
+
+	void RenderMesh(MeshComponent* mesh);
 
 public:
 	Renderer(Systems* systems);

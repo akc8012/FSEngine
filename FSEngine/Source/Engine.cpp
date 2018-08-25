@@ -248,7 +248,9 @@ void Engine::Update(float deltaTime)
 void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
+
 	sceneManager->Draw(renderer);
+
 	renderer->EndRender(window);
 }
 

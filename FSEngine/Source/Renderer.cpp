@@ -13,10 +13,7 @@ void Renderer::SetCamera(GameObject* camera)
 void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
-
-	TransformComponent* viewComponent = camera->GetComponent<TransformComponent>("View");
-	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewComponent->GetMatrix());
-	systems->shaderProgram->SetVectorUniform("viewPosition", viewComponent->GetPosition());
+	SetViewMatrices(camera->GetComponent<TransformComponent>("View"));
 }
 
 void Renderer::ClearScreen()
@@ -28,23 +25,47 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void Renderer::SetViewMatrices(TransformComponent* viewTransform)
+{
+	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
+	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
+}
+
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	TransformComponent* transform = gameObject->GetComponent<TransformComponent>();
-	ShadingComponent* shading = gameObject->GetComponent<ShadingComponent>();
-	MeshComponent* mesh = gameObject->GetComponent<MeshComponent>();
+	SetTransformMatrices(gameObject->GetComponent<TransformComponent>());
 
+	SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
+
+	RenderMesh(gameObject->GetComponent<MeshComponent>());
+}
+
+void Renderer::SetTransformMatrices(TransformComponent* transform)
+{
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
+}
 
-	bool enableDepthTest = shading->GetParameterCollection()->GetParameter(ShadingComponent::EnableDepthTest);
+void Renderer::SetShadingParameters(ShadingComponent* shading)
+{
+	SetDepthTest(shading->GetParameterCollection()->GetParameter(ShadingComponent::EnableDepthTest));
+	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(ShadingComponent::RenderPerspective));
+
+	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
+	shading->BindTexture();
+}
+
+void Renderer::SetDepthTest(bool enableDepthTest)
+{
 	if (!systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
 	{
 		enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 		systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
 	}
+}
 
-	bool renderPerspective = shading->GetParameterCollection()->GetParameter(ShadingComponent::RenderPerspective);
+void Renderer::SetRenderPerspective(bool renderPerspective)
+{
 	if (!systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 	{
 		TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
@@ -53,10 +74,10 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 		systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
 		systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
 	}
+}
 
-	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
-	shading->BindTexture();
-
+void Renderer::RenderMesh(MeshComponent* mesh)
+{
 	mesh->BindVertexArray();
 	mesh->DrawMesh();
 }
