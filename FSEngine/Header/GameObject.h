@@ -5,13 +5,12 @@
 #include "TextureComponent.h"
 #include "TransformComponent.h"
 #include "GameObjectMapper.h"
+#include "ParameterCollection.h"
 
 #include <unordered_map>
 #include <vector>
-#include <bitset>
 using std::unordered_map;
 using std::vector;
-using std::bitset;
 
 #pragma region GameObject
 class GameObject
@@ -29,7 +28,7 @@ public:
 	};
 
 private:
-	bitset<Parameters::ParametersLength> parameters;
+	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
 
 	unordered_map<string, MeshComponent*> meshComponents;
 	unordered_map<string, ShadingComponent*> shadingComponents;
@@ -47,7 +46,9 @@ public:
 	~GameObject();
 
 	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
+
 	virtual void Start();
+	virtual void Update(float deltaTime);
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
 	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
@@ -56,10 +57,8 @@ public:
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> const unordered_map<string, T*>& GetComponents() const;
-	virtual void Update(float deltaTime);
 
-	void SetParameter(Parameters parameter, bool value);
-	bool GetParameter(Parameters parameter) const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };
 #pragma endregion
 

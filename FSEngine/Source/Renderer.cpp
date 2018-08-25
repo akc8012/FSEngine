@@ -37,21 +37,21 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 
-	bool enableDepthTest = shading->EnableDepthTest();
-	if (!systems->shaderProgram->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
+	bool enableDepthTest = shading->GetParameterCollection()->GetParameter(ShadingComponent::EnableDepthTest);
+	if (!systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
 	{
 		enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-		systems->shaderProgram->SetParameter(ShaderProgram::Parameters::EnableDepthTest, enableDepthTest);
+		systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
 	}
 
-	bool renderPerspective = shading->GetRenderPerspective();
-	if (!systems->shaderProgram->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
+	bool renderPerspective = shading->GetParameterCollection()->GetParameter(ShadingComponent::RenderPerspective);
+	if (!systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 	{
 		TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
 		systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 		systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
-		systems->shaderProgram->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
+		systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
 	}
 
 	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());

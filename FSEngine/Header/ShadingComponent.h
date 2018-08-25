@@ -1,16 +1,27 @@
 #pragma once
 #include "Component.h"
 #include "ShaderProgram.h"
+#include "ParameterCollection.h"
 
 #include <glm\glm.hpp>
 using namespace glm;
 
 class ShadingComponent : public Component
 {
+public:
+	enum Parameters
+	{
+		EnableDepthTest,
+		RenderPerspective,
+
+		ParametersLength
+	};
+
 private:
+	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
 	vec4 flatColor = vec4(0);
-	bool enableDepthTest = true;
-	bool renderPerspective = true;
+
+	void Initialize();
 
 public:
 	static const ComponentType ComponentTypeId = Shading;
@@ -25,9 +36,5 @@ public:
 	void SetFlatColor(const vec3& flatColor);
 	vec4 GetFlatColor() const;
 
-	void SetDepthTest(bool enableDepthTest);
-	bool EnableDepthTest() const;
-
-	void SetRenderPerspective(bool renderPerspective);
-	bool GetRenderPerspective() const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };
