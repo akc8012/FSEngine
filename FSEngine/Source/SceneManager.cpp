@@ -20,7 +20,7 @@ void SceneManager::UpdateGameObjects(float deltaTime, bool doLateUpdate)
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		if (gameObject->GetParameter(GameObject::DoUpdate) && gameObject->GetParameter(GameObject::DoLateUpdate) == doLateUpdate)
+		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoUpdate) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateUpdate) == doLateUpdate)
 			gameObject->Update(deltaTime);
 	}
 }
@@ -35,7 +35,7 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
-		if (gameObject->GetParameter(GameObject::DoDraw) && gameObject->GetParameter(GameObject::DoLateDraw) == doLateDraw)
+		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoDraw) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateDraw) == doLateDraw)
 			renderer->RenderGameObject(gameObject);
 	}
 }
