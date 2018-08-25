@@ -26,7 +26,7 @@ void ShadingComponent::Initialize()
 
 void ShadingComponent::BindTexture()
 {
-
+	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
 void ShadingComponent::SetFlatColor(const vec3& flatColor)
