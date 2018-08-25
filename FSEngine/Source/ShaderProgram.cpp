@@ -2,6 +2,8 @@
 
 ShaderProgram::ShaderProgram()
 {
+	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+
 	shaderProgramId = glCreateProgram();
 	CompileShaders();
 }
@@ -205,7 +207,7 @@ void ShaderProgram::ShowUseWarning() const
 		printf("Warning: Use() has not been called on this shader\n");
 }
 
-ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameters() const
+ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameterCollection() const
 {
 	return parameterCollection;
 }
@@ -213,4 +215,5 @@ ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>*
 ShaderProgram::~ShaderProgram()
 {
 	glDeleteProgram(shaderProgramId);
+	delete parameterCollection;
 }

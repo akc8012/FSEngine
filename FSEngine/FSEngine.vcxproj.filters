@@ -24,7 +24,6 @@
     <ClCompile Include="Source\GameObjectMapper.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\Systems.cpp" />
-    <ClCompile Include="Source\ParameterCollection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />

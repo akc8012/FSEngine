@@ -67,5 +67,5 @@ public:
 	void SetMatrixUniform(const char* name, const mat3& value);
 	void SetMatrixUniform(const char* name, const mat4& value);
 
-	ParameterCollection<Parameters, ParametersLength>* GetParameters() const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };

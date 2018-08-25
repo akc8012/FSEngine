@@ -142,7 +142,6 @@
     <ClCompile Include="Source\GameObjectMapper.cpp" />
     <ClCompile Include="Source\MeshComponent.cpp" />
     <ClCompile Include="Source\Model.cpp" />
-    <ClCompile Include="Source\ParameterCollection.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Systems.cpp" />
