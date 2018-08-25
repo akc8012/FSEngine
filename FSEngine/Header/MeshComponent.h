@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Vertex.h"
+#include "ParameterCollection.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -15,7 +16,13 @@ using std::vector;
 class MeshComponent : public Component
 {
 public:
-	enum DrawingMode { Arrays, Elements };
+	enum Parameters
+	{
+		RenderBackfaces,
+		DrawElements,
+
+		ParametersLength
+	};
 
 private:
 	struct VertexAttribute
@@ -27,16 +34,16 @@ private:
 		size_t offset;
 	};
 
+	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+
 	vector<Vertex> vertices;
 	vector<Uint32> indices;
 	vector<string> associatedTextureNames;
 
 	Uint32 vertexArrayId = NULL;
-	bool renderBackfaces = false;
-	DrawingMode drawingMode = Elements;
 
+	void Initialize();
 	vector<Vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
-
 	void CreateVertexArray();
 
 	void SendVertices(Uint32 vertexBufferId);
@@ -48,8 +55,8 @@ private:
 
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
-	void DrawTriangleArrays();
 	void DrawTriangleElements();
+	void DrawTriangleArrays();
 
 public:
 	static const ComponentType ComponentTypeId = Mesh;
@@ -64,12 +71,9 @@ public:
 	int GetIndiceCount() const;
 	int GetVerticeCount() const;
 
-	void SetRenderBackfaces(bool renderBackfaces);
-	bool RenderBackfaces() const;
-	void SetDrawingMode(DrawingMode drawingMode);
-	DrawingMode GetDrawingMode() const;
-
-	void AddAssociatedTextureName(string textureName);
+	void AddAssociatedTextureName(const string& textureName);
 	void AddAssociatedTextureIndices(const vector<string>& textureNames);
 	vector<string> GetAssociatedTextureNames() const;
+
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };

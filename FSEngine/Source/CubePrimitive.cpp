@@ -3,8 +3,8 @@
 CubePrimitive::CubePrimitive(ShadingComponent* shadingComponent)
 {
 	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
-	meshComponent->SetDrawingMode(MeshComponent::Arrays);
-	meshComponent->SetRenderBackfaces(true);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
 
 	AddComponent(new TransformComponent());
 	AddComponent(shadingComponent);

@@ -4,8 +4,8 @@ RenderText::RenderText()
 {
 	AddComponent(new TransformComponent());
 	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
-	meshComponent->SetDrawingMode(MeshComponent::Arrays);
-	meshComponent->SetRenderBackfaces(true);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
 
 	LoadFont("arial.ttf");
 
