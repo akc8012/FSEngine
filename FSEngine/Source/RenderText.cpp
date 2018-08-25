@@ -10,8 +10,8 @@ RenderText::RenderText()
 	LoadFont("arial.ttf");
 
 	SetText(renderText);
-	GetComponent<ShadingComponent>()->SetRenderPerspective(false);
-	GetComponent<ShadingComponent>()->SetDepthTest(false);
+	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::RenderPerspective, false);
+	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::EnableDepthTest, false);
 }
 
 MeshComponent* RenderText::CreateMeshComponent() const

@@ -2,17 +2,26 @@
 
 ShadingComponent::ShadingComponent()
 {
-
+	Initialize();
 }
 
 ShadingComponent::ShadingComponent(const vec3& flatColor)
 {
 	SetFlatColor(flatColor);
+	Initialize();
 }
 
 ShadingComponent::ShadingComponent(float r, float g, float b)
 {
 	SetFlatColor(vec3(r, g, b));
+	Initialize();
+}
+
+void ShadingComponent::Initialize()
+{
+	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection->SetParameter(EnableDepthTest, true);
+	parameterCollection->SetParameter(RenderPerspective, true);
 }
 
 void ShadingComponent::BindTexture()
@@ -30,27 +39,12 @@ vec4 ShadingComponent::GetFlatColor() const
 	return flatColor;
 }
 
-void ShadingComponent::SetDepthTest(bool enableDepthTest)
+ParameterCollection<ShadingComponent::Parameters, ShadingComponent::ParametersLength>* ShadingComponent::GetParameterCollection() const
 {
-	this->enableDepthTest = enableDepthTest;
-}
-
-bool ShadingComponent::EnableDepthTest() const
-{
-	return enableDepthTest;
-}
-
-void ShadingComponent::SetRenderPerspective(bool renderPerspective)
-{
-	this->renderPerspective = renderPerspective;
-}
-
-bool ShadingComponent::GetRenderPerspective() const
-{
-	return renderPerspective;
+	return parameterCollection;
 }
 
 ShadingComponent::~ShadingComponent()
 {
-
+	delete parameterCollection;
 }
