@@ -13,6 +13,7 @@ public:
 	{
 		EnableDepthTest,
 		RenderPerspective,
+		Blend,
 
 		ParametersLength
 	};

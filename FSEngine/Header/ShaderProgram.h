@@ -24,6 +24,7 @@ public:
 		IsUsing,
 		RenderPerspective,
 		EnableDepthTest,
+		Blend,
 
 		ParametersLength
 	};

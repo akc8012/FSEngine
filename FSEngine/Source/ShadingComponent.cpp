@@ -22,6 +22,7 @@ void ShadingComponent::Initialize()
 	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
 	parameterCollection->SetParameter(EnableDepthTest, true);
 	parameterCollection->SetParameter(RenderPerspective, true);
+	parameterCollection->SetParameter(Blend, true);
 }
 
 void ShadingComponent::BindTexture()

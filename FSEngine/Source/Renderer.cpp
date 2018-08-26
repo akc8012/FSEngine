@@ -61,6 +61,7 @@ void Renderer::SetShadingParameters(ShadingComponent* shading)
 {
 	SetDepthTest(shading->GetParameterCollection()->GetParameter(ShadingComponent::EnableDepthTest));
 	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(ShadingComponent::RenderPerspective));
+	SetBlend(shading->GetParameterCollection()->GetParameter(ShadingComponent::Blend));
 
 	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
 	shading->BindTexture();
@@ -85,6 +86,15 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
 	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
+}
+
+void Renderer::SetBlend(bool blend)
+{
+	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::Blend, blend))
+		return;
+
+	blend ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
+	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
 }
 
 void Renderer::RenderMesh(MeshComponent* mesh)

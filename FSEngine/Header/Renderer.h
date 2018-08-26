@@ -26,6 +26,7 @@ private:
 	void SetShadingParameters(ShadingComponent* shading);
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
+	void SetBlend(bool blend);
 
 	void RenderMesh(MeshComponent* mesh);
 

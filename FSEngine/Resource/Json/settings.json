@@ -10,7 +10,7 @@
   "RenderText": "Debug text",
   "CameraControl": false,
   "ShipControl": true,
-  
+
   "ShipSpeed": 10,
   "CameraDistance": 5.5
 }
