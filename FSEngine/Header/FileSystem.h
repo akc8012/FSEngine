@@ -1,4 +1,6 @@
 #pragma once
+#include "FSException.h"
+
 #include <string>
 #include <fstream>
 #include <sstream>

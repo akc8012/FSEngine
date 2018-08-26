@@ -1,4 +1,5 @@
 #pragma once
+#include "FSException.h"
 #include "Systems.h"
 #include "MeshComponent.h"
 #include "ShadingComponent.h"
@@ -67,7 +68,7 @@ template <typename T> T* GameObject::GetComponent(string name) const
 {
 	T* component = TryGetComponent<T>(name);
 	if (component == nullptr)
-		throw (string)"Could not find component with name " + name;
+		throwFS("Could not find component with name " + name);
 
 	return component;
 }
@@ -98,7 +99,7 @@ template <typename T> const unordered_map<string, T*>& GameObject::GetComponents
 	if (typeid(T) == typeid(TransformComponent))
 		return reinterpret_cast<const unordered_map<string, T*>&>(transformComponents);
 
-	throw (string)"Unrecognized component type";
+	throwFS("Unrecognized component type");
 }
 #pragma endregion
 

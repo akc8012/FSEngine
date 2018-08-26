@@ -17,7 +17,7 @@ unique_ptr<Importer> Model::LoadModelImporter(const char* filepath)
 	const aiScene* scene = importer->ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 	if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
-		throw "Assimp error: " + (string)(importer->GetErrorString());
+		throwFS("Assimp error: " + (string)(importer->GetErrorString()));
 
 	return importer;
 }

@@ -1,5 +1,11 @@
 #include "../Header/Engine.h"
 
+void HandleException(const string& header, const string& message, SDL_Window* sdlWindow = nullptr)
+{
+	printf("%s\n", message.c_str());
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, header.c_str(), message.c_str(), sdlWindow);
+}
+
 int main(int argc, char* args[])
 {
 	Engine* engine = new Engine();
@@ -7,9 +13,9 @@ int main(int argc, char* args[])
 	{
 		engine->Initialize();
 	}
-	catch (string errorMessage)
+	catch (const std::exception& exception)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "INIT ERROR", errorMessage.c_str(), nullptr);
+		HandleException("INIT ERROR", exception.what());
 	}
 
 	while (engine->IsRunning())
@@ -18,9 +24,9 @@ int main(int argc, char* args[])
 		{
 			engine->GameLoop();
 		}
-		catch (string errorMessage)
+		catch (const std::exception& exception)
 		{
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "GAMELOOP ERROR", errorMessage.c_str(), engine->GetSDLWindow());
+			HandleException("GAMELOOP ERROR", exception.what(), engine->GetSDLWindow());
 			engine->Stop();
 		}
 	}

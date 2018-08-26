@@ -19,7 +19,7 @@ void Window::CreateWindow(const tvec2<int>& resolution, bool fullscreen)
 	sdlWindow = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowSize.x, WindowSize.y, WindowFlags);
 
 	if (sdlWindow == nullptr)
-		throw (string)"Window could not be created: " + SDL_GetError();
+		throwFS((string)"Window could not be created: " + SDL_GetError());
 }
 
 void Window::ToggleFullscreen()

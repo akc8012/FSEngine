@@ -67,7 +67,7 @@ TransformComponent* GameObject::AddComponent(TransformComponent* component, stri
 
 void GameObject::ThrowDuplicateNameException(const string& name) const
 {
-	throw "Component with name " + name + " already exists";
+	throwFS("Component with name " + name + " already exists");
 }
 
 ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameObject::GetParameterCollection() const

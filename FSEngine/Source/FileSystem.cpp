@@ -14,11 +14,11 @@ void FileSystem::LoadSettingsFile()
 json FileSystem::GetSettingsValue(const char* key) const
 {
 	if (settingsJson == nullptr)
-		throw (string)"Attempting to access settings json without loading it first";
+		throwFS((string)"Attempting to access settings json without loading it first");
 
 	auto jsonValue = settingsJson.find(key);
 	if (jsonValue == settingsJson.end())
-		throw (string)"Could not retrieve settings value using key: " + key;
+		throwFS((string)"Could not retrieve settings value using key: " + key);
 
 	return jsonValue.value();
 }
@@ -28,7 +28,7 @@ string FileSystem::LoadTextFromFile(const char* filepath)
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
 	if (!success)
-		throw (string)"Unable to load text file from path: " + filepath;
+		throwFS((string)"Unable to load text file from path: " + filepath);
 
 	return file;
 }

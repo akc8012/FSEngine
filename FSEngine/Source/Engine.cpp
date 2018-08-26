@@ -24,13 +24,13 @@ void Engine::Initialize()
 void Engine::InitSDL()
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0)
-		throw (string)"SDL could not initialize! SDL_Error: " + SDL_GetError();
+		throwFS((string)"SDL could not initialize! SDL_Error: " + SDL_GetError());
 
 	if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
-		throw (string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError();
+		throwFS((string)"SDL_image could not initialize! SDL_image Error: " + IMG_GetError());
 
 	if (TTF_Init() != 0)
-		throw (string)"SDL_ttf could not initialize! SDL_ttf error: " + TTF_GetError();
+		throwFS((string)"SDL_ttf could not initialize! SDL_ttf error: " + TTF_GetError());
 }
 
 void Engine::InitOpenGl()
@@ -55,13 +55,13 @@ void Engine::CreateOpenGlContext()
 	SDL_GL_DeleteContext(openGlContext);
 	openGlContext = SDL_GL_CreateContext(window->GetSDLWindow());
 	if (openGlContext == nullptr)
-		throw (string)"OpenGL context could not be created! SDL Error: " + SDL_GetError();
+		throwFS((string)"OpenGL context could not be created! SDL Error: " + SDL_GetError());
 }
 
 void Engine::SetSwapInterval(int interval)
 {
 	if (SDL_GL_SetSwapInterval(interval) != 0)
-		throw (string)"Unable to set swap interval! SDL Error: " + SDL_GetError();
+		throwFS((string)"Unable to set swap interval! SDL Error: " + SDL_GetError());
 }
 
 void Engine::InitGlew()
@@ -69,7 +69,7 @@ void Engine::InitGlew()
 	glewExperimental = GL_TRUE;
 	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
-		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
+		throwFS((string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError));
 }
 
 bool Engine::IsRunning() const

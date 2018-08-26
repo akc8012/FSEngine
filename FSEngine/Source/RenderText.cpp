@@ -42,7 +42,7 @@ void RenderText::LoadFont(const char* fontName)
 	const int FontSize = 32;
 	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
 	if (font == nullptr)
-		throw (string)"Failed to load font! SDL_ttf error: " + TTF_GetError();
+		throwFS((string)"Failed to load font! SDL_ttf error: " + TTF_GetError());
 }
 
 void RenderText::SetText(const string& text)
@@ -119,7 +119,7 @@ vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
 	case BottomRight:
 		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y - windowSize.y);
 	default:
-		throw "Could not recognize anchorPosition: " + std::to_string(anchorPosition);
+		throwFS("Could not recognize anchorPosition: " + std::to_string(anchorPosition));
 	}
 }
 
@@ -139,7 +139,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 	case BottomRight:
 		return vec2(position.x - pixelScale.x, position.y + pixelScale.y);
 	default:
-		throw "Could not recognize alignPosition: " + std::to_string(alignPosition);
+		throwFS("Could not recognize alignPosition: " + std::to_string(alignPosition));
 	}
 }
 

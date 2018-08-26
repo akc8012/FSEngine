@@ -1,4 +1,6 @@
 #pragma once
+#include "FSException.h"
+
 #include <string>
 #include <unordered_map>
 using std::string;

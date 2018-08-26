@@ -1,4 +1,6 @@
 #pragma once
+#include "FSException.h"
+
 #include <string>
 using std::string;
 
@@ -28,7 +30,7 @@ public:
 	bool GetParameter(Parameters parameter) const
 	{
 		if (!IsParameterInitialized(parameter))
-			throw (string)"Trying to access uninitialized parameter: " + std::to_string(parameter);
+			throwFS("Trying to access uninitialized parameter: " + std::to_string(parameter));
 
 		return (bool)parameters[parameter];
 	}

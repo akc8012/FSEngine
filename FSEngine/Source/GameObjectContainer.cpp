@@ -25,7 +25,7 @@ void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 {
 	GameObject* gameObject = TryGetGameObject(name);
 	if (gameObject == nullptr)
-		throw "Could not remove GameObject with name: " + name;
+		throwFS("Could not remove GameObject with name: " + name);
 
 	int index = gameObjectMapper->UnMapGameObject(name);
 	gameObjects.erase(gameObjects.begin() + index);
@@ -37,7 +37,7 @@ GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) c
 {
 	GameObject* gameObject = TryGetGameObject(name);
 	if (gameObject == nullptr)
-		throw "Could not get GameObject with name: " + name;
+		throwFS("Could not get GameObject with name: " + name);
 
 	return gameObject;
 }

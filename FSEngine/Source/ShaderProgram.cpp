@@ -112,7 +112,7 @@ void ShaderProgram::LinkShaderProgram(Uint32 vertexShaderId, Uint32 fragmentShad
 	{
 		char infoLog[512];
 		glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
-		throw (string)"Error linking program: " + infoLog;
+		throwFS((string)"Error linking program: " + infoLog);
 	}
 }
 
@@ -190,7 +190,7 @@ Uint32 ShaderProgram::GetUniformLocation(const char* name)
 	}
 	catch (std::out_of_range)
 	{
-		throw (string)"Could not find stored uniform location with name: " + name + (string)". Created new map entry.\n";
+		throwFS((string)"Could not find stored uniform location with name: " + name + (string)". Created new map entry.\n");
 	}
 
 	return location;

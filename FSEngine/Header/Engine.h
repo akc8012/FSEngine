@@ -5,14 +5,13 @@
 #include "Timer.h"
 #include "GameObject.h"
 #include "SceneManager.h"
+#include "FSException.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
-
-#include <string>
 
 class Engine
 {

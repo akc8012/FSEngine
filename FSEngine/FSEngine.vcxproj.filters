@@ -24,6 +24,7 @@
     <ClCompile Include="Source\GameObjectMapper.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\Systems.cpp" />
+    <ClCompile Include="Source\FSException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Header\GameObjectMapper.h" />
     <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\ParameterCollection.h" />
+    <ClInclude Include="Header\FSException.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
