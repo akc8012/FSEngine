@@ -168,7 +168,7 @@ void MeshComponent::AddAssociatedTextureIndices(const vector<string>& textureNam
 	associatedTextureNames.insert(associatedTextureNames.end(), textureNames.begin(), textureNames.end());
 }
 
-vector<string> MeshComponent::GetAssociatedTextureNames() const
+const vector<string>& MeshComponent::GetAssociatedTextureNames() const
 {
 	return associatedTextureNames;
 }

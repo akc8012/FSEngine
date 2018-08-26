@@ -100,7 +100,7 @@ void Engine::AddGameObjects()
 	camera->GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
-	//sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
+	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
 }
 
 bool Engine::IsRunning() const

@@ -73,7 +73,7 @@ public:
 
 	void AddAssociatedTextureName(const string& textureName);
 	void AddAssociatedTextureIndices(const vector<string>& textureNames);
-	vector<string> GetAssociatedTextureNames() const;
+	const vector<string>& GetAssociatedTextureNames() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };

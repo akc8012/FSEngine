@@ -35,9 +35,17 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<TransformComponent>());
 
-	SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
+	for (auto& mesh : gameObject->GetComponents<MeshComponent>())
+	{
+		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
+		for (const auto& textureName : textureNames)
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureName));
 
-	RenderMesh(gameObject->GetComponent<MeshComponent>());
+		if (textureNames.size() == 0)
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
+
+		RenderMesh(mesh.second);
+	}
 }
 
 void Renderer::SetTransformMatrices(TransformComponent* transform)
@@ -57,28 +65,30 @@ void Renderer::SetShadingParameters(ShadingComponent* shading)
 
 void Renderer::SetDepthTest(bool enableDepthTest)
 {
-	if (!systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
-	{
-		enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-		systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
-	}
+	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
+		return;
+
+	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
 }
 
 void Renderer::SetRenderPerspective(bool renderPerspective)
 {
-	if (!systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
-	{
-		TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
-		systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
+	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
+		return;
 
-		systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
-		systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
-	}
+	TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
+	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
+
+	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
+	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
 }
 
 void Renderer::RenderMesh(MeshComponent* mesh)
 {
 	mesh->BindVertexArray();
+
+	mesh->GetParameterCollection()->GetParameter(MeshComponent::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
 	mesh->DrawMesh();
 }
 
