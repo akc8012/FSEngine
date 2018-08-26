@@ -1,23 +1,13 @@
 #include "../Header/TextureComponent.h"
 
-TextureComponent::TextureComponent(const string& filepath, const string& name)
+TextureComponent::TextureComponent(const string& filepath)
 {
-	SetName(filepath, name);
-
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
 		throw (string)"Unable to load image at path: " + filepath + ", " + IMG_GetError();
 
 	GenerateTexture(surface);
 	SDL_FreeSurface(surface);
-}
-
-void TextureComponent::SetName(const string& filepath, const string& name)
-{
-	if (name == "")
-		this->name = filepath.substr(filepath.find_last_of('/') + 1, filepath.length());
-	else
-		this->name = name;
 }
 
 TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
@@ -93,11 +83,6 @@ int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
 void TextureComponent::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, textureId);
-}
-
-string TextureComponent::GetName() const
-{
-	return name;
 }
 
 TextureComponent::TextureType TextureComponent::GetTextureType() const

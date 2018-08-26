@@ -84,32 +84,32 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 	const aiTextureType textureType = aiTextureType_DIFFUSE;
 	for (Uint32 i = 0; i < material->GetTextureCount(textureType); i++)
 	{
-		aiString texturePath;
-		material->GetTexture(textureType, i, &texturePath);
+		aiString textureFileName;
+		material->GetTexture(textureType, i, &textureFileName);
 
-		string* loadedTextureName = GetLoadedTextureName((string)texturePath.C_Str());
-		if (loadedTextureName == nullptr)
-		{
-			string textureName = texturePath.C_Str();
-			meshComponent->AddAssociatedTextureName(textureName);
-
-			AddComponent(new TextureComponent(directory + textureName, textureName), textureName);
-		}
-		else
-		{
-			meshComponent->AddAssociatedTextureName(*loadedTextureName);
-			delete loadedTextureName;
-		}
+		AddTextureComponent(meshComponent, textureFileName.C_Str());
 	}
 }
 
-string* Model::GetLoadedTextureName(const string& texturePath) const
+void Model::AddTextureComponent(MeshComponent* meshComponent, const string& textureName)
+{
+	unique_ptr<string> loadedTextureName(TryGetLoadedTextureName(textureName));
+	if (loadedTextureName == nullptr)
+	{
+		meshComponent->AddAssociatedTextureName(textureName);
+		AddComponent(new TextureComponent(directory + textureName), textureName);
+	}
+	else
+		meshComponent->AddAssociatedTextureName(*loadedTextureName);
+}
+
+string* Model::TryGetLoadedTextureName(const string& textureName) const
 {
 	for (const auto& textureComponent : GetComponents<ShadingComponent>())
 	{
-		string name = dynamic_cast<TextureComponent*>(textureComponent.second)->GetName();
-		if (texturePath == name)
-			return new string(name);
+		string loadedTextureName = textureComponent.first;
+		if (textureName == loadedTextureName)
+			return new string(loadedTextureName);
 	}
 
 	return nullptr;

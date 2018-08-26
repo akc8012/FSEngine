@@ -25,12 +25,13 @@ private:
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 
 	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);
-	void ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMaterial* material);
-
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
 
-	string* GetLoadedTextureName(const string& texturePath) const;
+	void ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMaterial* material);
+	void AddTextureComponent(MeshComponent* meshComponent, const string& textureName);
+
+	string* TryGetLoadedTextureName(const string& textureName) const;
 
 public:
 	Model(const string& filepath);
