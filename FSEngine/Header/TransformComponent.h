@@ -37,7 +37,7 @@ public:
 	static string GetFormattedVectorString(const vec3& vector);
 	static string GetFormattedVectorString(const vec2& vector);
 
-	mat4 GetMatrix() const;
+	const mat4& GetMatrix() const;
 	mat3 CalculateNormalMatrix() const;
 
 	vec3 GetScale() const;

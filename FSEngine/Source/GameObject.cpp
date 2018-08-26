@@ -2,9 +2,24 @@
 
 GameObject::GameObject()
 {
+	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	SetDefaultParameters();
+
 	meshComponents = unordered_map<string, MeshComponent*>();
 	shadingComponents = unordered_map<string, ShadingComponent*>();
 	transformComponents = unordered_map<string, TransformComponent*>();
+}
+
+void GameObject::SetDefaultParameters()
+{
+	Parameters defaultTrue[] = { DoUpdate, DoDraw };
+	Parameters defaultFalse[] = { DoLateUpdate, DoLateDraw };
+
+	for (const auto& parameter : defaultTrue)
+		parameterCollection->SetParameter(parameter, true);
+
+	for (const auto& parameter : defaultFalse)
+		parameterCollection->SetParameter(parameter, false);
 }
 
 void GameObject::SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer)
@@ -14,6 +29,11 @@ void GameObject::SetSystems(Systems* systems, GameObject::GameObjectContainer* g
 }
 
 void GameObject::Start()
+{
+
+}
+
+void GameObject::Update(float deltaTime)
 {
 
 }
@@ -50,19 +70,9 @@ void GameObject::ThrowDuplicateNameException(const string& name) const
 	throw "Component with name " + name + " already exists";
 }
 
-void GameObject::Update(float deltaTime)
+ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameObject::GetParameterCollection() const
 {
-
-}
-
-void GameObject::SetLateRefresh(bool lateRefresh)
-{
-	this->lateRefresh = lateRefresh;
-}
-
-bool GameObject::IsLateRefresh() const
-{
-	return lateRefresh;
+	return parameterCollection;
 }
 
 GameObject::~GameObject()
@@ -84,4 +94,6 @@ GameObject::~GameObject()
 		if (!transformComponent.second->IsShared())
 			delete transformComponent.second;
 	}
+
+	delete parameterCollection;
 }

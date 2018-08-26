@@ -2,13 +2,16 @@
 
 ShaderProgram::ShaderProgram()
 {
+	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+
 	shaderProgramId = glCreateProgram();
 	CompileShaders();
 }
 
 void ShaderProgram::CompileShaders()
 {
-	setUse = false;
+	parameterCollection->SetParameter(IsUsing, false);
+
 	CreateShaderProgram();
 
 	uniformLocations.clear();
@@ -18,7 +21,7 @@ void ShaderProgram::CompileShaders()
 
 void ShaderProgram::MapUniformValues()
 {
-	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition", "renderPerspective" };
+	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition" };
 	for (const auto& uniformName : uniformNames)
 		uniformLocations[uniformName] = GetUniformLocationFromGl(uniformName.c_str());
 }
@@ -120,17 +123,13 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 
 void ShaderProgram::Use()
 {
-	setUse = true;
+	parameterCollection->SetParameter(IsUsing, true);
 	glUseProgram(shaderProgramId);
 }
 
 void ShaderProgram::SetBoolUniform(const char* name, bool value)
 {
 	ShowUseWarning();
-
-	if (name == "renderPerspective")
-		renderPerspective = value;
-
 	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
@@ -182,17 +181,6 @@ void ShaderProgram::SetMatrixUniform(const char* name, const mat4& value)
 	glUniformMatrix4fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
-void ShaderProgram::SetRenderPerspective(bool renderPerspective)
-{
-	ShowUseWarning();
-	this->renderPerspective = renderPerspective;
-}
-
-bool ShaderProgram::RenderPerspective() const
-{
-	return renderPerspective;
-}
-
 Uint32 ShaderProgram::GetUniformLocation(const char* name)
 {
 	Uint32 location = -1;
@@ -215,11 +203,17 @@ Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
 
 void ShaderProgram::ShowUseWarning() const
 {
-	if (!setUse)
+	if (!parameterCollection->GetParameter(IsUsing))
 		printf("Warning: Use() has not been called on this shader\n");
+}
+
+ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameterCollection() const
+{
+	return parameterCollection;
 }
 
 ShaderProgram::~ShaderProgram()
 {
 	glDeleteProgram(shaderProgramId);
+	delete parameterCollection;
 }

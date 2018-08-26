@@ -4,13 +4,15 @@
 void Engine::Initialize()
 {
 	systems = new Systems();
+	systems->fileSystem = new FileSystem();
+	systems->input = new Input();
 
 	InitSDL();
 	InitOpenGl();
 	InitGlew();
 
-	shaderProgram = new ShaderProgram();
-	renderer = new Renderer(systems->fileSystem, window, shaderProgram);
+	systems->shaderProgram = new ShaderProgram();
+	renderer = new Renderer(systems);
 
 	sceneManager = new SceneManager(systems);
 	AddGameObjects();
@@ -73,20 +75,20 @@ void Engine::InitGlew()
 void Engine::AddGameObjects()
 {
 	GameObject* memeFaceCube = sceneManager->GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
-	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(4.5f, 0.2f, 0);
+	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(2, 0.2f, 0);
 
 	GameObject* greenCube = sceneManager->GetGameObjectContainer()->AddGameObject("GreenCube", new CubePrimitive(new ShadingComponent(0.1f, 0.6f, 0.3f)));
-	greenCube->GetComponent<TransformComponent>()->SetPosition(6, -0.2f, 0.1f);
+	greenCube->GetComponent<TransformComponent>()->SetPosition(0, -0.2f, 0.1f);
 	greenCube->GetComponent<TransformComponent>()->SetScale(2, 0.8f, 2.8f);
 
-	sceneManager->GetGameObjectContainer()->AddGameObject("1", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
-	sceneManager->GetGameObjectContainer()->AddGameObject("2", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
-	sceneManager->GetGameObjectContainer()->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
-	sceneManager->GetGameObjectContainer()->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
+	//sceneManager->GetGameObjectContainer()->AddGameObject("1", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
+	//sceneManager->GetGameObjectContainer()->AddGameObject("2", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
+	//sceneManager->GetGameObjectContainer()->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
+	//sceneManager->GetGameObjectContainer()->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
 	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
 	debugText->SetWindow(window);
-	debugText->SetLateRefresh(true);
+	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
@@ -94,7 +96,8 @@ void Engine::AddGameObjects()
 
 	Camera* camera = dynamic_cast<Camera*>(sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera()));
 	camera->SetWindow(window);
-	camera->SetLateRefresh(true);
+	camera->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
+	camera->GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
 	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
@@ -162,7 +165,7 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 	case SDLK_x:
 		try
 		{
-			shaderProgram->CompileShaders();
+			systems->shaderProgram->CompileShaders();
 			printf("Rebuilt shader program\n");
 		}
 		catch (string errorMessage)
@@ -229,9 +232,9 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 			systems->fileSystem->LoadSettingsFile();
 
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
-			shaderProgram->CompileShaders();
+			systems->shaderProgram->CompileShaders();
 
-		sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
+		//sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
 		break;
 	}
 }
@@ -240,21 +243,15 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 void Engine::Update(float deltaTime)
 {
 	sceneManager->Update(deltaTime);
-
-	bool cubeExists = sceneManager->GetGameObjectContainer()->TryGetGameObject("SpawnCube") != nullptr;
-
-	if ((Timer::GetSeconds() > 3 && Timer::GetSeconds() < 6) && !cubeExists)
-		sceneManager->GetGameObjectContainer()->AddGameObject("SpawnCube", new CubePrimitive(new ShadingComponent(0.6f, 0, 0.2f)));
-
-	if (Timer::GetSeconds() > 6 && cubeExists)
-		sceneManager->GetGameObjectContainer()->RemoveGameObject("SpawnCube");
 }
 
 void Engine::Draw(float deltaTime)
 {
 	renderer->StartRender(deltaTime);
+
 	sceneManager->Draw(renderer);
-	renderer->EndRender();
+
+	renderer->EndRender(window);
 }
 
 SDL_Window* Engine::GetSDLWindow() const
@@ -266,8 +263,10 @@ Engine::~Engine()
 {
 	delete sceneManager;
 	delete renderer;
-	delete shaderProgram;
+	delete systems->shaderProgram;
 	delete window;
+	delete systems->input;
+	delete systems->fileSystem;
 	delete systems;
 
 	SDL_GL_DeleteContext(openGlContext);

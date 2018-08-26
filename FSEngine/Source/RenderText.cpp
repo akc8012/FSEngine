@@ -4,14 +4,14 @@ RenderText::RenderText()
 {
 	AddComponent(new TransformComponent());
 	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
-	meshComponent->SetDrawingMode(MeshComponent::Arrays);
-	meshComponent->SetRenderBackfaces(true);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
 
 	LoadFont("arial.ttf");
 
 	SetText(renderText);
-	GetComponent<ShadingComponent>()->SetRenderPerspective(false);
-	GetComponent<ShadingComponent>()->SetDepthTest(false);
+	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::RenderPerspective, false);
+	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::EnableDepthTest, false);
 }
 
 MeshComponent* RenderText::CreateMeshComponent() const

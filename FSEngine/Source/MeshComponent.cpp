@@ -5,13 +5,22 @@ MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32
 	this->vertices = vertices;
 	this->indices = indices;
 
-	CreateVertexArray();
+	Initialize();
 }
 
 MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
 {
 	this->vertices = ConvertRawVertices(rawVertices, stride);
 	this->indices = indices;
+
+	Initialize();
+}
+
+void MeshComponent::Initialize()
+{
+	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection->SetParameter(RenderBackfaces, false);
+	parameterCollection->SetParameter(DrawElements, true);
 
 	CreateVertexArray();
 }
@@ -122,6 +131,23 @@ void MeshComponent::BindVertexArray()
 	glBindVertexArray(vertexArrayId);
 }
 
+void MeshComponent::DrawMesh()
+{
+	parameterCollection->GetParameter(DrawElements) ? DrawTriangleElements() : DrawTriangleArrays();
+}
+
+void MeshComponent::DrawTriangleElements()
+{
+	const int Offset = 0;
+	glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, Offset);
+}
+
+void MeshComponent::DrawTriangleArrays()
+{
+	const int First = 0;
+	glDrawArrays(GL_TRIANGLES, First, GetVerticeCount());
+}
+
 int MeshComponent::GetIndiceCount() const
 {
 	return (int)indices.size();
@@ -132,27 +158,7 @@ int MeshComponent::GetVerticeCount() const
 	return (int)vertices.size();
 }
 
-void MeshComponent::SetRenderBackfaces(bool renderBackfaces)
-{
-	this->renderBackfaces = renderBackfaces;
-}
-
-bool MeshComponent::RenderBackfaces() const
-{
-	return renderBackfaces;
-}
-
-void MeshComponent::SetDrawingMode(DrawingMode drawingMode)
-{
-	this->drawingMode = drawingMode;
-}
-
-MeshComponent::DrawingMode MeshComponent::GetDrawingMode() const
-{
-	return drawingMode;
-}
-
-void MeshComponent::AddAssociatedTextureName(string textureName)
+void MeshComponent::AddAssociatedTextureName(const string& textureName)
 {
 	associatedTextureNames.push_back(textureName);
 }
@@ -162,13 +168,19 @@ void MeshComponent::AddAssociatedTextureIndices(const vector<string>& textureNam
 	associatedTextureNames.insert(associatedTextureNames.end(), textureNames.begin(), textureNames.end());
 }
 
-vector<string> MeshComponent::GetAssociatedTextureNames() const
+const vector<string>& MeshComponent::GetAssociatedTextureNames() const
 {
 	return associatedTextureNames;
+}
+
+ParameterCollection<MeshComponent::Parameters, MeshComponent::ParametersLength>* MeshComponent::GetParameterCollection() const
+{
+	return parameterCollection;
 }
 
 MeshComponent::~MeshComponent()
 {
 	const int Amount = 1;
 	glDeleteVertexArrays(Amount, &vertexArrayId);
+	delete parameterCollection;
 }

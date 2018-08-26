@@ -173,6 +173,7 @@
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\MeshComponent.h" />
     <ClInclude Include="Header\Model.h" />
+    <ClInclude Include="Header\ParameterCollection.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\CubePrimitive.h" />

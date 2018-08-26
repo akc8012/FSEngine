@@ -49,6 +49,7 @@
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
     <ClInclude Include="Header\Systems.h" />
+    <ClInclude Include="Header\ParameterCollection.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

@@ -3,8 +3,8 @@
 CubePrimitive::CubePrimitive(ShadingComponent* shadingComponent)
 {
 	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
-	meshComponent->SetDrawingMode(MeshComponent::Arrays);
-	meshComponent->SetRenderBackfaces(true);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
+	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
 
 	AddComponent(new TransformComponent());
 	AddComponent(shadingComponent);
@@ -66,4 +66,9 @@ MeshComponent* CubePrimitive::CreateMeshComponent() const
 
 	const int Stride = 8;
 	return new MeshComponent(rawVertices, Stride, indices);
+}
+
+void CubePrimitive::Update(float deltaTime)
+{
+	GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds(), glm::normalize(vec3(1, 1, 0)));
 }

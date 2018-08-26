@@ -1,9 +1,7 @@
 #pragma once
-#include "ShaderProgram.h"
+#include "Systems.h"
 #include "Window.h"
 #include "GameObject.h"
-#include "Camera.h"
-#include "Timer.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -14,31 +12,30 @@
 #include <glm\gtc\type_ptr.hpp>
 using namespace glm;
 
-#include <string>
-
 class Renderer
 {
 private:
-	Window* window = nullptr;
-	ShaderProgram* shaderProgram = nullptr;
+	Systems* systems = nullptr;
 	GameObject* camera = nullptr;
 
 	void ClearScreen();
+	void SetViewMatrices(TransformComponent* viewTransform);
 
-	void SetCameraMatrices();
-	void SetModelMatrices(TransformComponent* transform);
+	void SetTransformMatrices(TransformComponent* transform);
 
-	void UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents);
+	void SetShadingParameters(ShadingComponent* shading);
+	void SetDepthTest(bool enableDepthTest);
+	void SetRenderPerspective(bool enableDepthTest);
 
-	void DrawTriangleArrays(Uint32 verticeCount);
-	void DrawTriangleElements(Uint32 indiceCount);
+	void RenderMesh(MeshComponent* mesh);
 
 public:
-	Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram);
+	Renderer(Systems* systems);
 	~Renderer();
 
 	void SetCamera(GameObject* camera);
+
 	void StartRender(float deltaTime);
 	void RenderGameObject(GameObject* gameObject);
-	void EndRender();
+	void EndRender(Window* window);
 };

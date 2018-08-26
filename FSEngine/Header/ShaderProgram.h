@@ -1,5 +1,6 @@
 #pragma once
 #include "FileSystem.h"
+#include "ParameterCollection.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -12,15 +13,26 @@ using namespace glm;
 
 #include <string>
 #include <unordered_map>
+using std::string;
 using std::unordered_map;
 
 class ShaderProgram
 {
+public:
+	enum Parameters
+	{
+		IsUsing,
+		RenderPerspective,
+		EnableDepthTest,
+
+		ParametersLength
+	};
+
 private:
-	bool setUse = false;
+	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
-	bool renderPerspective = true;
 
 	void CreateShaderProgram();
 	void MapUniformValues();
@@ -55,6 +67,5 @@ public:
 	void SetMatrixUniform(const char* name, const mat3& value);
 	void SetMatrixUniform(const char* name, const mat4& value);
 
-	void SetRenderPerspective(bool renderPerspective);
-	bool RenderPerspective() const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };

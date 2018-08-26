@@ -5,6 +5,7 @@
 #include "TextureComponent.h"
 #include "TransformComponent.h"
 #include "GameObjectMapper.h"
+#include "ParameterCollection.h"
 
 #include <unordered_map>
 #include <vector>
@@ -16,13 +17,24 @@ class GameObject
 {
 public:
 	class GameObjectContainer;
+	enum Parameters
+	{
+		DoUpdate,
+		DoDraw,
+		DoLateUpdate,
+		DoLateDraw,
+
+		ParametersLength
+	};
 
 private:
+	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+
 	unordered_map<string, MeshComponent*> meshComponents;
 	unordered_map<string, ShadingComponent*> shadingComponents;
 	unordered_map<string, TransformComponent*> transformComponents;
-	bool lateRefresh = false;
 
+	void SetDefaultParameters();
 	void ThrowDuplicateNameException(const string& name) const;
 
 protected:
@@ -34,7 +46,9 @@ public:
 	~GameObject();
 
 	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
+
 	virtual void Start();
+	virtual void Update(float deltaTime);
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
 	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
@@ -43,10 +57,8 @@ public:
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> const unordered_map<string, T*>& GetComponents() const;
-	virtual void Update(float deltaTime);
 
-	void SetLateRefresh(bool lateRefresh);
-	bool IsLateRefresh() const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };
 #pragma endregion
 
@@ -111,6 +123,6 @@ public:
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;
 
-	vector<GameObject*> GetGameObjects() const;
+	const vector<GameObject*>& GetGameObjects() const;
 };
 #pragma endregion

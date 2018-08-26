@@ -60,7 +60,7 @@ GameObject* GameObject::GameObjectContainer::TryGetGameObjectAtIndex(int index) 
 	}
 }
 
-vector<GameObject*> GameObject::GameObjectContainer::GetGameObjects() const
+const vector<GameObject*>& GameObject::GameObjectContainer::GetGameObjects() const
 {
 	return gameObjects;
 }

@@ -1,9 +1,8 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(FileSystem* fileSystem, Window* window, ShaderProgram* shaderProgram)
+Renderer::Renderer(Systems* systems)
 {
-	this->window = window;
-	this->shaderProgram = shaderProgram;
+	this->systems = systems;
 }
 
 void Renderer::SetCamera(GameObject* camera)
@@ -14,47 +13,7 @@ void Renderer::SetCamera(GameObject* camera)
 void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
-}
-
-void Renderer::RenderGameObject(GameObject* gameObject)
-{
-	for (auto& meshComponentMap : gameObject->GetComponents<MeshComponent>())
-	{
-		MeshComponent* meshComponent = meshComponentMap.second;
-		meshComponent->RenderBackfaces() ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
-
-		if (meshComponent->GetAssociatedTextureNames().size() > 0)
-			UseMeshAssociatedTextures(meshComponent, gameObject->GetComponents<ShadingComponent>());
-		else
-			gameObject->GetComponent<ShadingComponent>()->Use(shaderProgram);
-
-		SetCameraMatrices();
-
-		meshComponent->BindVertexArray();
-		SetModelMatrices(gameObject->GetComponent<TransformComponent>());
-
-		if (meshComponent->GetDrawingMode() == MeshComponent::Elements)
-			DrawTriangleElements(meshComponent->GetIndiceCount());
-		else
-			DrawTriangleArrays(meshComponent->GetVerticeCount());
-	}
-}
-
-void Renderer::UseMeshAssociatedTextures(const MeshComponent* meshComponent, const unordered_map<string, ShadingComponent*>& shadingComponents)
-{
-	for (const auto& associatedTextureName : meshComponent->GetAssociatedTextureNames())
-	{
-		ShadingComponent* shadingComponent = shadingComponents.at(associatedTextureName);
-		if (!shadingComponent->CanUse())
-			continue;
-
-		shadingComponent->Use(shaderProgram);
-	}
-}
-
-void Renderer::EndRender()
-{
-	window->SwapWindow();
+	SetViewMatrices(camera->GetComponent<TransformComponent>("View"));
 }
 
 void Renderer::ClearScreen()
@@ -66,35 +25,76 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::SetCameraMatrices()
+void Renderer::SetViewMatrices(TransformComponent* viewTransform)
 {
-	if (shaderProgram->RenderPerspective())
+	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
+	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
+}
+
+void Renderer::RenderGameObject(GameObject* gameObject)
+{
+	SetTransformMatrices(gameObject->GetComponent<TransformComponent>());
+
+	for (auto& mesh : gameObject->GetComponents<MeshComponent>())
 	{
-		shaderProgram->SetMatrixUniform("viewMatrix", camera->GetComponent<TransformComponent>("View")->GetMatrix());
-		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
+		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
+		for (const auto& textureName : textureNames)
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureName));
+
+		if (textureNames.size() == 0)
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
+
+		RenderMesh(mesh.second);
 	}
-	else
-		shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Orthographic")->GetMatrix());
-
-	shaderProgram->SetVectorUniform("viewPosition", camera->GetComponent<TransformComponent>("View")->GetPosition());
 }
 
-void Renderer::SetModelMatrices(TransformComponent* transform)
+void Renderer::SetTransformMatrices(TransformComponent* transform)
 {
-	shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
-	shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
+	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
+	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-void Renderer::DrawTriangleArrays(Uint32 verticeCount)
+void Renderer::SetShadingParameters(ShadingComponent* shading)
 {
-	const int First = 0;
-	glDrawArrays(GL_TRIANGLES, First, verticeCount);
+	SetDepthTest(shading->GetParameterCollection()->GetParameter(ShadingComponent::EnableDepthTest));
+	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(ShadingComponent::RenderPerspective));
+
+	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
+	shading->BindTexture();
 }
 
-void Renderer::DrawTriangleElements(Uint32 indiceCount)
+void Renderer::SetDepthTest(bool enableDepthTest)
 {
-	const int Offset = 0;
-	glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_INT, Offset);
+	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
+		return;
+
+	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
+}
+
+void Renderer::SetRenderPerspective(bool renderPerspective)
+{
+	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
+		return;
+
+	TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
+	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
+
+	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
+	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
+}
+
+void Renderer::RenderMesh(MeshComponent* mesh)
+{
+	mesh->BindVertexArray();
+
+	mesh->GetParameterCollection()->GetParameter(MeshComponent::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
+	mesh->DrawMesh();
+}
+
+void Renderer::EndRender(Window* window)
+{
+	window->SwapWindow();
 }
 
 Renderer::~Renderer()
