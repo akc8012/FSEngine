@@ -6,12 +6,6 @@ GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
 	gameObjectMapper = new GameObjectMapper();
 }
 
-void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject)
-{
-	gameObject->SetSystems(systems, this);
-	gameObject->Start();
-}
-
 GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
 	gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
@@ -19,6 +13,12 @@ GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, G
 	InitializeGameObject(gameObject);
 
 	return gameObject;
+}
+
+void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject)
+{
+	gameObject->SetSystems(systems, this);
+	gameObject->Start();
 }
 
 void GameObject::GameObjectContainer::RemoveGameObject(const string& name)

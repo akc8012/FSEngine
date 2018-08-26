@@ -1,12 +1,17 @@
 #include "../Header/Camera.h"
 
-Camera::Camera()
+Camera::Camera(Window* window)
 {
+	this->window = window;
+
 	viewTransform = AddComponent(new TransformComponent(), "View");
 	SetPosition(vec3(0, 0, 4));
 
 	AddComponent(new TransformComponent(), "Perspective");
 	AddComponent(new TransformComponent(), "Orthographic");
+
+	GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
+	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 }
 
 void Camera::Update(float deltaTime)
@@ -57,11 +62,6 @@ void Camera::CalculateProjectionMatrixOrthographic()
 void Camera::SetPosition(const vec3& position)
 {
 	viewTransform->SetPosition(-position);
-}
-
-void Camera::SetWindow(Window* window)
-{
-	this->window = window;
 }
 
 vec3 Camera::GetPosition() const

@@ -31,11 +31,7 @@ void SceneManager::AddGameObjects(Window* window)
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
 
-	Camera* camera = dynamic_cast<Camera*>(GetGameObjectContainer()->AddGameObject("Camera", new Camera()));
-	camera->SetWindow(window);
-	camera->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
-	camera->GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
-
+	GetGameObjectContainer()->AddGameObject("Camera", new Camera(window));
 	GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
 }
 

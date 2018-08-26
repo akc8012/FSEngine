@@ -21,10 +21,9 @@ private:
 	void CalculateProjectionMatrixOrthographic();
 
 public:
-	Camera();
+	Camera(Window* window);
 	void Update(float deltaTime);
 
 	void SetPosition(const vec3& position);
-	void SetWindow(Window* window);
 	vec3 GetPosition() const;
 };
