@@ -5,10 +5,6 @@
 #include "Timer.h"
 #include "GameObject.h"
 #include "SceneManager.h"
-#include "CubePrimitive.h"
-#include "RenderText.h"
-#include "Model.h"
-#include "PlayerShip.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -34,7 +30,6 @@ private:
 	void InitOpenGl();
 	void CreateOpenGlContext();
 	void InitGlew();
-	void AddGameObjects();
 
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);

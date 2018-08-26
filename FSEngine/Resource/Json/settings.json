@@ -8,8 +8,9 @@
   "Fullscreen": false,
 
   "RenderText": "Debug text",
-  "CameraControl": true,
-  "ShipControl": false,
+  "CameraControl": false,
+  "ShipControl": true,
   
+  "ShipSpeed": 10,
   "CameraDistance": 5.5
 }

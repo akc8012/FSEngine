@@ -24,8 +24,8 @@ void PlayerShip::Update(float deltaTime)
 	if (glm::length(inputVector) != 0)
 		inputVector = glm::normalize(inputVector);
 
-	const float Speed = 3;
-	transform->Translate(inputVector * deltaTime * Speed);
+	float shipSpeed = systems->fileSystem->GetSettingsValue<float>("ShipSpeed");
+	transform->Translate(inputVector * deltaTime * shipSpeed);
 
 	camera->SetPosition(transform->GetPosition() + vec3(0, 0, systems->fileSystem->GetSettingsValue<float>("CameraDistance")));
 }

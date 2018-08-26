@@ -13,9 +13,9 @@ void Engine::Initialize()
 
 	systems->shaderProgram = new ShaderProgram();
 	renderer = new Renderer(systems);
+	sceneManager = new SceneManager(systems, window);
 
-	sceneManager = new SceneManager(systems);
-	AddGameObjects();
+	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
 	printf("Success\n");
 	running = true;
@@ -70,37 +70,6 @@ void Engine::InitGlew()
 	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throw (string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError);
-}
-
-void Engine::AddGameObjects()
-{
-	GameObject* memeFaceCube = sceneManager->GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
-	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(2, 0.2f, 0);
-
-	GameObject* greenCube = sceneManager->GetGameObjectContainer()->AddGameObject("GreenCube", new CubePrimitive(new ShadingComponent(0.1f, 0.6f, 0.3f)));
-	greenCube->GetComponent<TransformComponent>()->SetPosition(0, -0.2f, 0.1f);
-	greenCube->GetComponent<TransformComponent>()->SetScale(2, 0.8f, 2.8f);
-
-	//sceneManager->GetGameObjectContainer()->AddGameObject("1", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
-	//sceneManager->GetGameObjectContainer()->AddGameObject("2", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
-	//sceneManager->GetGameObjectContainer()->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
-	//sceneManager->GetGameObjectContainer()->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
-
-	RenderText* debugText = dynamic_cast<RenderText*>(sceneManager->GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
-	debugText->SetWindow(window);
-	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
-	debugText->SetPixelScale(26);
-	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
-	debugText->SetTextAlignment(RenderText::TopLeft);
-	debugText->SetPixelPosition(vec2(5, -5));
-
-	Camera* camera = dynamic_cast<Camera*>(sceneManager->GetGameObjectContainer()->AddGameObject("Camera", new Camera()));
-	camera->SetWindow(window);
-	camera->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
-	camera->GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
-	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
-
-	sceneManager->GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
 }
 
 bool Engine::IsRunning() const
@@ -234,7 +203,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			systems->shaderProgram->CompileShaders();
 
-		//sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
+		sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
 		break;
 	}
 }

@@ -1,6 +1,11 @@
 #pragma once
 #include "GameObject.h"
 #include "Renderer.h"
+#include "Window.h"
+#include "CubePrimitive.h"
+#include "RenderText.h"
+#include "Model.h"
+#include "PlayerShip.h"
 
 #include <string>
 #include <vector>
@@ -12,11 +17,12 @@ class SceneManager
 private:
 	GameObject::GameObjectContainer* gameObjectContainer = nullptr;
 
+	void AddGameObjects(Window* window);
 	void UpdateGameObjects(float deltaTime, bool doLateUpdate);
 	void DrawGameObjects(Renderer* renderer, bool doLateDraw);
 
 public:
-	SceneManager(Systems* systems);
+	SceneManager(Systems* systems, Window* window);
 	~SceneManager();
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
