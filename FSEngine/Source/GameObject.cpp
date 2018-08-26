@@ -75,6 +75,16 @@ ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameO
 	return parameterCollection;
 }
 
+const string& GameObject::GetName() const
+{
+	return *name;
+}
+
+void GameObject::SetName(const string& name)
+{
+	this->name = &name;
+}
+
 GameObject::~GameObject()
 {
 	for (auto& meshComponent : meshComponents)

@@ -1,12 +1,14 @@
 #include "../Header/GameObjectMapper.h"
 
-void GameObjectMapper::MapGameObject(const string& name, int index)
+const string& GameObjectMapper::MapGameObject(const string& name, int index)
 {
 	HandleDuplicateIndex(index);
 
 	auto result = gameObjectMap.emplace(name, index);
 	if (!result.second)
 		throwFS("Mapped GameObject with name " + name + " already exists");
+
+	return result.first->first;
 }
 
 void GameObjectMapper::HandleDuplicateIndex(int index) const

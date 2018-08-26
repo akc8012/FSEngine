@@ -8,16 +8,18 @@ GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
 
 GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
-	gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
+	const string& mappedName = gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
+
 	gameObjects.push_back(gameObject);
-	InitializeGameObject(gameObject);
+	InitializeGameObject(gameObject, mappedName);
 
 	return gameObject;
 }
 
-void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject)
+void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)
 {
 	gameObject->SetSystems(systems, this);
+	gameObject->SetName(name);
 	gameObject->Start();
 }
 

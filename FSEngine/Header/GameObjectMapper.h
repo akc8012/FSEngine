@@ -14,7 +14,7 @@ private:
 	void HandleDuplicateIndex(int index) const;
 
 public:
-	void MapGameObject(const string& name, int index);
+	const string& MapGameObject(const string& name, int index);
 	int UnMapGameObject(const string& name);
 
 	int TryGetGameObjectIndex(const string& name) const;

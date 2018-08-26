@@ -29,6 +29,7 @@ public:
 	};
 
 private:
+	const string* name = nullptr;
 	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
 
 	unordered_map<string, MeshComponent*> meshComponents;
@@ -60,6 +61,9 @@ public:
 	template <typename T> const unordered_map<string, T*>& GetComponents() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
+
+	const string& GetName() const;
+	void SetName(const string& name);
 };
 #pragma endregion
 
@@ -111,7 +115,7 @@ private:
 	GameObjectMapper* gameObjectMapper = nullptr;
 	vector<GameObject*> gameObjects;
 
-	void InitializeGameObject(GameObject* gameObject);
+	void InitializeGameObject(GameObject* gameObject, const string& name);
 	GameObject* TryGetGameObjectAtIndex(int index) const;
 
 public:
