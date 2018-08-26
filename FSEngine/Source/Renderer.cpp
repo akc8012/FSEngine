@@ -10,6 +10,7 @@ void Renderer::SetCamera(GameObject* camera)
 	this->camera = camera;
 }
 
+#pragma region StartRender
 void Renderer::StartRender(float deltaTime)
 {
 	ClearScreen();
@@ -30,7 +31,9 @@ void Renderer::SetViewMatrices(TransformComponent* viewTransform)
 	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
 }
+#pragma endregion
 
+#pragma region RenderGameObject
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<TransformComponent>());
@@ -91,11 +94,14 @@ void Renderer::RenderMesh(MeshComponent* mesh)
 	mesh->GetParameterCollection()->GetParameter(MeshComponent::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
 	mesh->DrawMesh();
 }
+#pragma endregion
 
+#pragma region EndRender
 void Renderer::EndRender(Window* window)
 {
 	window->SwapWindow();
 }
+#pragma endregion
 
 Renderer::~Renderer()
 {
