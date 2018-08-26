@@ -63,7 +63,7 @@ public:
 #pragma endregion
 
 #pragma region GetComponent
-template <typename T> inline T* GameObject::GetComponent(string name) const
+template <typename T> T* GameObject::GetComponent(string name) const
 {
 	T* component = TryGetComponent<T>(name);
 	if (component == nullptr)
@@ -72,7 +72,7 @@ template <typename T> inline T* GameObject::GetComponent(string name) const
 	return component;
 }
 
-template <typename T> inline T* GameObject::TryGetComponent(string name) const
+template <typename T> T* GameObject::TryGetComponent(string name) const
 {
 	try
 	{
@@ -87,7 +87,7 @@ template <typename T> inline T* GameObject::TryGetComponent(string name) const
 	return nullptr;
 }
 
-template <typename T> inline const unordered_map<string, T*>& GameObject::GetComponents() const
+template <typename T> const unordered_map<string, T*>& GameObject::GetComponents() const
 {
 	if (typeid(T) == typeid(MeshComponent))
 		return reinterpret_cast<const unordered_map<string, T*>&>(meshComponents);

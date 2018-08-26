@@ -25,7 +25,7 @@ public:
 	template <typename T> T GetSettingsValue(const char* key) const;
 };
 
-template <typename T> inline T FileSystem::GetSettingsValue(const char* key) const
+template <typename T> T FileSystem::GetSettingsValue(const char* key) const
 {
 	return GetSettingsValue(key).get<T>();
 }
