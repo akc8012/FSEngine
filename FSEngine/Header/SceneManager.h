@@ -18,7 +18,7 @@ private:
 	GameObject::GameObjectContainer* gameObjectContainer = nullptr;
 
 	void AddGameObjects(Window* window);
-	void UpdateGameObjects(float deltaTime, bool doLateUpdate);
+	void UpdateGameObjects(bool doLateUpdate);
 	void DrawGameObjects(Renderer* renderer, bool doLateDraw);
 
 public:
@@ -27,6 +27,6 @@ public:
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
 
-	void Update(float deltaTime);
+	void Update();
 	void Draw(Renderer* renderer);
 };

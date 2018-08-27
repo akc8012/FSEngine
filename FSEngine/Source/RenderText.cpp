@@ -77,13 +77,11 @@ vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
 	return vec2(width, height);
 }
 
-void RenderText::Update(float deltaTime)
+void RenderText::Update()
 {
 	vec2 windowSize = window->GetWindowSize();
 	SetScaleFromWindowSize(windowSize);
 	SetPositionFromWindowSize(windowSize);
-	
-	SetText(systems->fileSystem->GetSettingsValue<string>("RenderText"));
 }
 
 void RenderText::SetScaleFromWindowSize(const vec2& windowSize)

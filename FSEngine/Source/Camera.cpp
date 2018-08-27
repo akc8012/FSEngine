@@ -14,14 +14,14 @@ Camera::Camera(Window* window)
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 }
 
-void Camera::Update(float deltaTime)
+void Camera::Update()
 {
-	CalculateViewMatrix(deltaTime);
+	CalculateViewMatrix();
 	CalculateProjectionMatrixPerspective();
 	CalculateProjectionMatrixOrthographic();
 }
 
-void Camera::CalculateViewMatrix(float deltaTime)
+void Camera::CalculateViewMatrix()
 {
 	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
@@ -30,8 +30,8 @@ void Camera::CalculateViewMatrix(float deltaTime)
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
 		const float SpeedMod = 4;
-		position += normalize(cross(forwardVector, upVector)) * (systems->input->GetHorizontalAxis() * SpeedMod * deltaTime);
-		position += forwardVector * (-systems->input->GetVerticalAxis() * SpeedMod * deltaTime);
+		position += normalize(cross(forwardVector, upVector)) * (systems->input->GetHorizontalAxis() * SpeedMod * systems->gameTimer->GetDeltaTime());
+		position += forwardVector * (-systems->input->GetVerticalAxis() * SpeedMod * systems->gameTimer->GetDeltaTime());
 	}
 
 	viewTransform->LookAt(position, position + forwardVector, upVector);

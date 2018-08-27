@@ -12,5 +12,5 @@ private:
 
 public:
 	CubePrimitive(ShadingComponent* shadingComponent);
-	void Update(float deltaTime);
+	void Update() override;
 };

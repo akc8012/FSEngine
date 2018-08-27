@@ -50,7 +50,7 @@ public:
 	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
 
 	virtual void Start();
-	virtual void Update(float deltaTime);
+	virtual void Update();
 
 	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
 	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);

@@ -11,7 +11,7 @@ void Renderer::SetCamera(GameObject* camera)
 }
 
 #pragma region StartRender
-void Renderer::StartRender(float deltaTime)
+void Renderer::StartRender()
 {
 	ClearScreen();
 	SetViewMatrices(camera->GetComponent<TransformComponent>("View"));

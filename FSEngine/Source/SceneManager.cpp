@@ -24,6 +24,7 @@ void SceneManager::AddGameObjects(Window* window)
 	//	GetGameObjectContainer()->AddGameObject(std::to_string(i), new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
 
 	RenderText* debugText = dynamic_cast<RenderText*>(GetGameObjectContainer()->AddGameObject("DebugText", new RenderText(window)));
+	debugText->SetText("Debug text");
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
 	debugText->SetPixelScale(26);
@@ -40,18 +41,18 @@ GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
 	return gameObjectContainer;
 }
 
-void SceneManager::Update(float deltaTime)
+void SceneManager::Update()
 {
-	UpdateGameObjects(deltaTime, false);
-	UpdateGameObjects(deltaTime, true);
+	UpdateGameObjects(false);
+	UpdateGameObjects(true);
 }
 
-void SceneManager::UpdateGameObjects(float deltaTime, bool doLateUpdate)
+void SceneManager::UpdateGameObjects(bool doLateUpdate)
 {
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoUpdate) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateUpdate) == doLateUpdate)
-			gameObject->Update(deltaTime);
+			gameObject->Update();
 	}
 }
 

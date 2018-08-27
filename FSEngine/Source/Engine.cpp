@@ -91,20 +91,9 @@ void Engine::Stop()
 
 void Engine::GameLoop()
 {
-	float deltaTime = CalculateDeltaTime();
-
 	PollEvents();
-	Update(deltaTime);
-	Draw(deltaTime);
-}
-
-float Engine::CalculateDeltaTime()
-{
-	float currentFrameTime = Timer::GetSeconds();
-	float deltaTime = currentFrameTime - lastFrameTime;
-	lastFrameTime = currentFrameTime;
-
-	return deltaTime;
+	Update();
+	Draw();
 }
 
 #pragma region Event Handling
@@ -218,15 +207,15 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 }
 #pragma endregion
 
-void Engine::Update(float deltaTime)
+void Engine::Update()
 {
 	systems->gameTimer->UpdateDeltaTime();
-	sceneManager->Update(deltaTime);
+	sceneManager->Update();
 }
 
-void Engine::Draw(float deltaTime)
+void Engine::Draw()
 {
-	renderer->StartRender(deltaTime);
+	renderer->StartRender();
 
 	sceneManager->Draw(renderer);
 

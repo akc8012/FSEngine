@@ -16,13 +16,13 @@ private:
 	TransformComponent* viewTransform = nullptr;
 	Window* window = nullptr;
 
-	void CalculateViewMatrix(float deltaTime);
+	void CalculateViewMatrix();
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
 
 public:
 	Camera(Window* window);
-	void Update(float deltaTime);
+	void Update() override;
 
 	void SetPosition(const vec3& position);
 	vec3 GetPosition() const;

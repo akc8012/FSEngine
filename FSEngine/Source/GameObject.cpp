@@ -33,7 +33,7 @@ void GameObject::Start()
 
 }
 
-void GameObject::Update(float deltaTime)
+void GameObject::Update()
 {
 
 }

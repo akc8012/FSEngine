@@ -15,7 +15,7 @@ void PlayerShip::Start()
 	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));
 }
 
-void PlayerShip::Update(float deltaTime)
+void PlayerShip::Update()
 {
 	if (!systems->fileSystem->GetSettingsValue<bool>("ShipControl"))
 		return;

@@ -17,7 +17,6 @@ class Engine
 {
 private:
 	bool running = false;
-	float lastFrameTime = 0.0f;
 
 	SDL_GLContext openGlContext = nullptr;
 	Systems* systems = nullptr;
@@ -36,10 +35,9 @@ private:
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);
 
-	float CalculateDeltaTime();
 	void PollEvents();
-	void Update(float deltaTime);
-	void Draw(float deltaTime);
+	void Update();
+	void Draw();
 
 	void HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);

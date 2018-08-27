@@ -43,7 +43,7 @@ public:
 	RenderText(Window* window);
 	~RenderText();
 
-	void Update(float deltaTime) override;
+	void Update() override;
 	void SetText(const string& text);
 
 	void SetPixelScale(const vec2& pixelScaleFactor);

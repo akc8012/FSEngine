@@ -12,5 +12,5 @@ public:
 	PlayerShip();
 
 	void Start() override;
-	void Update(float deltaTime) override;
+	void Update() override;
 };

@@ -8,7 +8,6 @@
   "Resolution": [900, 600],
   "Fullscreen": false,
 
-  "RenderText": "Debug text",
   "CameraControl": false,
   "ShipControl": true,
 

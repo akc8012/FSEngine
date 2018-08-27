@@ -36,7 +36,7 @@ public:
 
 	void SetCamera(GameObject* camera);
 
-	void StartRender(float deltaTime);
+	void StartRender();
 	void RenderGameObject(GameObject* gameObject);
 	void EndRender(Window* window);
 };
