@@ -1,7 +1,9 @@
 #include "../Header/RenderText.h"
 
-RenderText::RenderText()
+RenderText::RenderText(Window* window)
 {
+	this->window = window;
+
 	AddComponent(new TransformComponent());
 	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
@@ -51,11 +53,6 @@ void RenderText::SetText(const string& text)
 		CreateTextureComponent(text);
 }
 
-void RenderText::SetWindow(Window* window)
-{
-	this->window = window;
-}
-
 void RenderText::CreateTextureComponent(const string& text)
 {
 	renderText = text;
@@ -85,7 +82,7 @@ void RenderText::Update(float deltaTime)
 	vec2 windowSize = window->GetWindowSize();
 	SetScaleFromWindowSize(windowSize);
 	SetPositionFromWindowSize(windowSize);
-
+	
 	SetText(systems->fileSystem->GetSettingsValue<string>("RenderText"));
 }
 

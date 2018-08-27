@@ -141,6 +141,7 @@
     <ClCompile Include="Source\FSException.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\GameObjectMapper.cpp" />
+    <ClCompile Include="Source\GameTimer.cpp" />
     <ClCompile Include="Source\MeshComponent.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Header\FSException.h" />
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
+    <ClInclude Include="Header\GameTimer.h" />
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\MeshComponent.h" />
     <ClInclude Include="Header\Model.h" />

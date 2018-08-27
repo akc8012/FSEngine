@@ -40,12 +40,11 @@ private:
 	void SetPixelPositionToTopLeftOrigin();
 
 public:
-	RenderText();
+	RenderText(Window* window);
 	~RenderText();
 
-	void Update(float deltaTime);
+	void Update(float deltaTime) override;
 	void SetText(const string& text);
-	void SetWindow(Window* window);
 
 	void SetPixelScale(const vec2& pixelScaleFactor);
 	void SetPixelScale(float pixelScaleFactor);

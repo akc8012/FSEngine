@@ -11,6 +11,6 @@ private:
 public:
 	PlayerShip();
 
-	void Start();
-	void Update(float deltaTime);
+	void Start() override;
+	void Update(float deltaTime) override;
 };

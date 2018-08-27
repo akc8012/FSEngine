@@ -6,6 +6,7 @@ void Engine::Initialize()
 	systems = new Systems();
 	systems->fileSystem = new FileSystem();
 	systems->input = new Input();
+	systems->gameTimer = new GameTimer();
 
 	InitSDL();
 	InitializeOpenGl();
@@ -219,6 +220,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update(float deltaTime)
 {
+	systems->gameTimer->UpdateDeltaTime();
 	sceneManager->Update(deltaTime);
 }
 
@@ -242,6 +244,7 @@ Engine::~Engine()
 	delete renderer;
 	delete systems->shaderProgram;
 	delete window;
+	delete systems->gameTimer;
 	delete systems->input;
 	delete systems->fileSystem;
 	delete systems;

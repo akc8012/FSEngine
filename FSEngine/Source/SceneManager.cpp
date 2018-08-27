@@ -23,8 +23,8 @@ void SceneManager::AddGameObjects(Window* window)
 	//for (int i = 5; i < 100; i++)
 	//	GetGameObjectContainer()->AddGameObject(std::to_string(i), new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
 
-	RenderText* debugText = dynamic_cast<RenderText*>(GetGameObjectContainer()->AddGameObject("DebugText", new RenderText()));
-	debugText->SetWindow(window);
+	RenderText* debugText = dynamic_cast<RenderText*>(GetGameObjectContainer()->AddGameObject("DebugText", new RenderText(window)));
+	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
