@@ -23,7 +23,6 @@
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\GameObjectMapper.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
-    <ClCompile Include="Source\Systems.cpp" />
     <ClCompile Include="Source\FSException.cpp" />
   </ItemGroup>
   <ItemGroup>
