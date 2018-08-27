@@ -41,10 +41,9 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 	for (auto& mesh : gameObject->GetComponents<MeshComponent>())
 	{
 		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
-		for (const auto& textureName : textureNames)
-			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureName));
-
-		if (textureNames.size() == 0)
+		if (textureNames.size() != 0)
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureNames.front()));
+		else
 			SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
 
 		RenderMesh(mesh.second);
