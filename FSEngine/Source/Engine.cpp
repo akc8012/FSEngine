@@ -8,7 +8,7 @@ void Engine::Initialize()
 	systems->input = new Input();
 
 	InitSDL();
-	InitOpenGl();
+	InitializeOpenGl();
 	InitGlew();
 
 	systems->shaderProgram = new ShaderProgram();
@@ -33,7 +33,7 @@ void Engine::InitSDL()
 		throwFS((string)"SDL_ttf could not initialize! SDL_ttf error: " + TTF_GetError());
 }
 
-void Engine::InitOpenGl()
+void Engine::InitializeOpenGl()
 {
 	CreateOpenGlContext();
 
@@ -41,8 +41,7 @@ void Engine::InitOpenGl()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	SetSwapInterval(systems->fileSystem->GetSettingsValue<int>("SwapInterval"));
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	SetOpenGlParameters();
 }
 
 void Engine::CreateOpenGlContext()
@@ -53,6 +52,15 @@ void Engine::CreateOpenGlContext()
 	openGlContext = SDL_GL_CreateContext(window->GetSDLWindow());
 	if (openGlContext == nullptr)
 		throwFS((string)"OpenGL context could not be created! SDL Error: " + SDL_GetError());
+}
+
+void Engine::SetOpenGlParameters()
+{
+	SetSwapInterval(systems->fileSystem->GetSettingsValue<int>("SwapInterval"));
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	bool polygonLineMode = systems->fileSystem->GetSettingsValue<bool>("PolygonLineMode");
+	glPolygonMode(GL_FRONT_AND_BACK, polygonLineMode ? GL_LINE : GL_FILL);
 }
 
 void Engine::SetSwapInterval(int interval)
@@ -195,7 +203,10 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 	case SDL_WINDOWEVENT_FOCUS_GAINED:
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadSettingsOnFocus"))
+		{
 			systems->fileSystem->LoadSettingsFile();
+			SetOpenGlParameters();
+		}
 
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			systems->shaderProgram->CompileShaders();

@@ -4,6 +4,7 @@
   "ShowWindowOnTop": false,
 
   "SwapInterval": -1,
+  "PolygonLineMode": false,
   "Resolution": [900, 600],
   "Fullscreen": false,
 
