@@ -17,15 +17,15 @@ void PlayerShip::Start()
 
 void PlayerShip::Update()
 {
-	if (!systems->fileSystem->GetSettingsValue<bool>("ShipControl"))
-		return;
+	if (systems->fileSystem->GetSettingsValue<bool>("ShipControl"))
+	{
+		vec3 inputVector = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
+		if (glm::length(inputVector) != 0)
+			inputVector = glm::normalize(inputVector);
 
-	vec3 inputVector = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
-	if (glm::length(inputVector) != 0)
-		inputVector = glm::normalize(inputVector);
+		float shipSpeed = systems->fileSystem->GetSettingsValue<float>("ShipSpeed");
+		transform->Translate(inputVector * systems->gameTimer->GetDeltaTime() * shipSpeed);
 
-	float shipSpeed = systems->fileSystem->GetSettingsValue<float>("ShipSpeed");
-	transform->Translate(inputVector * systems->gameTimer->GetDeltaTime() * shipSpeed);
-
-	camera->SetPosition(transform->GetPosition() + vec3(0, 0, systems->fileSystem->GetSettingsValue<float>("CameraDistance")));
+		//camera->SetPosition(transform->GetPosition() + vec3(0, 0, systems->fileSystem->GetSettingsValue<float>("CameraDistance")));
+	}
 }

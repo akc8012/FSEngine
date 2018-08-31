@@ -36,6 +36,7 @@ public:
 	static string GetFormattedMatrixString(const mat4& matrix);
 	static string GetFormattedVectorString(const vec3& vector);
 	static string GetFormattedVectorString(const vec2& vector);
+	static vec3 EulerAngleToDirectionVector(const vec3& angle);
 
 	const mat4& GetMatrix() const;
 	mat3 CalculateNormalMatrix() const;

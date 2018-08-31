@@ -1,16 +1,22 @@
 {
   "LoadSettingsOnFocus": true,
+  "ContinualSettingsReload": true,
+
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
 
-  "SwapInterval": -1,
+  "SwapInterval": 0,
   "PolygonLineMode": false,
-  "Resolution": [900, 600],
+  "Resolution": [1200, 740],
   "Fullscreen": false,
 
-  "CameraControl": false,
-  "ShipControl": true,
+  "CameraControl": true,
+  "ShipControl": false,
 
-  "ShipSpeed": 10,
-  "CameraDistance": 5.5
+  "ShipSpeed": 6,
+  "CameraSpeed": 6,
+  "CameraDistance": 5.5,
+
+  "ReadPosition": [0, 3, 6],
+  "ReadRotation": [0, -90, 0]
 }

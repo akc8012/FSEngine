@@ -9,7 +9,6 @@ private:
 	SDL_GameController * gameController;
 
 	float GetAnalogAxis(const SDL_GameControllerAxis& axis);
-	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput);
 	float ClampAnalogInput(Sint16 input);
 
 	float Clamp(float value, float low, float high) const;
@@ -20,4 +19,6 @@ public:
 
 	float GetHorizontalAxis();
 	float GetVerticalAxis();
+
+	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput);
 };

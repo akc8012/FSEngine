@@ -6,6 +6,7 @@ Camera::Camera(Window* window)
 
 	viewTransform = AddComponent(new TransformComponent(), "View");
 	SetPosition(vec3(0, 0, 4));
+	SetDirection(vec3(0, -90, 0));
 
 	AddComponent(new TransformComponent(), "Perspective");
 	AddComponent(new TransformComponent(), "Orthographic");
@@ -23,18 +24,31 @@ void Camera::Update()
 
 void Camera::CalculateViewMatrix()
 {
-	vec3 forwardVector = vec3(0.0f, 0.0f, -1.0f);
-	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
-
-	vec3 position = GetPosition();
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
-		const float SpeedMod = 4;
-		position += normalize(cross(forwardVector, upVector)) * (systems->input->GetHorizontalAxis() * SpeedMod * systems->gameTimer->GetDeltaTime());
-		position += forwardVector * (-systems->input->GetVerticalAxis() * SpeedMod * systems->gameTimer->GetDeltaTime());
+		vec3 wasdInputVector = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
+		if (glm::length(wasdInputVector) != 0)
+			wasdInputVector = glm::normalize(wasdInputVector);
+
+		position += wasdInputVector * GetFrameAdjustedSpeed();
+
+		float rfInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_R, SDL_SCANCODE_F);
+		position.y += rfInputValue * GetFrameAdjustedSpeed();
+
+		float pitchInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K);
+		float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
+
+		const float RotationSpeedModifier = 10;
+		direction += vec3(pitchInputValue, yawInputValue, 0) * (GetFrameAdjustedSpeed() * RotationSpeedModifier);
 	}
 
-	viewTransform->LookAt(position, position + forwardVector, upVector);
+	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
+	viewTransform->LookAt(position, position + TransformComponent::EulerAngleToDirectionVector(direction), upVector);
+}
+
+float Camera::GetFrameAdjustedSpeed() const
+{
+	return systems->fileSystem->GetSettingsValue<float>("CameraSpeed") * systems->gameTimer->GetDeltaTime();
 }
 
 void Camera::CalculateProjectionMatrixPerspective()
@@ -61,10 +75,20 @@ void Camera::CalculateProjectionMatrixOrthographic()
 
 void Camera::SetPosition(const vec3& position)
 {
-	viewTransform->SetPosition(-position);
+	this->position = position;
 }
 
 vec3 Camera::GetPosition() const
 {
-	return -viewTransform->GetPosition();
+	return position;
+}
+
+void Camera::SetDirection(const vec3& direction)
+{
+	this->direction = direction;
+}
+
+vec3 Camera::GetDirection() const
+{
+	return direction;
 }

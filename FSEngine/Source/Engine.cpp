@@ -143,16 +143,6 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		window->ToggleFullscreen();
 		break;
 
-	case SDLK_f:
-		ToggleSwapInterval();
-		printf("Set swap interval to: %i\n", SDL_GL_GetSwapInterval());
-		break;
-
-	case SDLK_k:
-		systems->fileSystem->LoadSettingsFile();
-		printf("Reloaded settings file\n");
-		break;
-
 	case SDLK_c:
 		system("CLS");
 		break;
@@ -209,6 +199,9 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 
 void Engine::Update()
 {
+	if (systems->fileSystem->GetSettingsValue<bool>("ContinualSettingsReload"))
+		systems->fileSystem->LoadSettingsFile();
+
 	systems->gameTimer->UpdateDeltaTime();
 	sceneManager->Update();
 }

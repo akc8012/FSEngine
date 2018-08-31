@@ -29,6 +29,20 @@ string TransformComponent::GetFormattedVectorString(const vec2& vector)
 	return "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ")";
 }
 
+vec3 TransformComponent::EulerAngleToDirectionVector(const vec3& angle)
+{
+	float pitch = glm::radians(angle.x);
+	float yaw = glm::radians(angle.y);
+	float roll = glm::radians(angle.z);
+
+	vec3 directionVector;
+	directionVector.x = cos(pitch) * cos(yaw);
+	directionVector.y = sin(pitch);
+	directionVector.z = cos(pitch) * sin(yaw);
+
+	return glm::normalize(directionVector);
+}
+
 const mat4& TransformComponent::GetMatrix() const
 {
 	return transform;

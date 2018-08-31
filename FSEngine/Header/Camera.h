@@ -16,9 +16,15 @@ private:
 	TransformComponent* viewTransform = nullptr;
 	Window* window = nullptr;
 
+	vec3 position;
+	vec3 direction;
+
 	void CalculateViewMatrix();
+
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
+
+	float GetFrameAdjustedSpeed() const;
 
 public:
 	Camera(Window* window);
@@ -26,4 +32,7 @@ public:
 
 	void SetPosition(const vec3& position);
 	vec3 GetPosition() const;
+
+	void SetDirection(const vec3& direction);
+	vec3 GetDirection() const;
 };
