@@ -7,7 +7,7 @@
 
   "SwapInterval": 0,
   "PolygonLineMode": false,
-  "Resolution": [1200, 740],
+  "Resolution": [900, 600],
   "Fullscreen": false,
 
   "CameraControl": true,

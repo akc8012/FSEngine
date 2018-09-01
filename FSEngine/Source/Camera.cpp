@@ -5,8 +5,7 @@ Camera::Camera(Window* window)
 	this->window = window;
 
 	viewTransform = AddComponent(new TransformComponent(), "View");
-	SetPosition(vec3(0, 0, 4));
-	SetDirection(vec3(0, -90, 0));
+	ResetViewTransform();
 
 	AddComponent(new TransformComponent(), "Perspective");
 	AddComponent(new TransformComponent(), "Orthographic");
@@ -15,8 +14,17 @@ Camera::Camera(Window* window)
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 }
 
+void Camera::ResetViewTransform()
+{
+	SetPosition(vec3(0, 0, 4));
+	SetDirection(vec3(0, -90, 0));
+}
+
 void Camera::Update()
 {
+	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
+		ResetViewTransform();
+
 	CalculateViewMatrix();
 	CalculateProjectionMatrixPerspective();
 	CalculateProjectionMatrixOrthographic();

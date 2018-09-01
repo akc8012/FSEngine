@@ -6,10 +6,14 @@
 class Input
 {
 private:
-	SDL_GameController * gameController;
+	const Uint8* keyboardState = nullptr;
+	Uint8* lastKeyboardState = nullptr;
+	int numberOfKeys;
 
-	float GetAnalogAxis(const SDL_GameControllerAxis& axis);
-	float ClampAnalogInput(Sint16 input);
+	SDL_GameController* gameController;
+
+	float GetAnalogAxis(const SDL_GameControllerAxis& axis) const;
+	float ClampAnalogInput(Sint16 input) const;
 
 	float Clamp(float value, float low, float high) const;
 
@@ -17,8 +21,14 @@ public:
 	Input();
 	~Input();
 
-	float GetHorizontalAxis();
-	float GetVerticalAxis();
+	void UpdateLastKeyboardState();
 
-	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput);
+	float GetHorizontalAxis() const;
+	float GetVerticalAxis() const;
+
+	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput) const;
+
+	bool IsButtonPressed(const SDL_Scancode& button) const;
+	bool IsButtonReleased(const SDL_Scancode& button) const;
+	bool IsButtonHeld(const SDL_Scancode& button) const;
 };

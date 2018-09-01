@@ -19,6 +19,7 @@ private:
 	vec3 position;
 	vec3 direction;
 
+	void ResetViewTransform();
 	void CalculateViewMatrix();
 
 	void CalculateProjectionMatrixPerspective();
@@ -28,6 +29,7 @@ private:
 
 public:
 	Camera(Window* window);
+
 	void Update() override;
 
 	void SetPosition(const vec3& position);

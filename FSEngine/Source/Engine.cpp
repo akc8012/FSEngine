@@ -92,7 +92,9 @@ void Engine::Stop()
 void Engine::GameLoop()
 {
 	PollEvents();
+
 	Update();
+
 	Draw();
 }
 
@@ -203,7 +205,10 @@ void Engine::Update()
 		systems->fileSystem->LoadSettingsFile();
 
 	systems->gameTimer->UpdateDeltaTime();
+
 	sceneManager->Update();
+
+	systems->input->UpdateLastKeyboardState();
 }
 
 void Engine::Draw()
