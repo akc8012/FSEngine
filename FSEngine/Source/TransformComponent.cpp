@@ -67,8 +67,7 @@ quat TransformComponent::GetRotation() const
 
 vec3 TransformComponent::GetEulerAngles() const
 {
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	return eulerAngles(matrixValues.rotation);
+	return eulerAngles(GetRotation());
 }
 
 vec3 TransformComponent::GetPosition() const

@@ -42,8 +42,8 @@ public:
 	mat3 CalculateNormalMatrix() const;
 
 	vec3 GetScale() const;
-	quat GetRotation() const;
 	vec3 GetEulerAngles() const;
+	quat GetRotation() const;
 	vec3 GetPosition() const;
 
 	void SetMatrix(const mat4& matrix);

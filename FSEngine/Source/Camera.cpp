@@ -34,10 +34,10 @@ void Camera::CalculateViewMatrix()
 {
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
+		direction += GetDirectionInput() * GetFrameAdjustedSpeed();
+
 		position += GetFloorMovementInput() * GetFrameAdjustedSpeed();
 		position.y += GetHeightInput() * GetFrameAdjustedSpeed();
-
-		direction += GetDirectionInput() * GetFrameAdjustedSpeed();
 	}
 
 	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
