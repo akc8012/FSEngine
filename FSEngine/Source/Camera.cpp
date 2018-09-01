@@ -44,6 +44,15 @@ void Camera::CalculateViewMatrix()
 	viewTransform->LookAt(position, position + TransformComponent::EulerAngleToDirectionVector(direction), upVector);
 }
 
+vec3 Camera::GetDirectionInput() const
+{
+	float pitchInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K);
+	float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
+
+	const float RotationSpeedModifier = 10;
+	return vec3(pitchInputValue, yawInputValue, 0) * RotationSpeedModifier;
+}
+
 vec3 Camera::GetFloorMovementInput() const
 {
 	vec3 floorMovementInput = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
@@ -56,15 +65,6 @@ vec3 Camera::GetFloorMovementInput() const
 float Camera::GetHeightInput() const
 {
 	return systems->input->GetDigitalAxis(SDL_SCANCODE_R, SDL_SCANCODE_F);
-}
-
-vec3 Camera::GetDirectionInput() const
-{
-	float pitchInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K);
-	float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
-
-	const float RotationSpeedModifier = 10;
-	return vec3(pitchInputValue, yawInputValue, 0) * RotationSpeedModifier;
 }
 
 float Camera::GetFrameAdjustedSpeed() const
