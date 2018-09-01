@@ -6,9 +6,9 @@
 class Input
 {
 private:
+	int numberOfKeys;
 	const Uint8* keyboardState = nullptr;
 	Uint8* lastKeyboardState = nullptr;
-	int numberOfKeys;
 
 	SDL_GameController* gameController;
 

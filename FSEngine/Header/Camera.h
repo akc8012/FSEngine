@@ -20,7 +20,11 @@ private:
 	vec3 direction;
 
 	void ResetViewTransform();
+
 	void CalculateViewMatrix();
+	vec3 GetFloorMovementInput() const;
+	float GetHeightInput() const;
+	vec3 GetDirectionInput() const;
 
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
