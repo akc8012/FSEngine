@@ -2,28 +2,28 @@
 
 SceneManager::SceneManager(Systems* systems, Window* window)
 {
-	gameObjectContainer = new GameObject::GameObjectContainer(systems);
+	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems);
 	AddGameObjects(window);
 }
 
 void SceneManager::AddGameObjects(Window* window)
 {
-	GameObject* memeFaceCube = GetGameObjectContainer()->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
+	GameObject* memeFaceCube = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
 	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(4.5f, 0.2f, 0);
 
-	GameObject* greenCube = GetGameObjectContainer()->AddGameObject("GreenCube", new CubePrimitive(new ShadingComponent(0.1f, 0.6f, 0.3f)));
+	GameObject* greenCube = gameObjectContainer->AddGameObject("GreenCube", new CubePrimitive(new ShadingComponent(0.1f, 0.6f, 0.3f)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(6, -0.2f, 0.1f);
 	greenCube->GetComponent<TransformComponent>()->SetScale(2, 0.8f, 2.8f);
 
-	GetGameObjectContainer()->AddGameObject("1", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
-	GetGameObjectContainer()->AddGameObject("2", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
-	GetGameObjectContainer()->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
-	GetGameObjectContainer()->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
+	gameObjectContainer->AddGameObject("1", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
+	gameObjectContainer->AddGameObject("2", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
+	gameObjectContainer->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
+	gameObjectContainer->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
 	//for (int i = 5; i < 100; i++)
-	//	GetGameObjectContainer()->AddGameObject(std::to_string(i), new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
+	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
 
-	RenderText* debugText = dynamic_cast<RenderText*>(GetGameObjectContainer()->AddGameObject("DebugText", new RenderText(window)));
+	RenderText* debugText = dynamic_cast<RenderText*>(gameObjectContainer->AddGameObject("DebugText", new RenderText(window)));
 	debugText->SetText("Debug text");
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
@@ -32,13 +32,13 @@ void SceneManager::AddGameObjects(Window* window)
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
 
-	GetGameObjectContainer()->AddGameObject("Camera", new Camera(window));
-	GetGameObjectContainer()->AddGameObject("PlayerShip", new PlayerShip());
+	gameObjectContainer->AddGameObject("Camera", new Camera(window));
+	gameObjectContainer->AddGameObject("PlayerShip", new PlayerShip());
 }
 
 GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
 {
-	return gameObjectContainer;
+	return gameObjectContainer.get();
 }
 
 void SceneManager::Update()
@@ -67,11 +67,6 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 	for (auto& gameObject : gameObjectContainer->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoDraw) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateDraw) == doLateDraw)
-			renderer->RenderGameObject(gameObject);
+			renderer->RenderGameObject(gameObject.get());
 	}
-}
-
-SceneManager::~SceneManager()
-{
-	delete gameObjectContainer;
 }

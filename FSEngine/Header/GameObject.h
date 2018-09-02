@@ -112,15 +112,14 @@ class GameObject::GameObjectContainer
 {
 private:
 	Systems* systems = nullptr;
-	GameObjectMapper* gameObjectMapper = nullptr;
-	vector<GameObject*> gameObjects;
+	unique_ptr<GameObjectMapper> gameObjectMapper;
+	vector<unique_ptr<GameObject>> gameObjects;
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 	GameObject* TryGetGameObjectAtIndex(int index) const;
 
 public:
 	GameObjectContainer(Systems* systems);
-	~GameObjectContainer();
 
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);
 	void RemoveGameObject(const string& name);
@@ -128,6 +127,6 @@ public:
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;
 
-	const vector<GameObject*>& GetGameObjects() const;
+	const vector<unique_ptr<GameObject>>& GetGameObjects() const;
 };
 #pragma endregion
