@@ -52,12 +52,12 @@ public:
 	virtual void Start();
 	virtual void Update();
 
-	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
-	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
-	TransformComponent* AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
+	MeshComponent* AddComponent(MeshComponent* component, const string& name = ComponentTypeString[MeshComponent::ComponentTypeId]);
+	ShadingComponent* AddComponent(ShadingComponent* component, const string& name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
+	TransformComponent* AddComponent(TransformComponent* component, const string& name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
-	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
-	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> T* GetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> T* TryGetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> const unordered_map<string, shared_ptr<T>>& GetComponents() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
@@ -68,7 +68,7 @@ public:
 #pragma endregion
 
 #pragma region GetComponent
-template <typename T> T* GameObject::GetComponent(string name) const
+template <typename T> T* GameObject::GetComponent(const string& name) const
 {
 	T* component = TryGetComponent<T>(name);
 	if (component == nullptr)
@@ -77,7 +77,7 @@ template <typename T> T* GameObject::GetComponent(string name) const
 	return component;
 }
 
-template <typename T> T* GameObject::TryGetComponent(string name) const
+template <typename T> T* GameObject::TryGetComponent(const string& name) const
 {
 	try
 	{

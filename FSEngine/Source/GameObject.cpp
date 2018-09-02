@@ -34,7 +34,7 @@ void GameObject::Update()
 
 }
 
-MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
+MeshComponent* GameObject::AddComponent(MeshComponent* component, const string& name)
 {
 	auto result = meshComponents.emplace(name, shared_ptr<MeshComponent>(component));
 	if (!result.second)
@@ -43,7 +43,7 @@ MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 	return component;
 }
 
-ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string name)
+ShadingComponent* GameObject::AddComponent(ShadingComponent* component, const string& name)
 {
 	auto result = shadingComponents.emplace(name, shared_ptr<ShadingComponent>(component));
 	if (!result.second)
@@ -52,7 +52,7 @@ ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string n
 	return component;
 }
 
-TransformComponent* GameObject::AddComponent(TransformComponent* component, string name)
+TransformComponent* GameObject::AddComponent(TransformComponent* component, const string& name)
 {
 	auto result = transformComponents.emplace(name, shared_ptr<TransformComponent>(component));
 	if (!result.second)
