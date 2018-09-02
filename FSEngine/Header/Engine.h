@@ -17,9 +17,9 @@ class Engine
 {
 private:
 	bool running = false;
-
 	SDL_GLContext openGlContext = nullptr;
-	Systems* systems = nullptr;
+
+	unique_ptr<Systems> systems;
 	Window* window = nullptr;
 	Renderer* renderer = nullptr;
 	SceneManager* sceneManager = nullptr;

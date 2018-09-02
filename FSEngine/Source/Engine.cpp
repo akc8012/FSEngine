@@ -3,18 +3,18 @@
 #pragma region Initialize
 void Engine::Initialize()
 {
-	systems = new Systems();
-	systems->fileSystem = new FileSystem();
-	systems->input = new Input();
-	systems->gameTimer = new GameTimer();
+	systems = make_unique<Systems>();
+	systems->fileSystem = make_unique<FileSystem>();
+	systems->input = make_unique<Input>();
+	systems->gameTimer = make_unique<GameTimer>();
 
 	InitSDL();
 	InitializeOpenGl();
 	InitGlew();
 
-	systems->shaderProgram = new ShaderProgram();
-	renderer = new Renderer(systems);
-	sceneManager = new SceneManager(systems, window);
+	systems->shaderProgram = make_unique<ShaderProgram>();
+	renderer = new Renderer(systems.get());
+	sceneManager = new SceneManager(systems.get(), window);
 
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
@@ -47,7 +47,7 @@ void Engine::InitializeOpenGl()
 
 void Engine::CreateOpenGlContext()
 {
-	window = new Window(systems->fileSystem);
+	window = new Window(systems->fileSystem.get());
 
 	SDL_GL_DeleteContext(openGlContext);
 	openGlContext = SDL_GL_CreateContext(window->GetSDLWindow());
@@ -229,12 +229,7 @@ Engine::~Engine()
 {
 	delete sceneManager;
 	delete renderer;
-	delete systems->shaderProgram;
 	delete window;
-	delete systems->gameTimer;
-	delete systems->input;
-	delete systems->fileSystem;
-	delete systems;
 
 	SDL_GL_DeleteContext(openGlContext);
 	TTF_Quit();
