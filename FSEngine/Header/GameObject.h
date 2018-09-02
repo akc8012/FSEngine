@@ -12,6 +12,7 @@
 #include <vector>
 using std::unordered_map;
 using std::vector;
+using std::shared_ptr;
 
 #pragma region GameObject
 class GameObject
@@ -32,9 +33,9 @@ private:
 	const string* name = nullptr;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
-	unordered_map<string, MeshComponent*> meshComponents;
-	unordered_map<string, ShadingComponent*> shadingComponents;
-	unordered_map<string, TransformComponent*> transformComponents;
+	unordered_map<string, shared_ptr<MeshComponent>> meshComponents;
+	unordered_map<string, shared_ptr<ShadingComponent>> shadingComponents;
+	unordered_map<string, shared_ptr<TransformComponent>> transformComponents;
 
 	void SetDefaultParameters();
 	void ThrowDuplicateNameException(const string& name) const;
@@ -45,7 +46,6 @@ protected:
 
 public:
 	GameObject();
-	~GameObject();
 
 	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
 
@@ -58,7 +58,7 @@ public:
 
 	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
-	template <typename T> const unordered_map<string, T*>& GetComponents() const;
+	template <typename T> const unordered_map<string, shared_ptr<T>>& GetComponents() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 
@@ -81,8 +81,8 @@ template <typename T> T* GameObject::TryGetComponent(string name) const
 {
 	try
 	{
-		unordered_map<string, T*> components = GetComponents<T>();
-		return components.at(name);
+		unordered_map<string, shared_ptr<T>> components = GetComponents<T>();
+		return components.at(name).get();
 	}
 	catch (std::out_of_range)
 	{
@@ -92,16 +92,16 @@ template <typename T> T* GameObject::TryGetComponent(string name) const
 	return nullptr;
 }
 
-template <typename T> const unordered_map<string, T*>& GameObject::GetComponents() const
+template <typename T> const unordered_map<string, shared_ptr<T>>& GameObject::GetComponents() const
 {
 	if (typeid(T) == typeid(MeshComponent))
-		return reinterpret_cast<const unordered_map<string, T*>&>(meshComponents);
+		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(meshComponents);
 
 	if (typeid(T) == typeid(ShadingComponent))
-		return reinterpret_cast<const unordered_map<string, T*>&>(shadingComponents);
+		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(shadingComponents);
 
 	if (typeid(T) == typeid(TransformComponent))
-		return reinterpret_cast<const unordered_map<string, T*>&>(transformComponents);
+		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(transformComponents);
 
 	throwFS("Unrecognized component type");
 }

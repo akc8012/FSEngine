@@ -4,10 +4,6 @@ GameObject::GameObject()
 {
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
 	SetDefaultParameters();
-
-	meshComponents = unordered_map<string, MeshComponent*>();
-	shadingComponents = unordered_map<string, ShadingComponent*>();
-	transformComponents = unordered_map<string, TransformComponent*>();
 }
 
 void GameObject::SetDefaultParameters()
@@ -40,7 +36,7 @@ void GameObject::Update()
 
 MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 {
-	auto result = meshComponents.emplace(name, component);
+	auto result = meshComponents.emplace(name, shared_ptr<MeshComponent>(component));
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
@@ -49,7 +45,7 @@ MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 
 ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string name)
 {
-	auto result = shadingComponents.emplace(name, component);
+	auto result = shadingComponents.emplace(name, shared_ptr<ShadingComponent>(component));
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
@@ -58,7 +54,7 @@ ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string n
 
 TransformComponent* GameObject::AddComponent(TransformComponent* component, string name)
 {
-	auto result = transformComponents.emplace(name, component);
+	auto result = transformComponents.emplace(name, shared_ptr<TransformComponent>(component));
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
@@ -83,16 +79,4 @@ const string& GameObject::GetName() const
 void GameObject::SetName(const string& name)
 {
 	this->name = &name;
-}
-
-GameObject::~GameObject()
-{
-	for (auto& meshComponent : meshComponents)
-		delete meshComponent.second;
-
-	for (auto& textureComponent : shadingComponents)
-		delete textureComponent.second;
-
-	for (auto& transformComponent : transformComponents)
-		delete transformComponent.second;
 }

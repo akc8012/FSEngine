@@ -46,7 +46,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 		else
 			SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
 
-		RenderMesh(mesh.second);
+		RenderMesh(mesh.second.get());
 	}
 }
 
