@@ -1,12 +1,10 @@
 #include "../Header/GameObjectMapper.h"
 
-const string& GameObjectMapper::MapGameObject(const string& name, int index)
+void GameObjectMapper::MapGameObject(const string& name, int index)
 {
 	auto result = gameObjectMap.emplace(name, index);
 	if (!result.second)
 		throwFS("Mapped GameObject with name " + name + " already exists");
-
-	return result.first->first;
 }
 
 int GameObjectMapper::UnMapGameObject(const string& name)
@@ -29,4 +27,9 @@ int GameObjectMapper::TryGetGameObjectIndex(const string& name) const
 	{
 		return -1;
 	}
+}
+
+void GameObjectMapper::Clear()
+{
+	gameObjectMap.clear();
 }

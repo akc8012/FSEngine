@@ -71,14 +71,14 @@ ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameO
 	return parameterCollection.get();
 }
 
-const string& GameObject::GetName() const
+string GameObject::GetName() const
 {
-	return *name;
+	return name;
 }
 
 void GameObject::SetName(const string& name)
 {
-	this->name = &name;
+	this->name = name;
 }
 
 GameObject::~GameObject()

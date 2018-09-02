@@ -8,10 +8,11 @@ GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
 
 GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
-	const string& mappedName = gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
+	int index = (int)gameObjects.size();
+	gameObjectMapper->MapGameObject(name, index);
 
 	gameObjects.push_back(unique_ptr<GameObject>(gameObject));
-	InitializeGameObject(gameObject, mappedName);
+	InitializeGameObject(gameObject, name);
 
 	return gameObject;
 }
@@ -31,6 +32,19 @@ void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 
 	int index = gameObjectMapper->UnMapGameObject(name);
 	gameObjects.erase(gameObjects.begin() + index);
+
+	ReMapGameObjectNames();
+}
+
+void GameObject::GameObjectContainer::ReMapGameObjectNames()
+{
+	gameObjectMapper->Clear();
+
+	for (int index = 0; index < gameObjects.size(); index++)
+	{
+		string name = gameObjects[index]->GetName();
+		gameObjectMapper->MapGameObject(name, index);
+	}
 }
 
 GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const

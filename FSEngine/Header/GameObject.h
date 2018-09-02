@@ -31,7 +31,7 @@ public:
 	};
 
 private:
-	const string* name = nullptr;
+	string name;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	unordered_map<string, shared_ptr<MeshComponent>> meshComponents;
@@ -64,7 +64,7 @@ public:
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 
-	const string& GetName() const;
+	string GetName() const;
 	void SetName(const string& name);
 };
 #pragma endregion
@@ -119,6 +119,8 @@ private:
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 	GameObject* TryGetGameObjectAtIndex(int index) const;
+
+	void ReMapGameObjectNames();
 
 public:
 	GameObjectContainer(Systems* systems);

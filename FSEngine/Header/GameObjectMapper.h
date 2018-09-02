@@ -12,8 +12,10 @@ private:
 	unordered_map<string, int> gameObjectMap;
 
 public:
-	const string& MapGameObject(const string& name, int index);
+	void MapGameObject(const string& name, int index);
 	int UnMapGameObject(const string& name);
 
 	int TryGetGameObjectIndex(const string& name) const;
+
+	void Clear();
 };
