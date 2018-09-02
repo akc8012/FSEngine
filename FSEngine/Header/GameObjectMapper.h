@@ -11,8 +11,6 @@ class GameObjectMapper
 private:
 	unordered_map<string, int> gameObjectMap;
 
-	void HandleDuplicateIndex(int index) const;
-
 public:
 	const string& MapGameObject(const string& name, int index);
 	int UnMapGameObject(const string& name);
