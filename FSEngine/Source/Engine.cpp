@@ -3,18 +3,18 @@
 #pragma region Initialize
 void Engine::Initialize()
 {
-	systems = new Systems();
-	systems->fileSystem = new FileSystem();
-	systems->input = new Input();
-	systems->gameTimer = new GameTimer();
+	systems = make_unique<Systems>();
+	systems->fileSystem = make_unique<FileSystem>();
+	systems->input = make_unique<Input>();
+	systems->gameTimer = make_unique<GameTimer>();
 
 	InitSDL();
 	InitializeOpenGl();
 	InitGlew();
 
-	systems->shaderProgram = new ShaderProgram();
-	renderer = new Renderer(systems);
-	sceneManager = new SceneManager(systems, window);
+	systems->shaderProgram = make_unique<ShaderProgram>();
+	renderer = make_unique<Renderer>(systems.get());
+	sceneManager = make_unique<SceneManager>(systems.get(), window.get());
 
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
@@ -47,7 +47,7 @@ void Engine::InitializeOpenGl()
 
 void Engine::CreateOpenGlContext()
 {
-	window = new Window(systems->fileSystem);
+	window = make_unique<Window>(systems->fileSystem.get());
 
 	SDL_GL_DeleteContext(openGlContext);
 	openGlContext = SDL_GL_CreateContext(window->GetSDLWindow());
@@ -215,9 +215,9 @@ void Engine::Draw()
 {
 	renderer->StartRender();
 
-	sceneManager->Draw(renderer);
+	sceneManager->Draw(renderer.get());
 
-	renderer->EndRender(window);
+	renderer->EndRender(window.get());
 }
 
 SDL_Window* Engine::GetSDLWindow() const
@@ -227,16 +227,8 @@ SDL_Window* Engine::GetSDLWindow() const
 
 Engine::~Engine()
 {
-	delete sceneManager;
-	delete renderer;
-	delete systems->shaderProgram;
-	delete window;
-	delete systems->gameTimer;
-	delete systems->input;
-	delete systems->fileSystem;
-	delete systems;
-
 	SDL_GL_DeleteContext(openGlContext);
+
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();

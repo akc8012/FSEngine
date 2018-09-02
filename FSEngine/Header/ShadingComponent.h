@@ -19,8 +19,8 @@ public:
 	};
 
 private:
-	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
-	vec4 flatColor = vec4(0);
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
+	vec4 flatColor;
 
 	void Initialize();
 
@@ -30,7 +30,7 @@ public:
 	ShadingComponent();
 	ShadingComponent(const vec3& flatColor);
 	ShadingComponent(float r, float g, float b);
-	virtual ~ShadingComponent();
+	ShadingComponent(int r, int g, int b);
 
 	virtual void BindTexture();
 

@@ -3,14 +3,14 @@
 GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
 {
 	this->systems = systems;
-	gameObjectMapper = new GameObjectMapper();
+	gameObjectMapper = make_unique<GameObjectMapper>();
 }
 
 GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
 	const string& mappedName = gameObjectMapper->MapGameObject(name, (int)gameObjects.size());
 
-	gameObjects.push_back(gameObject);
+	gameObjects.push_back(unique_ptr<GameObject>(gameObject));
 	InitializeGameObject(gameObject, mappedName);
 
 	return gameObject;
@@ -31,8 +31,6 @@ void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 
 	int index = gameObjectMapper->UnMapGameObject(name);
 	gameObjects.erase(gameObjects.begin() + index);
-
-	delete gameObject;
 }
 
 GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const
@@ -54,7 +52,7 @@ GameObject* GameObject::GameObjectContainer::TryGetGameObjectAtIndex(int index) 
 {
 	try
 	{
-		return gameObjects.at(index);
+		return gameObjects.at(index).get();
 	}
 	catch (std::out_of_range)
 	{
@@ -62,15 +60,7 @@ GameObject* GameObject::GameObjectContainer::TryGetGameObjectAtIndex(int index) 
 	}
 }
 
-const vector<GameObject*>& GameObject::GameObjectContainer::GetGameObjects() const
+const vector<unique_ptr<GameObject>>& GameObject::GameObjectContainer::GetGameObjects() const
 {
 	return gameObjects;
-}
-
-GameObject::GameObjectContainer::~GameObjectContainer()
-{
-	delete gameObjectMapper;
-
-	for (auto& gameObject : gameObjects)
-		delete gameObject;
 }

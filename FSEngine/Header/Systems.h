@@ -4,10 +4,14 @@
 #include "ShaderProgram.h"
 #include "GameTimer.h"
 
+#include <memory>
+using std::unique_ptr;
+using std::make_unique;
+
 struct Systems
 {
-	FileSystem* fileSystem = nullptr;
-	Input* input = nullptr;
-	ShaderProgram* shaderProgram = nullptr;
-	GameTimer* gameTimer = nullptr;
+	unique_ptr<FileSystem> fileSystem;
+	unique_ptr<Input> input;
+	unique_ptr<ShaderProgram> shaderProgram;
+	unique_ptr<GameTimer> gameTimer;
 };

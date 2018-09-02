@@ -13,8 +13,11 @@ using namespace glm;
 
 #include <string>
 #include <unordered_map>
+#include <memory>
 using std::string;
 using std::unordered_map;
+using std::unique_ptr;
+using std::make_unique;
 
 class ShaderProgram
 {
@@ -30,7 +33,7 @@ public:
 	};
 
 private:
-	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;

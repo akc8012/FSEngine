@@ -8,7 +8,7 @@ void HandleException(const string& header, const string& message, SDL_Window* sd
 
 int main(int argc, char* args[])
 {
-	Engine* engine = new Engine();
+	unique_ptr<Engine> engine = make_unique<Engine>();
 	try
 	{
 		engine->Initialize();
@@ -31,6 +31,5 @@ int main(int argc, char* args[])
 		}
 	}
 
-	delete engine;
 	return 0;
 }

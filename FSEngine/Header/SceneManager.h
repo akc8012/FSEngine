@@ -15,7 +15,7 @@ using std::vector;
 class SceneManager
 {
 private:
-	GameObject::GameObjectContainer* gameObjectContainer = nullptr;
+	unique_ptr<GameObject::GameObjectContainer> gameObjectContainer;
 
 	void AddGameObjects(Window* window);
 	void UpdateGameObjects(bool doLateUpdate);
@@ -23,7 +23,6 @@ private:
 
 public:
 	SceneManager(Systems* systems, Window* window);
-	~SceneManager();
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
 

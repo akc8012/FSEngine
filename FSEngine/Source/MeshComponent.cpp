@@ -18,7 +18,7 @@ MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const
 
 void MeshComponent::Initialize()
 {
-	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
 	parameterCollection->SetParameter(RenderBackfaces, false);
 	parameterCollection->SetParameter(DrawElements, true);
 
@@ -175,12 +175,11 @@ const vector<string>& MeshComponent::GetAssociatedTextureNames() const
 
 ParameterCollection<MeshComponent::Parameters, MeshComponent::ParametersLength>* MeshComponent::GetParameterCollection() const
 {
-	return parameterCollection;
+	return parameterCollection.get();
 }
 
 MeshComponent::~MeshComponent()
 {
 	const int Amount = 1;
 	glDeleteVertexArrays(Amount, &vertexArrayId);
-	delete parameterCollection;
 }

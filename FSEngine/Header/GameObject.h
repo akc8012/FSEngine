@@ -12,6 +12,8 @@
 #include <vector>
 using std::unordered_map;
 using std::vector;
+using std::shared_ptr;
+using std::make_shared;
 
 #pragma region GameObject
 class GameObject
@@ -30,11 +32,11 @@ public:
 
 private:
 	const string* name = nullptr;
-	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
-	unordered_map<string, MeshComponent*> meshComponents;
-	unordered_map<string, ShadingComponent*> shadingComponents;
-	unordered_map<string, TransformComponent*> transformComponents;
+	unordered_map<string, shared_ptr<MeshComponent>> meshComponents;
+	unordered_map<string, shared_ptr<ShadingComponent>> shadingComponents;
+	unordered_map<string, shared_ptr<TransformComponent>> transformComponents;
 
 	void SetDefaultParameters();
 	void ThrowDuplicateNameException(const string& name) const;
@@ -45,20 +47,19 @@ protected:
 
 public:
 	GameObject();
-	~GameObject();
 
 	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
 
 	virtual void Start();
 	virtual void Update();
 
-	MeshComponent* AddComponent(MeshComponent* component, string name = ComponentTypeString[MeshComponent::ComponentTypeId]);
-	ShadingComponent* AddComponent(ShadingComponent* component, string name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
-	TransformComponent* AddComponent(TransformComponent* component, string name = ComponentTypeString[TransformComponent::ComponentTypeId]);
+	const shared_ptr<MeshComponent>& AddComponent(const shared_ptr<MeshComponent>& component, const string& name = ComponentTypeString[MeshComponent::ComponentTypeId]);
+	const shared_ptr<ShadingComponent>& AddComponent(const shared_ptr<ShadingComponent>& component, const string& name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
+	const shared_ptr<TransformComponent>& AddComponent(const shared_ptr<TransformComponent>& component, const string& name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
-	template <typename T> T* GetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
-	template <typename T> T* TryGetComponent(string name = ComponentTypeString[T::ComponentTypeId]) const;
-	template <typename T> const unordered_map<string, T*>& GetComponents() const;
+	template <typename T> shared_ptr<T> GetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> shared_ptr<T> TryGetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> const unordered_map<string, shared_ptr<T>>& GetComponents() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 
@@ -68,20 +69,20 @@ public:
 #pragma endregion
 
 #pragma region GetComponent
-template <typename T> T* GameObject::GetComponent(string name) const
+template <typename T> shared_ptr<T> GameObject::GetComponent(const string& name) const
 {
-	T* component = TryGetComponent<T>(name);
+	auto component = TryGetComponent<T>(name);
 	if (component == nullptr)
 		throwFS("Could not find component with name " + name);
 
 	return component;
 }
 
-template <typename T> T* GameObject::TryGetComponent(string name) const
+template <typename T> shared_ptr<T> GameObject::TryGetComponent(const string& name) const
 {
 	try
 	{
-		unordered_map<string, T*> components = GetComponents<T>();
+		auto components = GetComponents<T>();
 		return components.at(name);
 	}
 	catch (std::out_of_range)
@@ -92,16 +93,16 @@ template <typename T> T* GameObject::TryGetComponent(string name) const
 	return nullptr;
 }
 
-template <typename T> const unordered_map<string, T*>& GameObject::GetComponents() const
+template <typename T> const unordered_map<string, shared_ptr<T>>& GameObject::GetComponents() const
 {
 	if (typeid(T) == typeid(MeshComponent))
-		return reinterpret_cast<const unordered_map<string, T*>&>(meshComponents);
+		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(meshComponents);
 
 	if (typeid(T) == typeid(ShadingComponent))
-		return reinterpret_cast<const unordered_map<string, T*>&>(shadingComponents);
+		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(shadingComponents);
 
 	if (typeid(T) == typeid(TransformComponent))
-		return reinterpret_cast<const unordered_map<string, T*>&>(transformComponents);
+		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(transformComponents);
 
 	throwFS("Unrecognized component type");
 }
@@ -112,15 +113,14 @@ class GameObject::GameObjectContainer
 {
 private:
 	Systems* systems = nullptr;
-	GameObjectMapper* gameObjectMapper = nullptr;
-	vector<GameObject*> gameObjects;
+	unique_ptr<GameObjectMapper> gameObjectMapper;
+	vector<unique_ptr<GameObject>> gameObjects;
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 	GameObject* TryGetGameObjectAtIndex(int index) const;
 
 public:
 	GameObjectContainer(Systems* systems);
-	~GameObjectContainer();
 
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);
 	void RemoveGameObject(const string& name);
@@ -128,6 +128,6 @@ public:
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;
 
-	const vector<GameObject*>& GetGameObjects() const;
+	const vector<unique_ptr<GameObject>>& GetGameObjects() const;
 };
 #pragma endregion

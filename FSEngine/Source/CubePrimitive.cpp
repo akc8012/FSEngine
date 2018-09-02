@@ -1,16 +1,16 @@
 #include "../Header/CubePrimitive.h"
 
-CubePrimitive::CubePrimitive(ShadingComponent* shadingComponent)
+CubePrimitive::CubePrimitive(const shared_ptr<ShadingComponent>& shadingComponent)
 {
-	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
+	shared_ptr<MeshComponent> meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
 
-	AddComponent(new TransformComponent());
+	AddComponent(make_shared<TransformComponent>());
 	AddComponent(shadingComponent);
 }
 
-MeshComponent* CubePrimitive::CreateMeshComponent() const
+shared_ptr<MeshComponent> CubePrimitive::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
@@ -65,7 +65,7 @@ MeshComponent* CubePrimitive::CreateMeshComponent() const
 	};
 
 	const int Stride = 8;
-	return new MeshComponent(rawVertices, Stride, indices);
+	return make_shared<MeshComponent>(rawVertices, Stride, indices);
 }
 
 void CubePrimitive::Update()

@@ -2,12 +2,8 @@
 
 GameObject::GameObject()
 {
-	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
 	SetDefaultParameters();
-
-	meshComponents = unordered_map<string, MeshComponent*>();
-	shadingComponents = unordered_map<string, ShadingComponent*>();
-	transformComponents = unordered_map<string, TransformComponent*>();
 }
 
 void GameObject::SetDefaultParameters()
@@ -38,7 +34,7 @@ void GameObject::Update()
 
 }
 
-MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
+const shared_ptr<MeshComponent>& GameObject::AddComponent(const shared_ptr<MeshComponent>& component, const string& name)
 {
 	auto result = meshComponents.emplace(name, component);
 	if (!result.second)
@@ -47,7 +43,7 @@ MeshComponent* GameObject::AddComponent(MeshComponent* component, string name)
 	return component;
 }
 
-ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string name)
+const shared_ptr<ShadingComponent>& GameObject::AddComponent(const shared_ptr<ShadingComponent>& component, const string& name)
 {
 	auto result = shadingComponents.emplace(name, component);
 	if (!result.second)
@@ -56,7 +52,7 @@ ShadingComponent* GameObject::AddComponent(ShadingComponent* component, string n
 	return component;
 }
 
-TransformComponent* GameObject::AddComponent(TransformComponent* component, string name)
+const shared_ptr<TransformComponent>& GameObject::AddComponent(const shared_ptr<TransformComponent>& component, const string& name)
 {
 	auto result = transformComponents.emplace(name, component);
 	if (!result.second)
@@ -72,7 +68,7 @@ void GameObject::ThrowDuplicateNameException(const string& name) const
 
 ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameObject::GetParameterCollection() const
 {
-	return parameterCollection;
+	return parameterCollection.get();
 }
 
 const string& GameObject::GetName() const
@@ -83,27 +79,4 @@ const string& GameObject::GetName() const
 void GameObject::SetName(const string& name)
 {
 	this->name = &name;
-}
-
-GameObject::~GameObject()
-{
-	for (auto& meshComponent : meshComponents)
-	{
-		if (!meshComponent.second->IsShared())
-			delete meshComponent.second;
-	}
-
-	for (auto& textureComponent : shadingComponents)
-	{
-		if (!textureComponent.second->IsShared())
-			delete textureComponent.second;
-	}
-
-	for (auto& transformComponent : transformComponents)
-	{
-		if (!transformComponent.second->IsShared())
-			delete transformComponent.second;
-	}
-
-	delete parameterCollection;
 }

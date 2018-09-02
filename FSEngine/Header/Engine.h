@@ -17,12 +17,12 @@ class Engine
 {
 private:
 	bool running = false;
-
 	SDL_GLContext openGlContext = nullptr;
-	Systems* systems = nullptr;
-	Window* window = nullptr;
-	Renderer* renderer = nullptr;
-	SceneManager* sceneManager = nullptr;
+
+	unique_ptr<Systems> systems;
+	unique_ptr<Window> window;
+	unique_ptr<Renderer> renderer;
+	unique_ptr<SceneManager> sceneManager;
 
 	void InitSDL();
 
