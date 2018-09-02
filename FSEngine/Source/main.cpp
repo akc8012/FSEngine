@@ -15,7 +15,7 @@ int main(int argc, char* args[])
 	}
 	catch (const std::exception& exception)
 	{
-		HandleException("INIT ERROR", exception.what());
+		HandleException("INITIALIZE ERROR", exception.what());
 	}
 
 	while (engine->IsRunning())

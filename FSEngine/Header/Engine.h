@@ -25,13 +25,13 @@ private:
 
 	SceneManager* sceneManager = nullptr;
 
-	void InitSDL();
+	void InitializeSDL();
 
 	void InitializeOpenGl();
 	void CreateOpenGlContext();
 	void SetOpenGlParameters();
 
-	void InitGlew();
+	void InitializeGlew();
 
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);

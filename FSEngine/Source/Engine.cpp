@@ -6,9 +6,9 @@ void Engine::Initialize()
 	systems = make_unique<Systems>();
 	systems->fileSystem = make_unique<FileSystem>();
 
-	InitSDL();
+	InitializeSDL();
 	InitializeOpenGl();
-	InitGlew();
+	InitializeGlew();
 
 	systems->input = make_unique<Input>();
 	systems->gameTimer = make_unique<GameTimer>();
@@ -23,7 +23,7 @@ void Engine::Initialize()
 	running = true;
 }
 
-void Engine::InitSDL()
+void Engine::InitializeSDL()
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) != 0)
 		throwFS((string)"SDL could not initialize! SDL_Error: " + SDL_GetError());
@@ -71,7 +71,7 @@ void Engine::SetSwapInterval(int interval)
 		throwFS((string)"Unable to set swap interval! SDL Error: " + SDL_GetError());
 }
 
-void Engine::InitGlew()
+void Engine::InitializeGlew()
 {
 	glewExperimental = GL_TRUE;
 	Uint32 glewError = glewInit();
