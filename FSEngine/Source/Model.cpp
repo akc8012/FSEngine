@@ -8,7 +8,7 @@ Model::Model(const string& filepath)
 	const aiScene* scene = importer->GetScene();
 
 	ConvertMeshesOnNode(scene->mRootNode, scene);
-	AddComponent(new TransformComponent());
+	AddComponent(make_shared<TransformComponent>());
 }
 
 unique_ptr<Importer> Model::LoadModelImporter(const char* filepath)
@@ -27,24 +27,24 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	for (Uint32 i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		MeshComponent* meshComponent = ConvertMeshToComponent(mesh);
+		shared_ptr<MeshComponent> meshComponent = ConvertMeshToComponent(mesh);
 		AddComponent(meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
-			ConvertMaterialToTextures(meshComponent, scene->mMaterials[mesh->mMaterialIndex]);
+			ConvertMaterialToTextures(meshComponent.get(), scene->mMaterials[mesh->mMaterialIndex]);
 	}
 
 	for (Uint32 i = 0; i < node->mNumChildren; i++)
 		ConvertMeshesOnNode(node->mChildren[i], scene);
 }
 
-MeshComponent* Model::ConvertMeshToComponent(const aiMesh* mesh)
+shared_ptr<MeshComponent> Model::ConvertMeshToComponent(const aiMesh* mesh)
 {
 	vector<Vertex> vertices = ConvertVertices(mesh);
 	vector<Uint32> indices = ConvertIndices(mesh);
 
-	return new MeshComponent(vertices, indices);
+	return make_shared<MeshComponent>(vertices, indices);
 }
 
 vector<Vertex> Model::ConvertVertices(const aiMesh* mesh)
@@ -97,7 +97,7 @@ void Model::AddTextureComponent(MeshComponent* meshComponent, const string& text
 	if (loadedTextureName == nullptr)
 	{
 		meshComponent->AddAssociatedTextureName(textureName);
-		AddComponent(new TextureComponent(directory + textureName), textureName);
+		AddComponent(make_shared<TextureComponent>(directory + textureName), textureName);
 	}
 	else
 		meshComponent->AddAssociatedTextureName(*loadedTextureName);

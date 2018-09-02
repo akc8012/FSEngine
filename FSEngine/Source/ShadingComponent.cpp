@@ -2,6 +2,7 @@
 
 ShadingComponent::ShadingComponent()
 {
+	flatColor = vec4(0);
 	Initialize();
 }
 
@@ -14,6 +15,12 @@ ShadingComponent::ShadingComponent(const vec3& flatColor)
 ShadingComponent::ShadingComponent(float r, float g, float b)
 {
 	SetFlatColor(vec3(r, g, b));
+	Initialize();
+}
+
+ShadingComponent::ShadingComponent(int r, int g, int b)
+{
+	SetFlatColor(vec3((float)r, (float)g, (float)b));
 	Initialize();
 }
 

@@ -34,27 +34,27 @@ void GameObject::Update()
 
 }
 
-MeshComponent* GameObject::AddComponent(MeshComponent* component, const string& name)
+const shared_ptr<MeshComponent>& GameObject::AddComponent(const shared_ptr<MeshComponent>& component, const string& name)
 {
-	auto result = meshComponents.emplace(name, shared_ptr<MeshComponent>(component));
+	auto result = meshComponents.emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
 	return component;
 }
 
-ShadingComponent* GameObject::AddComponent(ShadingComponent* component, const string& name)
+const shared_ptr<ShadingComponent>& GameObject::AddComponent(const shared_ptr<ShadingComponent>& component, const string& name)
 {
-	auto result = shadingComponents.emplace(name, shared_ptr<ShadingComponent>(component));
+	auto result = shadingComponents.emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 
 	return component;
 }
 
-TransformComponent* GameObject::AddComponent(TransformComponent* component, const string& name)
+const shared_ptr<TransformComponent>& GameObject::AddComponent(const shared_ptr<TransformComponent>& component, const string& name)
 {
-	auto result = transformComponents.emplace(name, shared_ptr<TransformComponent>(component));
+	auto result = transformComponents.emplace(name, component);
 	if (!result.second)
 		ThrowDuplicateNameException(name);
 

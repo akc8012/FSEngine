@@ -13,6 +13,7 @@
 using std::unordered_map;
 using std::vector;
 using std::shared_ptr;
+using std::make_shared;
 
 #pragma region GameObject
 class GameObject
@@ -52,12 +53,12 @@ public:
 	virtual void Start();
 	virtual void Update();
 
-	MeshComponent* AddComponent(MeshComponent* component, const string& name = ComponentTypeString[MeshComponent::ComponentTypeId]);
-	ShadingComponent* AddComponent(ShadingComponent* component, const string& name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
-	TransformComponent* AddComponent(TransformComponent* component, const string& name = ComponentTypeString[TransformComponent::ComponentTypeId]);
+	const shared_ptr<MeshComponent>& AddComponent(const shared_ptr<MeshComponent>& component, const string& name = ComponentTypeString[MeshComponent::ComponentTypeId]);
+	const shared_ptr<ShadingComponent>& AddComponent(const shared_ptr<ShadingComponent>& component, const string& name = ComponentTypeString[ShadingComponent::ComponentTypeId]);
+	const shared_ptr<TransformComponent>& AddComponent(const shared_ptr<TransformComponent>& component, const string& name = ComponentTypeString[TransformComponent::ComponentTypeId]);
 
-	template <typename T> T* GetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
-	template <typename T> T* TryGetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> shared_ptr<T> GetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
+	template <typename T> shared_ptr<T> TryGetComponent(const string& name = ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> const unordered_map<string, shared_ptr<T>>& GetComponents() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
@@ -68,21 +69,21 @@ public:
 #pragma endregion
 
 #pragma region GetComponent
-template <typename T> T* GameObject::GetComponent(const string& name) const
+template <typename T> shared_ptr<T> GameObject::GetComponent(const string& name) const
 {
-	T* component = TryGetComponent<T>(name);
+	auto component = TryGetComponent<T>(name);
 	if (component == nullptr)
 		throwFS("Could not find component with name " + name);
 
 	return component;
 }
 
-template <typename T> T* GameObject::TryGetComponent(const string& name) const
+template <typename T> shared_ptr<T> GameObject::TryGetComponent(const string& name) const
 {
 	try
 	{
-		unordered_map<string, shared_ptr<T>> components = GetComponents<T>();
-		return components.at(name).get();
+		auto components = GetComponents<T>();
+		return components.at(name);
 	}
 	catch (std::out_of_range)
 	{

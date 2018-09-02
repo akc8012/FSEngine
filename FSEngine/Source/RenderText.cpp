@@ -4,8 +4,8 @@ RenderText::RenderText(Window* window)
 {
 	this->window = window;
 
-	AddComponent(new TransformComponent());
-	MeshComponent* meshComponent = AddComponent(CreateMeshComponent());
+	AddComponent(make_shared<TransformComponent>());
+	shared_ptr<MeshComponent> meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
 
@@ -16,7 +16,7 @@ RenderText::RenderText(Window* window)
 	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::EnableDepthTest, false);
 }
 
-MeshComponent* RenderText::CreateMeshComponent() const
+shared_ptr<MeshComponent> RenderText::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
@@ -36,7 +36,7 @@ MeshComponent* RenderText::CreateMeshComponent() const
 	};
 
 	const int Stride = 5;
-	return new MeshComponent(rawVertices, Stride, indices);
+	return make_shared<MeshComponent>(rawVertices, Stride, indices);
 }
 
 void RenderText::LoadFont(const char* fontName)
@@ -62,9 +62,9 @@ void RenderText::CreateTextureComponent(const string& text)
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
 	if (TryGetComponent<ShadingComponent>() == nullptr)
-		AddComponent(new TextureComponent(surface, true));
+		AddComponent(make_shared<TextureComponent>(surface, true));
 	else
-		dynamic_cast<TextureComponent*>(GetComponent<ShadingComponent>())->GenerateTexture(surface, true);
+		dynamic_cast<TextureComponent*>(GetComponent<ShadingComponent>().get())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }
@@ -140,7 +140,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 
 vec2 RenderText::GetPixelScale(const vec2& windowSize) const
 {
-	TransformComponent* transform = GetComponent<TransformComponent>();
+	shared_ptr<TransformComponent> transform = GetComponent<TransformComponent>();
 	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
 }
 

@@ -24,7 +24,7 @@ private:
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 
-	MeshComponent* ConvertMeshToComponent(const aiMesh* mesh);
+	shared_ptr<MeshComponent> ConvertMeshToComponent(const aiMesh* mesh);
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
 

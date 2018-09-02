@@ -4,11 +4,11 @@ Camera::Camera(Window* window)
 {
 	this->window = window;
 
-	viewTransform = AddComponent(new TransformComponent(), "View");
+	viewTransform = AddComponent(make_shared<TransformComponent>(), "View").get();
 	ResetViewTransform();
 
-	AddComponent(new TransformComponent(), "Perspective");
-	AddComponent(new TransformComponent(), "Orthographic");
+	AddComponent(make_shared<TransformComponent>(), "Perspective");
+	AddComponent(make_shared<TransformComponent>(), "Orthographic");
 
 	GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);

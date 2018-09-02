@@ -8,20 +8,20 @@ SceneManager::SceneManager(Systems* systems, Window* window)
 
 void SceneManager::AddGameObjects(Window* window)
 {
-	GameObject* memeFaceCube = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(new TextureComponent("Resource/Image/awesomeface.png")));
+	GameObject* memeFaceCube = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(make_shared<TextureComponent>("Resource/Image/awesomeface.png")));
 	memeFaceCube->GetComponent<TransformComponent>()->SetPosition(4.5f, 0.2f, 0);
 
-	GameObject* greenCube = gameObjectContainer->AddGameObject("GreenCube", new CubePrimitive(new ShadingComponent(0.1f, 0.6f, 0.3f)));
+	GameObject* greenCube = gameObjectContainer->AddGameObject("GreenCube", new CubePrimitive(make_shared<ShadingComponent>(0.1f, 0.6f, 0.3f)));
 	greenCube->GetComponent<TransformComponent>()->SetPosition(6, -0.2f, 0.1f);
 	greenCube->GetComponent<TransformComponent>()->SetScale(2, 0.8f, 2.8f);
 
-	gameObjectContainer->AddGameObject("1", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
-	gameObjectContainer->AddGameObject("2", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
-	gameObjectContainer->AddGameObject("3", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
-	gameObjectContainer->AddGameObject("4", new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
+	gameObjectContainer->AddGameObject("1", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
+	gameObjectContainer->AddGameObject("2", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
+	gameObjectContainer->AddGameObject("3", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
+	gameObjectContainer->AddGameObject("4", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
 	//for (int i = 5; i < 100; i++)
-	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(new ShadingComponent(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
+	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
 
 	RenderText* debugText = dynamic_cast<RenderText*>(gameObjectContainer->AddGameObject("DebugText", new RenderText(window)));
 	debugText->SetText("Debug text");

@@ -7,9 +7,7 @@
 #include <SDL_opengl.h>
 
 #include <string>
-#include <memory>
 using std::string;
-using std::unique_ptr;
 
 class TextureComponent : public ShadingComponent
 {

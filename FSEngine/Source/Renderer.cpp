@@ -14,7 +14,7 @@ void Renderer::SetCamera(GameObject* camera)
 void Renderer::StartRender()
 {
 	ClearScreen();
-	SetViewMatrices(camera->GetComponent<TransformComponent>("View"));
+	SetViewMatrices(camera->GetComponent<TransformComponent>("View").get());
 }
 
 void Renderer::ClearScreen()
@@ -36,15 +36,15 @@ void Renderer::SetViewMatrices(TransformComponent* viewTransform)
 #pragma region RenderGameObject
 void Renderer::RenderGameObject(GameObject* gameObject)
 {
-	SetTransformMatrices(gameObject->GetComponent<TransformComponent>());
+	SetTransformMatrices(gameObject->GetComponent<TransformComponent>().get());
 
 	for (auto& mesh : gameObject->GetComponents<MeshComponent>())
 	{
 		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
 		if (textureNames.size() != 0)
-			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureNames.front()));
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureNames.front()).get());
 		else
-			SetShadingParameters(gameObject->GetComponent<ShadingComponent>());
+			SetShadingParameters(gameObject->GetComponent<ShadingComponent>().get());
 
 		RenderMesh(mesh.second.get());
 	}
@@ -80,7 +80,7 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 		return;
 
-	TransformComponent* projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
+	shared_ptr<TransformComponent> projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);

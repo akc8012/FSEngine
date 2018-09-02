@@ -8,9 +8,10 @@ using std::vector;
 class CubePrimitive : public GameObject
 {
 private:
-	MeshComponent* CreateMeshComponent() const;
+	shared_ptr<MeshComponent> CreateMeshComponent() const;
 
 public:
-	CubePrimitive(ShadingComponent* shadingComponent);
+	CubePrimitive(const shared_ptr<ShadingComponent>& shadingComponent);
+
 	void Update() override;
 };

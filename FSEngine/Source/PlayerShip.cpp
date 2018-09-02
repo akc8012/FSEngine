@@ -8,7 +8,7 @@ PlayerShip::PlayerShip()
 
 void PlayerShip::Start()
 {
-	transform = GetComponent<TransformComponent>();
+	transform = GetComponent<TransformComponent>().get();
 	camera = dynamic_cast<Camera*>(gameObjectContainer->GetGameObject("Camera"));
 
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
