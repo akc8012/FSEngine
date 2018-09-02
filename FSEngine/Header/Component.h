@@ -15,7 +15,4 @@ private:
 
 public:
 	virtual ~Component();
-
-	bool IsShared() const;
-	void SetShared(bool isShared);
 };

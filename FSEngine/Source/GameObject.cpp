@@ -88,20 +88,11 @@ void GameObject::SetName(const string& name)
 GameObject::~GameObject()
 {
 	for (auto& meshComponent : meshComponents)
-	{
-		if (!meshComponent.second->IsShared())
-			delete meshComponent.second;
-	}
+		delete meshComponent.second;
 
 	for (auto& textureComponent : shadingComponents)
-	{
-		if (!textureComponent.second->IsShared())
-			delete textureComponent.second;
-	}
+		delete textureComponent.second;
 
 	for (auto& transformComponent : transformComponents)
-	{
-		if (!transformComponent.second->IsShared())
-			delete transformComponent.second;
-	}
+		delete transformComponent.second;
 }
