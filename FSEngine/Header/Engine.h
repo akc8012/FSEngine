@@ -20,9 +20,9 @@ private:
 	SDL_GLContext openGlContext = nullptr;
 
 	unique_ptr<Systems> systems;
-	Window* window = nullptr;
-	Renderer* renderer = nullptr;
-	SceneManager* sceneManager = nullptr;
+	unique_ptr<Window> window;
+	unique_ptr<Renderer> renderer;
+	unique_ptr<SceneManager> sceneManager;
 
 	void InitSDL();
 

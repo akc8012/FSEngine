@@ -13,8 +13,8 @@ void Engine::Initialize()
 	InitGlew();
 
 	systems->shaderProgram = make_unique<ShaderProgram>();
-	renderer = new Renderer(systems.get());
-	sceneManager = new SceneManager(systems.get(), window);
+	renderer = make_unique<Renderer>(systems.get());
+	sceneManager = make_unique<SceneManager>(systems.get(), window.get());
 
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
@@ -47,7 +47,7 @@ void Engine::InitializeOpenGl()
 
 void Engine::CreateOpenGlContext()
 {
-	window = new Window(systems->fileSystem.get());
+	window = make_unique<Window>(systems->fileSystem.get());
 
 	SDL_GL_DeleteContext(openGlContext);
 	openGlContext = SDL_GL_CreateContext(window->GetSDLWindow());
@@ -215,9 +215,9 @@ void Engine::Draw()
 {
 	renderer->StartRender();
 
-	sceneManager->Draw(renderer);
+	sceneManager->Draw(renderer.get());
 
-	renderer->EndRender(window);
+	renderer->EndRender(window.get());
 }
 
 SDL_Window* Engine::GetSDLWindow() const
@@ -227,11 +227,8 @@ SDL_Window* Engine::GetSDLWindow() const
 
 Engine::~Engine()
 {
-	delete sceneManager;
-	delete renderer;
-	delete window;
-
 	SDL_GL_DeleteContext(openGlContext);
+
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
