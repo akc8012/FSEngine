@@ -20,7 +20,7 @@ private:
 	string renderText;
 	vec2 aspectRatio;
 
-	vec2 pixelScaleFactor = vec2(1.f, 1.f);
+	vec2 pixelScaleFactor = vec2(1, 1);
 	vec2 pixelPosition = vec2(0, 0);
 	AnchorPosition anchorPosition = Center;
 	AnchorPosition alignPosition = Center;

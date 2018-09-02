@@ -5,16 +5,17 @@ void Engine::Initialize()
 {
 	systems = make_unique<Systems>();
 	systems->fileSystem = make_unique<FileSystem>();
-	systems->input = make_unique<Input>();
-	systems->gameTimer = make_unique<GameTimer>();
 
 	InitSDL();
 	InitializeOpenGl();
 	InitGlew();
 
+	systems->input = make_unique<Input>();
+	systems->gameTimer = make_unique<GameTimer>();
 	systems->shaderProgram = make_unique<ShaderProgram>();
+
 	renderer = make_unique<Renderer>(systems.get());
-	sceneManager = make_unique<SceneManager>(systems.get(), window.get());
+	sceneManager = new SceneManager(systems.get(), window.get());
 
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
@@ -227,8 +228,9 @@ SDL_Window* Engine::GetSDLWindow() const
 
 Engine::~Engine()
 {
-	SDL_GL_DeleteContext(openGlContext);
+	delete sceneManager;
 
+	SDL_GL_DeleteContext(openGlContext);
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();

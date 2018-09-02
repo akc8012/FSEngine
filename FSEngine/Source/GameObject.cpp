@@ -80,3 +80,8 @@ void GameObject::SetName(const string& name)
 {
 	this->name = &name;
 }
+
+GameObject::~GameObject()
+{
+
+}

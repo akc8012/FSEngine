@@ -47,6 +47,7 @@ protected:
 
 public:
 	GameObject();
+	virtual ~GameObject();
 
 	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
 
