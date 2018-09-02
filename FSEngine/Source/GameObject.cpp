@@ -2,7 +2,7 @@
 
 GameObject::GameObject()
 {
-	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
 	SetDefaultParameters();
 
 	meshComponents = unordered_map<string, MeshComponent*>();
@@ -72,7 +72,7 @@ void GameObject::ThrowDuplicateNameException(const string& name) const
 
 ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameObject::GetParameterCollection() const
 {
-	return parameterCollection;
+	return parameterCollection.get();
 }
 
 const string& GameObject::GetName() const
@@ -104,6 +104,4 @@ GameObject::~GameObject()
 		if (!transformComponent.second->IsShared())
 			delete transformComponent.second;
 	}
-
-	delete parameterCollection;
 }

@@ -30,7 +30,7 @@ public:
 
 private:
 	const string* name = nullptr;
-	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	unordered_map<string, MeshComponent*> meshComponents;
 	unordered_map<string, ShadingComponent*> shadingComponents;
