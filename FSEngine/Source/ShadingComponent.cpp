@@ -19,7 +19,7 @@ ShadingComponent::ShadingComponent(float r, float g, float b)
 
 void ShadingComponent::Initialize()
 {
-	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
 	parameterCollection->SetParameter(EnableDepthTest, true);
 	parameterCollection->SetParameter(RenderPerspective, true);
 	parameterCollection->SetParameter(Blend, true);
@@ -42,10 +42,5 @@ vec4 ShadingComponent::GetFlatColor() const
 
 ParameterCollection<ShadingComponent::Parameters, ShadingComponent::ParametersLength>* ShadingComponent::GetParameterCollection() const
 {
-	return parameterCollection;
-}
-
-ShadingComponent::~ShadingComponent()
-{
-	delete parameterCollection;
+	return parameterCollection.get();
 }

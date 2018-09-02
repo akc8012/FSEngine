@@ -34,7 +34,7 @@ private:
 		size_t offset;
 	};
 
-	ParameterCollection<Parameters, ParametersLength>* parameterCollection = nullptr;
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	vector<Vertex> vertices;
 	vector<Uint32> indices;

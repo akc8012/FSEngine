@@ -2,7 +2,7 @@
 
 ShaderProgram::ShaderProgram()
 {
-	parameterCollection = new ParameterCollection<Parameters, ParametersLength>();
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
 
 	shaderProgramId = glCreateProgram();
 	CompileShaders();
@@ -209,11 +209,10 @@ void ShaderProgram::ShowUseWarning() const
 
 ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameterCollection() const
 {
-	return parameterCollection;
+	return parameterCollection.get();
 }
 
 ShaderProgram::~ShaderProgram()
 {
 	glDeleteProgram(shaderProgramId);
-	delete parameterCollection;
 }
