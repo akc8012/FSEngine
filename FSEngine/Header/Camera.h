@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Input.h"
 #include "Window.h"
+#include "RenderText.h"
 
 #include <SDL.h>
 #include <glm\glm.hpp>
@@ -23,13 +24,14 @@ private:
 
 	void CalculateViewMatrix();
 	vec3 GetDirectionInput() const;
-	vec3 GetFloorMovementInput() const;
+	vec3 GetFloorMovementInput(const vec3& forward, const vec3& right) const;
 	float GetHeightInput() const;
 
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
 
 	float GetFrameAdjustedSpeed() const;
+	void SetDebugText(const string& text) const;
 
 public:
 	Camera(Window* window);

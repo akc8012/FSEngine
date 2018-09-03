@@ -1,6 +1,6 @@
 #include "../Header/TransformComponent.h"
 
-string TransformComponent::GetFormattedMatrixString(const mat4& matrix)
+string TransformComponent::GetMatrixString(const mat4& matrix)
 {
 	string matrixString = "";
 
@@ -19,12 +19,12 @@ string TransformComponent::GetFormattedMatrixString(const mat4& matrix)
 	return matrixString;
 }
 
-string TransformComponent::GetFormattedVectorString(const vec3& vector)
+string TransformComponent::GetVectorString(const vec3& vector)
 {
 	return "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ", " + std::to_string(vector.z) + ")";
 }
 
-string TransformComponent::GetFormattedVectorString(const vec2& vector)
+string TransformComponent::GetVectorString(const vec2& vector)
 {
 	return "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ")";
 }

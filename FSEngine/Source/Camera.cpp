@@ -32,16 +32,21 @@ void Camera::Update()
 
 void Camera::CalculateViewMatrix()
 {
+	vec3 forward = vec3(0.0f, 0.0f, -1.0f);
+	vec3 up = vec3(0.0f, 1.0f, 0.0f);
+
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
 		direction += GetDirectionInput() * GetFrameAdjustedSpeed();
+		forward = TransformComponent::EulerAngleToDirectionVector(direction);
 
-		position += GetFloorMovementInput() * GetFrameAdjustedSpeed();
+		vec3 right = glm::normalize(glm::cross(forward, up));
+		position += GetFloorMovementInput(forward, right) * GetFrameAdjustedSpeed();
 		position.y += GetHeightInput() * GetFrameAdjustedSpeed();
 	}
 
-	vec3 upVector = vec3(0.0f, 1.0f, 0.0f);
-	viewTransform->LookAt(position, position + TransformComponent::EulerAngleToDirectionVector(direction), upVector);
+	SetDebugText(TransformComponent::GetVectorString(position));
+	viewTransform->LookAt(position, position + forward, up);
 }
 
 vec3 Camera::GetDirectionInput() const
@@ -53,13 +58,12 @@ vec3 Camera::GetDirectionInput() const
 	return vec3(pitchInputValue, yawInputValue, 0) * RotationSpeedModifier;
 }
 
-vec3 Camera::GetFloorMovementInput() const
+vec3 Camera::GetFloorMovementInput(const vec3& forward, const vec3& right) const
 {
-	vec3 floorMovementInput = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
-	if (glm::length(floorMovementInput) != 0)
-		floorMovementInput = glm::normalize(floorMovementInput);
+	vec3 verticalInput = -systems->input->GetVerticalAxis() * vec3(forward.x, 0, forward.z);
+	vec3 horizontalInput = systems->input->GetHorizontalAxis() * right;
 
-	return floorMovementInput;
+	return verticalInput + horizontalInput;
 }
 
 float Camera::GetHeightInput() const
@@ -70,6 +74,11 @@ float Camera::GetHeightInput() const
 float Camera::GetFrameAdjustedSpeed() const
 {
 	return systems->fileSystem->GetSettingsValue<float>("CameraSpeed") * systems->gameTimer->GetDeltaTime();
+}
+
+void Camera::SetDebugText(const string& text) const
+{
+	dynamic_cast<RenderText*>(gameObjectContainer->GetGameObject("DebugText"))->SetText(text);
 }
 
 void Camera::CalculateProjectionMatrixPerspective()
