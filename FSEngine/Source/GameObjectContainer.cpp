@@ -26,24 +26,18 @@ void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObjec
 
 void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 {
-	GameObject* gameObject = TryGetGameObject(name);
-	if (gameObject == nullptr)
-		throwFS("Could not remove GameObject with name: " + name);
-
 	int index = gameObjectMapper->UnMapGameObject(name);
 	gameObjects.erase(gameObjects.begin() + index);
 
-	ReMapGameObjectNames();
+	ReMapGameObjectNames(index);
 }
 
-void GameObject::GameObjectContainer::ReMapGameObjectNames()
+void GameObject::GameObjectContainer::ReMapGameObjectNames(int startIndex)
 {
-	gameObjectMapper->Clear();
-
-	for (int index = 0; index < gameObjects.size(); index++)
+	for (int index = startIndex; index < gameObjects.size(); index++)
 	{
 		string name = gameObjects[index]->GetName();
-		gameObjectMapper->MapGameObject(name, index);
+		gameObjectMapper->ReMapGameObject(name, index);
 	}
 }
 

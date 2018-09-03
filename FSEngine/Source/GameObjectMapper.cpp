@@ -7,11 +7,19 @@ void GameObjectMapper::MapGameObject(const string& name, int index)
 		throwFS("Mapped GameObject with name " + name + " already exists");
 }
 
+void GameObjectMapper::ReMapGameObject(const string& name, int index)
+{
+	if (TryGetGameObjectIndex(name) == -1)
+		throwFS("Could not find GameObject to remap with name: " + name);
+
+	gameObjectMap[name] = index;
+}
+
 int GameObjectMapper::UnMapGameObject(const string& name)
 {
 	int index = TryGetGameObjectIndex(name);
 	if (index == -1)
-		throwFS("Could not find GameObject to UnMap with name: " + name);
+		throwFS("Could not find GameObject to unmap with name: " + name);
 
 	gameObjectMap.erase(name);
 	return index;
@@ -27,9 +35,4 @@ int GameObjectMapper::TryGetGameObjectIndex(const string& name) const
 	{
 		return -1;
 	}
-}
-
-void GameObjectMapper::Clear()
-{
-	gameObjectMap.clear();
 }

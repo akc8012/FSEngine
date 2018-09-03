@@ -15,6 +15,9 @@ using std::vector;
 class SceneManager
 {
 private:
+	Systems* systems = nullptr;
+	Window* window = nullptr;
+
 	unique_ptr<GameObject::GameObjectContainer> gameObjectContainer;
 
 	void AddGameObjects(Window* window);

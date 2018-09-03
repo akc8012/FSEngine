@@ -205,7 +205,7 @@ void Engine::Update()
 	if (systems->fileSystem->GetSettingsValue<bool>("ContinualSettingsReload"))
 		systems->fileSystem->LoadSettingsFile();
 
-	systems->gameTimer->UpdateDeltaTime();
+	systems->gameTimer->Update();
 
 	sceneManager->Update();
 

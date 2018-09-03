@@ -5,6 +5,12 @@ GameTimer::GameTimer()
 	Start();
 }
 
+void GameTimer::Update()
+{
+	frames++;
+	UpdateDeltaTime();
+}
+
 void GameTimer::UpdateDeltaTime()
 {
 	float currentFrameTime = GetSeconds();
@@ -16,4 +22,9 @@ void GameTimer::UpdateDeltaTime()
 float GameTimer::GetDeltaTime() const
 {
 	return deltaTime;
+}
+
+int GameTimer::GetFrames() const
+{
+	return frames;
 }

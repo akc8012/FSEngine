@@ -120,7 +120,7 @@ private:
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 	GameObject* TryGetGameObjectAtIndex(int index) const;
 
-	void ReMapGameObjectNames();
+	void ReMapGameObjectNames(int startIndex);
 
 public:
 	GameObjectContainer(Systems* systems);

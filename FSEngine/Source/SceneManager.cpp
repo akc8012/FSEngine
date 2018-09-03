@@ -2,6 +2,9 @@
 
 SceneManager::SceneManager(Systems* systems, Window* window)
 {
+	this->systems = systems;
+	this->window = window;
+
 	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems);
 	AddGameObjects(window);
 }

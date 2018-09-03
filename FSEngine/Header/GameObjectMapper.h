@@ -13,9 +13,8 @@ private:
 
 public:
 	void MapGameObject(const string& name, int index);
+	void ReMapGameObject(const string& name, int index);
 	int UnMapGameObject(const string& name);
 
 	int TryGetGameObjectIndex(const string& name) const;
-
-	void Clear();
 };
