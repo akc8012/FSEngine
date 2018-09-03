@@ -17,7 +17,7 @@ Camera::Camera(Window* window)
 void Camera::ResetViewTransform()
 {
 	SetPosition(vec3(0, 0, 4));
-	SetDirection(vec3(0, -90, 0));
+	rotation = vec2(0, 0);
 }
 
 void Camera::Update()
@@ -32,35 +32,38 @@ void Camera::Update()
 
 void Camera::CalculateViewMatrix()
 {
-	vec3 forward = vec3(0.0f, 0.0f, -1.0f);
-	vec3 up = vec3(0.0f, 1.0f, 0.0f);
+	const vec3 Up = vec3(0.0f, 1.0f, 0.0f);
+	const vec3 Forward = vec3(0.0f, 0.0f, -1.0f);
+
+	vec3 right = glm::normalize(glm::cross(GetDirection(), Up));
+	vec3 direction = Forward;
 
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
-		direction += GetDirectionInput() * GetFrameAdjustedSpeed();
-		forward = TransformComponent::EulerAngleToDirectionVector(direction);
+		direction = GetDirectionInput(right, Up) * direction;
 
-		vec3 right = glm::normalize(glm::cross(forward, up));
-		position += GetFloorMovementInput(forward, right) * GetFrameAdjustedSpeed();
+		position += GetFloorMovementInput(GetDirection(), right) * GetFrameAdjustedSpeed();
 		position.y += GetHeightInput() * GetFrameAdjustedSpeed();
 	}
 
-	SetDebugText(TransformComponent::GetVectorString(position));
-	viewTransform->LookAt(position, position + forward, up);
+	viewTransform->LookAt(position, position + direction, Up);
 }
 
-vec3 Camera::GetDirectionInput() const
+quat Camera::GetDirectionInput(const vec3& right, const vec3& up)
 {
-	float pitchInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K);
-	float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
+	rotation.x += systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K) * GetFrameAdjustedSpeed();
+	rotation.y += -systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J) * GetFrameAdjustedSpeed();
+	SetDebugText(TransformComponent::GetVectorString(rotation));
 
-	const float RotationSpeedModifier = 10;
-	return vec3(pitchInputValue, yawInputValue, 0) * RotationSpeedModifier;
+	quat pitchRotation = glm::angleAxis(rotation.x, right);
+	quat yawRotation = glm::angleAxis(rotation.y, up);
+
+	return pitchRotation * yawRotation;
 }
 
 vec3 Camera::GetFloorMovementInput(const vec3& forward, const vec3& right) const
 {
-	vec3 verticalInput = -systems->input->GetVerticalAxis() * vec3(forward.x, 0, forward.z);
+	vec3 verticalInput = -systems->input->GetVerticalAxis() * glm::normalize(vec3(forward.x, 0, forward.z));
 	vec3 horizontalInput = systems->input->GetHorizontalAxis() * right;
 
 	return verticalInput + horizontalInput;
@@ -113,12 +116,7 @@ vec3 Camera::GetPosition() const
 	return position;
 }
 
-void Camera::SetDirection(const vec3& direction)
-{
-	this->direction = direction;
-}
-
 vec3 Camera::GetDirection() const
 {
-	return direction;
+	return -1.f * vec3(viewTransform->GetMatrix()[0][2], viewTransform->GetMatrix()[1][2], viewTransform->GetMatrix()[2][2]);
 }

@@ -31,9 +31,9 @@ string TransformComponent::GetVectorString(const vec2& vector)
 
 vec3 TransformComponent::EulerAngleToDirectionVector(const vec3& angle)
 {
-	float pitch = glm::radians(angle.x);
-	float yaw = glm::radians(angle.y);
-	float roll = glm::radians(angle.z);
+	float pitch = angle.x;
+	float yaw = angle.y;
+	float roll = angle.z;
 
 	vec3 directionVector;
 	directionVector.x = cos(pitch) * cos(yaw);

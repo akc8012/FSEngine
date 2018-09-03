@@ -18,12 +18,12 @@ private:
 	Window* window = nullptr;
 
 	vec3 position;
-	vec3 direction;
+	vec2 rotation;
 
 	void ResetViewTransform();
 
 	void CalculateViewMatrix();
-	vec3 GetDirectionInput() const;
+	quat GetDirectionInput(const vec3& right, const vec3& up);
 	vec3 GetFloorMovementInput(const vec3& forward, const vec3& right) const;
 	float GetHeightInput() const;
 
@@ -40,7 +40,5 @@ public:
 
 	void SetPosition(const vec3& position);
 	vec3 GetPosition() const;
-
-	void SetDirection(const vec3& direction);
 	vec3 GetDirection() const;
 };

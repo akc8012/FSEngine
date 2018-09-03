@@ -14,7 +14,7 @@
   "ShipControl": false,
 
   "ShipSpeed": 6,
-  "CameraSpeed": 6,
+  "CameraSpeed": 2,
   "CameraDistance": 5.5,
 
   "ReadPosition": [0, 3, 6],
