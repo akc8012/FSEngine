@@ -88,12 +88,12 @@ void Camera::CalculateProjectionMatrixPerspective()
 {
 	vec2 windowSize = window->GetWindowSize();
 
-	const float FieldOfView = radians(45.0f);
+	const float FieldOfView = glm::radians(45.0f);
 	const float AspectRatio = windowSize.x / windowSize.y;
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 
-	GetComponent<TransformComponent>("Perspective")->SetMatrix(perspective(FieldOfView, AspectRatio, NearPlane, FarPlane));
+	GetComponent<TransformComponent>("Perspective")->SetMatrix(glm::perspective(FieldOfView, AspectRatio, NearPlane, FarPlane));
 }
 
 void Camera::CalculateProjectionMatrixOrthographic()
@@ -103,7 +103,7 @@ void Camera::CalculateProjectionMatrixOrthographic()
 	const float Bottom = Left;
 	const float Top = Right;
 
-	GetComponent<TransformComponent>("Orthographic")->SetMatrix(ortho(Left, Right, Bottom, Top));
+	GetComponent<TransformComponent>("Orthographic")->SetMatrix(glm::ortho(Left, Right, Bottom, Top));
 }
 
 void Camera::SetPosition(const vec3& position)

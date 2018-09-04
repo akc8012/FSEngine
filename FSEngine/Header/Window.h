@@ -6,7 +6,7 @@
 #include <SDL_opengl.h>
 
 #include <glm\glm.hpp>
-using namespace glm;
+using glm::tvec2;
 
 #include <string>
 using std::string;

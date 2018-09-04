@@ -1,6 +1,7 @@
 #pragma once
 #include <glm\glm.hpp>
-using namespace glm;
+using glm::vec3;
+using glm::vec2;
 
 struct Vertex
 {

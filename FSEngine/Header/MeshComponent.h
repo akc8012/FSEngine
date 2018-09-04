@@ -7,9 +7,6 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
-#include <glm\glm.hpp>
-using namespace glm;
-
 #include <vector>
 using std::vector;
 

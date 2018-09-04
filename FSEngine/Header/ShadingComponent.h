@@ -4,7 +4,8 @@
 #include "ParameterCollection.h"
 
 #include <glm\glm.hpp>
-using namespace glm;
+using glm::vec4;
+using glm::vec3;
 
 class ShadingComponent : public Component
 {
