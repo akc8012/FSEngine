@@ -26,7 +26,7 @@ private:
 	AnchorPosition alignPosition = Center;
 
 	shared_ptr<MeshComponent> CreateMeshComponent() const;
-	void LoadFont(const char* fontName);
+	void LoadFont(const string& fontName);
 	void CreateTextureComponent(const string& text);
 
 	vec2 CalculateAspectRatio(const vec2& surfaceSize);

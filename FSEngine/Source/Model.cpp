@@ -11,7 +11,7 @@ Model::Model(const string& filepath)
 	AddComponent(make_shared<TransformComponent>());
 }
 
-unique_ptr<Importer> Model::LoadModelImporter(const char* filepath)
+unique_ptr<Importer> Model::LoadModelImporter(const string& filepath)
 {
 	unique_ptr<Importer> importer(new Importer());
 	const aiScene* scene = importer->ReadFile(filepath, aiProcess_Triangulate | aiProcess_FlipUVs);

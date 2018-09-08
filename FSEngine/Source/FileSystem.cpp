@@ -11,7 +11,7 @@ void FileSystem::LoadSettingsFile()
 	settingsJson = json::parse(file);
 }
 
-json FileSystem::GetSettingsValue(const char* key) const
+json FileSystem::GetSettingsValue(const string& key) const
 {
 	if (settingsJson == nullptr)
 		throwFS((string)"Attempting to access settings json without loading it first");
@@ -23,7 +23,7 @@ json FileSystem::GetSettingsValue(const char* key) const
 	return jsonValue.value();
 }
 
-string FileSystem::LoadTextFromFile(const char* filepath)
+string FileSystem::LoadTextFromFile(const string& filepath)
 {
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
@@ -33,17 +33,17 @@ string FileSystem::LoadTextFromFile(const char* filepath)
 	return file;
 }
 
-string FileSystem::TryLoadTextFromFile(const char* filepath)
+string FileSystem::TryLoadTextFromFile(const string& filepath)
 {
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
 	if (!success)
-		printf("Warning: Unable to load text file from path: %s", filepath);
+		printf("Warning: Unable to load text file from path: %s", filepath.c_str());
 
 	return file;
 }
 
-string FileSystem::InternalTryLoadTextFromFile(const char* filepath, bool& success)
+string FileSystem::InternalTryLoadTextFromFile(const string& filepath, bool& success)
 {
 	using std::fstream;
 	using std::ifstream;

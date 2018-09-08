@@ -68,7 +68,7 @@ Uint32 ShaderProgram::CreateFragmentShader()
 	return CreateShaderFromFilepath(GL_FRAGMENT_SHADER, "Resource/Shader/FragmentPhongShader.glsl", fragmentShaderFallbackSource);
 }
 
-Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource)
+Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const string& filepath, const string& fallbackSource)
 {
 	int shaderId = TryCompileShaderSource(type, FileSystem::LoadTextFromFile(filepath).c_str());
 	if (shaderId == -1)
@@ -80,10 +80,12 @@ Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const char* filepath
 	return shaderId;
 }
 
-int ShaderProgram::TryCompileShaderSource(Uint32 type, const char* source)
+int ShaderProgram::TryCompileShaderSource(Uint32 type, const string& source)
 {
 	Uint32 shaderId = glCreateShader(type);
-	glShaderSource(shaderId, 1, &source, NULL);
+
+	const char* sourceText = source.c_str();
+	glShaderSource(shaderId, 1, &sourceText, NULL);
 
 	int success;
 	glCompileShader(shaderId);
@@ -127,25 +129,25 @@ void ShaderProgram::Use()
 	glUseProgram(shaderProgramId);
 }
 
-void ShaderProgram::SetBoolUniform(const char* name, bool value)
+void ShaderProgram::SetBoolUniform(const string& name, bool value)
 {
 	ShowUseWarning();
 	glUniform1i(GetUniformLocation(name), (int)value);
 }
 
-void ShaderProgram::SetIntUniform(const char* name, int value)
+void ShaderProgram::SetIntUniform(const string& name, int value)
 {
 	ShowUseWarning();
 	glUniform1i(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetFloatUniform(const char* name, float value)
+void ShaderProgram::SetFloatUniform(const string& name, float value)
 {
 	ShowUseWarning();
 	glUniform1f(GetUniformLocation(name), value);
 }
 
-void ShaderProgram::SetVectorUniform(const char* name, const vec3& value)
+void ShaderProgram::SetVectorUniform(const string& name, const vec3& value)
 {
 	ShowUseWarning();
 
@@ -153,7 +155,7 @@ void ShaderProgram::SetVectorUniform(const char* name, const vec3& value)
 	glUniform3fv(GetUniformLocation(name), Count, value_ptr(value));
 }
 
-void ShaderProgram::SetVectorUniform(const char* name, const vec4& value)
+void ShaderProgram::SetVectorUniform(const string& name, const vec4& value)
 {
 	ShowUseWarning();
 
@@ -161,7 +163,7 @@ void ShaderProgram::SetVectorUniform(const char* name, const vec4& value)
 	glUniform4fv(GetUniformLocation(name), Count, value_ptr(value));
 }
 
-void ShaderProgram::SetMatrixUniform(const char* name, const mat3& value)
+void ShaderProgram::SetMatrixUniform(const string& name, const mat3& value)
 {
 	ShowUseWarning();
 
@@ -171,7 +173,7 @@ void ShaderProgram::SetMatrixUniform(const char* name, const mat3& value)
 	glUniformMatrix3fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
-void ShaderProgram::SetMatrixUniform(const char* name, const mat4& value)
+void ShaderProgram::SetMatrixUniform(const string& name, const mat4& value)
 {
 	ShowUseWarning();
 
@@ -181,7 +183,7 @@ void ShaderProgram::SetMatrixUniform(const char* name, const mat4& value)
 	glUniformMatrix4fv(GetUniformLocation(name), Count, Transpose, value_ptr(value));
 }
 
-Uint32 ShaderProgram::GetUniformLocation(const char* name)
+Uint32 ShaderProgram::GetUniformLocation(const string& name)
 {
 	Uint32 location = -1;
 	try
@@ -196,9 +198,9 @@ Uint32 ShaderProgram::GetUniformLocation(const char* name)
 	return location;
 }
 
-Uint32 ShaderProgram::GetUniformLocationFromGl(const char* name) const
+Uint32 ShaderProgram::GetUniformLocationFromGl(const string& name) const
 {
-	return glGetUniformLocation(shaderProgramId, name);
+	return glGetUniformLocation(shaderProgramId, name.c_str());
 }
 
 void ShaderProgram::ShowUseWarning() const

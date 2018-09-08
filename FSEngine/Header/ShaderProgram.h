@@ -48,11 +48,11 @@ private:
 	Uint32 CreateFragmentShader();
 	void LinkShaderProgram(Uint32 vertexShaderId, Uint32 fragmentShaderId);
 
-	Uint32 CreateShaderFromFilepath(Uint32 type, const char* filepath, const char* fallbackSource);
-	int TryCompileShaderSource(Uint32 type, const char* filepath);
+	Uint32 CreateShaderFromFilepath(Uint32 type, const string& filepath, const string& fallbackSource);
+	int TryCompileShaderSource(Uint32 type, const string& filepath);
 
-	Uint32 GetUniformLocation(const char* name);
-	Uint32 GetUniformLocationFromGl(const char* name) const;
+	Uint32 GetUniformLocation(const string& name);
+	Uint32 GetUniformLocationFromGl(const string& name) const;
 	void ShowUseWarning() const;
 
 	static string GetShaderTypeText(Uint32 type);
@@ -64,15 +64,15 @@ public:
 	void CompileShaders();
 	void Use();
 
-	void SetBoolUniform(const char* name, bool value);
-	void SetIntUniform(const char* name, int value);
-	void SetFloatUniform(const char* name, float value);
+	void SetBoolUniform(const string& name, bool value);
+	void SetIntUniform(const string& name, int value);
+	void SetFloatUniform(const string& name, float value);
 
-	void SetVectorUniform(const char* name, const vec3& value);
-	void SetVectorUniform(const char* name, const vec4& value);
+	void SetVectorUniform(const string& name, const vec3& value);
+	void SetVectorUniform(const string& name, const vec4& value);
 
-	void SetMatrixUniform(const char* name, const mat3& value);
-	void SetMatrixUniform(const char* name, const mat4& value);
+	void SetMatrixUniform(const string& name, const mat3& value);
+	void SetMatrixUniform(const string& name, const mat4& value);
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };

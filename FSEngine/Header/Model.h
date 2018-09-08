@@ -20,7 +20,7 @@ class Model : public GameObject
 private:
 	string directory = "";
 
-	unique_ptr<Importer> LoadModelImporter(const char* filepath);
+	unique_ptr<Importer> LoadModelImporter(const string& filepath);
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 

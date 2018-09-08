@@ -39,7 +39,7 @@ shared_ptr<MeshComponent> RenderText::CreateMeshComponent() const
 	return make_shared<MeshComponent>(rawVertices, Stride, indices);
 }
 
-void RenderText::LoadFont(const char* fontName)
+void RenderText::LoadFont(const string& fontName)
 {
 	const int FontSize = 32;
 	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
