@@ -5,9 +5,9 @@
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
 
-  "SwapInterval": -1,
+  "SwapInterval": 0,
   "PolygonLineMode": false,
-  "Resolution": [900, 600],
+  "Resolution": [1280, 800],
   "Fullscreen": false,
 
   "CameraControl": true,

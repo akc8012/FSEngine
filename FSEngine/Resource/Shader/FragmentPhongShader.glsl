@@ -26,7 +26,7 @@ void main()
 		return;
 	}
 
-	FragmentColor = vec4(CalcLighting(), 1) * fragmentColor;
+	FragmentColor = vec4(CalcLighting() * vec3(fragmentColor), 1);
 }
 
 vec3 CalcLighting()
