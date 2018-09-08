@@ -61,7 +61,7 @@ vec3 Camera::GetDirectionInput() const
 float Camera::ClampPitch(float pitch) const
 {
 	if (std::abs(pitch) >= 90.f)
-		return 89.f * (pitch > 0 ? 1 : -1);
+		return 89.999f * (pitch > 0 ? 1 : -1);
 
 	return pitch;
 }
