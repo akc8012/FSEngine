@@ -1,5 +1,9 @@
 #include "../Header/TransformComponent.h"
 
+const vec3 TransformComponent::Forward = vec3(0, 0, -1);
+const vec3 TransformComponent::Up = vec3(0, 1, 0);
+const vec3 TransformComponent::Right = vec3(1, 0, 0);
+
 string TransformComponent::GetMatrixString(const mat4& matrix)
 {
 	string matrixString = "";
@@ -31,9 +35,9 @@ string TransformComponent::GetVectorString(const vec2& vector)
 
 vec3 TransformComponent::EulerAngleToDirectionVector(const vec3& angle)
 {
-	float pitch = angle.x;
-	float yaw = angle.y;
-	float roll = angle.z;
+	float pitch = glm::radians(angle.x);
+	float yaw = glm::radians(angle.y);
+	float roll = glm::radians(angle.z);
 
 	vec3 directionVector;
 	directionVector.x = cos(pitch) * cos(yaw);

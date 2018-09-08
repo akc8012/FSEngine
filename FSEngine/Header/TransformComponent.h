@@ -37,6 +37,9 @@ private:
 
 public:
 	static const ComponentType ComponentTypeId = Transform;
+	static const vec3 Forward;
+	static const vec3 Up;
+	static const vec3 Right;
 
 	static string GetMatrixString(const mat4& matrix);
 	static string GetVectorString(const vec3& vector);
