@@ -37,6 +37,8 @@ void Camera::CalculateViewMatrix()
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
 		direction += GetDirectionInput() * GetFrameAdjustedSpeed();
+		direction.x = ClampPitch(direction.x);
+
 		forward = TransformComponent::EulerAngleToDirectionVector(direction);
 
 		vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
@@ -54,6 +56,14 @@ vec3 Camera::GetDirectionInput() const
 	float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
 
 	return vec3(glm::degrees(pitchInputValue), glm::degrees(yawInputValue), 0);
+}
+
+float Camera::ClampPitch(float pitch) const
+{
+	if (std::abs(pitch) >= 90.f)
+		return 89.f * (pitch > 0 ? 1 : -1);
+
+	return pitch;
 }
 
 vec3 Camera::GetFloorMovementInput(const vec3& forward, const vec3& right) const
