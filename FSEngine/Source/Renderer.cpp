@@ -63,8 +63,8 @@ void Renderer::SetRenderParametersForGrid()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
-	systems->shaderProgram->SetMatrixUniform("modelMatrix", mat4(1));
-	systems->shaderProgram->SetMatrixUniform("normalMatrix", mat4(1));
+	systems->shaderProgram->SetMatrixUniform("modelMatrix", TransformComponent::IdentityMatrix);
+	systems->shaderProgram->SetMatrixUniform("normalMatrix", TransformComponent::IdentityMatrix);
 	systems->shaderProgram->SetVectorUniform("flatColor", vec4(1, 1, 0.6f, 1));
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
 	systems->shaderProgram->SetBoolUniform("renderPerspective", true);

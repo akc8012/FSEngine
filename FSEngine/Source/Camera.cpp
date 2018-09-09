@@ -37,7 +37,6 @@ void Camera::CalculateViewMatrix()
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 		forward = HandleInput();
 
-	SetDebugText(std::to_string(position.y));
 	viewTransform->LookAt(position, position + forward, TransformComponent::Up);
 }
 

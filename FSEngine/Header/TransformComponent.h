@@ -21,7 +21,6 @@ using std::string;
 class TransformComponent : public Component
 {
 private:
-	const mat4 identityMatrix = mat4(1);
 	struct MatrixValues
 	{
 		vec3 scale;
@@ -31,15 +30,20 @@ private:
 		vec4 perspective;
 	};
 
-	mat4 transform = mat4(1.0f);
+	mat4 transform = IdentityMatrix;
 
 	MatrixValues DecomposeTransformMatrix() const;
 
 public:
 	static const ComponentType ComponentTypeId = Transform;
+	static const mat4 IdentityMatrix;
 	static const vec3 Forward;
 	static const vec3 Up;
 	static const vec3 Right;
+
+	static void PrintMatrixString(const mat4& matrix);
+	static void PrintVectorString(const vec3& vector);
+	static void PrintVectorString(const vec2& vector);
 
 	static string GetMatrixString(const mat4& matrix);
 	static string GetVectorString(const vec3& vector);

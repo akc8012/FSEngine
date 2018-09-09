@@ -1,8 +1,24 @@
 #include "../Header/TransformComponent.h"
 
+const mat4 TransformComponent::IdentityMatrix = mat4(1);
 const vec3 TransformComponent::Forward = vec3(0, 0, -1);
 const vec3 TransformComponent::Up = vec3(0, 1, 0);
 const vec3 TransformComponent::Right = vec3(1, 0, 0);
+
+void TransformComponent::PrintMatrixString(const mat4& matrix)
+{
+	printf("%s\n", GetMatrixString(matrix).c_str());
+}
+
+void TransformComponent::PrintVectorString(const vec3& vector)
+{
+	printf("%s\n", GetVectorString(vector).c_str());
+}
+
+void TransformComponent::PrintVectorString(const vec2& vector)
+{
+	printf("%s\n", GetVectorString(vector).c_str());
+}
 
 string TransformComponent::GetMatrixString(const mat4& matrix)
 {
@@ -138,14 +154,14 @@ mat4 TransformComponent::SetScale(float x, float y, float z)
 mat4 TransformComponent::SetScale(const vec3& scaleVector)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(identityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(identityMatrix, scaleVector);
+	transform = translate(IdentityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(IdentityMatrix, scaleVector);
 	return transform;
 }
 
 mat4 TransformComponent::SetRotation(float angle, const vec3& axis)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(identityMatrix, matrixValues.translation) * rotate(identityMatrix, angle, axis) * scale(identityMatrix, matrixValues.scale);
+	transform = translate(IdentityMatrix, matrixValues.translation) * rotate(IdentityMatrix, angle, axis) * scale(IdentityMatrix, matrixValues.scale);
 	return transform;
 }
 
@@ -162,11 +178,11 @@ mat4 TransformComponent::SetPosition(float x, float y, float z)
 mat4 TransformComponent::SetPosition(const vec3& position)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(identityMatrix, position) * toMat4(matrixValues.rotation) * scale(identityMatrix, matrixValues.scale);
+	transform = translate(IdentityMatrix, position) * toMat4(matrixValues.rotation) * scale(IdentityMatrix, matrixValues.scale);
 	return transform;
 }
 
 void TransformComponent::LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector)
 {
-	transform = lookAt(position, forwardVector, upVector);
+	transform = glm::lookAt(position, forwardVector, upVector);
 }
