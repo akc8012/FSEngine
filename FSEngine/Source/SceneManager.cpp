@@ -18,10 +18,10 @@ void SceneManager::AddGameObjects(Window* window)
 	greenCube->GetComponent<TransformComponent>()->SetPosition(6, -0.2f, 0.1f);
 	greenCube->GetComponent<TransformComponent>()->SetScale(2, 0.8f, 2.8f);
 
-	gameObjectContainer->AddGameObject("1", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(0, 1, 3);
-	gameObjectContainer->AddGameObject("2", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
-	gameObjectContainer->AddGameObject("3", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
-	gameObjectContainer->AddGameObject("4", new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
+	gameObjectContainer->AddGameObject("Red", new CubePrimitive(make_shared<ShadingComponent>(0.8f, 0.f, 0.f)))->GetComponent<TransformComponent>()->SetPosition(1.5f, 1, -3);
+	gameObjectContainer->AddGameObject("Green", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.8f, 0.f)))->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
+	gameObjectContainer->AddGameObject("Blue", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.f, 0.8f)))->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
+	gameObjectContainer->AddGameObject("Yellow", new CubePrimitive(make_shared<ShadingComponent>(0.6f, 0.6f, 0.f)))->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
 	//for (int i = 5; i < 100; i++)
 	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);

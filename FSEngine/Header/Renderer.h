@@ -16,6 +16,9 @@ private:
 	void ClearScreen();
 	void SetViewMatrices(TransformComponent* viewTransform);
 
+	void DrawGrid();
+	void SetRenderParametersForGrid();
+
 	void SetTransformMatrices(TransformComponent* transform);
 
 	void SetShadingParameters(ShadingComponent* shading);
@@ -23,7 +26,7 @@ private:
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);
 
-	void RenderMesh(MeshComponent* mesh);
+	void DrawMesh(MeshComponent* mesh);
 
 public:
 	Renderer(Systems* systems);
@@ -32,6 +35,6 @@ public:
 	void SetCamera(GameObject* camera);
 
 	void StartRender();
-	void RenderGameObject(GameObject* gameObject);
+	void RenderGameObject(const GameObject* gameObject);
 	void EndRender(Window* window);
 };

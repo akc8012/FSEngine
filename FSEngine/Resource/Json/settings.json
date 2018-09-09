@@ -7,6 +7,8 @@
 
   "SwapInterval": 0,
   "PolygonLineMode": false,
+  "DrawGrid": true,
+
   "Resolution": [1280, 800],
   "Fullscreen": false,
 
@@ -15,8 +17,5 @@
 
   "ShipSpeed": 6,
   "CameraSpeed": 2,
-  "CameraDistance": 5.5,
-
-  "ReadPosition": [0, 3, 6],
-  "ReadRotation": [0, -90, 0]
+  "CameraDistance": 5.5
 }

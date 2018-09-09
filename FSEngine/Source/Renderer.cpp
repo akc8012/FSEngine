@@ -14,12 +14,16 @@ void Renderer::SetCamera(GameObject* camera)
 void Renderer::StartRender()
 {
 	ClearScreen();
+
 	SetViewMatrices(camera->GetComponent<TransformComponent>("View").get());
+
+	if (systems->fileSystem->GetSettingsValue<bool>("DrawGrid"))
+		DrawGrid();
 }
 
 void Renderer::ClearScreen()
 {
-	vec3 color = vec3(41, 48, 61);
+	vec3 color = vec3(61, 54, 71);
 	color /= 255;
 
 	glClearColor(color.x, color.y, color.z, 1.0f);
@@ -31,10 +35,44 @@ void Renderer::SetViewMatrices(TransformComponent* viewTransform)
 	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
 }
+
+void Renderer::DrawGrid()
+{
+	SetRenderParametersForGrid();
+	glBegin(GL_LINES);
+
+	const int GridSize = 1000;
+	int halfGridSize = GridSize / 2;
+
+	for (int i = -halfGridSize; i <= halfGridSize; i++)
+	{
+		vec3 xLinePoint = vec3(i, 0, halfGridSize);
+		glVertex3f(xLinePoint.x, xLinePoint.y, -xLinePoint.z);
+		glVertex3f(xLinePoint.x, xLinePoint.y, xLinePoint.z);
+
+		vec3 zLinePoint = vec3(halfGridSize, 0, i);
+		glVertex3f(-zLinePoint.x, zLinePoint.y, zLinePoint.z);
+		glVertex3f(zLinePoint.x, zLinePoint.y, zLinePoint.z);
+	}
+
+	glEnd();
+}
+
+void Renderer::SetRenderParametersForGrid()
+{
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+
+	systems->shaderProgram->SetMatrixUniform("modelMatrix", mat4(1));
+	systems->shaderProgram->SetMatrixUniform("normalMatrix", mat4(1));
+	systems->shaderProgram->SetVectorUniform("flatColor", vec4(1, 1, 0.6f, 1));
+	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
+	systems->shaderProgram->SetBoolUniform("renderPerspective", true);
+}
 #pragma endregion
 
 #pragma region RenderGameObject
-void Renderer::RenderGameObject(GameObject* gameObject)
+void Renderer::RenderGameObject(const GameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<TransformComponent>().get());
 
@@ -46,7 +84,7 @@ void Renderer::RenderGameObject(GameObject* gameObject)
 		else
 			SetShadingParameters(gameObject->GetComponent<ShadingComponent>().get());
 
-		RenderMesh(mesh.second.get());
+		DrawMesh(mesh.second.get());
 	}
 }
 
@@ -96,7 +134,7 @@ void Renderer::SetBlend(bool blend)
 	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
 }
 
-void Renderer::RenderMesh(MeshComponent* mesh)
+void Renderer::DrawMesh(MeshComponent* mesh)
 {
 	mesh->BindVertexArray();
 

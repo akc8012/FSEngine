@@ -16,8 +16,8 @@ Camera::Camera(Window* window)
 
 void Camera::ResetViewTransform()
 {
-	SetPosition(vec3(0, 0, 4));
-	SetDirection(vec3(0, -90, 0));
+	SetPosition(vec3(0, 1.5f, 5));
+	SetDirection(vec3(-17, -90, 0));
 }
 
 void Camera::Update()
