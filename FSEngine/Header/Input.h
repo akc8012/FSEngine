@@ -12,8 +12,12 @@ private:
 	int numberOfKeys;
 	const Uint8* keyboardState = nullptr;
 	Uint8* lastKeyboardState = nullptr;
+	tvec2<int> lastCursorPosition = tvec2<int>(0, 0);
 
 	SDL_GameController* gameController;
+
+	void UpdateLastKeyboardState();
+	void UpdateLastCursorPosition();
 
 	float GetAnalogAxis(const SDL_GameControllerAxis& axis) const;
 	float ClampAnalogInput(Sint16 input) const;
@@ -24,12 +28,14 @@ public:
 	Input();
 	~Input();
 
-	void UpdateLastKeyboardState();
+	void Update();
 
 	float GetHorizontalAxis() const;
 	float GetVerticalAxis() const;
 
 	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput) const;
+
+	tvec2<int> GetCursorDelta() const;
 	tvec2<int> GetCursorPosition() const;
 
 	bool IsButtonPressed(const SDL_Scancode& button) const;

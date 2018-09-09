@@ -9,12 +9,23 @@ Input::Input()
 	UpdateLastKeyboardState();
 }
 
+void Input::Update()
+{
+	UpdateLastKeyboardState();
+	UpdateLastCursorPosition();
+}
+
 void Input::UpdateLastKeyboardState()
 {
 	delete lastKeyboardState;
 	lastKeyboardState = new Uint8[numberOfKeys];
 
 	std::copy(keyboardState, keyboardState + numberOfKeys, lastKeyboardState);
+}
+
+void Input::UpdateLastCursorPosition()
+{
+	lastCursorPosition = GetCursorPosition();
 }
 
 float Input::GetHorizontalAxis() const
@@ -58,6 +69,11 @@ float Input::GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancod
 		axis--;
 
 	return axis;
+}
+
+tvec2<int> Input::GetCursorDelta() const
+{
+	return GetCursorPosition() - lastCursorPosition;
 }
 
 tvec2<int> Input::GetCursorPosition() const

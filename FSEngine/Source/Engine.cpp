@@ -209,7 +209,7 @@ void Engine::Update()
 
 	sceneManager->Update();
 
-	systems->input->UpdateLastKeyboardState();
+	systems->input->Update();
 }
 
 void Engine::Draw()
