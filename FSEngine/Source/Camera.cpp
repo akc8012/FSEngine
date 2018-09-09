@@ -35,21 +35,26 @@ void Camera::CalculateViewMatrix()
 	vec3 forward = TransformComponent::Forward;
 
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
-	{
-		direction += GetDirectionInput() * GetFrameAdjustedSpeed();
-		direction.x = ClampPitch(direction.x);
-
-		forward = TransformComponent::EulerAngleToDirectionVector(direction);
-
-		vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
-		position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
-
-		position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
-		position.y += GetHeightMouseInput();
-	}
+		forward = HandleInput();
 
 	SetDebugText(std::to_string(position.y));
 	viewTransform->LookAt(position, position + forward, TransformComponent::Up);
+}
+
+vec3 Camera::HandleInput()
+{
+	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
+	direction.x = ClampPitch(direction.x);
+
+	vec3 forward = TransformComponent::EulerAngleToDirectionVector(direction);
+
+	vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
+	position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
+
+	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
+	position.y += GetHeightMouseInput();
+
+	return forward;
 }
 
 vec3 Camera::GetDirectionInput() const

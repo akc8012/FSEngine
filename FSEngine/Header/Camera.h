@@ -16,6 +16,8 @@ private:
 	void ResetViewTransform();
 
 	void CalculateViewMatrix();
+	vec3 HandleInput();
+
 	vec3 GetDirectionInput() const;
 	float ClampPitch(float pitch) const;
 	vec3 GetFloorMovementInput(const vec3& right, const vec3& forward) const;
