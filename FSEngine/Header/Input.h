@@ -1,6 +1,9 @@
 #pragma once
 #include <SDL.h>
 
+#include <glm\glm.hpp>
+using glm::tvec2;
+
 #include <algorithm>
 
 class Input
@@ -27,8 +30,10 @@ public:
 	float GetVerticalAxis() const;
 
 	float GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancode& negativeInput) const;
+	tvec2<int> GetCursorPosition() const;
 
 	bool IsButtonPressed(const SDL_Scancode& button) const;
 	bool IsButtonReleased(const SDL_Scancode& button) const;
 	bool IsButtonHeld(const SDL_Scancode& button) const;
+	bool IsButtonHeld(int button) const;
 };

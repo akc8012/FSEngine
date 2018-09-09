@@ -60,6 +60,14 @@ float Input::GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancod
 	return axis;
 }
 
+tvec2<int> Input::GetCursorPosition() const
+{
+	tvec2<int> cursorPosition = tvec2<int>(0, 0);
+	SDL_GetMouseState(&cursorPosition.x, &cursorPosition.y);
+
+	return cursorPosition;
+}
+
 bool Input::IsButtonPressed(const SDL_Scancode& button) const
 {
 	return !lastKeyboardState[button] && IsButtonHeld(button);
@@ -73,6 +81,11 @@ bool Input::IsButtonReleased(const SDL_Scancode& button) const
 bool Input::IsButtonHeld(const SDL_Scancode& button) const
 {
 	return keyboardState[button];
+}
+
+bool Input::IsButtonHeld(int button) const
+{
+	return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(button);
 }
 
 Input::~Input()
