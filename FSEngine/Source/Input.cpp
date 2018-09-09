@@ -12,7 +12,10 @@ Input::Input()
 void Input::Update()
 {
 	UpdateLastKeyboardState();
+
 	UpdateLastCursorPosition();
+
+	ResetMouseWheelScroll();
 }
 
 void Input::UpdateLastKeyboardState()
@@ -26,6 +29,11 @@ void Input::UpdateLastKeyboardState()
 void Input::UpdateLastCursorPosition()
 {
 	lastCursorPosition = GetCursorPosition();
+}
+
+void Input::ResetMouseWheelScroll()
+{
+	mouseWheelScroll = 0;
 }
 
 float Input::GetHorizontalAxis() const
@@ -69,6 +77,16 @@ float Input::GetDigitalAxis(const SDL_Scancode& positiveInput, const SDL_Scancod
 		axis--;
 
 	return axis;
+}
+
+void Input::SetMouseWheelScroll(int mouseWheelScroll)
+{
+	this->mouseWheelScroll = mouseWheelScroll;
+}
+
+int Input::GetMouseWheelScroll() const
+{
+	return mouseWheelScroll;
 }
 
 tvec2<int> Input::GetCursorDelta() const

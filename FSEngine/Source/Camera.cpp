@@ -43,7 +43,9 @@ void Camera::CalculateViewMatrix()
 
 		vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
 		position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
-		position.y += GetHeightInput() * GetFrameAdjustedSpeed();
+
+		position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
+		position.y += GetHeightMouseInput();
 	}
 
 	SetDebugText(TransformComponent::GetVectorString(direction));
@@ -78,9 +80,15 @@ vec3 Camera::GetFloorMovementInput(const vec3& right, const vec3& forward) const
 	return verticalMovement + horizontalMovement;
 }
 
-float Camera::GetHeightInput() const
+float Camera::GetHeightKeyboardInput() const
 {
 	return systems->input->GetDigitalAxis(SDL_SCANCODE_R, SDL_SCANCODE_F);
+}
+
+float Camera::GetHeightMouseInput() const
+{
+	const float MouseScrollSpeed = 0.15f;
+	return (float)systems->input->GetMouseWheelScroll() * MouseScrollSpeed;
 }
 
 float Camera::GetFrameAdjustedSpeed() const

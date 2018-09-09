@@ -121,6 +121,9 @@ void Engine::PollEvents()
 		case SDL_WINDOWEVENT:
 			HandleWindowEvent(sdlEvent.window);
 			break;
+
+		case SDL_MOUSEWHEEL:
+			systems->input->SetMouseWheelScroll(sdlEvent.wheel.y);
 		}
 	}
 }

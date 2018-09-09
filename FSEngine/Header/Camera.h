@@ -19,7 +19,8 @@ private:
 	vec3 GetDirectionInput() const;
 	float ClampPitch(float pitch) const;
 	vec3 GetFloorMovementInput(const vec3& right, const vec3& forward) const;
-	float GetHeightInput() const;
+	float GetHeightKeyboardInput() const;
+	float GetHeightMouseInput() const;
 
 	void CalculateProjectionMatrixPerspective();
 	void CalculateProjectionMatrixOrthographic();
