@@ -184,7 +184,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	switch (windowEvent.event)
 	{
 	case SDL_WINDOWEVENT_SIZE_CHANGED:
-		window->SetResolutionToWindowResolution();
+		window->SetResolutionToWindowSize();
 		break;
 
 	case SDL_WINDOWEVENT_FOCUS_GAINED:
@@ -207,6 +207,9 @@ void Engine::Update()
 {
 	if (systems->fileSystem->GetSettingsValue<bool>("ContinualSettingsReload"))
 		systems->fileSystem->LoadSettingsFile();
+
+	if (window->ContinuallyReloadWindowSizeSetting())
+		window->SetWindowSizeFromSettingsValue();
 
 	systems->gameTimer->Update();
 

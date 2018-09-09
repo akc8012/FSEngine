@@ -9,7 +9,7 @@
   "PolygonLineMode": false,
   "DrawGrid": true,
 
-  "Resolution": [1280, 800],
+  "WindowSize": [1280, 800],
   "Fullscreen": false,
 
   "CameraControl": true,

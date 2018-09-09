@@ -48,7 +48,7 @@ void Camera::CalculateViewMatrix()
 		position.y += GetHeightMouseInput();
 	}
 
-	SetDebugText(TransformComponent::GetVectorString(direction));
+	SetDebugText(std::to_string(position.y));
 	viewTransform->LookAt(position, position + forward, TransformComponent::Up);
 }
 
