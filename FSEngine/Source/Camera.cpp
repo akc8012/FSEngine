@@ -42,7 +42,7 @@ void Camera::CalculateViewMatrix()
 		forward = TransformComponent::EulerAngleToDirectionVector(direction);
 
 		vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
-		position += GetFloorMovementInput(forward, right) * GetFrameAdjustedSpeed();
+		position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
 		position.y += GetHeightInput() * GetFrameAdjustedSpeed();
 	}
 
@@ -66,12 +66,16 @@ float Camera::ClampPitch(float pitch) const
 	return pitch;
 }
 
-vec3 Camera::GetFloorMovementInput(const vec3& forward, const vec3& right) const
+vec3 Camera::GetFloorMovementInput(const vec3& right, const vec3& forward) const
 {
-	vec3 verticalInput = -systems->input->GetVerticalAxis() * glm::normalize(vec3(forward.x, 0, forward.z));
-	vec3 horizontalInput = systems->input->GetHorizontalAxis() * right;
+	vec2 inputDelta = vec2(systems->input->GetHorizontalAxis(), -systems->input->GetVerticalAxis());
+	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
+		inputDelta += vec2(-systems->input->GetCursorDelta().x, systems->input->GetCursorDelta().y);
 
-	return verticalInput + horizontalInput;
+	vec3 horizontalMovement = inputDelta.x * right;
+	vec3 verticalMovement = inputDelta.y * glm::normalize(vec3(forward.x, 0, forward.z));
+
+	return verticalMovement + horizontalMovement;
 }
 
 float Camera::GetHeightInput() const

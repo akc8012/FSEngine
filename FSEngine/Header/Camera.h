@@ -18,7 +18,7 @@ private:
 	void CalculateViewMatrix();
 	vec3 GetDirectionInput() const;
 	float ClampPitch(float pitch) const;
-	vec3 GetFloorMovementInput(const vec3& forward, const vec3& right) const;
+	vec3 GetFloorMovementInput(const vec3& right, const vec3& forward) const;
 	float GetHeightInput() const;
 
 	void CalculateProjectionMatrixPerspective();
