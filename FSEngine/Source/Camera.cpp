@@ -30,6 +30,12 @@ void Camera::Update()
 	CalculateProjectionMatrixOrthographic();
 
 	ProjectScreenSpaceToWorldSpace();
+
+	float data;
+	tvec2<int> cursor = systems->input->GetCursorPosition();
+	cursor.y = std::abs(cursor.y - window->GetWindowSize().y) - 1;
+
+	glReadPixels(cursor.x, cursor.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &data);
 }
 
 #pragma region Calculate Matrices
