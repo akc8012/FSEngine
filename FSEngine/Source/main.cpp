@@ -2,7 +2,7 @@
 
 void HandleException(const string& header, const string& message, SDL_Window* sdlWindow = nullptr)
 {
-	printf("%s\n", message.c_str());
+	printFS(message);
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, header.c_str(), message.c_str(), sdlWindow);
 }
 
