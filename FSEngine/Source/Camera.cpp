@@ -102,7 +102,7 @@ float Camera::GetFrameAdjustedSpeed() const
 
 void Camera::SetDebugText(const string& text) const
 {
-	dynamic_cast<RenderText*>(gameObjectContainer->GetGameObject("DebugText"))->SetText(text);
+	gameObjectContainer->GetGameObjectAs<RenderText>("DebugText")->SetText(text);
 }
 
 void Camera::CalculateProjectionMatrixPerspective()
