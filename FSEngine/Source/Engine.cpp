@@ -19,7 +19,7 @@ void Engine::Initialize()
 
 	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
 
-	printf("Success\n");
+	printFS("Success");
 	running = true;
 }
 
@@ -136,11 +136,11 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 		try
 		{
 			systems->shaderProgram->CompileShaders();
-			printf("Rebuilt shader program\n");
+			printFS("Rebuilt shader program\n");
 		}
 		catch (string errorMessage)
 		{
-			printf("%s\n", errorMessage.c_str());
+			printFS(errorMessage);
 		}
 		break;
 
