@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\FSDebug.cpp" />
     <ClCompile Include="Source\FSException.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\GameObjectMapper.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Header\Camera.h" />
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\Engine.h" />
+    <ClInclude Include="Header\FSDebug.h" />
     <ClInclude Include="Header\FSException.h" />
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />

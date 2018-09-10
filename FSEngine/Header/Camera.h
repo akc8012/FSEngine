@@ -16,16 +16,18 @@ private:
 	void ResetViewTransform();
 
 	void CalculateViewMatrix();
+	void CalculateProjectionMatrixPerspective();
+	void CalculateProjectionMatrixOrthographic();
+
 	vec3 HandleInput();
 
 	vec3 GetDirectionInput() const;
-	float ClampPitch(float pitch) const;
 	vec3 GetFloorMovementInput(const vec3& right, const vec3& forward) const;
+
 	float GetHeightKeyboardInput() const;
 	float GetHeightMouseInput() const;
 
-	void CalculateProjectionMatrixPerspective();
-	void CalculateProjectionMatrixOrthographic();
+	float ClampPitch(float pitch) const;
 
 	float GetFrameAdjustedSpeed() const;
 	void SetDebugText(const string& text) const;
