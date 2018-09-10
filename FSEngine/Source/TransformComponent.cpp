@@ -5,50 +5,6 @@ const vec3 TransformComponent::Forward = vec3(0, 0, -1);
 const vec3 TransformComponent::Up = vec3(0, 1, 0);
 const vec3 TransformComponent::Right = vec3(1, 0, 0);
 
-void TransformComponent::PrintMatrixString(const mat4& matrix)
-{
-	printf("%s\n", GetMatrixString(matrix).c_str());
-}
-
-void TransformComponent::PrintVectorString(const vec3& vector)
-{
-	printf("%s\n", GetVectorString(vector).c_str());
-}
-
-void TransformComponent::PrintVectorString(const vec2& vector)
-{
-	printf("%s\n", GetVectorString(vector).c_str());
-}
-
-string TransformComponent::GetMatrixString(const mat4& matrix)
-{
-	string matrixString = "";
-
-	const int ColumnAmount = 4, RowAmount = ColumnAmount;
-	for (int col = 0; col < ColumnAmount; col++)
-	{
-		for (int row = 0; row < RowAmount; row++)
-		{
-			string comma = (row != RowAmount-1) ? ", " : "";
-			matrixString += std::to_string(matrix[col][row]) + comma;
-		}
-
-		matrixString += "\n";
-	}
-
-	return matrixString;
-}
-
-string TransformComponent::GetVectorString(const vec3& vector)
-{
-	return "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ", " + std::to_string(vector.z) + ")";
-}
-
-string TransformComponent::GetVectorString(const vec2& vector)
-{
-	return "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ")";
-}
-
 vec3 TransformComponent::EulerAngleToDirectionVector(const vec3& angle)
 {
 	float pitch = glm::radians(angle.x);

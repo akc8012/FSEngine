@@ -5,7 +5,7 @@
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
 
-  "SwapInterval": -1,
+  "SwapInterval": 0,
   "PolygonLineMode": false,
   "DrawGrid": true,
 
