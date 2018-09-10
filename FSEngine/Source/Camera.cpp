@@ -28,8 +28,11 @@ void Camera::Update()
 	CalculateViewMatrix();
 	CalculateProjectionMatrixPerspective();
 	CalculateProjectionMatrixOrthographic();
+
+	ProjectScreenSpaceToWorldSpace();
 }
 
+#pragma region Calculate Matrices
 void Camera::CalculateViewMatrix()
 {
 	vec3 forward = TransformComponent::Forward;
@@ -125,6 +128,31 @@ void Camera::CalculateProjectionMatrixOrthographic()
 	const float Top = Right;
 
 	GetComponent<TransformComponent>("Orthographic")->SetMatrix(glm::ortho(Left, Right, Bottom, Top));
+}
+#pragma endregion
+
+// https://stackoverflow.com/questions/7692988/opengl-math-projecting-screen-space-to-world-space-coords
+void Camera::ProjectScreenSpaceToWorldSpace() const
+{
+	vec2 cursorPosition = (vec2)systems->input->GetCursorPosition() /= (vec2)window->GetWindowSize();
+	cursorPosition = (cursorPosition - 0.5f) * 2.f;
+	cursorPosition.y = -cursorPosition.y;
+
+	mat4 viewMatrix = viewTransform->GetMatrix();
+	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
+
+	mat4 matrix = projectionMatrix * viewMatrix;
+	matrix = glm::inverse(matrix);
+
+	vec4 screenCoordinates = vec4(cursorPosition.x, cursorPosition.y, 0, 1);
+	vec4 position = screenCoordinates * matrix;
+
+	position.x /= position.w;
+	position.y /= position.w;
+	position.z /= position.w;
+
+	system("CLS");
+	printf("%s\n", TransformComponent::GetVectorString(vec3(position.x, position.y, position.z)).c_str());
 }
 
 void Camera::SetPosition(const vec3& position)
