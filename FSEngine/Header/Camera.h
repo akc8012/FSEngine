@@ -24,6 +24,7 @@ private:
 	vec3 GetDirectionInput() const;
 	vec3 GetFloorMovementInput(const vec3& right, const vec3& forward) const;
 
+	vec3 GetZoomInput(const vec3& forward) const;
 	float GetHeightKeyboardInput() const;
 	float GetHeightMouseInput() const;
 

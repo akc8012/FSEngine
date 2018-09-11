@@ -49,9 +49,13 @@ vec3 Camera::HandleInput()
 
 	vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
 	position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
-
 	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
-	position.y += GetHeightMouseInput();
+
+	float mouseScrollSpeed = systems->fileSystem->GetSettingsValue<float>("CameraScrollSpeed");
+	if (!systems->input->IsButtonHeld(SDL_SCANCODE_LALT))
+		position += GetZoomInput(forward) * mouseScrollSpeed;
+	else
+		position.y += GetHeightMouseInput() * mouseScrollSpeed;
 
 	return forward;
 }
@@ -84,6 +88,11 @@ vec3 Camera::GetFloorMovementInput(const vec3& right, const vec3& forward) const
 	return verticalMovement + horizontalMovement;
 }
 
+vec3 Camera::GetZoomInput(const vec3& forward) const
+{
+	return forward * GetHeightMouseInput();
+}
+
 float Camera::GetHeightKeyboardInput() const
 {
 	return systems->input->GetDigitalAxis(SDL_SCANCODE_R, SDL_SCANCODE_F);
@@ -91,13 +100,12 @@ float Camera::GetHeightKeyboardInput() const
 
 float Camera::GetHeightMouseInput() const
 {
-	const float MouseScrollSpeed = 0.15f;
-	return (float)systems->input->GetMouseWheelScroll() * MouseScrollSpeed;
+	return (float)systems->input->GetMouseWheelScroll();
 }
 
 float Camera::GetFrameAdjustedSpeed() const
 {
-	return systems->fileSystem->GetSettingsValue<float>("CameraSpeed") * systems->gameTimer->GetDeltaTime();
+	return systems->fileSystem->GetSettingsValue<float>("CameraMoveSpeed") * systems->gameTimer->GetDeltaTime();
 }
 
 void Camera::SetDebugText(const string& text) const
