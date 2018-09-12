@@ -29,6 +29,12 @@ void FSDebug::Print(const mat4& matrix)
 	Print(matrixString);
 }
 
+void FSDebug::Print(const vec4& message)
+{
+	string vectorString = "(" + std::to_string(message.x) + ", " + std::to_string(message.y) + ", " + std::to_string(message.z) + ", " + std::to_string(message.w) + ")";
+	Print(vectorString);
+}
+
 void FSDebug::Print(const vec3& message)
 {
 	string vectorString = "(" + std::to_string(message.x) + ", " + std::to_string(message.y) + ", " + std::to_string(message.z) + ")";
