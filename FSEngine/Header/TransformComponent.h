@@ -66,6 +66,4 @@ public:
 	mat4 SetPosition(const vec2& position);
 	mat4 SetPosition(float x, float y, float z);
 	mat4 SetPosition(const vec3& position);
-
-	void LookAt(const vec3& position, const vec3& forwardVector, const vec3& upVector);
 };

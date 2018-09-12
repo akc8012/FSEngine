@@ -15,9 +15,9 @@ private:
 
 	void ResetViewTransform();
 
-	void CalculateViewMatrix();
-	void CalculateProjectionMatrixPerspective();
-	void CalculateProjectionMatrixOrthographic();
+	mat4 CalculateViewMatrix(const vec3& forward) const;
+	mat4 CalculateProjectionMatrixPerspective() const;
+	mat4 CalculateProjectionMatrixOrthographic() const;
 
 	vec3 HandleInput();
 
@@ -30,8 +30,8 @@ private:
 
 	float ClampPitch(float pitch) const;
 
-	vec3 ProjectScreenSpaceToWorldSpace() const;
-	vec2 GetNormalizedDeviceCursorCoordinates() const;
+	vec3 ProjectCursorPositionToWorldDirection(mat4 projectionMatrix, mat4 viewMatrix) const;
+	vec2 GetDeviceNormalizedCursorPosition() const;
 
 	float GetFrameAdjustedSpeed() const;
 	void SetDebugText(const string& text) const;

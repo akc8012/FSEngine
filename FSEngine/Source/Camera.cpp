@@ -25,30 +25,24 @@ void Camera::Update()
 	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
 		ResetViewTransform();
 
-	CalculateViewMatrix();
-	CalculateProjectionMatrixPerspective();
-	CalculateProjectionMatrixOrthographic();
-
-	ProjectScreenSpaceToWorldSpace();
-
-	float data;
-	tvec2<int> cursor = systems->input->GetCursorPosition();
-	cursor.y = std::abs(cursor.y - window->GetWindowSize().y) - 1;
-
-	glReadPixels(cursor.x, cursor.y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &data);
-}
-
-#pragma region Calculate Matrices
-void Camera::CalculateViewMatrix()
-{
 	vec3 forward = TransformComponent::Forward;
-
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 		forward = HandleInput();
 
-	viewTransform->LookAt(position, position + forward, TransformComponent::Up);
+	mat4 viewMatrix = CalculateViewMatrix(forward);
+	viewTransform->SetMatrix(viewMatrix);
+
+	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective();
+	GetComponent<TransformComponent>("Perspective")->SetMatrix(perspectiveMatrix);
+
+	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
+	GetComponent<TransformComponent>("Orthographic")->SetMatrix(orthographicMatrix);
+
+	vec3 cursorDirection = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
+	printFS(cursorDirection);
 }
 
+#pragma region Handle Input
 vec3 Camera::HandleInput()
 {
 	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
@@ -116,13 +110,15 @@ float Camera::GetFrameAdjustedSpeed() const
 {
 	return systems->fileSystem->GetSettingsValue<float>("CameraMoveSpeed") * systems->gameTimer->GetDeltaTime();
 }
+#pragma endregion
 
-void Camera::SetDebugText(const string& text) const
+#pragma region Calculate Matrices
+mat4 Camera::CalculateViewMatrix(const vec3& forward) const
 {
-	gameObjectContainer->GetGameObjectAs<RenderText>("DebugText")->SetText(text);
+	return glm::lookAt(position, position + forward, TransformComponent::Up);
 }
 
-void Camera::CalculateProjectionMatrixPerspective()
+mat4 Camera::CalculateProjectionMatrixPerspective() const
 {
 	vec2 windowSize = window->GetWindowSize();
 
@@ -131,36 +127,31 @@ void Camera::CalculateProjectionMatrixPerspective()
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 
-	GetComponent<TransformComponent>("Perspective")->SetMatrix(glm::perspective(FieldOfView, AspectRatio, NearPlane, FarPlane));
+	return glm::perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
 }
 
-void Camera::CalculateProjectionMatrixOrthographic()
+mat4 Camera::CalculateProjectionMatrixOrthographic() const
 {
 	const float Left = -1.0f;
 	const float Right = 1.0f;
 	const float Bottom = Left;
 	const float Top = Right;
 
-	GetComponent<TransformComponent>("Orthographic")->SetMatrix(glm::ortho(Left, Right, Bottom, Top));
+	return glm::ortho(Left, Right, Bottom, Top);
 }
 #pragma endregion
 
-vec3 Camera::ProjectScreenSpaceToWorldSpace() const
+vec3 Camera::ProjectCursorPositionToWorldDirection(mat4 projectionMatrix, mat4 viewMatrix) const
 {
-	vec4 cursorPosition = vec4(GetNormalizedDeviceCursorCoordinates(), -1, 1);
+	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(), -1, 1);
 
-	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
-	vec4 eyeDirection = glm::inverse(projectionMatrix) * cursorPosition;
-	eyeDirection = vec4(eyeDirection.x, eyeDirection.y, -1, 0);
-
-	mat4 viewMatrix = viewTransform->GetMatrix();
+	vec4 eyeDirection = vec4(vec2(glm::inverse(projectionMatrix) * deviceNormalizedCursorPosition), -1, 0);
 	vec3 worldDirection = glm::normalize(glm::inverse(viewMatrix) * eyeDirection);
 
-	printFS(worldDirection);
 	return worldDirection;
 }
 
-vec2 Camera::GetNormalizedDeviceCursorCoordinates() const
+vec2 Camera::GetDeviceNormalizedCursorPosition() const
 {
 	vec2 cursorCoordinates = (vec2)systems->input->GetCursorPosition() /= (vec2)window->GetWindowSize();
 	cursorCoordinates = (cursorCoordinates - 0.5f) * 2.f;
@@ -187,4 +178,9 @@ void Camera::SetDirection(const vec3& direction)
 vec3 Camera::GetDirection() const
 {
 	return direction;
+}
+
+void Camera::SetDebugText(const string& text) const
+{
+	gameObjectContainer->GetGameObjectAs<RenderText>("DebugText")->SetText(text);
 }
