@@ -16,8 +16,8 @@ Camera::Camera(Window* window)
 
 void Camera::ResetViewTransform()
 {
-	SetPosition(vec3(0, 1.5f, 5));
-	SetDirection(vec3(-17, -90, 0));
+	SetPosition(vec3(0, 0, 5));
+	SetDirection(vec3(0, -90, 0));
 }
 
 void Camera::Update()
@@ -145,27 +145,28 @@ void Camera::CalculateProjectionMatrixOrthographic()
 }
 #pragma endregion
 
-// https://stackoverflow.com/questions/7692988/opengl-math-projecting-screen-space-to-world-space-coords
-void Camera::ProjectScreenSpaceToWorldSpace() const
+vec3 Camera::ProjectScreenSpaceToWorldSpace() const
 {
-	vec2 cursorPosition = (vec2)systems->input->GetCursorPosition() /= (vec2)window->GetWindowSize();
-	cursorPosition = (cursorPosition - 0.5f) * 2.f;
-	cursorPosition.y = -cursorPosition.y;
+	vec4 cursorPosition = vec4(GetNormalizedDeviceCursorCoordinates(), -1, 1);
+
+	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
+	vec4 eyeDirection = glm::inverse(projectionMatrix) * cursorPosition;
+	eyeDirection = vec4(eyeDirection.x, eyeDirection.y, -1, 0);
 
 	mat4 viewMatrix = viewTransform->GetMatrix();
-	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
+	vec3 worldDirection = glm::normalize(glm::inverse(viewMatrix) * eyeDirection);
 
-	mat4 matrix = projectionMatrix * viewMatrix;
-	matrix = glm::inverse(matrix);
+	printFS(worldDirection);
+	return worldDirection;
+}
 
-	vec4 screenCoordinates = vec4(cursorPosition.x, cursorPosition.y, 0, 1);
-	vec4 position = screenCoordinates * matrix;
+vec2 Camera::GetNormalizedDeviceCursorCoordinates() const
+{
+	vec2 cursorCoordinates = (vec2)systems->input->GetCursorPosition() /= (vec2)window->GetWindowSize();
+	cursorCoordinates = (cursorCoordinates - 0.5f) * 2.f;
+	cursorCoordinates.y = -cursorCoordinates.y;
 
-	position.x /= position.w;
-	position.y /= position.w;
-	position.z /= position.w;
-
-	printFS(position);
+	return cursorCoordinates;
 }
 
 void Camera::SetPosition(const vec3& position)

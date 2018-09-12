@@ -30,7 +30,8 @@ private:
 
 	float ClampPitch(float pitch) const;
 
-	void ProjectScreenSpaceToWorldSpace() const;
+	vec3 ProjectScreenSpaceToWorldSpace() const;
+	vec2 GetNormalizedDeviceCursorCoordinates() const;
 
 	float GetFrameAdjustedSpeed() const;
 	void SetDebugText(const string& text) const;
