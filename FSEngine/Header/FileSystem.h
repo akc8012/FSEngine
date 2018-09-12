@@ -1,10 +1,14 @@
 #pragma once
 #include "FSException.h"
+#include "FSDebug.h"
 
 #include <string>
 #include <fstream>
 #include <sstream>
 using std::string;
+using std::fstream;
+using std::ifstream;
+using std::ios;
 
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;

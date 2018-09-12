@@ -38,17 +38,13 @@ string FileSystem::TryLoadTextFromFile(const string& filepath)
 	bool success = false;
 	string file = InternalTryLoadTextFromFile(filepath, success);
 	if (!success)
-		printf("Warning: Unable to load text file from path: %s", filepath.c_str());
+		printFS("Warning: Unable to load text file from path: " + filepath);
 
 	return file;
 }
 
 string FileSystem::InternalTryLoadTextFromFile(const string& filepath, bool& success)
 {
-	using std::fstream;
-	using std::ifstream;
-	using std::ios;
-
 	ifstream inputStream(filepath, ios::in | ios::binary);
 	
 	success = (bool)inputStream;

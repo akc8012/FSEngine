@@ -16,4 +16,4 @@ public:
 	const char* what() const noexcept override;
 };
 
-#define throwFS(message) throw FSException(message, __LINE__, __func__, __FILE__);
+#define throwFS(message) throw FSException(message, __LINE__, __func__, __FILE__)

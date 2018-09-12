@@ -41,13 +41,6 @@ public:
 	static const vec3 Up;
 	static const vec3 Right;
 
-	static void PrintMatrixString(const mat4& matrix);
-	static void PrintVectorString(const vec3& vector);
-	static void PrintVectorString(const vec2& vector);
-
-	static string GetMatrixString(const mat4& matrix);
-	static string GetVectorString(const vec3& vector);
-	static string GetVectorString(const vec2& vector);
 	static vec3 EulerAngleToDirectionVector(const vec3& angle);
 
 	const mat4& GetMatrix() const;

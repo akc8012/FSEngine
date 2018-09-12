@@ -74,7 +74,7 @@ Uint32 ShaderProgram::CreateShaderFromFilepath(Uint32 type, const string& filepa
 	if (shaderId == -1)
 	{
 		shaderId = TryCompileShaderSource(type, fallbackSource);
-		printf("Using fallback %s shader\n", GetShaderTypeText(type).c_str());
+		printFS("Using fallback " + GetShaderTypeText(type) + " shader");
 	}
 
 	return shaderId;
@@ -94,7 +94,7 @@ int ShaderProgram::TryCompileShaderSource(Uint32 type, const string& source)
 	{
 		char infoLog[512];
 		glGetShaderInfoLog(shaderId, 512, NULL, infoLog);
-		printf("Warning: Unable to compile %s shader: %s\n", GetShaderTypeText(type).c_str(), infoLog);
+		printFS("Warning: Unable to compile " + GetShaderTypeText(type) + " shader: " + infoLog);
 		return -1;
 	}
 
@@ -206,7 +206,7 @@ Uint32 ShaderProgram::GetUniformLocationFromGl(const string& name) const
 void ShaderProgram::ShowUseWarning() const
 {
 	if (!parameterCollection->GetParameter(IsUsing))
-		printf("Warning: Use() has not been called on this shader\n");
+		printFS("Warning: Use() has not been called on this shader");
 }
 
 ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameterCollection() const

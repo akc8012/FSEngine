@@ -130,7 +130,13 @@ public:
 
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;
+	template <typename T> T* GetGameObjectAs(const string& name) const;
 
 	const vector<unique_ptr<GameObject>>& GetGameObjects() const;
 };
+
+template <typename T> T* GameObject::GameObjectContainer::GetGameObjectAs(const string& name) const
+{
+	return dynamic_cast<T*>(GetGameObject(name));
+}
 #pragma endregion
