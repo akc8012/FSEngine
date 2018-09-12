@@ -165,8 +165,7 @@ void Camera::ProjectScreenSpaceToWorldSpace() const
 	position.y /= position.w;
 	position.z /= position.w;
 
-	system("CLS");
-	printf("%s\n", TransformComponent::GetVectorString(vec3(position.x, position.y, position.z)).c_str());
+	printFS(position);
 }
 
 void Camera::SetPosition(const vec3& position)
