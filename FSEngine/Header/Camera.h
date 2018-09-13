@@ -7,6 +7,8 @@
 class Camera : public GameObject
 {
 private:
+	GameObject* point = nullptr;
+
 	TransformComponent* viewTransform = nullptr;
 	Window* window = nullptr;
 
@@ -39,6 +41,7 @@ private:
 public:
 	Camera(Window* window);
 
+	void Start() override;
 	void Update() override;
 
 	void SetPosition(const vec3& position);

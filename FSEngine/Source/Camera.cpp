@@ -20,6 +20,11 @@ void Camera::ResetViewTransform()
 	SetDirection(vec3(-17, -90, 0));
 }
 
+void Camera::Start()
+{
+	point = gameObjectContainer->GetGameObject("Point");
+}
+
 void Camera::Update()
 {
 	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
@@ -39,7 +44,10 @@ void Camera::Update()
 	GetComponent<TransformComponent>("Orthographic")->SetMatrix(orthographicMatrix);
 
 	vec3 cursorDirection = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
-	//printFS(cursorDirection);
+
+	float distance = systems->fileSystem->GetSettingsValue<float>("Distance");
+	vec3 pointPosition = position + (cursorDirection * distance);
+	point->GetComponent<TransformComponent>()->SetPosition(pointPosition);
 }
 
 #pragma region Handle Input

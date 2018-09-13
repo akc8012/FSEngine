@@ -5,7 +5,7 @@
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
 
-  "SwapInterval": -1,
+  "SwapInterval": 0,
   "PolygonLineMode": false,
   "DrawGrid": true,
 
@@ -17,5 +17,7 @@
 
   "CameraControl": true,
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15
+  "CameraScrollSpeed": 0.15,
+
+  "Distance": 6
 }

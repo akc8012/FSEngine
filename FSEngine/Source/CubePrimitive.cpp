@@ -70,5 +70,5 @@ shared_ptr<MeshComponent> CubePrimitive::CreateMeshComponent() const
 
 void CubePrimitive::Update()
 {
-	GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds(), glm::normalize(vec3(1, 1, 0)));
+	//GetComponent<TransformComponent>()->SetRotation(Timer::GetSeconds(), glm::normalize(vec3(1, 1, 0)));
 }
