@@ -45,9 +45,9 @@ void Camera::Update()
 
 	vec3 cursorDirection = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
 
+	float distance = systems->fileSystem->GetSettingsValue<float>("Distance");
 	if (systems->fileSystem->GetSettingsValue<bool>("ControlPoint"))
 	{
-		float distance = systems->fileSystem->GetSettingsValue<float>("Distance");
 		vec3 pointPosition = position + (cursorDirection * distance);
 		point->GetComponent<TransformComponent>()->SetPosition(pointPosition);
 	}
@@ -60,6 +60,12 @@ void Camera::Update()
 		point->GetComponent<TransformComponent>()->SetPosition(pointPosition * TransformComponent::Up);
 		printFS(point->GetComponent<TransformComponent>()->GetPosition());
 	}
+
+	vec3 floorPlaneNormal = TransformComponent::Up;
+	vec3 floorPlaneDistance = TransformComponent::Zero;
+
+	float rayIntersectFloorDistance = -(((position * floorPlaneNormal) + floorPlaneDistance) / (cursorDirection * floorPlaneNormal)).y;
+	printcFS(rayIntersectFloorDistance);
 }
 
 #pragma region Handle Input

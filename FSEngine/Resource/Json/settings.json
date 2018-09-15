@@ -19,6 +19,6 @@
   "CameraMoveSpeed": 2,
   "CameraScrollSpeed": 0.15,
 
-  "ControlPoint": false,
+  "ControlPoint": true,
   "Distance": 6
 }
