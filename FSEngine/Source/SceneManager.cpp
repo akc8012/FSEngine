@@ -33,10 +33,11 @@ void SceneManager::AddGameObjects(Window* window)
 	gameObject->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
 	gameObject = gameObjectContainer->AddGameObject("Point", new CubePrimitive(make_shared<ShadingComponent>(0.6f, 1.f, 0.6f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(-3, 0, -10);
+	gameObject->GetComponent<TransformComponent>()->SetPosition(3, 0, 1.5f);
 	gameObject->GetComponent<TransformComponent>()->SetScale(0.2f, 0.2f, 0.2f);
 
-	gameObject = gameObjectContainer->AddGameObject("Quad", new QuadPrimitive(make_shared<ShadingComponent>(0.f, 0.8f, 0.f)));
+	gameObject = gameObjectContainer->AddGameObject("Quad", new QuadPrimitive(make_shared<ShadingComponent>(0.8f, 0.f, 0.8f)));
+	gameObject->GetComponent<TransformComponent>()->SetScale(8, 1, 8);
 
 	//for (int i = 5; i < 100; i++)
 	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);

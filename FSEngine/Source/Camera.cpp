@@ -45,9 +45,21 @@ void Camera::Update()
 
 	vec3 cursorDirection = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
 
-	float distance = systems->fileSystem->GetSettingsValue<float>("Distance");
-	vec3 pointPosition = position + (cursorDirection * distance);
-	point->GetComponent<TransformComponent>()->SetPosition(pointPosition);
+	if (systems->fileSystem->GetSettingsValue<bool>("ControlPoint"))
+	{
+		float distance = systems->fileSystem->GetSettingsValue<float>("Distance");
+		vec3 pointPosition = position + (cursorDirection * distance);
+		point->GetComponent<TransformComponent>()->SetPosition(pointPosition);
+	}
+
+	if (systems->input->IsButtonPressed(SDL_SCANCODE_SPACE))
+	{
+		vec3 pointPosition = point->GetComponent<TransformComponent>()->GetPosition();
+		printFS(pointPosition);
+
+		point->GetComponent<TransformComponent>()->SetPosition(pointPosition * TransformComponent::Up);
+		printFS(point->GetComponent<TransformComponent>()->GetPosition());
+	}
 }
 
 #pragma region Handle Input
