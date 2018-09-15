@@ -4,6 +4,8 @@ const mat4 TransformComponent::IdentityMatrix = mat4(1);
 const vec3 TransformComponent::Forward = vec3(0, 0, -1);
 const vec3 TransformComponent::Up = vec3(0, 1, 0);
 const vec3 TransformComponent::Right = vec3(1, 0, 0);
+const vec3 TransformComponent::Zero = vec3(0, 0, 0);
+const vec3 TransformComponent::One = vec3(1, 1, 1);
 
 vec3 TransformComponent::EulerAngleToDirectionVector(const vec3& angle)
 {
