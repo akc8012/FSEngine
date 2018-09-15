@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "CubePrimitive.h"
+#include "QuadPrimitive.h"
 #include "RenderText.h"
 #include "Model.h"
 #include "PlayerShip.h"
