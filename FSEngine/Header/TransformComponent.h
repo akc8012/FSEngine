@@ -40,6 +40,8 @@ public:
 	static const vec3 Forward;
 	static const vec3 Up;
 	static const vec3 Right;
+	static const vec3 Zero;
+	static const vec3 One;
 
 	static vec3 EulerAngleToDirectionVector(const vec3& angle);
 
