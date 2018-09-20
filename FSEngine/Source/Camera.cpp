@@ -30,7 +30,7 @@ void Camera::Update()
 	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
 		ResetViewTransform();
 
-	vec3 forward = TransformComponent::Forward;
+	vec3 forward = FSMath::Forward;
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 		forward = HandleInput();
 
@@ -60,7 +60,7 @@ vec3 Camera::HandleInput()
 
 	vec3 forward = TransformComponent::EulerAngleToDirectionVector(direction);
 
-	vec3 right = glm::normalize(glm::cross(forward, TransformComponent::Up));
+	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
 	position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
 	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
 
@@ -125,7 +125,7 @@ float Camera::GetFrameAdjustedSpeed() const
 #pragma region Calculate Matrices
 mat4 Camera::CalculateViewMatrix(const vec3& forward) const
 {
-	return glm::lookAt(position, position + forward, TransformComponent::Up);
+	return glm::lookAt(position, position + forward, FSMath::Up);
 }
 
 mat4 Camera::CalculateProjectionMatrixPerspective() const
@@ -174,7 +174,7 @@ vec2 Camera::GetDeviceNormalizedCursorPosition() const
 // http://antongerdelan.net/opengl/raycasting.html
 float Camera::GetRayIntersectFloorDistance(const ray& ray) const
 {
-	plane floorPlane(TransformComponent::Zero, TransformComponent::Up);
+	plane floorPlane(FSMath::Zero, FSMath::Up);
 	return -( ((ray.origin * floorPlane.normal) - floorPlane.origin) / (ray.direction * floorPlane.normal) ).y;
 }
 

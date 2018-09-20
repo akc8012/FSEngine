@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "FSMath.h"
 
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -30,19 +31,12 @@ private:
 		vec4 perspective;
 	};
 
-	mat4 transform = IdentityMatrix;
+	mat4 transform = FSMath::IdentityMatrix;
 
 	MatrixValues DecomposeTransformMatrix() const;
 
 public:
 	static const ComponentType ComponentTypeId = Transform;
-	static const mat4 IdentityMatrix;
-	static const vec3 Forward;
-	static const vec3 Up;
-	static const vec3 Right;
-	static const vec3 Zero;
-	static const vec3 One;
-
 	static vec3 EulerAngleToDirectionVector(const vec3& angle);
 
 	const mat4& GetMatrix() const;

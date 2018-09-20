@@ -1,12 +1,5 @@
 #include "../Header/TransformComponent.h"
 
-const mat4 TransformComponent::IdentityMatrix = mat4(1);
-const vec3 TransformComponent::Forward = vec3(0, 0, -1);
-const vec3 TransformComponent::Up = vec3(0, 1, 0);
-const vec3 TransformComponent::Right = vec3(1, 0, 0);
-const vec3 TransformComponent::Zero = vec3(0, 0, 0);
-const vec3 TransformComponent::One = vec3(1, 1, 1);
-
 vec3 TransformComponent::EulerAngleToDirectionVector(const vec3& angle)
 {
 	float pitch = glm::radians(angle.x);
@@ -112,14 +105,14 @@ mat4 TransformComponent::SetScale(float x, float y, float z)
 mat4 TransformComponent::SetScale(const vec3& scaleVector)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(IdentityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(IdentityMatrix, scaleVector);
+	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(FSMath::IdentityMatrix, scaleVector);
 	return transform;
 }
 
 mat4 TransformComponent::SetRotation(float angle, const vec3& axis)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(IdentityMatrix, matrixValues.translation) * rotate(IdentityMatrix, angle, axis) * scale(IdentityMatrix, matrixValues.scale);
+	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * rotate(FSMath::IdentityMatrix, angle, axis) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
 }
 
@@ -136,6 +129,6 @@ mat4 TransformComponent::SetPosition(float x, float y, float z)
 mat4 TransformComponent::SetPosition(const vec3& position)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(IdentityMatrix, position) * toMat4(matrixValues.rotation) * scale(IdentityMatrix, matrixValues.scale);
+	transform = translate(FSMath::IdentityMatrix, position) * toMat4(matrixValues.rotation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
 }

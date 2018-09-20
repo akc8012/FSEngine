@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "Window.h"
 #include "RenderText.h"
-#include "FSMath.h"
 
 class Camera : public GameObject
 {
