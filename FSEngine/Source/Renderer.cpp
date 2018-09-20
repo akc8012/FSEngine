@@ -36,6 +36,7 @@ void Renderer::SetViewMatrices(TransformComponent* viewTransform)
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
 }
 
+// https://www.opengl.org/discussion_boards/showthread.php/181622-OpenGL-Drawing-Grid-%28help%29
 void Renderer::DrawGrid()
 {
 	SetRenderParametersForGrid();
@@ -46,11 +47,11 @@ void Renderer::DrawGrid()
 
 	for (int i = -halfGridSize; i <= halfGridSize; i++)
 	{
-		vec3 xLinePoint = vec3(i, 0, halfGridSize);
+		vec3 xLinePoint(i, 0, halfGridSize);
 		glVertex3f(xLinePoint.x, xLinePoint.y, -xLinePoint.z);
 		glVertex3f(xLinePoint.x, xLinePoint.y, xLinePoint.z);
 
-		vec3 zLinePoint = vec3(halfGridSize, 0, i);
+		vec3 zLinePoint(halfGridSize, 0, i);
 		glVertex3f(-zLinePoint.x, zLinePoint.y, zLinePoint.z);
 		glVertex3f(zLinePoint.x, zLinePoint.y, zLinePoint.z);
 	}

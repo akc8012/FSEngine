@@ -36,8 +36,8 @@ void SceneManager::AddGameObjects(Window* window)
 	gameObject->GetComponent<TransformComponent>()->SetPosition(3, 0, 1.5f);
 	gameObject->GetComponent<TransformComponent>()->SetScale(0.2f, 0.2f, 0.2f);
 
-	gameObject = gameObjectContainer->AddGameObject("Quad", new QuadPrimitive(make_shared<ShadingComponent>(0.8f, 0.f, 0.8f)));
-	gameObject->GetComponent<TransformComponent>()->SetScale(8, 1, 8);
+	//gameObject = gameObjectContainer->AddGameObject("Quad", new QuadPrimitive(make_shared<ShadingComponent>(0.8f, 0.f, 0.8f)));
+	//gameObject->GetComponent<TransformComponent>()->SetScale(8, 1, 8);
 
 	//for (int i = 5; i < 100; i++)
 	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
@@ -53,7 +53,7 @@ void SceneManager::AddGameObjects(Window* window)
 	debugText->SetPixelPosition(vec2(5, -5));
 
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
-	gameObjectContainer->AddGameObject("PlayerShip", new PlayerShip())->GetComponent<TransformComponent>()->SetPosition(0, 0, -20);
+	gameObjectContainer->AddGameObject("PlayerShip", new PlayerShip())->GetComponent<TransformComponent>()->SetPosition(0, 0, 0);
 }
 
 GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const

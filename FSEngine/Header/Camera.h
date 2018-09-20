@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Window.h"
 #include "RenderText.h"
+#include "FSMath.h"
 
 class Camera : public GameObject
 {
@@ -31,8 +32,9 @@ private:
 
 	float ClampPitch(float pitch) const;
 
-	vec3 ProjectCursorPositionToWorldDirection(mat4 projectionMatrix, mat4 viewMatrix) const;
+	vec3 ProjectCursorPositionToWorldDirection(const mat4& projectionMatrix, const mat4& viewMatrix) const;
 	vec2 GetDeviceNormalizedCursorPosition() const;
+	float GetRayIntersectFloorDistance(const ray& ray) const;
 
 	float GetFrameAdjustedSpeed() const;
 	void SetDebugText(const string& text) const;

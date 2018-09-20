@@ -43,29 +43,13 @@ void Camera::Update()
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
 	GetComponent<TransformComponent>("Orthographic")->SetMatrix(orthographicMatrix);
 
-	vec3 cursorDirection = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
-
-	float distance = systems->fileSystem->GetSettingsValue<float>("Distance");
 	if (systems->fileSystem->GetSettingsValue<bool>("ControlPoint"))
 	{
-		vec3 pointPosition = position + (cursorDirection * distance);
+		ray cursorRay(position, ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix));
+		vec3 pointPosition = cursorRay.origin + (cursorRay.direction * GetRayIntersectFloorDistance(cursorRay));
+
 		point->GetComponent<TransformComponent>()->SetPosition(pointPosition);
 	}
-
-	if (systems->input->IsButtonPressed(SDL_SCANCODE_SPACE))
-	{
-		vec3 pointPosition = point->GetComponent<TransformComponent>()->GetPosition();
-		printFS(pointPosition);
-
-		point->GetComponent<TransformComponent>()->SetPosition(pointPosition * TransformComponent::Up);
-		printFS(point->GetComponent<TransformComponent>()->GetPosition());
-	}
-
-	vec3 floorPlaneNormal = TransformComponent::Up;
-	vec3 floorPlaneDistance = TransformComponent::Zero;
-
-	float rayIntersectFloorDistance = -(((position * floorPlaneNormal) + floorPlaneDistance) / (cursorDirection * floorPlaneNormal)).y;
-	printcFS(rayIntersectFloorDistance);
 }
 
 #pragma region Handle Input
@@ -167,7 +151,8 @@ mat4 Camera::CalculateProjectionMatrixOrthographic() const
 }
 #pragma endregion
 
-vec3 Camera::ProjectCursorPositionToWorldDirection(mat4 projectionMatrix, mat4 viewMatrix) const
+// http://antongerdelan.net/opengl/raycasting.html
+vec3 Camera::ProjectCursorPositionToWorldDirection(const mat4& projectionMatrix, const mat4& viewMatrix) const
 {
 	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(), -1, 1);
 
@@ -184,6 +169,13 @@ vec2 Camera::GetDeviceNormalizedCursorPosition() const
 	cursorCoordinates.y = -cursorCoordinates.y;
 
 	return cursorCoordinates;
+}
+
+// http://antongerdelan.net/opengl/raycasting.html
+float Camera::GetRayIntersectFloorDistance(const ray& ray) const
+{
+	plane floorPlane(TransformComponent::Zero, TransformComponent::Up);
+	return -( ((ray.origin * floorPlane.normal) - floorPlane.origin) / (ray.direction * floorPlane.normal) ).y;
 }
 
 void Camera::SetPosition(const vec3& position)

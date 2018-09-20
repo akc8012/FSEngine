@@ -57,6 +57,7 @@
     <ClInclude Include="Header\GameTimer.h" />
     <ClInclude Include="Header\FSDebug.h" />
     <ClInclude Include="Header\QuadPrimitive.h" />
+    <ClInclude Include="Header\FSMath.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

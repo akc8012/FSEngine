@@ -182,6 +182,7 @@
     <ClInclude Include="Header\ParameterCollection.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\QuadPrimitive.h" />
+    <ClInclude Include="Header\FSMath.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\CubePrimitive.h" />
     <ClInclude Include="Header\SceneManager.h" />
