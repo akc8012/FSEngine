@@ -37,7 +37,6 @@ private:
 
 public:
 	static const ComponentType ComponentTypeId = Transform;
-	static vec3 EulerAngleToDirectionVector(const vec3& angle);
 
 	const mat4& GetMatrix() const;
 	mat3 CalculateNormalMatrix() const;

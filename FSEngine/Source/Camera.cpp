@@ -58,7 +58,7 @@ vec3 Camera::HandleInput()
 	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
 	direction.x = ClampPitch(direction.x);
 
-	vec3 forward = TransformComponent::EulerAngleToDirectionVector(direction);
+	vec3 forward = FSMath::EulerAngleToDirectionVector(direction);
 
 	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
 	position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
@@ -175,7 +175,10 @@ vec2 Camera::GetDeviceNormalizedCursorPosition() const
 float Camera::GetRayIntersectFloorDistance(const ray& ray) const
 {
 	plane floorPlane(FSMath::Zero, FSMath::Up);
-	return -( ((ray.origin * floorPlane.normal) - floorPlane.origin) / (ray.direction * floorPlane.normal) ).y;
+	vec3 vector = -( ((ray.origin * floorPlane.normal) - floorPlane.origin) / (ray.direction * floorPlane.normal) );
+	vector = FSMath::NanToZero(vector);
+
+	return glm::dot(floorPlane.normal, vector);
 }
 
 void Camera::SetPosition(const vec3& position)

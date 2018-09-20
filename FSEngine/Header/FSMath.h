@@ -11,6 +11,9 @@ namespace FSMath
 	const vec3 Right = vec3(1, 0, 0);
 	const vec3 Zero = vec3(0, 0, 0);
 	const vec3 One = vec3(1, 1, 1);
+
+	vec3 EulerAngleToDirectionVector(const vec3& angle);
+	vec3 NanToZero(vec3 vector);
 }
 
 struct ray

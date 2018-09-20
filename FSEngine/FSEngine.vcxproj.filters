@@ -27,6 +27,7 @@
     <ClCompile Include="Source\GameTimer.cpp" />
     <ClCompile Include="Source\FSDebug.cpp" />
     <ClCompile Include="Source\QuadPrimitive.cpp" />
+    <ClCompile Include="Source\FSMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
