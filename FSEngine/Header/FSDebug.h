@@ -21,13 +21,20 @@ public:
 	static void Print(const string& message);
 };
 
-template<typename T> constexpr auto printFS(T message)
+template<typename T> constexpr auto printFS(const T& message, const string& label = "")
 {
+	if (label != "")
+		printf((label + ": ").c_str());
+
 	return FSDebug::Print(message);
 }
 
-template<typename T> constexpr auto printcFS(T message)
+template<typename T> constexpr auto printcFS(const T& message, const string& label = "")
 {
 	system("cls");
+
+	if (label != "")
+		printf((label + ": ").c_str());
+
 	return FSDebug::Print(message);
 }

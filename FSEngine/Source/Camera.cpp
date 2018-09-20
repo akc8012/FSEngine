@@ -174,7 +174,7 @@ vec2 Camera::GetDeviceNormalizedCursorPosition() const
 // http://antongerdelan.net/opengl/raycasting.html
 float Camera::GetRayIntersectFloorDistance(const ray& ray) const
 {
-	plane floorPlane(FSMath::Zero, FSMath::Up);
+	plane floorPlane(FSMath::Zero, glm::abs(FSMath::Up));
 	vec3 vector = -( ((ray.origin * floorPlane.normal) - floorPlane.origin) / (ray.direction * floorPlane.normal) );
 	vector = FSMath::NanToZero(vector);
 
