@@ -6,7 +6,6 @@
 class Camera : public GameObject
 {
 private:
-	TransformComponent* viewTransform = nullptr;
 	Window* window = nullptr;
 
 	vec3 position;
@@ -21,9 +20,11 @@ private:
 	mat4 CalculateProjectionMatrixPerspective() const;
 	mat4 CalculateProjectionMatrixOrthographic() const;
 
-	vec3 HandleInput();
+	void HandleDirection();
+	void HandlePosition(const vec3& forward);
+
 	vec3 GetDirectionDelta() const;
-	vec3 GetPositionDelta(const vec3& right, const vec3& forward, const vec3& cursorPosition) const;
+	vec3 GetPositionDelta(const vec3& forward, const vec3& cursorPosition) const;
 
 	vec3 GetDirectionInput() const;
 	vec3 GetMovementKeyInput(const vec3& right, const vec3& forward) const;
@@ -35,7 +36,7 @@ private:
 
 	float ClampPitch(float pitch) const;
 
-	vec3 ProjectCursorPositionToWorldDirection(const mat4& projectionMatrix, const mat4& viewMatrix) const;
+	vec3 ProjectCursorPositionToWorldDirection() const;
 	vec2 GetDeviceNormalizedCursorPosition() const;
 	float GetRayIntersectFloorDistance(const ray& ray) const;
 

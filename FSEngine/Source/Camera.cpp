@@ -4,9 +4,9 @@ Camera::Camera(Window* window)
 {
 	this->window = window;
 
-	viewTransform = AddComponent(make_shared<TransformComponent>(), "View").get();
 	ResetViewTransform();
 
+	AddComponent(make_shared<TransformComponent>(), "View");
 	AddComponent(make_shared<TransformComponent>(), "Perspective");
 	AddComponent(make_shared<TransformComponent>(), "Orthographic");
 
@@ -30,45 +30,37 @@ void Camera::Update()
 	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
 		ResetViewTransform();
 
-	vec3 forward = FSMath::Forward;
+	vec3 forward;
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
-		forward = HandleInput();
+	{
+		HandleDirection();
+		forward = FSMath::EulerAngleToDirectionVector(direction);
+		HandlePosition(forward);
+	}
+	else
+		forward = FSMath::EulerAngleToDirectionVector(direction);
 
 	mat4 viewMatrix = CalculateViewMatrix(forward);
-	viewTransform->SetMatrix(viewMatrix);
+	GetComponent<TransformComponent>("View")->SetMatrix(viewMatrix);
 
 	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective();
 	GetComponent<TransformComponent>("Perspective")->SetMatrix(perspectiveMatrix);
 
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
 	GetComponent<TransformComponent>("Orthographic")->SetMatrix(orthographicMatrix);
-
-	cursorRay.direction = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
 }
 
 #pragma region Handle Input
-vec3 Camera::HandleInput()
+void Camera::HandleDirection()
 {
 	direction += GetDirectionDelta();
-
-	vec3 forward = FSMath::EulerAngleToDirectionVector(direction);
-	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
-
-	vec3 cursorPosition = GetCursorPositionAtRayIntersect();
-	if (!systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
-		cursorRay.origin = position;
-
-	position += GetPositionDelta(right, forward, cursorPosition);
-
-	lastCursorPosition = cursorPosition;
-	return forward;
+	direction.x = ClampPitch(direction.x);
 }
 
 vec3 Camera::GetDirectionDelta() const
 {
 	vec3 direction = FSMath::Zero;
 	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
-	direction.x = ClampPitch(direction.x);
 
 	return direction;
 }
@@ -89,9 +81,22 @@ float Camera::ClampPitch(float pitch) const
 	return pitch;
 }
 
-vec3 Camera::GetPositionDelta(const vec3& right, const vec3& forward, const vec3& cursorPosition) const
+void Camera::HandlePosition(const vec3& forward)
+{
+	cursorRay.direction = ProjectCursorPositionToWorldDirection();
+	vec3 cursorPosition = GetCursorPositionAtRayIntersect();
+	if (!systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
+		cursorRay.origin = position;
+
+	position += GetPositionDelta(forward, cursorPosition);
+	lastCursorPosition = cursorPosition;
+}
+
+vec3 Camera::GetPositionDelta(const vec3& forward, const vec3& cursorPosition) const
 {
 	vec3 position = FSMath::Zero;
+	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
+
 	position += GetMovementKeyInput(right, forward) * GetFrameAdjustedSpeed();
 
 	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
@@ -175,11 +180,14 @@ mat4 Camera::CalculateProjectionMatrixOrthographic() const
 
 #pragma region Ray Casting
 // http://antongerdelan.net/opengl/raycasting.html
-vec3 Camera::ProjectCursorPositionToWorldDirection(const mat4& projectionMatrix, const mat4& viewMatrix) const
+vec3 Camera::ProjectCursorPositionToWorldDirection() const
 {
 	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(), -1, 1);
 
+	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
 	vec4 eyeDirection = vec4(vec2(glm::inverse(projectionMatrix) * deviceNormalizedCursorPosition), -1, 0);
+
+	mat4 viewMatrix = GetComponent<TransformComponent>("View")->GetMatrix();
 	vec3 worldDirection = glm::normalize(glm::inverse(viewMatrix) * eyeDirection);
 
 	return worldDirection;
