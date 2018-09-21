@@ -59,16 +59,20 @@ void Camera::HandleDirection()
 
 vec3 Camera::GetDirectionDelta() const
 {
-	vec3 direction = FSMath::Zero;
-	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
-
-	return direction;
+	return GetDirectionInput() * GetFrameAdjustedSpeed();
 }
 
 vec3 Camera::GetDirectionInput() const
 {
 	float pitchInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K);
 	float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
+
+	if (systems->input->IsButtonHeld(SDL_SCANCODE_LALT) && systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
+	{
+		tvec2<int> cursorDelta = systems->input->GetCursorDelta();
+		pitchInputValue += cursorDelta.y;
+		yawInputValue += -cursorDelta.x;
+	}
 
 	return vec3(glm::degrees(pitchInputValue), glm::degrees(yawInputValue), 0);
 }
@@ -97,7 +101,7 @@ vec3 Camera::GetPositionDelta(const vec3& forward, const vec3& cursorPosition) c
 	vec3 position = FSMath::Zero;
 	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
 
-	position += GetMovementKeyInput(right, forward) * GetFrameAdjustedSpeed();
+	position += GetPositionKeyInput(right, forward) * GetFrameAdjustedSpeed();
 
 	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
 		position += -(cursorPosition - lastCursorPosition);
@@ -113,7 +117,7 @@ vec3 Camera::GetPositionDelta(const vec3& forward, const vec3& cursorPosition) c
 	return position;
 }
 
-vec3 Camera::GetMovementKeyInput(const vec3& right, const vec3& forward) const
+vec3 Camera::GetPositionKeyInput(const vec3& right, const vec3& forward) const
 {
 	vec2 inputDelta = vec2(systems->input->GetHorizontalAxis(), -systems->input->GetVerticalAxis());
 
