@@ -6,13 +6,14 @@
 class Camera : public GameObject
 {
 private:
-	GameObject* point = nullptr;
-
 	TransformComponent* viewTransform = nullptr;
 	Window* window = nullptr;
 
 	vec3 position;
 	vec3 direction;
+
+	ray cursorRay;
+	vec3 lastCursorPosition;
 
 	void ResetViewTransform();
 
@@ -23,7 +24,8 @@ private:
 	vec3 HandleInput();
 
 	vec3 GetDirectionInput() const;
-	vec3 GetFloorMovementInput(const vec3& right, const vec3& forward) const;
+	vec3 GetMovementKeyInput(const vec3& right, const vec3& forward) const;
+	vec3 GetMovementCursorInput() const;
 
 	vec3 GetZoomInput(const vec3& forward) const;
 	float GetHeightKeyboardInput() const;

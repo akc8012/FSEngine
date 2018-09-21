@@ -22,7 +22,7 @@ void Camera::ResetViewTransform()
 
 void Camera::Start()
 {
-	point = gameObjectContainer->GetGameObject("Point");
+	cursorRay.origin = position;
 }
 
 void Camera::Update()
@@ -43,13 +43,7 @@ void Camera::Update()
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
 	GetComponent<TransformComponent>("Orthographic")->SetMatrix(orthographicMatrix);
 
-	if (systems->fileSystem->GetSettingsValue<bool>("ControlPoint"))
-	{
-		ray cursorRay(position, ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix));
-		vec3 pointPosition = cursorRay.origin + (cursorRay.direction * GetRayIntersectFloorDistance(cursorRay));
-
-		point->GetComponent<TransformComponent>()->SetPosition(pointPosition);
-	}
+	cursorRay.direction = ProjectCursorPositionToWorldDirection(perspectiveMatrix, viewMatrix);
 }
 
 #pragma region Handle Input
@@ -59,9 +53,17 @@ vec3 Camera::HandleInput()
 	direction.x = ClampPitch(direction.x);
 
 	vec3 forward = FSMath::EulerAngleToDirectionVector(direction);
-
 	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
-	position += GetFloorMovementInput(right, forward) * GetFrameAdjustedSpeed();
+
+	position += GetMovementKeyInput(right, forward) * GetFrameAdjustedSpeed();
+
+	vec3 cursorPosition = GetMovementCursorInput();
+	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
+		position += -(cursorPosition - lastCursorPosition);
+	else
+		cursorRay.origin = position;
+	lastCursorPosition = cursorPosition;
+
 	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
 
 	float mouseScrollSpeed = systems->fileSystem->GetSettingsValue<float>("CameraScrollSpeed");
@@ -89,16 +91,19 @@ float Camera::ClampPitch(float pitch) const
 	return pitch;
 }
 
-vec3 Camera::GetFloorMovementInput(const vec3& right, const vec3& forward) const
+vec3 Camera::GetMovementKeyInput(const vec3& right, const vec3& forward) const
 {
 	vec2 inputDelta = vec2(systems->input->GetHorizontalAxis(), -systems->input->GetVerticalAxis());
-	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
-		inputDelta += vec2(-systems->input->GetCursorDelta().x, systems->input->GetCursorDelta().y);
 
 	vec3 horizontalMovement = inputDelta.x * right;
 	vec3 verticalMovement = inputDelta.y * glm::normalize(vec3(forward.x, 0, forward.z));
 
 	return verticalMovement + horizontalMovement;
+}
+
+vec3 Camera::GetMovementCursorInput() const
+{
+	return cursorRay.origin + (cursorRay.direction * GetRayIntersectFloorDistance(cursorRay));
 }
 
 vec3 Camera::GetZoomInput(const vec3& forward) const
@@ -151,6 +156,7 @@ mat4 Camera::CalculateProjectionMatrixOrthographic() const
 }
 #pragma endregion
 
+#pragma region Ray Casting
 // http://antongerdelan.net/opengl/raycasting.html
 vec3 Camera::ProjectCursorPositionToWorldDirection(const mat4& projectionMatrix, const mat4& viewMatrix) const
 {
@@ -180,6 +186,7 @@ float Camera::GetRayIntersectFloorDistance(const ray& ray) const
 
 	return glm::dot(floorPlane.normal, vector);
 }
+#pragma endregion
 
 void Camera::SetPosition(const vec3& position)
 {

@@ -18,6 +18,8 @@ namespace FSMath
 
 struct ray
 {
+	ray() { }
+
 	ray(const vec3& origin, const vec3& direction)
 	{
 		this->origin = origin;
@@ -30,6 +32,8 @@ struct ray
 
 struct plane
 {
+	plane() { }
+
 	plane(const vec3& origin, const vec3& normal)
 	{
 		this->origin = origin;
