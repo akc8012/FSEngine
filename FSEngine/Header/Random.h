@@ -12,4 +12,5 @@ private:
 public:
 	int GetRandomRange(int min, int max);
 	float GetRandomRange(float min, float max);
+	vec3 GetRandomUniformVector(float min, float max);
 };

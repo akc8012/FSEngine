@@ -32,15 +32,12 @@ void SceneManager::AddGameObjects(Window* window)
 	gameObject = gameObjectContainer->AddGameObject("Yellow", new CubePrimitive(make_shared<ShadingComponent>(0.6f, 0.6f, 0.f)));
 	gameObject->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
 
-	gameObject = gameObjectContainer->AddGameObject("Point", new CubePrimitive(make_shared<ShadingComponent>(0.6f, 1.f, 0.6f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(0, 0, 0);
-	gameObject->GetComponent<TransformComponent>()->SetScale(0.2f, 0.2f, 0.2f);
-
-	//gameObject = gameObjectContainer->AddGameObject("Quad", new QuadPrimitive(make_shared<ShadingComponent>(0.8f, 0.f, 0.8f)));
-	//gameObject->GetComponent<TransformComponent>()->SetScale(1.2f, 1, 1.2f);
-
-	//for (int i = 5; i < 100; i++)
-	//	gameObjectContainer->AddGameObject(std::to_string(i), new CubePrimitive(make_shared<ShadingComponent>(1, 1, 1)))->GetComponent<TransformComponent>()->SetPosition((float)i, 0, (float)i);
+	for (int i = 0; i < 100; i++)
+	{
+		GameObject* cube = new CubePrimitive(make_shared<ShadingComponent>(systems->random->GetRandomUniformVector(0.f, 1.f)));
+		gameObject = gameObjectContainer->AddGameObject(std::to_string(i), cube);
+		gameObject->GetComponent<TransformComponent>()->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
+	}
 
 	gameObjectContainer->AddGameObject("DebugText", new RenderText(window));
 	RenderText* debugText = gameObjectContainer->GetGameObjectAs<RenderText>("DebugText");

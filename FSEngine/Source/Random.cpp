@@ -12,4 +12,7 @@ float Random::GetRandomRange(float min, float max)
 	return distribution(generator);
 }
 
-
+vec3 Random::GetRandomUniformVector(float min, float max)
+{
+	return vec3(GetRandomRange(min, max), GetRandomRange(min, max), GetRandomRange(min, max));
+}
