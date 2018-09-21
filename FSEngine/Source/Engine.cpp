@@ -11,8 +11,9 @@ void Engine::Initialize()
 	InitializeGlew();
 
 	systems->input = make_unique<Input>();
-	systems->gameTimer = make_unique<GameTimer>();
 	systems->shaderProgram = make_unique<ShaderProgram>();
+	systems->gameTimer = make_unique<GameTimer>();
+	systems->random = make_unique<Random>();
 
 	renderer = make_unique<Renderer>(systems.get());
 	sceneManager = new SceneManager(systems.get(), window.get());
