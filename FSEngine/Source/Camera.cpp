@@ -59,20 +59,28 @@ void Camera::HandleDirection()
 
 vec3 Camera::GetDirectionDelta() const
 {
-	return GetDirectionInput() * GetFrameAdjustedSpeed();
+	return GetDirectionMouseInput() + (GetDirectionKeyInput() * GetFrameAdjustedSpeed());
 }
 
-vec3 Camera::GetDirectionInput() const
+vec3 Camera::GetDirectionMouseInput() const
+{
+	if (!(systems->input->IsButtonHeld(SDL_SCANCODE_LALT) && systems->input->IsButtonHeld(SDL_BUTTON_LEFT)))
+		return FSMath::Zero;
+
+	vec2 currentDevicePosition = GetDeviceNormalizedCursorPosition(systems->input->GetCursorPosition());
+	vec2 lastDevicePosition = GetDeviceNormalizedCursorPosition(systems->input->GetLastCursorPosition());
+
+	vec2 cursorDelta = currentDevicePosition - lastDevicePosition;
+	float pitchInputValue = -cursorDelta.y;
+	float yawInputValue = -cursorDelta.x;
+
+	return vec3(glm::degrees(pitchInputValue), glm::degrees(yawInputValue), 0);
+}
+
+vec3 Camera::GetDirectionKeyInput() const
 {
 	float pitchInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_I, SDL_SCANCODE_K);
 	float yawInputValue = systems->input->GetDigitalAxis(SDL_SCANCODE_L, SDL_SCANCODE_J);
-
-	if (systems->input->IsButtonHeld(SDL_SCANCODE_LALT) && systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
-	{
-		tvec2<int> cursorDelta = systems->input->GetCursorDelta();
-		pitchInputValue += cursorDelta.y;
-		yawInputValue += -cursorDelta.x;
-	}
 
 	return vec3(glm::degrees(pitchInputValue), glm::degrees(yawInputValue), 0);
 }
@@ -101,11 +109,7 @@ vec3 Camera::GetPositionDelta(const vec3& forward, const vec3& cursorPosition) c
 	vec3 position = FSMath::Zero;
 	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
 
-	position += GetPositionKeyInput(right, forward) * GetFrameAdjustedSpeed();
-
-	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
-		position += -(cursorPosition - lastCursorPosition);
-
+	position += GetPositionMouseInput(cursorPosition) + (GetPositionKeyInput(right, forward) * GetFrameAdjustedSpeed());
 	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
 
 	float mouseScrollSpeed = systems->fileSystem->GetSettingsValue<float>("CameraScrollSpeed");
@@ -115,6 +119,14 @@ vec3 Camera::GetPositionDelta(const vec3& forward, const vec3& cursorPosition) c
 		position.y += GetHeightMouseInput() * mouseScrollSpeed;
 
 	return position;
+}
+
+vec3 Camera::GetPositionMouseInput(const vec3& cursorPosition) const
+{
+	if (!systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
+		return FSMath::Zero;
+
+	return -(cursorPosition - lastCursorPosition);
 }
 
 vec3 Camera::GetPositionKeyInput(const vec3& right, const vec3& forward) const
@@ -186,7 +198,7 @@ mat4 Camera::CalculateProjectionMatrixOrthographic() const
 // http://antongerdelan.net/opengl/raycasting.html
 vec3 Camera::ProjectCursorPositionToWorldDirection() const
 {
-	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(), -1, 1);
+	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(systems->input->GetCursorPosition()), -1, 1);
 
 	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
 	vec4 eyeDirection = vec4(vec2(glm::inverse(projectionMatrix) * deviceNormalizedCursorPosition), -1, 0);
@@ -197,9 +209,9 @@ vec3 Camera::ProjectCursorPositionToWorldDirection() const
 	return worldDirection;
 }
 
-vec2 Camera::GetDeviceNormalizedCursorPosition() const
+vec2 Camera::GetDeviceNormalizedCursorPosition(const tvec2<int>& cursorPosition) const
 {
-	vec2 cursorCoordinates = (vec2)systems->input->GetCursorPosition() /= (vec2)window->GetWindowSize();
+	vec2 cursorCoordinates = (vec2)cursorPosition /= (vec2)window->GetWindowSize();
 	cursorCoordinates = (cursorCoordinates - 0.5f) * 2.f;
 	cursorCoordinates.y = -cursorCoordinates.y;
 

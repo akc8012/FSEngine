@@ -42,6 +42,7 @@ public:
 
 	tvec2<int> GetCursorDelta() const;
 	tvec2<int> GetCursorPosition() const;
+	tvec2<int> GetLastCursorPosition() const;
 
 	bool IsButtonPressed(const SDL_Scancode& button) const;
 	bool IsButtonReleased(const SDL_Scancode& button) const;

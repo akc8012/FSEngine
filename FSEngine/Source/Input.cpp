@@ -102,6 +102,11 @@ tvec2<int> Input::GetCursorPosition() const
 	return cursorPosition;
 }
 
+tvec2<int> Input::GetLastCursorPosition() const
+{
+	return lastCursorPosition;
+}
+
 bool Input::IsButtonPressed(const SDL_Scancode& button) const
 {
 	return !lastKeyboardState[button] && IsButtonHeld(button);

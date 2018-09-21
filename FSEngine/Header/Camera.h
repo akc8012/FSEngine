@@ -26,7 +26,10 @@ private:
 	vec3 GetDirectionDelta() const;
 	vec3 GetPositionDelta(const vec3& forward, const vec3& cursorPosition) const;
 
-	vec3 GetDirectionInput() const;
+	vec3 GetDirectionMouseInput() const;
+	vec3 GetDirectionKeyInput() const;
+
+	vec3 GetPositionMouseInput(const vec3& cursorPosition) const;
 	vec3 GetPositionKeyInput(const vec3& right, const vec3& forward) const;
 	vec3 GetCursorPositionAtRayIntersect() const;
 
@@ -37,7 +40,7 @@ private:
 	float ClampPitch(float pitch) const;
 
 	vec3 ProjectCursorPositionToWorldDirection() const;
-	vec2 GetDeviceNormalizedCursorPosition() const;
+	vec2 GetDeviceNormalizedCursorPosition(const tvec2<int>& cursorPosition) const;
 	float GetRayIntersectFloorDistance(const ray& ray) const;
 
 	float GetFrameAdjustedSpeed() const;
