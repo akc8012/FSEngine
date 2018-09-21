@@ -49,30 +49,28 @@ void Camera::Update()
 #pragma region Handle Input
 vec3 Camera::HandleInput()
 {
-	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
-	direction.x = ClampPitch(direction.x);
+	direction += GetDirectionDelta();
 
 	vec3 forward = FSMath::EulerAngleToDirectionVector(direction);
 	vec3 right = glm::normalize(glm::cross(forward, FSMath::Up));
 
-	position += GetMovementKeyInput(right, forward) * GetFrameAdjustedSpeed();
-
-	vec3 cursorPosition = GetMovementCursorInput();
-	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
-		position += -(cursorPosition - lastCursorPosition);
-	else
+	vec3 cursorPosition = GetCursorPositionAtRayIntersect();
+	if (!systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
 		cursorRay.origin = position;
+
+	position += GetPositionDelta(right, forward, cursorPosition);
+
 	lastCursorPosition = cursorPosition;
-
-	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
-
-	float mouseScrollSpeed = systems->fileSystem->GetSettingsValue<float>("CameraScrollSpeed");
-	if (!systems->input->IsButtonHeld(SDL_SCANCODE_LALT))
-		position += GetZoomInput(forward) * mouseScrollSpeed;
-	else
-		position.y += GetHeightMouseInput() * mouseScrollSpeed;
-
 	return forward;
+}
+
+vec3 Camera::GetDirectionDelta() const
+{
+	vec3 direction = FSMath::Zero;
+	direction += GetDirectionInput() * GetFrameAdjustedSpeed();
+	direction.x = ClampPitch(direction.x);
+
+	return direction;
 }
 
 vec3 Camera::GetDirectionInput() const
@@ -91,6 +89,25 @@ float Camera::ClampPitch(float pitch) const
 	return pitch;
 }
 
+vec3 Camera::GetPositionDelta(const vec3& right, const vec3& forward, const vec3& cursorPosition) const
+{
+	vec3 position = FSMath::Zero;
+	position += GetMovementKeyInput(right, forward) * GetFrameAdjustedSpeed();
+
+	if (systems->input->IsButtonHeld(SDL_BUTTON_MIDDLE))
+		position += -(cursorPosition - lastCursorPosition);
+
+	position.y += GetHeightKeyboardInput() * GetFrameAdjustedSpeed();
+
+	float mouseScrollSpeed = systems->fileSystem->GetSettingsValue<float>("CameraScrollSpeed");
+	if (!systems->input->IsButtonHeld(SDL_SCANCODE_LALT))
+		position += GetZoomInput(forward) * mouseScrollSpeed;
+	else
+		position.y += GetHeightMouseInput() * mouseScrollSpeed;
+
+	return position;
+}
+
 vec3 Camera::GetMovementKeyInput(const vec3& right, const vec3& forward) const
 {
 	vec2 inputDelta = vec2(systems->input->GetHorizontalAxis(), -systems->input->GetVerticalAxis());
@@ -101,7 +118,7 @@ vec3 Camera::GetMovementKeyInput(const vec3& right, const vec3& forward) const
 	return verticalMovement + horizontalMovement;
 }
 
-vec3 Camera::GetMovementCursorInput() const
+vec3 Camera::GetCursorPositionAtRayIntersect() const
 {
 	return cursorRay.origin + (cursorRay.direction * GetRayIntersectFloorDistance(cursorRay));
 }

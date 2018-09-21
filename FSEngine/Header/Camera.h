@@ -22,10 +22,12 @@ private:
 	mat4 CalculateProjectionMatrixOrthographic() const;
 
 	vec3 HandleInput();
+	vec3 GetDirectionDelta() const;
+	vec3 GetPositionDelta(const vec3& right, const vec3& forward, const vec3& cursorPosition) const;
 
 	vec3 GetDirectionInput() const;
 	vec3 GetMovementKeyInput(const vec3& right, const vec3& forward) const;
-	vec3 GetMovementCursorInput() const;
+	vec3 GetCursorPositionAtRayIntersect() const;
 
 	vec3 GetZoomInput(const vec3& forward) const;
 	float GetHeightKeyboardInput() const;
