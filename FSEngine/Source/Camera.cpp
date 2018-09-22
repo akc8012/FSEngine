@@ -27,12 +27,12 @@ void Camera::Start()
 
 void Camera::Update()
 {
-	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
-		ResetViewTransform();
-
 	vec3 forward;
 	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
 	{
+		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
+			ResetViewTransform();
+
 		HandleDirection();
 		forward = FSMath::EulerAngleToDirectionVector(direction);
 		HandlePosition(forward);

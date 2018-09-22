@@ -15,6 +15,7 @@ using glm::vec2;
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm\gtx\matrix_decompose.hpp>
 #include <glm\gtx\quaternion.hpp>
+#include <glm\gtx\euler_angles.hpp>
 
 #include <string>
 using std::string;
@@ -58,6 +59,7 @@ public:
 	mat4 SetScale(float x, float y, float z);
 	mat4 SetScale(const vec3& scaleVector);
 	mat4 SetOrientation(float angle, const vec3& axis);
+	mat4 SetOrientation(const vec3& eulerAngles);
 	mat4 SetPosition(const vec2& position);
 	mat4 SetPosition(float x, float y, float z);
 	mat4 SetPosition(const vec3& position);

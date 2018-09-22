@@ -12,13 +12,10 @@
   "WindowSize": [960, 600],
   "Fullscreen": false,
 
-  "ShipControl": false,
-  "ShipSpeed": 6,
+  "ShipControl": true,
+  "ShipSpeed": 1,
 
-  "CameraControl": true,
+  "CameraControl": false,
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15,
-
-  "ControlPoint": true,
-  "Distance": 6
+  "CameraScrollSpeed": 0.15
 }

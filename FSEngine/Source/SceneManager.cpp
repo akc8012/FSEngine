@@ -50,7 +50,7 @@ void SceneManager::AddGameObjects(Window* window)
 	debugText->SetPixelPosition(vec2(5, -5));
 
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
-	gameObjectContainer->AddGameObject("PlayerShip", new PlayerShip())->GetComponent<TransformComponent>()->SetPosition(0, 0, -10);
+	gameObjectContainer->AddGameObject("PlayerShip", new PlayerShip());
 }
 
 GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
