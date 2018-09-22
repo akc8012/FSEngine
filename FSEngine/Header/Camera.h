@@ -10,6 +10,7 @@ private:
 
 	vec3 position;
 	vec3 direction;
+	quat newDirection;
 
 	ray cursorRay;
 	vec3 lastCursorPosition;
@@ -54,6 +55,7 @@ public:
 
 	void SetPosition(const vec3& position);
 	void SetOrientation(const vec3& orientation);
+	void SetNewOrientation(const quat& orientation);
 	vec3 GetPosition() const;
 	vec3 GetOrientation() const;
 };

@@ -27,20 +27,20 @@ void Camera::Start()
 
 void Camera::Update()
 {
-	vec3 forward;
-	if (systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
-	{
-		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
-			ResetViewTransform();
+	//vec3 forward;
+	//if (systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
+	//{
+	//	if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
+	//		ResetViewTransform();
 
-		HandleDirection();
-		forward = FSMath::EulerAngleToDirectionVector(direction);
-		HandlePosition(forward);
-	}
-	else
-		forward = FSMath::EulerAngleToDirectionVector(direction);
+	//	HandleDirection();
+	//	forward = FSMath::EulerAngleToDirectionVector(direction);
+	//	HandlePosition(forward);
+	//}
+	//else
+	//	forward = FSMath::EulerAngleToDirectionVector(direction);
 
-	mat4 viewMatrix = CalculateViewMatrix(forward);
+	mat4 viewMatrix = CalculateViewMatrix(newDirection * FSMath::Forward);
 	GetComponent<TransformComponent>("View")->SetMatrix(viewMatrix);
 
 	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective();
@@ -239,9 +239,14 @@ vec3 Camera::GetPosition() const
 	return position;
 }
 
-void Camera::SetOrientation(const vec3& direction)
+void Camera::SetOrientation(const vec3& orientation)
 {
-	this->direction = direction;
+	this->direction = orientation;
+}
+
+void Camera::SetNewOrientation(const quat& orientation)
+{
+	this->newDirection = orientation;
 }
 
 vec3 Camera::GetOrientation() const
