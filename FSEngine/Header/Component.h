@@ -10,9 +10,6 @@ using std::make_unique;
 
 class Component
 {
-private:
-	bool isShared = false;
-
 public:
 	virtual ~Component();
 };
