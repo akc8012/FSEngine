@@ -147,3 +147,22 @@ const mat4& TransformComponent::SetPosition(const vec3& position)
 	transform = translate(FSMath::IdentityMatrix, position) * toMat4(matrixValues.orientation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
 }
+
+json TransformComponent::GetJson() const
+{
+	json innerObject;
+
+	vec3 position = GetPosition();
+	innerObject["Position"] = { position.x, position.y, position.z };
+
+	vec3 eulerAngles = GetEulerAngles();
+	innerObject["EulerAngles"] = { eulerAngles.x, eulerAngles.y, eulerAngles.z };
+
+	vec3 scale = GetScale();
+	innerObject["Scale"] = { scale.x, scale.y, scale.z };
+
+	json rootObject;
+	rootObject["TransformComponent"] = innerObject;
+
+	return rootObject;
+}

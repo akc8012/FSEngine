@@ -11,46 +11,14 @@ SceneManager::SceneManager(Systems* systems, Window* window)
 
 void SceneManager::AddGameObjects(Window* window)
 {
-	GameObject* gameObject = nullptr;
+	auto gameObject = gameObjectContainer->AddGameObject("Cube", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.2f, 0.7f)));
+	gameObject->GetComponent<TransformComponent>()->SetPosition(0, 1, -4);
+	gameObject->GetComponent<TransformComponent>()->SetScale(vec3(1, 2, 0.5f));
 
-	gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(make_shared<TextureComponent>("Resource/Image/awesomeface.png")));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(4.5f, 0.2f, 0);
-
-	gameObject = gameObjectContainer->AddGameObject("GreenCube", new CubePrimitive(make_shared<ShadingComponent>(0.1f, 0.6f, 0.3f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(6, -0.2f, 0.1f);
-	gameObject->GetComponent<TransformComponent>()->SetScale(2, 0.8f, 2.8f);
-
-	gameObject = gameObjectContainer->AddGameObject("Red", new CubePrimitive(make_shared<ShadingComponent>(0.8f, 0.f, 0.f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(1.5f, 1, -3);
-
-	gameObject = gameObjectContainer->AddGameObject("Green", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.8f, 0.f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(1, -1, -1);
-
-	gameObject = gameObjectContainer->AddGameObject("Blue", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.f, 0.8f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(-0.8f, 0, -2);
-
-	gameObject = gameObjectContainer->AddGameObject("Yellow", new CubePrimitive(make_shared<ShadingComponent>(0.6f, 0.6f, 0.f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(-2, -1, 0);
-
-	for (int i = 0; i < 100; i++)
-	{
-		GameObject* cube = new CubePrimitive(make_shared<ShadingComponent>(systems->random->GetRandomUniformVector(0.f, 1.f)));
-		gameObject = gameObjectContainer->AddGameObject(std::to_string(i), cube);
-		gameObject->GetComponent<TransformComponent>()->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
-	}
-
-	gameObjectContainer->AddGameObject("DebugText", new RenderText(window));
-	RenderText* debugText = gameObjectContainer->GetGameObjectAs<RenderText>("DebugText");
-	debugText->SetText("Debug text");
-	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
-	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
-	debugText->SetPixelScale(26);
-	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
-	debugText->SetTextAlignment(RenderText::TopLeft);
-	debugText->SetPixelPosition(vec2(5, -5));
+	auto j = gameObject->GetComponent<TransformComponent>()->GetJson().dump(2);
+	printFS(j);
 
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
-	gameObjectContainer->AddGameObject("PlayerShip", new PlayerShip());
 }
 
 GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
