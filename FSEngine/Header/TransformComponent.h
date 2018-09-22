@@ -66,6 +66,7 @@ public:
 	const mat4& SetScale(float x, float y, float z);
 	const mat4& SetScale(const vec3& scaleVector);
 	const mat4& SetOrientation(const quat& orientation);
+	const mat4& SetOrientation(float eulerX, float eulerY, float eulerZ);
 	const mat4& SetOrientation(const vec3& eulerAngles);
 	const mat4& SetOrientation(float angle, const vec3& axis);
 	const mat4& SetPosition(const vec2& position);
@@ -73,4 +74,5 @@ public:
 	const mat4& SetPosition(const vec3& position);
 
 	json GetJson() const;
+	void SetFromJson(const json& j);
 };

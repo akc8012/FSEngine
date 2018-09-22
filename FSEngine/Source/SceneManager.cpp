@@ -15,8 +15,14 @@ void SceneManager::AddGameObjects(Window* window)
 	gameObject->GetComponent<TransformComponent>()->SetPosition(0, 1, -4);
 	gameObject->GetComponent<TransformComponent>()->SetScale(vec3(1, 2, 0.5f));
 
-	auto j = gameObject->GetComponent<TransformComponent>()->GetJson().dump(2);
-	printFS(j);
+	json j;
+	j["Position"] = { -1, 0, -1 };
+	j["EulerAngles"] = { 0, 0, 0 };
+	j["Scale"] = { 12, 1, 1 };
+	gameObject->GetComponent<TransformComponent>()->SetFromJson(j);
+
+	auto s = gameObject->GetComponent<TransformComponent>()->GetJson().dump(2);
+	printFS(s);
 
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
 }
