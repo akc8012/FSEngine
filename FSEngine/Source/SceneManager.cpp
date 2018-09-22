@@ -15,14 +15,11 @@ void SceneManager::AddGameObjects(Window* window)
 	gameObject->GetComponent<TransformComponent>()->SetPosition(0, 1, -4);
 	gameObject->GetComponent<TransformComponent>()->SetScale(vec3(1, 2, 0.5f));
 
-	json j;
-	j["Position"] = { -1, 0, -1 };
-	j["EulerAngles"] = { 0, 0, 0 };
-	j["Scale"] = { 12, 1, 1 };
-	gameObject->GetComponent<TransformComponent>()->SetFromJson(j);
+	gameObject->GetComponent<TransformComponent>()->SetFromJson(json::parse(FileSystem::LoadTextFromFile("Resource/Json/scene.json")));
 
-	auto s = gameObject->GetComponent<TransformComponent>()->GetJson().dump(2);
-	printFS(s);
+	string jsonString = gameObject->GetComponent<TransformComponent>()->GetJson().dump(2);
+	FileSystem::WriteTextToFile(jsonString, "Resource/Json/scene.json");
+	printFS(jsonString);
 
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
 }

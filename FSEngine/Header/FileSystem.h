@@ -6,9 +6,8 @@
 #include <fstream>
 #include <sstream>
 using std::string;
-using std::fstream;
 using std::ifstream;
-using std::ios;
+using std::ofstream;
 
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;
@@ -16,15 +15,15 @@ using json = nlohmann::json;
 class FileSystem
 {
 private:
-	json settingsJson = nullptr;
-
-	static string InternalTryLoadTextFromFile(const string& filepath, bool& success);
+	json settingsJson;
 
 public:
 	FileSystem();
 
 	static string LoadTextFromFile(const string& filepath);
-	static string TryLoadTextFromFile(const string& filepath);
+	static string TryLoadTextFromFile(const string& filepath, bool& success);
+
+	static void WriteTextToFile(const string& text, const string& filepath);
 
 	void LoadSettingsFile();
 	json GetSettingsValue(const string& key) const;
