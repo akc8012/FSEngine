@@ -1,7 +1,15 @@
 #pragma once
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/norm.hpp>
+
 using glm::vec3;
 using glm::mat4;
+using glm::quat;
 
 namespace FSMath
 {
@@ -14,6 +22,10 @@ namespace FSMath
 
 	vec3 EulerAngleToDirectionVector(const vec3& angle);
 	vec3 NanToZero(vec3 vector);
+
+	// https://github.com/opengl-tutorials/ogl/blob/master/common/quaternion_utils.cpp
+	quat RotationBetweenVectors(vec3 start, vec3 dest);
+	quat LookAt(vec3 direction, vec3 desiredUp);
 }
 
 struct ray
