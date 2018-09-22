@@ -16,7 +16,7 @@ void PlayerShip::Start()
 
 void PlayerShip::ResetValues()
 {
-	transform->SetPosition(vec3(0, 0, 0));
+	transform->SetPosition(vec3(0, 0, 4));
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
 	transform->SetOrientation(vec3(0, 0, 180));
 
@@ -41,6 +41,12 @@ void PlayerShip::ControlShip()
 	direction += glm::degrees(input) * GetFrameAdjustedSpeed();
 
 	transform->SetOrientation(direction);
+
+	if (!systems->input->IsButtonHeld(SDL_SCANCODE_SPACE))
+	{
+		vec3 forward = transform->GetOrientation() * -FSMath::Forward;
+		transform->Translate(forward * GetFrameAdjustedSpeed());
+	}
 }
 
 void PlayerShip::SetCamera()

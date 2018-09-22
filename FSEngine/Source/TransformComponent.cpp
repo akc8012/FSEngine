@@ -24,7 +24,7 @@ quat TransformComponent::GetOrientation() const
 
 vec3 TransformComponent::GetEulerAngles() const
 {
-	return eulerAngles(GetOrientation());
+	return glm::degrees(glm::eulerAngles(GetOrientation()));
 }
 
 vec3 TransformComponent::GetPosition() const
