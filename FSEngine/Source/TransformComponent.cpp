@@ -16,15 +16,15 @@ vec3 TransformComponent::GetScale() const
 	return matrixValues.scale;
 }
 
-quat TransformComponent::GetRotation() const
+quat TransformComponent::GetOrientation() const
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	return matrixValues.rotation;
+	return matrixValues.orientation;
 }
 
 vec3 TransformComponent::GetEulerAngles() const
 {
-	return eulerAngles(GetRotation());
+	return eulerAngles(GetOrientation());
 }
 
 vec3 TransformComponent::GetPosition() const
@@ -36,7 +36,7 @@ vec3 TransformComponent::GetPosition() const
 TransformComponent::MatrixValues TransformComponent::DecomposeTransformMatrix() const
 {
 	MatrixValues matrixValues;
-	decompose(transform, matrixValues.scale, matrixValues.rotation, matrixValues.translation, matrixValues.skew, matrixValues.perspective);
+	decompose(transform, matrixValues.scale, matrixValues.orientation, matrixValues.translation, matrixValues.skew, matrixValues.perspective);
 	return matrixValues;
 }
 
@@ -91,11 +91,11 @@ mat4 TransformComponent::SetScale(float x, float y, float z)
 mat4 TransformComponent::SetScale(const vec3& scaleVector)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * toMat4(matrixValues.rotation) * scale(FSMath::IdentityMatrix, scaleVector);
+	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * toMat4(matrixValues.orientation) * scale(FSMath::IdentityMatrix, scaleVector);
 	return transform;
 }
 
-mat4 TransformComponent::SetRotation(float angle, const vec3& axis)
+mat4 TransformComponent::SetOrientation(float angle, const vec3& axis)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * rotate(FSMath::IdentityMatrix, angle, axis) * scale(FSMath::IdentityMatrix, matrixValues.scale);
@@ -115,6 +115,6 @@ mat4 TransformComponent::SetPosition(float x, float y, float z)
 mat4 TransformComponent::SetPosition(const vec3& position)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, position) * toMat4(matrixValues.rotation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
+	transform = translate(FSMath::IdentityMatrix, position) * toMat4(matrixValues.orientation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
 }

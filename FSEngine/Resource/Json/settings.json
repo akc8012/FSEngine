@@ -5,11 +5,11 @@
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
 
-  "SwapInterval": 0,
+  "SwapInterval": -1,
   "PolygonLineMode": false,
   "DrawGrid": true,
 
-  "WindowSize": [1280, 800],
+  "WindowSize": [960, 600],
   "Fullscreen": false,
 
   "ShipControl": false,

@@ -12,7 +12,7 @@ void PlayerShip::Start()
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
-	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));
+	transform->SetOrientation(glm::radians(180.f), vec3(0, 1, 0));
 }
 
 void PlayerShip::Update()

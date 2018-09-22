@@ -25,7 +25,7 @@ private:
 	struct MatrixValues
 	{
 		vec3 scale;
-		quat rotation;
+		quat orientation;
 		vec3 translation;
 		vec3 skew;
 		vec4 perspective;
@@ -43,7 +43,7 @@ public:
 
 	vec3 GetScale() const;
 	vec3 GetEulerAngles() const;
-	quat GetRotation() const;
+	quat GetOrientation() const;
 	vec3 GetPosition() const;
 
 	void SetMatrix(const mat4& matrix);
@@ -57,7 +57,7 @@ public:
 	mat4 SetScale(float scaleFactor);
 	mat4 SetScale(float x, float y, float z);
 	mat4 SetScale(const vec3& scaleVector);
-	mat4 SetRotation(float angle, const vec3& axis);
+	mat4 SetOrientation(float angle, const vec3& axis);
 	mat4 SetPosition(const vec2& position);
 	mat4 SetPosition(float x, float y, float z);
 	mat4 SetPosition(const vec3& position);
