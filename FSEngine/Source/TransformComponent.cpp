@@ -102,11 +102,7 @@ mat4 TransformComponent::SetOrientation(float angle, const vec3& axis)
 	return transform;
 }
 
-<<<<<<< HEAD
 mat4 TransformComponent::SetOrientation(const vec3& eulerAngles)
-=======
-mat4 TransformComponent::SetRotation(const vec3& eulerAngles)
->>>>>>> b0294f1b90ae4641a98cf919d8937d817ca3fa8f
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * glm::orientate4(glm::radians(eulerAngles)) * scale(FSMath::IdentityMatrix, matrixValues.scale);

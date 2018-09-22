@@ -40,11 +40,7 @@ void PlayerShip::ControlShip()
 	vec3 input(systems->input->GetVerticalAxis(), 0, -systems->input->GetHorizontalAxis());
 	direction += glm::degrees(input) * GetFrameAdjustedSpeed();
 
-<<<<<<< HEAD
 	transform->SetOrientation(direction);
-=======
-	transform->SetRotation(direction);
->>>>>>> b0294f1b90ae4641a98cf919d8937d817ca3fa8f
 }
 
 void PlayerShip::SetCamera()
