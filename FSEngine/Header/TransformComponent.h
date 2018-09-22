@@ -48,6 +48,10 @@ public:
 	quat GetOrientation() const;
 	vec3 GetPosition() const;
 
+	vec3 GetForward() const;
+	vec3 GetUp() const;
+	vec3 GetRight() const;
+
 	const mat4& Scale(const vec2& scaleVector);
 	const mat4& Scale(float scaleFactor);
 	const mat4& Scale(const vec3& scaleVector);

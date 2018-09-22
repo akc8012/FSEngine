@@ -38,6 +38,21 @@ vec3 TransformComponent::GetPosition() const
 	return matrixValues.translation;
 }
 
+vec3 TransformComponent::GetForward() const
+{
+	return GetOrientation() * FSMath::Forward;
+}
+
+vec3 TransformComponent::GetUp() const
+{
+	return GetOrientation() * FSMath::Up;
+}
+
+vec3 TransformComponent::GetRight() const
+{
+	return GetOrientation() * FSMath::Right;
+}
+
 TransformComponent::MatrixValues TransformComponent::DecomposeTransformMatrix() const
 {
 	MatrixValues matrixValues;

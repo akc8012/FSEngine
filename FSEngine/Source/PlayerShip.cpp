@@ -43,10 +43,7 @@ void PlayerShip::ControlShip()
 	transform->SetOrientation(direction);
 
 	if (!systems->input->IsButtonHeld(SDL_SCANCODE_SPACE))
-	{
-		vec3 forward = transform->GetOrientation() * -FSMath::Forward;
-		transform->Translate(forward * GetFrameAdjustedSpeed());
-	}
+		transform->Translate(-transform->GetForward() * GetFrameAdjustedSpeed());
 }
 
 void PlayerShip::SetCamera()
