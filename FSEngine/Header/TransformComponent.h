@@ -17,6 +17,9 @@ using glm::vec2;
 #include <glm\gtx\quaternion.hpp>
 #include <glm\gtx\euler_angles.hpp>
 
+#include <nlohmann\json.hpp>
+using json = nlohmann::json;
+
 #include <string>
 using std::string;
 
@@ -68,4 +71,6 @@ public:
 	const mat4& SetPosition(const vec2& position);
 	const mat4& SetPosition(float x, float y, float z);
 	const mat4& SetPosition(const vec3& position);
+
+	json GetJson() const;
 };
