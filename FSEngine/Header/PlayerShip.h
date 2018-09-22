@@ -8,6 +8,14 @@ private:
 	TransformComponent* transform = nullptr;
 	Camera* camera = nullptr;
 
+	vec3 direction;
+
+	void ResetValues();
+	void ControlShip();
+	void SetCamera();
+
+	float GetFrameAdjustedSpeed() const;
+
 public:
 	PlayerShip();
 

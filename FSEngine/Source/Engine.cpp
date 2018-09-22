@@ -198,7 +198,6 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			systems->shaderProgram->CompileShaders();
 
-		sceneManager->GetGameObjectContainer()->GetGameObject("PlayerShip")->Start();
 		break;
 	}
 }

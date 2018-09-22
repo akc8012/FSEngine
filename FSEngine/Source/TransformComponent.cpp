@@ -102,6 +102,13 @@ mat4 TransformComponent::SetRotation(float angle, const vec3& axis)
 	return transform;
 }
 
+mat4 TransformComponent::SetRotation(const vec3& eulerAngles)
+{
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * glm::orientate4(glm::radians(eulerAngles)) * scale(FSMath::IdentityMatrix, matrixValues.scale);
+	return transform;
+}
+
 mat4 TransformComponent::SetPosition(const vec2& position)
 {
 	return SetPosition(vec3(position, 0));

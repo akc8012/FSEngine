@@ -11,21 +11,45 @@ void PlayerShip::Start()
 	transform = GetComponent<TransformComponent>().get();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
+	ResetValues();
+}
+
+void PlayerShip::ResetValues()
+{
+	transform->SetPosition(vec3(0, 0, 0));
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
-	transform->SetRotation(glm::radians(180.f), vec3(0, 1, 0));
+	transform->SetRotation(vec3(0, 0, 180));
+
+	direction = vec3(0, 0, 180);
 }
 
 void PlayerShip::Update()
 {
 	if (systems->fileSystem->GetSettingsValue<bool>("ShipControl"))
 	{
-		vec3 inputVector = vec3(systems->input->GetHorizontalAxis(), 0, systems->input->GetVerticalAxis());
-		if (glm::length(inputVector) != 0)
-			inputVector = glm::normalize(inputVector);
+		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
+			ResetValues();
 
-		float shipSpeed = systems->fileSystem->GetSettingsValue<float>("ShipSpeed");
-		transform->Translate(inputVector * systems->gameTimer->GetDeltaTime() * shipSpeed);
-
-		//camera->SetPosition(transform->GetPosition() + vec3(0, 0, systems->fileSystem->GetSettingsValue<float>("CameraDistance")));
+		ControlShip();
+		//SetCamera();
 	}
+}
+
+void PlayerShip::ControlShip()
+{
+	vec3 input(systems->input->GetVerticalAxis(), 0, -systems->input->GetHorizontalAxis());
+	direction += glm::degrees(input) * GetFrameAdjustedSpeed();
+
+	transform->SetRotation(direction);
+}
+
+void PlayerShip::SetCamera()
+{
+	const float CameraDistance = 6;
+	camera->SetPosition(transform->GetPosition() + (-FSMath::Forward * CameraDistance));
+}
+
+float PlayerShip::GetFrameAdjustedSpeed() const
+{
+	return systems->fileSystem->GetSettingsValue<float>("ShipSpeed") * systems->gameTimer->GetDeltaTime();
 }
