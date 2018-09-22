@@ -53,7 +53,7 @@ public:
 	void Update() override;
 
 	void SetPosition(const vec3& position);
-	void SetDirection(const vec3& direction);
+	void SetOrientation(const vec3& orientation);
 	vec3 GetPosition() const;
-	vec3 GetDirection() const;
+	vec3 GetOrientation() const;
 };

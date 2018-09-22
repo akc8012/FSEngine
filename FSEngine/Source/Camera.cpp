@@ -17,7 +17,7 @@ Camera::Camera(Window* window)
 void Camera::ResetViewTransform()
 {
 	SetPosition(vec3(0, 1.5f, 5));
-	SetDirection(vec3(-17, -90, 0));
+	SetOrientation(vec3(-17, -90, 0));
 }
 
 void Camera::Start()
@@ -239,12 +239,12 @@ vec3 Camera::GetPosition() const
 	return position;
 }
 
-void Camera::SetDirection(const vec3& direction)
+void Camera::SetOrientation(const vec3& direction)
 {
 	this->direction = direction;
 }
 
-vec3 Camera::GetDirection() const
+vec3 Camera::GetOrientation() const
 {
 	return direction;
 }
