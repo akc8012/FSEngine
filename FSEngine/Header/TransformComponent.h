@@ -40,6 +40,7 @@ public:
 	static const ComponentType ComponentTypeId = Transform;
 
 	const mat4& GetMatrix() const;
+	void SetMatrix(const mat4& matrix);
 	mat3 CalculateNormalMatrix() const;
 
 	vec3 GetScale() const;
@@ -47,20 +48,19 @@ public:
 	quat GetOrientation() const;
 	vec3 GetPosition() const;
 
-	void SetMatrix(const mat4& matrix);
-	mat4 Scale(const vec2& scaleVector);
-	mat4 Scale(float scaleFactor);
-	mat4 Scale(const vec3& scaleVector);
-	mat4 Translate(const vec2& translation);
-	mat4 Translate(const vec3& translation);
+	const mat4& Scale(const vec2& scaleVector);
+	const mat4& Scale(float scaleFactor);
+	const mat4& Scale(const vec3& scaleVector);
+	const mat4& Translate(const vec2& translation);
+	const mat4& Translate(const vec3& translation);
 
-	mat4 SetScale(const vec2& scaleVector);
-	mat4 SetScale(float scaleFactor);
-	mat4 SetScale(float x, float y, float z);
-	mat4 SetScale(const vec3& scaleVector);
-	mat4 SetOrientation(float angle, const vec3& axis);
-	mat4 SetOrientation(const vec3& eulerAngles);
-	mat4 SetPosition(const vec2& position);
-	mat4 SetPosition(float x, float y, float z);
-	mat4 SetPosition(const vec3& position);
+	const mat4& SetScale(const vec2& scaleVector);
+	const mat4& SetScale(float scaleFactor);
+	const mat4& SetScale(float x, float y, float z);
+	const mat4& SetScale(const vec3& scaleVector);
+	const mat4& SetOrientation(float angle, const vec3& axis);
+	const mat4& SetOrientation(const vec3& eulerAngles);
+	const mat4& SetPosition(const vec2& position);
+	const mat4& SetPosition(float x, float y, float z);
+	const mat4& SetPosition(const vec3& position);
 };

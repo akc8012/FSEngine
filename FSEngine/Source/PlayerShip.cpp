@@ -25,7 +25,7 @@ void PlayerShip::ResetValues()
 
 void PlayerShip::Update()
 {
-	if (systems->fileSystem->GetSettingsValue<bool>("ShipControl"))
+	if (!systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
 	{
 		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
 			ResetValues();

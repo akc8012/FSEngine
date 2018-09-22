@@ -28,7 +28,7 @@ void Camera::Start()
 void Camera::Update()
 {
 	vec3 forward;
-	if (systems->fileSystem->GetSettingsValue<bool>("CameraControl"))
+	if (systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
 	{
 		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
 			ResetViewTransform();

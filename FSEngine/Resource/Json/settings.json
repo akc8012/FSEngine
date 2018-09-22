@@ -5,17 +5,16 @@
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
 
-  "SwapInterval": -1,
+  "SwapInterval": 0,
   "PolygonLineMode": false,
   "DrawGrid": true,
 
-  "WindowSize": [960, 600],
+  "WindowSize": [1280, 800],
   "Fullscreen": false,
 
-  "ShipControl": true,
+  "EditorMode": true,
   "ShipSpeed": 1,
 
-  "CameraControl": false,
   "CameraMoveSpeed": 2,
   "CameraScrollSpeed": 0.15
 }
