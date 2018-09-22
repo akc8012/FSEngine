@@ -110,10 +110,10 @@ const mat4& TransformComponent::SetScale(const vec3& scaleVector)
 	return transform;
 }
 
-const mat4& TransformComponent::SetOrientation(float angle, const vec3& axis)
+const mat4& TransformComponent::SetOrientation(const quat& orientation)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * rotate(FSMath::IdentityMatrix, angle, axis) * scale(FSMath::IdentityMatrix, matrixValues.scale);
+	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * glm::toMat4(orientation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
 }
 
@@ -121,6 +121,13 @@ const mat4& TransformComponent::SetOrientation(const vec3& eulerAngles)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * glm::orientate4(glm::radians(eulerAngles)) * scale(FSMath::IdentityMatrix, matrixValues.scale);
+	return transform;
+}
+
+const mat4& TransformComponent::SetOrientation(float angle, const vec3& axis)
+{
+	MatrixValues matrixValues = DecomposeTransformMatrix();
+	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * rotate(FSMath::IdentityMatrix, angle, axis) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
 }
 
