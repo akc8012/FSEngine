@@ -85,6 +85,9 @@ void GameObject::SetName(const string& name)
 json GameObject::GetJson() const
 {
 	json j;
+	for (const auto& transformComponent : transformComponents)
+		j[transformComponent.first] = transformComponent.second->GetJson();
+
 	for (const auto& shadingComponent : shadingComponents)
 		j[shadingComponent.first] = shadingComponent.second->GetJson();
 
@@ -94,6 +97,9 @@ json GameObject::GetJson() const
 
 void GameObject::SetFromJson(const json& j)
 {
+	for (auto& transformComponent : transformComponents)
+		transformComponent.second->SetFromJson(j[transformComponent.first]);
+
 	for (auto& shadingComponent : shadingComponents)
 		shadingComponent.second->SetFromJson(j[shadingComponent.first]);
 
