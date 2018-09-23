@@ -39,4 +39,7 @@ public:
 	vec4 GetFlatColor() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
+
+	virtual json GetJson() const override;
+	virtual void SetFromJson(const json& j) override;
 };

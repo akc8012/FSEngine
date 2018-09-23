@@ -90,6 +90,16 @@ TextureComponent::TextureType TextureComponent::GetTextureType() const
 	return textureType;
 }
 
+json TextureComponent::GetJson() const
+{
+	return json();
+}
+
+void TextureComponent::SetFromJson(const json& j)
+{
+
+}
+
 TextureComponent::~TextureComponent()
 {
 	DeleteTexture();

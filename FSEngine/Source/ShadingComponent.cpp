@@ -53,3 +53,13 @@ ParameterCollection<ShadingComponent::Parameters, ShadingComponent::ParametersLe
 {
 	return parameterCollection.get();
 }
+
+json ShadingComponent::GetJson() const
+{
+	return json();
+}
+
+void ShadingComponent::SetFromJson(const json& j)
+{
+
+}
