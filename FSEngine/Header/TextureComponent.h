@@ -33,4 +33,7 @@ public:
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 
 	TextureType GetTextureType() const;
+
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 };

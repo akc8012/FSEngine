@@ -73,4 +73,7 @@ public:
 	const vector<string>& GetAssociatedTextureNames() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
+
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 };
