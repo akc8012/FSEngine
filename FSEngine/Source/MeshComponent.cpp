@@ -18,7 +18,8 @@ MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const
 
 void MeshComponent::Initialize()
 {
-	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
+	string parameterNames[] = { "RenderBackfaces", "DrawElements" };
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 	parameterCollection->SetParameter(RenderBackfaces, false);
 	parameterCollection->SetParameter(DrawElements, true);
 

@@ -9,6 +9,7 @@ class ParameterCollection
 {
 private:
 	short parameters[CollectionLength];
+	string parameterNames[CollectionLength];
 
 	void SetParameter(Parameters parameter, short value)
 	{
@@ -16,8 +17,11 @@ private:
 	}
 
 public:
-	ParameterCollection()
+	ParameterCollection(string parameterNames[CollectionLength])
 	{
+		for (int i = 0; i < CollectionLength; i++)
+			this->parameterNames[i] = parameterNames[i];
+
 		for (auto& parameter : parameters)
 			parameter = -1;
 	}

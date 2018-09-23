@@ -2,7 +2,8 @@
 
 GameObject::GameObject()
 {
-	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
+	string parameterNames[] = { "DoUpdate", "DoDraw", "DoLateUpdate", "DoLateDraw" };
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 	SetDefaultParameters();
 }
 

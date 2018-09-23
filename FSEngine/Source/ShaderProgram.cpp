@@ -2,7 +2,8 @@
 
 ShaderProgram::ShaderProgram()
 {
-	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>();
+	string parameterNames[] = { "IsUsing", "RenderPerspective", "EnableDepthTest", "Blend" };
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 
 	shaderProgramId = glCreateProgram();
 	CompileShaders();
