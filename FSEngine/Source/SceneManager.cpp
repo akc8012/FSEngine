@@ -12,9 +12,9 @@ SceneManager::SceneManager(Systems* systems, Window* window)
 void SceneManager::AddGameObjects(Window* window)
 {
 	auto gameObject = gameObjectContainer->AddGameObject("Cube", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.2f, 0.7f)));
-	gameObject->GetComponent<ShadingComponent>()->SetFromJson(json::parse(FileSystem::LoadTextFromFile("Resource/Json/scene.json")));
+	gameObject->SetFromJson(json::parse(FileSystem::LoadTextFromFile("Resource/Json/scene.json")));
 
-	auto s = gameObject->GetComponent<ShadingComponent>()->GetJson().dump(2);
+	auto s = gameObject->GetJson().dump(2);
 	FileSystem::WriteTextToFile(s, "Resource/Json/scene.json");
 	printFS(s);
 
