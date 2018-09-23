@@ -34,7 +34,7 @@ public:
 	bool GetParameter(Parameters parameter) const
 	{
 		if (!IsParameterInitialized(parameter))
-			throwFS("Trying to access uninitialized parameter: " + std::to_string(parameter));
+			throwFS("Trying to access uninitialized parameter: " + parameterNames[parameter]);
 
 		return (bool)parameters[parameter];
 	}
