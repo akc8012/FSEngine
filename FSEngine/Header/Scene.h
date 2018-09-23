@@ -23,10 +23,13 @@ private:
 	unique_ptr<GameObject::GameObjectContainer> gameObjectContainer;
 
 	void AddGameObjects(Window* window);
+	string GetFileName() const;
 
 public:
 	Scene(const string& name, Systems* systems, Window* window);
+	~Scene();
 
+	void LoadScene();
 	void SaveScene() const;
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;

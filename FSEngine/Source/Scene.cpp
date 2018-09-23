@@ -9,7 +9,7 @@ Scene::Scene(const string& name, Systems* systems, Window* window)
 	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems);
 	AddGameObjects(window);
 
-	SaveScene();
+	LoadScene();
 }
 
 void Scene::AddGameObjects(Window* window)
@@ -18,17 +18,34 @@ void Scene::AddGameObjects(Window* window)
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
 }
 
+void Scene::LoadScene()
+{
+	json j = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
+
+	for (const auto& gameObject : gameObjectContainer->GetGameObjects())
+		gameObject->SetFromJson(j[gameObject->GetName()]);
+}
+
 void Scene::SaveScene() const
 {
 	json j;
-
 	for (const auto& gameObject : gameObjectContainer->GetGameObjects())
 		j[gameObject->GetName()] = gameObject->GetJson();
 
-	FileSystem::WriteTextToFile(j.dump(2), "Resource/Json/" + name + ".json");
+	FileSystem::WriteTextToFile(j.dump(2), GetFileName());
+}
+
+string Scene::GetFileName() const
+{
+	return "Resource/Json/" + name + ".json";
 }
 
 GameObject::GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
+}
+
+Scene::~Scene()
+{
+	SaveScene();
 }
