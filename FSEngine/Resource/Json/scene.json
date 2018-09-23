@@ -1,5 +1,13 @@
 {
-  "Blend": 1,
-  "EnableDepthTest": 1,
-  "RenderPerspective": 1
+  "FlatColor": [
+    0.0,
+    0.20000000298023224,
+    0.699999988079071,
+    1.0
+  ],
+  "ParameterCollection": {
+    "Blend": 1,
+    "EnableDepthTest": 1,
+    "RenderPerspective": 1
+  }
 }

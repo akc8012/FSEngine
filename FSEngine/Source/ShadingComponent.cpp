@@ -63,6 +63,8 @@ json ShadingComponent::GetJson() const
 {
 	json j;
 	j["FlatColor"] = { flatColor.r, flatColor.g, flatColor.b, flatColor.a };
+	j["ParameterCollection"] = parameterCollection->GetJson();
+
 	return j;
 }
 
@@ -70,4 +72,6 @@ void ShadingComponent::SetFromJson(const json& j)
 {
 	json flatColor = j["FlatColor"];
 	SetFlatColor(vec4(flatColor[0], flatColor[1], flatColor[2], flatColor[3]));
+
+	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
