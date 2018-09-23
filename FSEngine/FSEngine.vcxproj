@@ -149,6 +149,7 @@
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\QuadPrimitive.cpp" />
     <ClCompile Include="Source\Random.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\TextureComponent.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Header\Random.h" />
     <ClInclude Include="Header\Renderer.h" />
     <ClInclude Include="Header\CubePrimitive.h" />
+    <ClInclude Include="Header\Scene.h" />
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
     <ClInclude Include="Header\ShadingComponent.h" />

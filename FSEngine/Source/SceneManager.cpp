@@ -2,28 +2,7 @@
 
 SceneManager::SceneManager(Systems* systems, Window* window)
 {
-	this->systems = systems;
-	this->window = window;
-
-	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems);
-	AddGameObjects(window);
-}
-
-void SceneManager::AddGameObjects(Window* window)
-{
-	auto gameObject = gameObjectContainer->AddGameObject("Cube", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.2f, 0.7f)));
-	gameObject->SetFromJson(json::parse(FileSystem::LoadTextFromFile("Resource/Json/scene.json")));
-
-	auto s = gameObject->GetJson().dump(2);
-	FileSystem::WriteTextToFile(s, "Resource/Json/scene.json");
-	printFS(s);
-
-	gameObject = gameObjectContainer->AddGameObject("Camera", new Camera(window));
-}
-
-GameObject::GameObjectContainer* SceneManager::GetGameObjectContainer() const
-{
-	return gameObjectContainer.get();
+	currentScene = make_unique<Scene>(systems, window);
 }
 
 void SceneManager::Update()
@@ -34,7 +13,7 @@ void SceneManager::Update()
 
 void SceneManager::UpdateGameObjects(bool doLateUpdate)
 {
-	for (auto& gameObject : gameObjectContainer->GetGameObjects())
+	for (auto& gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoUpdate) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateUpdate) == doLateUpdate)
 			gameObject->Update();
@@ -49,9 +28,14 @@ void SceneManager::Draw(Renderer* renderer)
 
 void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 {
-	for (auto& gameObject : gameObjectContainer->GetGameObjects())
+	for (auto& gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoDraw) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateDraw) == doLateDraw)
 			renderer->RenderGameObject(gameObject.get());
 	}
+}
+
+Scene* SceneManager::GetCurrentScene() const
+{
+	return currentScene.get();
 }

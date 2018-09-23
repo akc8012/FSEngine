@@ -29,6 +29,7 @@
     <ClCompile Include="Source\QuadPrimitive.cpp" />
     <ClCompile Include="Source\FSMath.cpp" />
     <ClCompile Include="Source\Random.cpp" />
+    <ClCompile Include="Source\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -61,6 +62,7 @@
     <ClInclude Include="Header\QuadPrimitive.h" />
     <ClInclude Include="Header\FSMath.h" />
     <ClInclude Include="Header\Random.h" />
+    <ClInclude Include="Header\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
