@@ -1,8 +1,5 @@
 {
-  "FlatColor": [
-    0.0,
-    0.5,
-    1.0,
-    1.0
-  ]
+  "Blend": 1,
+  "EnableDepthTest": 1,
+  "RenderPerspective": 1
 }
