@@ -2,7 +2,7 @@
 
 SceneManager::SceneManager(Systems* systems, Window* window)
 {
-	currentScene = make_unique<Scene>(systems, window);
+	currentScene = make_unique<Scene>("scene", systems, window);
 }
 
 void SceneManager::Update()

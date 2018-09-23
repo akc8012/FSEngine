@@ -1,38 +1,99 @@
 {
-  "ParameterCollection": {
-    "DoDraw": 1,
-    "DoLateDraw": 0,
-    "DoLateUpdate": 0,
-    "DoUpdate": 1
-  },
-  "Shading": {
-    "FlatColor": [
-      0.0,
-      0.20000000298023224,
-      0.699999988079071,
-      1.0
-    ],
+  "Camera": {
+    "Orthographic": {
+      "EulerAngles": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "Position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
     "ParameterCollection": {
-      "Blend": 1,
-      "EnableDepthTest": 1,
-      "RenderPerspective": 1
+      "DoDraw": 0,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 1,
+      "DoUpdate": 1
+    },
+    "Perspective": {
+      "EulerAngles": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "Position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "View": {
+      "EulerAngles": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "Position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
     }
   },
-  "Transform": {
-    "EulerAngles": [
-      0.0,
-      -0.0,
-      0.0
-    ],
-    "Position": [
-      0.0,
-      0.0,
-      -6.0
-    ],
-    "Scale": [
-      1.0,
-      12.0,
-      1.0
-    ]
+  "Cube": {
+    "ParameterCollection": {
+      "DoDraw": 1,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 0,
+      "DoUpdate": 1
+    },
+    "Shading": {
+      "FlatColor": [
+        0.0,
+        0.20000000298023224,
+        0.699999988079071,
+        1.0
+      ],
+      "ParameterCollection": {
+        "Blend": 1,
+        "EnableDepthTest": 1,
+        "RenderPerspective": 1
+      }
+    },
+    "Transform": {
+      "EulerAngles": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "Position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
   }
 }

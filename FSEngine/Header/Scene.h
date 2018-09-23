@@ -16,6 +16,7 @@ using std::vector;
 class Scene
 {
 private:
+	string name;
 	Systems* systems = nullptr;
 	Window* window = nullptr;
 
@@ -24,7 +25,9 @@ private:
 	void AddGameObjects(Window* window);
 
 public:
-	Scene(Systems* systems, Window* window);
+	Scene(const string& name, Systems* systems, Window* window);
+
+	void SaveScene() const;
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
 };
