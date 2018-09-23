@@ -36,6 +36,7 @@ public:
 	virtual void BindTexture();
 
 	void SetFlatColor(const vec3& flatColor);
+	void SetFlatColor(const vec4& flatColor);
 	vec4 GetFlatColor() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;

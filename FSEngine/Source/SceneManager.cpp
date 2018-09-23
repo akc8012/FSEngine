@@ -12,14 +12,11 @@ SceneManager::SceneManager(Systems* systems, Window* window)
 void SceneManager::AddGameObjects(Window* window)
 {
 	auto gameObject = gameObjectContainer->AddGameObject("Cube", new CubePrimitive(make_shared<ShadingComponent>(0.f, 0.2f, 0.7f)));
-	gameObject->GetComponent<TransformComponent>()->SetPosition(0, 1, -4);
-	gameObject->GetComponent<TransformComponent>()->SetScale(vec3(1, 2, 0.5f));
+	gameObject->GetComponent<ShadingComponent>()->SetFromJson(json::parse(FileSystem::LoadTextFromFile("Resource/Json/scene.json")));
 
-	gameObject->GetComponent<TransformComponent>()->SetFromJson(json::parse(FileSystem::LoadTextFromFile("Resource/Json/scene.json")));
-
-	string jsonString = gameObject->GetComponent<TransformComponent>()->GetJson().dump(2);
-	FileSystem::WriteTextToFile(jsonString, "Resource/Json/scene.json");
-	printFS(jsonString);
+	auto s = gameObject->GetComponent<ShadingComponent>()->GetJson().dump(2);
+	FileSystem::WriteTextToFile(s, "Resource/Json/scene.json");
+	printFS(s);
 
 	gameObjectContainer->AddGameObject("Camera", new Camera(window));
 }
