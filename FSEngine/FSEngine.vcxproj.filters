@@ -16,7 +16,6 @@
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\CubePrimitive.cpp" />
     <ClCompile Include="Source\RenderText.cpp" />
-    <ClCompile Include="Source\TextureComponent.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\GameObjectMapper.cpp" />
@@ -29,6 +28,7 @@
     <ClCompile Include="Source\Random.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Shading.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -47,7 +47,6 @@
     <ClInclude Include="Header\CubePrimitive.h" />
     <ClInclude Include="Header\RenderText.h" />
     <ClInclude Include="Header\ComponentType.h" />
-    <ClInclude Include="Header\TextureComponent.h" />
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
@@ -61,6 +60,7 @@
     <ClInclude Include="Header\Random.h" />
     <ClInclude Include="Header\Mesh.h" />
     <ClInclude Include="Header\Shading.h" />
+    <ClInclude Include="Header\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

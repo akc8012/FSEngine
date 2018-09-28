@@ -97,7 +97,7 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 	if (loadedTextureName == nullptr)
 	{
 		meshComponent->AddAssociatedTextureName(textureName);
-		AddComponent(make_shared<TextureComponent>(directory + textureName), textureName);
+		AddComponent(make_shared<Texture>(directory + textureName), textureName);
 	}
 	else
 		meshComponent->AddAssociatedTextureName(*loadedTextureName);

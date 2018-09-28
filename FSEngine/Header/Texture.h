@@ -9,7 +9,7 @@
 #include <string>
 using std::string;
 
-class TextureComponent : public Shading
+class Texture : public Shading
 {
 public:
 	enum TextureType { Diffuse, Specular };
@@ -25,9 +25,9 @@ private:
 	void DeleteTexture();
 
 public:
-	TextureComponent(const string& filepath);
-	TextureComponent(SDL_Surface* surface, bool flipSurface = false);
-	~TextureComponent();
+	Texture(const string& filepath);
+	Texture(SDL_Surface* surface, bool flipSurface = false);
+	~Texture();
 
 	void BindTexture();
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);

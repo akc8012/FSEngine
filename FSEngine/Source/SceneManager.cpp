@@ -13,7 +13,7 @@ void SceneManager::AddGameObjects(Window* window)
 {
 	GameObject* gameObject = nullptr;
 
-	gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(make_shared<TextureComponent>("Resource/Image/awesomeface.png")));
+	gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(make_shared<Texture>("Resource/Image/awesomeface.png")));
 	gameObject->GetComponent<TransformComponent>()->SetPosition(4.5f, 0.2f, 0);
 
 	gameObject = gameObjectContainer->AddGameObject("GreenCube", new CubePrimitive(make_shared<Shading>(0.1f, 0.6f, 0.3f)));

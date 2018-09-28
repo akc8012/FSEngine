@@ -3,7 +3,7 @@
 #include "Systems.h"
 #include "Mesh.h"
 #include "Shading.h"
-#include "TextureComponent.h"
+#include "Texture.h"
 #include "TransformComponent.h"
 #include "GameObjectMapper.h"
 #include "ParameterCollection.h"

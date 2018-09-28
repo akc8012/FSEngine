@@ -1,6 +1,6 @@
-#include "../Header/TextureComponent.h"
+#include "../Header/Texture.h"
 
-TextureComponent::TextureComponent(const string& filepath)
+Texture::Texture(const string& filepath)
 {
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
@@ -10,12 +10,12 @@ TextureComponent::TextureComponent(const string& filepath)
 	SDL_FreeSurface(surface);
 }
 
-TextureComponent::TextureComponent(SDL_Surface* surface, bool flipSurface)
+Texture::Texture(SDL_Surface* surface, bool flipSurface)
 {
 	GenerateTexture(surface, flipSurface);
 }
 
-void TextureComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
+void Texture::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 {
 	DeleteTexture();
 
@@ -39,7 +39,7 @@ void TextureComponent::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
+GLenum Texture::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 {
 	bool hasAlphaChannel = colors == 4;
 	bool isStandardRMask = rmask == 0x000000ff;
@@ -50,7 +50,7 @@ GLenum TextureComponent::GetTextureFormat(Uint32 colors, Uint32 rmask) const
 		return isStandardRMask ? GL_RGB : GL_BGR;
 }
 
-void TextureComponent::FlipSurface(SDL_Surface* surface)
+void Texture::FlipSurface(SDL_Surface* surface)
 {
 	const int ExpectedColorDepth = 4;
 	if (surface->format->BytesPerPixel != ExpectedColorDepth)
@@ -75,27 +75,27 @@ void TextureComponent::FlipSurface(SDL_Surface* surface)
 		sourcePixels[i] = targetPixels[i];
 }
 
-int TextureComponent::GetPixelIndex(int x, int y, int surfaceWidth) const
+int Texture::GetPixelIndex(int x, int y, int surfaceWidth) const
 {
 	return (y * surfaceWidth) + x;
 }
 
-void TextureComponent::BindTexture()
+void Texture::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-TextureComponent::TextureType TextureComponent::GetTextureType() const
+Texture::TextureType Texture::GetTextureType() const
 {
 	return textureType;
 }
 
-TextureComponent::~TextureComponent()
+Texture::~Texture()
 {
 	DeleteTexture();
 }
 
-void TextureComponent::DeleteTexture()
+void Texture::DeleteTexture()
 {
 	if (textureId != NULL)
 	{

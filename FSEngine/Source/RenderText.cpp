@@ -62,9 +62,9 @@ void RenderText::CreateTextureComponent(const string& text)
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
 	if (TryGetComponent<Shading>() == nullptr)
-		AddComponent(make_shared<TextureComponent>(surface, true));
+		AddComponent(make_shared<Texture>(surface, true));
 	else
-		dynamic_cast<TextureComponent*>(GetComponent<Shading>().get())->GenerateTexture(surface, true);
+		dynamic_cast<Texture*>(GetComponent<Shading>().get())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }
