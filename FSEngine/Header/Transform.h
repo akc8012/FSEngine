@@ -20,7 +20,7 @@ using glm::vec2;
 #include <string>
 using std::string;
 
-class TransformComponent : public Component
+class Transform : public Component
 {
 private:
 	struct MatrixValues

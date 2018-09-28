@@ -151,7 +151,7 @@
     <ClCompile Include="Source\Random.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\TransformComponent.cpp" />
+    <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\CubePrimitive.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
@@ -194,7 +194,7 @@
     <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Timer.h" />
-    <ClInclude Include="Header\TransformComponent.h" />
+    <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\RenderText.h" />

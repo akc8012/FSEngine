@@ -4,7 +4,7 @@ RenderText::RenderText(Window* window)
 {
 	this->window = window;
 
-	AddComponent(make_shared<TransformComponent>());
+	AddComponent(make_shared<Transform>());
 	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
@@ -89,14 +89,14 @@ void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
 	float width = (aspectRatio.x * (1 / aspectRatio.y)) / windowSize.x;
 	float height = 1 / windowSize.y;
 
-	GetComponent<TransformComponent>()->SetScale(vec2(width, height));
-	GetComponent<TransformComponent>()->Scale(pixelScaleFactor);
+	GetComponent<Transform>()->SetScale(vec2(width, height));
+	GetComponent<Transform>()->Scale(pixelScaleFactor);
 }
 
 void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
 {
 	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(windowSize), windowSize);
-	GetComponent<TransformComponent>()->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
+	GetComponent<Transform>()->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
 }
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
@@ -140,7 +140,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 
 vec2 RenderText::GetPixelScale(const vec2& windowSize) const
 {
-	shared_ptr<TransformComponent> transform = GetComponent<TransformComponent>();
+	shared_ptr<Transform> transform = GetComponent<Transform>();
 	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
 }
 

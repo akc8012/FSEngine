@@ -5,7 +5,7 @@
 class PlayerShip : public Model
 {
 private:
-	TransformComponent* transform = nullptr;
+	Transform* transform = nullptr;
 	Camera* camera = nullptr;
 
 	vec3 direction;

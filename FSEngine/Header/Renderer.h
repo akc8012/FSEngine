@@ -14,12 +14,12 @@ private:
 	GameObject* camera = nullptr;
 
 	void ClearScreen();
-	void SetViewMatrices(TransformComponent* viewTransform);
+	void SetViewMatrices(Transform* viewTransform);
 
 	void DrawGrid();
 	void SetRenderParametersForGrid();
 
-	void SetTransformMatrices(TransformComponent* transform);
+	void SetTransformMatrices(Transform* transform);
 
 	void SetShadingParameters(Shading* shading);
 	void SetDepthTest(bool enableDepthTest);

@@ -53,7 +53,7 @@ const shared_ptr<Shading>& GameObject::AddComponent(const shared_ptr<Shading>& c
 	return component;
 }
 
-const shared_ptr<TransformComponent>& GameObject::AddComponent(const shared_ptr<TransformComponent>& component, const string& name)
+const shared_ptr<Transform>& GameObject::AddComponent(const shared_ptr<Transform>& component, const string& name)
 {
 	auto result = transformComponents.emplace(name, component);
 	if (!result.second)

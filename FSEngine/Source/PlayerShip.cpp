@@ -8,7 +8,7 @@ PlayerShip::PlayerShip()
 
 void PlayerShip::Start()
 {
-	transform = GetComponent<TransformComponent>().get();
+	transform = GetComponent<Transform>().get();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
 	ResetValues();

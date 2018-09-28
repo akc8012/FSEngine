@@ -4,7 +4,7 @@
 #include "Mesh.h"
 #include "Shading.h"
 #include "Texture.h"
-#include "TransformComponent.h"
+#include "Transform.h"
 #include "GameObjectMapper.h"
 #include "ParameterCollection.h"
 
@@ -36,7 +36,7 @@ private:
 
 	unordered_map<string, shared_ptr<Mesh>> meshComponents;
 	unordered_map<string, shared_ptr<Shading>> shadingComponents;
-	unordered_map<string, shared_ptr<TransformComponent>> transformComponents;
+	unordered_map<string, shared_ptr<Transform>> transformComponents;
 
 	void SetDefaultParameters();
 	void ThrowDuplicateNameException(const string& name) const;
@@ -56,7 +56,7 @@ public:
 
 	const shared_ptr<Mesh>& AddComponent(const shared_ptr<Mesh>& component, const string& name = Types::ComponentTypeString[Mesh::ComponentTypeId]);
 	const shared_ptr<Shading>& AddComponent(const shared_ptr<Shading>& component, const string& name = Types::ComponentTypeString[Shading::ComponentTypeId]);
-	const shared_ptr<TransformComponent>& AddComponent(const shared_ptr<TransformComponent>& component, const string& name = Types::ComponentTypeString[TransformComponent::ComponentTypeId]);
+	const shared_ptr<Transform>& AddComponent(const shared_ptr<Transform>& component, const string& name = Types::ComponentTypeString[Transform::ComponentTypeId]);
 
 	template <typename T> shared_ptr<T> GetComponent(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 	template <typename T> shared_ptr<T> TryGetComponent(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
@@ -102,7 +102,7 @@ template <typename T> const unordered_map<string, shared_ptr<T>>& GameObject::Ge
 	if (typeid(T) == typeid(Shading))
 		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(shadingComponents);
 
-	if (typeid(T) == typeid(TransformComponent))
+	if (typeid(T) == typeid(Transform))
 		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(transformComponents);
 
 	throwFS("Unrecognized component type");

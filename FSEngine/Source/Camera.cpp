@@ -6,9 +6,9 @@ Camera::Camera(Window* window)
 
 	ResetViewTransform();
 
-	AddComponent(make_shared<TransformComponent>(), "View");
-	AddComponent(make_shared<TransformComponent>(), "Perspective");
-	AddComponent(make_shared<TransformComponent>(), "Orthographic");
+	AddComponent(make_shared<Transform>(), "View");
+	AddComponent(make_shared<Transform>(), "Perspective");
+	AddComponent(make_shared<Transform>(), "Orthographic");
 
 	GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
@@ -41,13 +41,13 @@ void Camera::Update()
 		forward = FSMath::EulerAngleToDirectionVector(direction);
 
 	mat4 viewMatrix = CalculateViewMatrix(forward);
-	GetComponent<TransformComponent>("View")->SetMatrix(viewMatrix);
+	GetComponent<Transform>("View")->SetMatrix(viewMatrix);
 
 	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective();
-	GetComponent<TransformComponent>("Perspective")->SetMatrix(perspectiveMatrix);
+	GetComponent<Transform>("Perspective")->SetMatrix(perspectiveMatrix);
 
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
-	GetComponent<TransformComponent>("Orthographic")->SetMatrix(orthographicMatrix);
+	GetComponent<Transform>("Orthographic")->SetMatrix(orthographicMatrix);
 }
 
 #pragma region Handle Input
@@ -200,10 +200,10 @@ vec3 Camera::ProjectCursorPositionToWorldDirection() const
 {
 	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(systems->input->GetCursorPosition()), -1, 1);
 
-	mat4 projectionMatrix = GetComponent<TransformComponent>("Perspective")->GetMatrix();
+	mat4 projectionMatrix = GetComponent<Transform>("Perspective")->GetMatrix();
 	vec4 eyeDirection = vec4(vec2(glm::inverse(projectionMatrix) * deviceNormalizedCursorPosition), -1, 0);
 
-	mat4 viewMatrix = GetComponent<TransformComponent>("View")->GetMatrix();
+	mat4 viewMatrix = GetComponent<Transform>("View")->GetMatrix();
 	vec3 worldDirection = glm::normalize(glm::inverse(viewMatrix) * eyeDirection);
 
 	return worldDirection;

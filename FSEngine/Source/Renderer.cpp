@@ -15,7 +15,7 @@ void Renderer::StartRender()
 {
 	ClearScreen();
 
-	SetViewMatrices(camera->GetComponent<TransformComponent>("View").get());
+	SetViewMatrices(camera->GetComponent<Transform>("View").get());
 
 	if (systems->fileSystem->GetSettingsValue<bool>("DrawGrid"))
 		DrawGrid();
@@ -30,7 +30,7 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::SetViewMatrices(TransformComponent* viewTransform)
+void Renderer::SetViewMatrices(Transform* viewTransform)
 {
 	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
@@ -67,7 +67,7 @@ void Renderer::SetRenderParametersForGrid()
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetVectorUniform("flatColor", vec4(1, 1, 0.6f, 1));
-	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<TransformComponent>("Perspective")->GetMatrix());
+	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<Transform>("Perspective")->GetMatrix());
 	systems->shaderProgram->SetBoolUniform("renderPerspective", true);
 }
 #pragma endregion
@@ -75,7 +75,7 @@ void Renderer::SetRenderParametersForGrid()
 #pragma region RenderGameObject
 void Renderer::RenderGameObject(const GameObject* gameObject)
 {
-	SetTransformMatrices(gameObject->GetComponent<TransformComponent>().get());
+	SetTransformMatrices(gameObject->GetComponent<Transform>().get());
 
 	for (auto& mesh : gameObject->GetComponents<Mesh>())
 	{
@@ -89,7 +89,7 @@ void Renderer::RenderGameObject(const GameObject* gameObject)
 	}
 }
 
-void Renderer::SetTransformMatrices(TransformComponent* transform)
+void Renderer::SetTransformMatrices(Transform* transform)
 {
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
@@ -119,7 +119,7 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 		return;
 
-	shared_ptr<TransformComponent> projectionTransform = camera->GetComponent<TransformComponent>(renderPerspective ? "Perspective" : "Orthographic");
+	shared_ptr<Transform> projectionTransform = camera->GetComponent<Transform>(renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
