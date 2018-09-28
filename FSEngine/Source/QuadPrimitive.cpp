@@ -1,6 +1,6 @@
 #include "../Header/QuadPrimitive.h"
 
-QuadPrimitive::QuadPrimitive(const shared_ptr<ShadingComponent>& shadingComponent)
+QuadPrimitive::QuadPrimitive(const shared_ptr<Shading>& shadingComponent)
 {
 	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);

@@ -1,6 +1,6 @@
 #include "../Header/CubePrimitive.h"
 
-CubePrimitive::CubePrimitive(const shared_ptr<ShadingComponent>& shadingComponent)
+CubePrimitive::CubePrimitive(const shared_ptr<Shading>& shadingComponent)
 {
 	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);

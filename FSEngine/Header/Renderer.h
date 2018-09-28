@@ -21,7 +21,7 @@ private:
 
 	void SetTransformMatrices(TransformComponent* transform);
 
-	void SetShadingParameters(ShadingComponent* shading);
+	void SetShadingParameters(Shading* shading);
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);

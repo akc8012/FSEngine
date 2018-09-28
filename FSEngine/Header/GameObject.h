@@ -2,7 +2,7 @@
 #include "FSException.h"
 #include "Systems.h"
 #include "Mesh.h"
-#include "ShadingComponent.h"
+#include "Shading.h"
 #include "TextureComponent.h"
 #include "TransformComponent.h"
 #include "GameObjectMapper.h"
@@ -35,7 +35,7 @@ private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	unordered_map<string, shared_ptr<Mesh>> meshComponents;
-	unordered_map<string, shared_ptr<ShadingComponent>> shadingComponents;
+	unordered_map<string, shared_ptr<Shading>> shadingComponents;
 	unordered_map<string, shared_ptr<TransformComponent>> transformComponents;
 
 	void SetDefaultParameters();
@@ -55,7 +55,7 @@ public:
 	virtual void Update();
 
 	const shared_ptr<Mesh>& AddComponent(const shared_ptr<Mesh>& component, const string& name = Types::ComponentTypeString[Mesh::ComponentTypeId]);
-	const shared_ptr<ShadingComponent>& AddComponent(const shared_ptr<ShadingComponent>& component, const string& name = Types::ComponentTypeString[ShadingComponent::ComponentTypeId]);
+	const shared_ptr<Shading>& AddComponent(const shared_ptr<Shading>& component, const string& name = Types::ComponentTypeString[Shading::ComponentTypeId]);
 	const shared_ptr<TransformComponent>& AddComponent(const shared_ptr<TransformComponent>& component, const string& name = Types::ComponentTypeString[TransformComponent::ComponentTypeId]);
 
 	template <typename T> shared_ptr<T> GetComponent(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
@@ -99,7 +99,7 @@ template <typename T> const unordered_map<string, shared_ptr<T>>& GameObject::Ge
 	if (typeid(T) == typeid(Mesh))
 		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(meshComponents);
 
-	if (typeid(T) == typeid(ShadingComponent))
+	if (typeid(T) == typeid(Shading))
 		return reinterpret_cast<const unordered_map<string, shared_ptr<T>>&>(shadingComponents);
 
 	if (typeid(T) == typeid(TransformComponent))

@@ -7,7 +7,7 @@
 using glm::vec4;
 using glm::vec3;
 
-class ShadingComponent : public Component
+class Shading : public Component
 {
 public:
 	enum Parameters
@@ -28,10 +28,10 @@ private:
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Shading;
 
-	ShadingComponent();
-	ShadingComponent(const vec3& flatColor);
-	ShadingComponent(float r, float g, float b);
-	ShadingComponent(int r, int g, int b);
+	Shading();
+	Shading(const vec3& flatColor);
+	Shading(float r, float g, float b);
+	Shading(int r, int g, int b);
 
 	virtual void BindTexture();
 

@@ -12,8 +12,8 @@ RenderText::RenderText(Window* window)
 	LoadFont("arial.ttf");
 
 	SetText(renderText);
-	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::RenderPerspective, false);
-	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::EnableDepthTest, false);
+	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
+	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const
@@ -49,7 +49,7 @@ void RenderText::LoadFont(const string& fontName)
 
 void RenderText::SetText(const string& text)
 {
-	if (renderText != text || TryGetComponent<ShadingComponent>() == nullptr)
+	if (renderText != text || TryGetComponent<Shading>() == nullptr)
 		CreateTextureComponent(text);
 }
 
@@ -61,10 +61,10 @@ void RenderText::CreateTextureComponent(const string& text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, text == "" ? " " : text.c_str(), textColor);
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
-	if (TryGetComponent<ShadingComponent>() == nullptr)
+	if (TryGetComponent<Shading>() == nullptr)
 		AddComponent(make_shared<TextureComponent>(surface, true));
 	else
-		dynamic_cast<TextureComponent*>(GetComponent<ShadingComponent>().get())->GenerateTexture(surface, true);
+		dynamic_cast<TextureComponent*>(GetComponent<Shading>().get())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }

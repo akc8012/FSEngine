@@ -1,30 +1,30 @@
-#include "../Header/ShadingComponent.h"
+#include "../Header/Shading.h"
 
-ShadingComponent::ShadingComponent()
+Shading::Shading()
 {
 	flatColor = vec4(0);
 	Initialize();
 }
 
-ShadingComponent::ShadingComponent(const vec3& flatColor)
+Shading::Shading(const vec3& flatColor)
 {
 	SetFlatColor(flatColor);
 	Initialize();
 }
 
-ShadingComponent::ShadingComponent(float r, float g, float b)
+Shading::Shading(float r, float g, float b)
 {
 	SetFlatColor(vec3(r, g, b));
 	Initialize();
 }
 
-ShadingComponent::ShadingComponent(int r, int g, int b)
+Shading::Shading(int r, int g, int b)
 {
 	SetFlatColor(vec3((float)r, (float)g, (float)b));
 	Initialize();
 }
 
-void ShadingComponent::Initialize()
+void Shading::Initialize()
 {
 	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
@@ -34,22 +34,22 @@ void ShadingComponent::Initialize()
 	parameterCollection->SetParameter(Blend, true);
 }
 
-void ShadingComponent::BindTexture()
+void Shading::BindTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
-void ShadingComponent::SetFlatColor(const vec3& flatColor)
+void Shading::SetFlatColor(const vec3& flatColor)
 {
 	this->flatColor = vec4(flatColor, 1.0f);
 }
 
-vec4 ShadingComponent::GetFlatColor() const
+vec4 Shading::GetFlatColor() const
 {
 	return flatColor;
 }
 
-ParameterCollection<ShadingComponent::Parameters, ShadingComponent::ParametersLength>* ShadingComponent::GetParameterCollection() const
+ParameterCollection<Shading::Parameters, Shading::ParametersLength>* Shading::GetParameterCollection() const
 {
 	return parameterCollection.get();
 }

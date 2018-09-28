@@ -162,7 +162,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\ShadingComponent.cpp" />
+    <ClCompile Include="Source\Shading.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\RenderText.cpp" />
@@ -190,7 +190,7 @@
     <ClInclude Include="Header\CubePrimitive.h" />
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
-    <ClInclude Include="Header\ShadingComponent.h" />
+    <ClInclude Include="Header\Shading.h" />
     <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\TextureComponent.h" />
     <ClInclude Include="Header\Timer.h" />

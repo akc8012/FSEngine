@@ -81,9 +81,9 @@ void Renderer::RenderGameObject(const GameObject* gameObject)
 	{
 		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
 		if (textureNames.size() != 0)
-			SetShadingParameters(gameObject->GetComponent<ShadingComponent>(textureNames.front()).get());
+			SetShadingParameters(gameObject->GetComponent<Shading>(textureNames.front()).get());
 		else
-			SetShadingParameters(gameObject->GetComponent<ShadingComponent>().get());
+			SetShadingParameters(gameObject->GetComponent<Shading>().get());
 
 		DrawMesh(mesh.second.get());
 	}
@@ -95,11 +95,11 @@ void Renderer::SetTransformMatrices(TransformComponent* transform)
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-void Renderer::SetShadingParameters(ShadingComponent* shading)
+void Renderer::SetShadingParameters(Shading* shading)
 {
-	SetDepthTest(shading->GetParameterCollection()->GetParameter(ShadingComponent::EnableDepthTest));
-	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(ShadingComponent::RenderPerspective));
-	SetBlend(shading->GetParameterCollection()->GetParameter(ShadingComponent::Blend));
+	SetDepthTest(shading->GetParameterCollection()->GetParameter(Shading::EnableDepthTest));
+	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(Shading::RenderPerspective));
+	SetBlend(shading->GetParameterCollection()->GetParameter(Shading::Blend));
 
 	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
 	shading->BindTexture();

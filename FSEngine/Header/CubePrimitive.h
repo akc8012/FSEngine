@@ -7,7 +7,7 @@ private:
 	shared_ptr<Mesh> CreateMeshComponent() const;
 
 public:
-	CubePrimitive(const shared_ptr<ShadingComponent>& shadingComponent);
+	CubePrimitive(const shared_ptr<Shading>& shadingComponent);
 
 	void Update() override;
 };

@@ -7,5 +7,5 @@ private:
 	shared_ptr<Mesh> CreateMeshComponent() const;
 
 public:
-	QuadPrimitive(const shared_ptr<ShadingComponent>& shadingComponent);
+	QuadPrimitive(const shared_ptr<Shading>& shadingComponent);
 };

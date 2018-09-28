@@ -44,7 +44,7 @@ const shared_ptr<Mesh>& GameObject::AddComponent(const shared_ptr<Mesh>& compone
 	return component;
 }
 
-const shared_ptr<ShadingComponent>& GameObject::AddComponent(const shared_ptr<ShadingComponent>& component, const string& name)
+const shared_ptr<Shading>& GameObject::AddComponent(const shared_ptr<Shading>& component, const string& name)
 {
 	auto result = shadingComponents.emplace(name, component);
 	if (!result.second)

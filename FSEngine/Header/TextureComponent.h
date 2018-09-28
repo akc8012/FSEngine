@@ -1,5 +1,5 @@
 #pragma once
-#include "ShadingComponent.h"
+#include "Shading.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -9,7 +9,7 @@
 #include <string>
 using std::string;
 
-class TextureComponent : public ShadingComponent
+class TextureComponent : public Shading
 {
 public:
 	enum TextureType { Diffuse, Specular };
