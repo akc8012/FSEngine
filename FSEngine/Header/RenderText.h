@@ -25,7 +25,7 @@ private:
 	AnchorPosition anchorPosition = Center;
 	AnchorPosition alignPosition = Center;
 
-	shared_ptr<MeshComponent> CreateMeshComponent() const;
+	shared_ptr<Mesh> CreateMeshComponent() const;
 	void LoadFont(const string& fontName);
 	void CreateTextureComponent(const string& text);
 

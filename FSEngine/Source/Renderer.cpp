@@ -77,7 +77,7 @@ void Renderer::RenderGameObject(const GameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<TransformComponent>().get());
 
-	for (auto& mesh : gameObject->GetComponents<MeshComponent>())
+	for (auto& mesh : gameObject->GetComponents<Mesh>())
 	{
 		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
 		if (textureNames.size() != 0)
@@ -135,11 +135,11 @@ void Renderer::SetBlend(bool blend)
 	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
 }
 
-void Renderer::DrawMesh(MeshComponent* mesh)
+void Renderer::DrawMesh(Mesh* mesh)
 {
 	mesh->BindVertexArray();
 
-	mesh->GetParameterCollection()->GetParameter(MeshComponent::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
+	mesh->GetParameterCollection()->GetParameter(Mesh::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
 	mesh->DrawMesh();
 }
 #pragma endregion

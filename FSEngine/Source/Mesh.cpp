@@ -1,6 +1,6 @@
-#include "..\Header\MeshComponent.h"
+#include "..\Header\Mesh.h"
 
-MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices)
+Mesh::Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices)
 {
 	this->vertices = vertices;
 	this->indices = indices;
@@ -8,7 +8,7 @@ MeshComponent::MeshComponent(const vector<Vertex>& vertices, const vector<Uint32
 	Initialize();
 }
 
-MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
+Mesh::Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
 {
 	this->vertices = ConvertRawVertices(rawVertices, stride);
 	this->indices = indices;
@@ -16,7 +16,7 @@ MeshComponent::MeshComponent(const vector<float>& rawVertices, int stride, const
 	Initialize();
 }
 
-void MeshComponent::Initialize()
+void Mesh::Initialize()
 {
 	string parameterNames[] = { "RenderBackfaces", "DrawElements" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
@@ -26,7 +26,7 @@ void MeshComponent::Initialize()
 	CreateVertexArray();
 }
 
-vector<Vertex> MeshComponent::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
+vector<Vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
 {
 	vector<Vertex> vertices;
 	for (int i = 0; i < rawVertices.size(); i += stride)
@@ -55,7 +55,7 @@ vector<Vertex> MeshComponent::ConvertRawVertices(const vector<float>& rawVertice
 	return vertices;
 }
 
-void MeshComponent::CreateVertexArray()
+void Mesh::CreateVertexArray()
 {
 	Uint32 vertexBufferId, elementBufferId;
 	const int Amount = 1;
@@ -75,7 +75,7 @@ void MeshComponent::CreateVertexArray()
 	glDeleteBuffers(Amount, &vertexBufferId);
 }
 
-void MeshComponent::SendVertices(Uint32 vertexBufferId)
+void Mesh::SendVertices(Uint32 vertexBufferId)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices.front(), GL_STATIC_DRAW);
@@ -85,7 +85,7 @@ void MeshComponent::SendVertices(Uint32 vertexBufferId)
 	SendTextureAttribute();
 }
 
-void MeshComponent::SendPositionAttribute()
+void Mesh::SendPositionAttribute()
 {
 	VertexAttribute positionAttribute;
 	positionAttribute.location = 0;
@@ -95,7 +95,7 @@ void MeshComponent::SendPositionAttribute()
 	SendVertexAttribute(positionAttribute);
 }
 
-void MeshComponent::SendNormalAttribute()
+void Mesh::SendNormalAttribute()
 {
 	VertexAttribute normalAttribute;
 	normalAttribute.location = 1;
@@ -105,7 +105,7 @@ void MeshComponent::SendNormalAttribute()
 	SendVertexAttribute(normalAttribute);
 }
 
-void MeshComponent::SendTextureAttribute()
+void Mesh::SendTextureAttribute()
 {
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 2;
@@ -115,71 +115,71 @@ void MeshComponent::SendTextureAttribute()
 	SendVertexAttribute(textureAttribute);
 }
 
-void MeshComponent::SendVertexAttribute(const VertexAttribute& attribute)
+void Mesh::SendVertexAttribute(const VertexAttribute& attribute)
 {
 	glVertexAttribPointer(attribute.location, attribute.size, GL_FLOAT, attribute.normalize, attribute.stride, (void*)attribute.offset);
 	glEnableVertexAttribArray(attribute.location);
 }
 
-void MeshComponent::SendIndices(Uint32 elementBufferId)
+void Mesh::SendIndices(Uint32 elementBufferId)
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Uint32), &indices.front(), GL_STATIC_DRAW);
 }
 
-void MeshComponent::BindVertexArray()
+void Mesh::BindVertexArray()
 {
 	glBindVertexArray(vertexArrayId);
 }
 
-void MeshComponent::DrawMesh()
+void Mesh::DrawMesh()
 {
 	parameterCollection->GetParameter(DrawElements) ? DrawTriangleElements() : DrawTriangleArrays();
 }
 
-void MeshComponent::DrawTriangleElements()
+void Mesh::DrawTriangleElements()
 {
 	const int Offset = 0;
 	glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, Offset);
 }
 
-void MeshComponent::DrawTriangleArrays()
+void Mesh::DrawTriangleArrays()
 {
 	const int First = 0;
 	glDrawArrays(GL_TRIANGLES, First, GetVerticeCount());
 }
 
-int MeshComponent::GetIndiceCount() const
+int Mesh::GetIndiceCount() const
 {
 	return (int)indices.size();
 }
 
-int MeshComponent::GetVerticeCount() const
+int Mesh::GetVerticeCount() const
 {
 	return (int)vertices.size();
 }
 
-void MeshComponent::AddAssociatedTextureName(const string& textureName)
+void Mesh::AddAssociatedTextureName(const string& textureName)
 {
 	associatedTextureNames.push_back(textureName);
 }
 
-void MeshComponent::AddAssociatedTextureIndices(const vector<string>& textureNames)
+void Mesh::AddAssociatedTextureIndices(const vector<string>& textureNames)
 {
 	associatedTextureNames.insert(associatedTextureNames.end(), textureNames.begin(), textureNames.end());
 }
 
-const vector<string>& MeshComponent::GetAssociatedTextureNames() const
+const vector<string>& Mesh::GetAssociatedTextureNames() const
 {
 	return associatedTextureNames;
 }
 
-ParameterCollection<MeshComponent::Parameters, MeshComponent::ParametersLength>* MeshComponent::GetParameterCollection() const
+ParameterCollection<Mesh::Parameters, Mesh::ParametersLength>* Mesh::GetParameterCollection() const
 {
 	return parameterCollection.get();
 }
 
-MeshComponent::~MeshComponent()
+Mesh::~Mesh()
 {
 	const int Amount = 1;
 	glDeleteVertexArrays(Amount, &vertexArrayId);

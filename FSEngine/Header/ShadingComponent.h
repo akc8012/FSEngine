@@ -26,7 +26,7 @@ private:
 	void Initialize();
 
 public:
-	static const ComponentType ComponentTypeId = Shading;
+	static const Types::ComponentType ComponentTypeId = Types::Shading;
 
 	ShadingComponent();
 	ShadingComponent(const vec3& flatColor);

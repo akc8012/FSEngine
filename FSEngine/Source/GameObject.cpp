@@ -35,7 +35,7 @@ void GameObject::Update()
 
 }
 
-const shared_ptr<MeshComponent>& GameObject::AddComponent(const shared_ptr<MeshComponent>& component, const string& name)
+const shared_ptr<Mesh>& GameObject::AddComponent(const shared_ptr<Mesh>& component, const string& name)
 {
 	auto result = meshComponents.emplace(name, component);
 	if (!result.second)

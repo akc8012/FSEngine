@@ -13,7 +13,6 @@
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\TransformComponent.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
-    <ClCompile Include="Source\MeshComponent.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\CubePrimitive.cpp" />
     <ClCompile Include="Source\RenderText.cpp" />
@@ -29,6 +28,7 @@
     <ClCompile Include="Source\QuadPrimitive.cpp" />
     <ClCompile Include="Source\FSMath.cpp" />
     <ClCompile Include="Source\Random.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -42,7 +42,6 @@
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\TransformComponent.h" />
     <ClInclude Include="Header\FileSystem.h" />
-    <ClInclude Include="Header\MeshComponent.h" />
     <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\CubePrimitive.h" />
@@ -61,6 +60,7 @@
     <ClInclude Include="Header\QuadPrimitive.h" />
     <ClInclude Include="Header\FSMath.h" />
     <ClInclude Include="Header\Random.h" />
+    <ClInclude Include="Header\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

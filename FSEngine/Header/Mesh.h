@@ -10,7 +10,7 @@
 #include <vector>
 using std::vector;
 
-class MeshComponent : public Component
+class Mesh : public Component
 {
 public:
 	enum Parameters
@@ -56,11 +56,11 @@ private:
 	void DrawTriangleArrays();
 
 public:
-	static const ComponentType ComponentTypeId = Mesh;
+	static const Types::ComponentType ComponentTypeId = Types::Mesh;
 
-	MeshComponent(const vector<Vertex>& vertices, const vector<Uint32>& indices);
-	MeshComponent(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
-	~MeshComponent();
+	Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices);
+	Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
+	~Mesh();
 
 	void BindVertexArray();
 	void DrawMesh();

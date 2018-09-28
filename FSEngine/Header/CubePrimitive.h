@@ -4,7 +4,7 @@
 class CubePrimitive : public GameObject
 {
 private:
-	shared_ptr<MeshComponent> CreateMeshComponent() const;
+	shared_ptr<Mesh> CreateMeshComponent() const;
 
 public:
 	CubePrimitive(const shared_ptr<ShadingComponent>& shadingComponent);

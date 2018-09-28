@@ -37,7 +37,7 @@ private:
 	MatrixValues DecomposeTransformMatrix() const;
 
 public:
-	static const ComponentType ComponentTypeId = Transform;
+	static const Types::ComponentType ComponentTypeId = Types::Transform;
 
 	const mat4& GetMatrix() const;
 	void SetMatrix(const mat4& matrix);

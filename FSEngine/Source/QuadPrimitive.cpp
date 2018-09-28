@@ -2,15 +2,15 @@
 
 QuadPrimitive::QuadPrimitive(const shared_ptr<ShadingComponent>& shadingComponent)
 {
-	shared_ptr<MeshComponent> meshComponent = AddComponent(CreateMeshComponent());
-	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
-	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
+	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
+	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
+	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	AddComponent(make_shared<TransformComponent>());
 	AddComponent(shadingComponent);
 }
 
-shared_ptr<MeshComponent> QuadPrimitive::CreateMeshComponent() const
+shared_ptr<Mesh> QuadPrimitive::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
@@ -30,5 +30,5 @@ shared_ptr<MeshComponent> QuadPrimitive::CreateMeshComponent() const
 	};
 
 	const int Stride = 8;
-	return make_shared<MeshComponent>(rawVertices, Stride, indices);
+	return make_shared<Mesh>(rawVertices, Stride, indices);
 }

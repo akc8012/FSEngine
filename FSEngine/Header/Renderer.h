@@ -26,7 +26,7 @@ private:
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);
 
-	void DrawMesh(MeshComponent* mesh);
+	void DrawMesh(Mesh* mesh);
 
 public:
 	Renderer(Systems* systems);

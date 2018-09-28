@@ -27,7 +27,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	for (Uint32 i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		shared_ptr<MeshComponent> meshComponent = ConvertMeshToComponent(mesh);
+		shared_ptr<Mesh> meshComponent = ConvertMeshToComponent(mesh);
 		AddComponent(meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
@@ -39,12 +39,12 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 		ConvertMeshesOnNode(node->mChildren[i], scene);
 }
 
-shared_ptr<MeshComponent> Model::ConvertMeshToComponent(const aiMesh* mesh)
+shared_ptr<Mesh> Model::ConvertMeshToComponent(const aiMesh* mesh)
 {
 	vector<Vertex> vertices = ConvertVertices(mesh);
 	vector<Uint32> indices = ConvertIndices(mesh);
 
-	return make_shared<MeshComponent>(vertices, indices);
+	return make_shared<Mesh>(vertices, indices);
 }
 
 vector<Vertex> Model::ConvertVertices(const aiMesh* mesh)
@@ -79,7 +79,7 @@ vector<Uint32> Model::ConvertIndices(const aiMesh* mesh)
 	return indices;
 }
 
-void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMaterial* material)
+void Model::ConvertMaterialToTextures(Mesh* meshComponent, const aiMaterial* material)
 {
 	const aiTextureType textureType = aiTextureType_DIFFUSE;
 	for (Uint32 i = 0; i < material->GetTextureCount(textureType); i++)
@@ -91,7 +91,7 @@ void Model::ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMate
 	}
 }
 
-void Model::AddTextureComponent(MeshComponent* meshComponent, const string& textureName)
+void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 {
 	unique_ptr<string> loadedTextureName(TryGetLoadedTextureName(textureName));
 	if (loadedTextureName == nullptr)

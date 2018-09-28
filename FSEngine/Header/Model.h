@@ -24,12 +24,12 @@ private:
 
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 
-	shared_ptr<MeshComponent> ConvertMeshToComponent(const aiMesh* mesh);
+	shared_ptr<Mesh> ConvertMeshToComponent(const aiMesh* mesh);
 	vector<Vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
 
-	void ConvertMaterialToTextures(MeshComponent* meshComponent, const aiMaterial* material);
-	void AddTextureComponent(MeshComponent* meshComponent, const string& textureName);
+	void ConvertMaterialToTextures(Mesh* meshComponent, const aiMaterial* material);
+	void AddTextureComponent(Mesh* meshComponent, const string& textureName);
 
 	string* TryGetLoadedTextureName(const string& textureName) const;
 

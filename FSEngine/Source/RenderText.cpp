@@ -5,9 +5,9 @@ RenderText::RenderText(Window* window)
 	this->window = window;
 
 	AddComponent(make_shared<TransformComponent>());
-	shared_ptr<MeshComponent> meshComponent = AddComponent(CreateMeshComponent());
-	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::DrawElements, false);
-	meshComponent->GetParameterCollection()->SetParameter(MeshComponent::RenderBackfaces, true);
+	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
+	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
+	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	LoadFont("arial.ttf");
 
@@ -16,7 +16,7 @@ RenderText::RenderText(Window* window)
 	GetComponent<ShadingComponent>()->GetParameterCollection()->SetParameter(ShadingComponent::EnableDepthTest, false);
 }
 
-shared_ptr<MeshComponent> RenderText::CreateMeshComponent() const
+shared_ptr<Mesh> RenderText::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
@@ -36,7 +36,7 @@ shared_ptr<MeshComponent> RenderText::CreateMeshComponent() const
 	};
 
 	const int Stride = 5;
-	return make_shared<MeshComponent>(rawVertices, Stride, indices);
+	return make_shared<Mesh>(rawVertices, Stride, indices);
 }
 
 void RenderText::LoadFont(const string& fontName)
