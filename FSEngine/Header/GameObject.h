@@ -66,6 +66,9 @@ public:
 
 	string GetName() const;
 	void SetName(const string& name);
+
+	json GetJson() const;
+	void SetFromJson(const json& j);
 };
 #pragma endregion
 

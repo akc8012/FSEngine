@@ -1,7 +1,11 @@
 #pragma once
 #include "FSException.h"
 
+#include <nlohmann\json.hpp>
+using json = nlohmann::json;
+
 #include <string>
+#include <algorithm>
 using std::string;
 
 template <typename Parameters, int CollectionLength>
@@ -47,5 +51,25 @@ public:
 	bool IsParameterInitialized(Parameters parameter) const
 	{
 		return parameters[parameter] != (short)-1;
+	}
+
+	json GetJson() const
+	{
+		json j;
+		for (int i = 0; i < CollectionLength; i++)
+			j[parameterNames[i]] = parameters[i];
+
+		return j;
+	}
+
+	void SetFromJson(const json& j)
+	{
+		for (int i = 0; i < CollectionLength; i++)
+		{
+			string name = parameterNames[i];
+			int index = (int)std::distance(parameterNames, std::find(parameterNames, parameterNames + CollectionLength, name));
+
+			parameters[index] = j[name];
+		}
 	}
 };

@@ -18,7 +18,7 @@ void Engine::Initialize()
 	renderer = make_unique<Renderer>(systems.get());
 	sceneManager = new SceneManager(systems.get(), window.get());
 
-	renderer->SetCamera(sceneManager->GetGameObjectContainer()->GetGameObject("Camera"));
+	renderer->SetCamera(sceneManager->GetCurrentScene()->GetGameObjectContainer()->GetGameObject("Camera"));
 
 	printFS("Success");
 	running = true;

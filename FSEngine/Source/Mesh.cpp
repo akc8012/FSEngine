@@ -179,6 +179,16 @@ ParameterCollection<Mesh::Parameters, Mesh::ParametersLength>* Mesh::GetParamete
 	return parameterCollection.get();
 }
 
+json Mesh::GetJson() const
+{
+	return json();
+}
+
+void Mesh::SetFromJson(const json& j)
+{
+
+}
+
 Mesh::~Mesh()
 {
 	const int Amount = 1;

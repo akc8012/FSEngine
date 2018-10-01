@@ -41,7 +41,12 @@ void Shading::BindTexture()
 
 void Shading::SetFlatColor(const vec3& flatColor)
 {
-	this->flatColor = vec4(flatColor, 1.0f);
+	SetFlatColor(vec4(flatColor, 1.0f));
+}
+
+void Shading::SetFlatColor(const vec4& flatColor)
+{
+	this->flatColor = flatColor;
 }
 
 vec4 Shading::GetFlatColor() const
@@ -52,4 +57,21 @@ vec4 Shading::GetFlatColor() const
 ParameterCollection<Shading::Parameters, Shading::ParametersLength>* Shading::GetParameterCollection() const
 {
 	return parameterCollection.get();
+}
+
+json Shading::GetJson() const
+{
+	json j;
+	j["FlatColor"] = { flatColor.r, flatColor.g, flatColor.b, flatColor.a };
+	j["ParameterCollection"] = parameterCollection->GetJson();
+
+	return j;
+}
+
+void Shading::SetFromJson(const json& j)
+{
+	json flatColor = j["FlatColor"];
+	SetFlatColor(vec4(flatColor[0], flatColor[1], flatColor[2], flatColor[3]));
+
+	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }

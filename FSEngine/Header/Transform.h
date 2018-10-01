@@ -17,9 +17,6 @@ using glm::vec2;
 #include <glm\gtx\quaternion.hpp>
 #include <glm\gtx\euler_angles.hpp>
 
-#include <string>
-using std::string;
-
 class Transform : public Component
 {
 private:
@@ -63,9 +60,13 @@ public:
 	const mat4& SetScale(float x, float y, float z);
 	const mat4& SetScale(const vec3& scaleVector);
 	const mat4& SetOrientation(const quat& orientation);
+	const mat4& SetOrientation(float eulerX, float eulerY, float eulerZ);
 	const mat4& SetOrientation(const vec3& eulerAngles);
 	const mat4& SetOrientation(float angle, const vec3& axis);
 	const mat4& SetPosition(const vec2& position);
 	const mat4& SetPosition(float x, float y, float z);
 	const mat4& SetPosition(const vec3& position);
+
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 };

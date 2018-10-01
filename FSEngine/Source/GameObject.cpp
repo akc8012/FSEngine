@@ -82,6 +82,30 @@ void GameObject::SetName(const string& name)
 	this->name = name;
 }
 
+json GameObject::GetJson() const
+{
+	json j;
+	for (const auto& transformComponent : transformComponents)
+		j[transformComponent.first] = transformComponent.second->GetJson();
+
+	for (const auto& shadingComponent : shadingComponents)
+		j[shadingComponent.first] = shadingComponent.second->GetJson();
+
+	j["ParameterCollection"] = parameterCollection->GetJson();
+	return j;
+}
+
+void GameObject::SetFromJson(const json& j)
+{
+	for (auto& transformComponent : transformComponents)
+		transformComponent.second->SetFromJson(j[transformComponent.first]);
+
+	for (auto& shadingComponent : shadingComponents)
+		shadingComponent.second->SetFromJson(j[shadingComponent.first]);
+
+	parameterCollection->SetFromJson(j["ParameterCollection"]);
+}
+
 GameObject::~GameObject()
 {
 

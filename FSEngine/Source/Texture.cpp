@@ -90,6 +90,16 @@ Texture::TextureType Texture::GetTextureType() const
 	return textureType;
 }
 
+json Texture::GetJson() const
+{
+	return json();
+}
+
+void Texture::SetFromJson(const json& j)
+{
+
+}
+
 Texture::~Texture()
 {
 	DeleteTexture();

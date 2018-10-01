@@ -117,6 +117,11 @@ const mat4& Transform::SetOrientation(const quat& orientation)
 	return transform;
 }
 
+const mat4& Transform::SetOrientation(float eulerX, float eulerY, float eulerZ)
+{
+	return SetOrientation(vec3(eulerX, eulerY, eulerZ));
+}
+
 const mat4& Transform::SetOrientation(const vec3& eulerAngles)
 {
 	MatrixValues matrixValues = DecomposeTransformMatrix();
@@ -146,4 +151,32 @@ const mat4& Transform::SetPosition(const vec3& position)
 	MatrixValues matrixValues = DecomposeTransformMatrix();
 	transform = translate(FSMath::IdentityMatrix, position) * toMat4(matrixValues.orientation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
 	return transform;
+}
+
+json Transform::GetJson() const
+{
+	json j;
+
+	vec3 position = GetPosition();
+	j["Position"] = { position.x, position.y, position.z };
+
+	vec3 eulerAngles = GetEulerAngles();
+	j["EulerAngles"] = { eulerAngles.x, eulerAngles.y, eulerAngles.z };
+
+	vec3 scale = GetScale();
+	j["Scale"] = { scale.x, scale.y, scale.z };
+
+	return j;
+}
+
+void Transform::SetFromJson(const json& j)
+{
+	json position = j["Position"];
+	SetPosition(position[0], position[1], position[2]);
+
+	json eulerAngles = j["EulerAngles"];
+	SetOrientation(eulerAngles[0], eulerAngles[1], eulerAngles[2]);
+
+	json scale = j["Scale"];
+	SetScale(scale[0], scale[1], scale[2]);
 }
