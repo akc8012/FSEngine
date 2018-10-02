@@ -16,6 +16,7 @@ private:
 
 public:
 	const shared_ptr<T>& Add(const shared_ptr<T>& component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
+	shared_ptr<T> Get(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 	shared_ptr<T> TryGet(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 };
 
@@ -25,6 +26,16 @@ const shared_ptr<T>& ComponentContainer<T>::Add(const shared_ptr<T>& component, 
 	auto result = components.emplace(name, component);
 	if (!result.second)
 		throwFS("Component with name \"" + name + "\" already exists");
+
+	return component;
+}
+
+template <typename T>
+shared_ptr<T> ComponentContainer<T>::Get(const string& name) const
+{
+	auto component = TryGet(name);
+	if (component == nullptr)
+		throwFS("Could not find component with name \"" + name + "\"");
 
 	return component;
 }

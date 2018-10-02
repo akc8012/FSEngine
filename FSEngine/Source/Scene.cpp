@@ -14,14 +14,12 @@ Scene::Scene(const string& name, Systems* systems, Window* window)
 	transformContainer->Add(make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
 	transformContainer->Add(make_shared<Transform>(), "Third");
 
-	auto boy = transformContainer->TryGet("Second");
+	auto second = transformContainer->Get("Second");
 }
 
 void Scene::AddGameObjects(Window* window)
 {
-	GameObject* gameObject = nullptr;
-
-	gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(make_shared<Texture>("Resource/Image/awesomeface.png")));
+	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", new CubePrimitive(make_shared<Texture>("Resource/Image/awesomeface.png")));
 	gameObject->GetComponent<Transform>()->SetPosition(4.5f, 0.2f, 0);
 
 	gameObject = gameObjectContainer->AddGameObject("GreenCube", new CubePrimitive(make_shared<Shading>(0.1f, 0.6f, 0.3f)));
