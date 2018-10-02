@@ -13,6 +13,8 @@ Scene::Scene(const string& name, Systems* systems, Window* window)
 	transformContainer->Add(make_shared<Transform>(), "First");
 	transformContainer->Add(make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
 	transformContainer->Add(make_shared<Transform>(), "Third");
+
+	auto boy = transformContainer->TryGet("Second");
 }
 
 void Scene::AddGameObjects(Window* window)
