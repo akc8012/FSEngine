@@ -65,6 +65,7 @@
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\Scene.h" />
     <ClInclude Include="Header\ComponentContainer.h" />
+    <ClInclude Include="Header\Components.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

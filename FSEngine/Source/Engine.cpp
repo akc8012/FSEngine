@@ -14,6 +14,16 @@ void Engine::Initialize()
 	systems->shaderProgram = make_unique<ShaderProgram>();
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
+	systems->components = make_unique<Components>();
+
+	{
+		auto transforms = systems->components->transformComponents;
+		transforms->Add(make_shared<Transform>(), "First");
+		transforms->Add(make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
+		transforms->Add(make_shared<Transform>(), "Third");
+
+		auto second = transforms->Get("Second");
+	}
 
 	renderer = make_unique<Renderer>(systems.get());
 	sceneManager = new SceneManager(systems.get(), window.get());

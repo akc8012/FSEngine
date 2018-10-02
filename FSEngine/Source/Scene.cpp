@@ -8,13 +8,6 @@ Scene::Scene(const string& name, Systems* systems, Window* window)
 
 	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems);
 	AddGameObjects(window);
-
-	auto transformContainer = new ComponentContainer<Transform>();
-	transformContainer->Add(make_shared<Transform>(), "First");
-	transformContainer->Add(make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
-	transformContainer->Add(make_shared<Transform>(), "Third");
-
-	auto second = transformContainer->Get("Second");
 }
 
 void Scene::AddGameObjects(Window* window)
