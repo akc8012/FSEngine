@@ -17,7 +17,7 @@ void Engine::Initialize()
 	systems->components = make_unique<Components>();
 
 	{
-		auto transforms = systems->components->transformComponents;
+		auto transforms = systems->components->transformComponents.get();
 		transforms->Add(make_shared<Transform>(), "First");
 		transforms->Add(make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
 		transforms->Add(make_shared<Transform>(), "Third");
