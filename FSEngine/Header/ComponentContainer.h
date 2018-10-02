@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "ComponentType.h"
+#include "FSException.h"
 
 #include <unordered_map>
 #include <memory>
@@ -13,12 +15,16 @@ private:
 	unordered_map<string, shared_ptr<T>> components;
 
 public:
-	void Add(const shared_ptr<T>& component, const string& name);
+	const shared_ptr<T>& Add(const shared_ptr<T>& component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
 
 };
 
 template <typename T>
-void ComponentContainer<T>::Add(const shared_ptr<T>& component, const string& name)
+const shared_ptr<T>& ComponentContainer<T>::Add(const shared_ptr<T>& component, const string& name)
 {
-	components.emplace(name, component);
+	auto result = components.emplace(name, component);
+	if (!result.second)
+		throwFS("Component with name \"" + name + "\" already exists");
+
+	return component;
 }
