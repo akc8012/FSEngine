@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ComponentContainer.cpp" />
     <ClCompile Include="Source\FSDebug.cpp" />
     <ClCompile Include="Source\FSException.cpp" />
     <ClCompile Include="Source\FSMath.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Source\RenderText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\ComponentContainer.h" />
     <ClInclude Include="Header\ComponentType.h" />
     <ClInclude Include="Header\FileSystem.h" />
     <ClInclude Include="Header\Camera.h" />

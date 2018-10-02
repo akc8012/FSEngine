@@ -9,7 +9,8 @@ Scene::Scene(const string& name, Systems* systems, Window* window)
 	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems);
 	AddGameObjects(window);
 
-	//LoadScene();
+	auto transformContainer = new ComponentContainer<Transform>();
+	transformContainer->Add(make_shared<Transform>(), "Transform");
 }
 
 void Scene::AddGameObjects(Window* window)

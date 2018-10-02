@@ -7,6 +7,7 @@
 #include "RenderText.h"
 #include "Model.h"
 #include "PlayerShip.h"
+#include "ComponentContainer.h"
 
 #include <string>
 #include <vector>
