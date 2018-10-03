@@ -16,15 +16,6 @@ void Engine::Initialize()
 	systems->random = make_unique<Random>();
 	systems->components = make_unique<Components>();
 
-	{
-		auto transforms = systems->components->transformComponents.get();
-		transforms->Add("PlayerShip", make_shared<Transform>(), "First");
-		transforms->Add("Camera", make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
-		transforms->Add("PlayerShip", make_shared<Transform>(), "Third");
-
-		auto second = transforms->Get("Camera", "Second");
-	}
-
 	renderer = make_unique<Renderer>(systems.get());
 	sceneManager = new SceneManager(systems.get(), window.get());
 

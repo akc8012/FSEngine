@@ -1,13 +1,13 @@
 #include "../Header/CubePrimitive.h"
 
-CubePrimitive::CubePrimitive(const shared_ptr<Shading>& shadingComponent)
+void CubePrimitive::Start()
 {
-	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
+	shared_ptr<Mesh> meshComponent = systems->components->mesh->Add(GetName(), CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
-	AddComponent(make_shared<Transform>());
-	AddComponent(shadingComponent);
+	systems->components->transform->Add(GetName(), make_shared<Transform>());
+	systems->components->shading->Add(GetName(), make_shared<Shading>(0.1f, 0.6f, 0.3f));
 }
 
 shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const

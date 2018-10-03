@@ -19,14 +19,14 @@ private:
 	void DrawGrid();
 	void SetRenderParametersForGrid();
 
-	void SetTransformMatrices(Transform* transform);
+	void SetTransformMatrices(shared_ptr<Transform> transform);
 
-	void SetShadingParameters(Shading* shading);
+	void SetShadingParameters(shared_ptr<Shading> shading);
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);
 
-	void DrawMesh(Mesh* mesh);
+	void DrawMesh(shared_ptr<Mesh> mesh);
 
 public:
 	Renderer(Systems* systems);
@@ -35,6 +35,6 @@ public:
 	void SetCamera(GameObject* camera);
 
 	void StartRender();
-	void RenderGameObject(const GameObject* gameObject);
+	void RenderGameObject(const string& name);
 	void EndRender(Window* window);
 };

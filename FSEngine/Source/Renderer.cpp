@@ -73,29 +73,28 @@ void Renderer::SetRenderParametersForGrid()
 #pragma endregion
 
 #pragma region RenderGameObject
-void Renderer::RenderGameObject(const GameObject* gameObject)
+void Renderer::RenderGameObject(const string& name)
 {
-	SetTransformMatrices(gameObject->GetComponent<Transform>().get());
+	auto& components = systems->components;
 
-	for (auto& mesh : gameObject->GetComponents<Mesh>())
-	{
-		vector<string> textureNames = mesh.second->GetAssociatedTextureNames();
-		if (textureNames.size() != 0)
-			SetShadingParameters(gameObject->GetComponent<Shading>(textureNames.front()).get());
-		else
-			SetShadingParameters(gameObject->GetComponent<Shading>().get());
+	SetTransformMatrices(components->transform->Get(name));
 
-		DrawMesh(mesh.second.get());
-	}
+	vector<string> textureNames = components->mesh->Get(name)->GetAssociatedTextureNames();
+	if (textureNames.size() != 0)
+		SetShadingParameters(components->shading->Get(name, textureNames.front()));
+	else
+		SetShadingParameters(components->shading->Get(name));
+
+	DrawMesh(components->mesh->Get(name));
 }
 
-void Renderer::SetTransformMatrices(Transform* transform)
+void Renderer::SetTransformMatrices(shared_ptr<Transform> transform)
 {
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-void Renderer::SetShadingParameters(Shading* shading)
+void Renderer::SetShadingParameters(shared_ptr<Shading> shading)
 {
 	SetDepthTest(shading->GetParameterCollection()->GetParameter(Shading::EnableDepthTest));
 	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(Shading::RenderPerspective));
@@ -135,7 +134,7 @@ void Renderer::SetBlend(bool blend)
 	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
 }
 
-void Renderer::DrawMesh(Mesh* mesh)
+void Renderer::DrawMesh(shared_ptr<Mesh> mesh)
 {
 	mesh->BindVertexArray();
 
