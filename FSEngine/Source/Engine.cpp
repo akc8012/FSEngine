@@ -18,11 +18,11 @@ void Engine::Initialize()
 
 	{
 		auto transforms = systems->components->transformComponents.get();
-		transforms->Add(make_shared<Transform>(), "First");
-		transforms->Add(make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
-		transforms->Add(make_shared<Transform>(), "Third");
+		transforms->Add("PlayerShip", make_shared<Transform>(), "First");
+		transforms->Add("Camera", make_shared<Transform>(), "Second")->SetPosition(1, 6, 12);
+		transforms->Add("PlayerShip", make_shared<Transform>(), "Third");
 
-		auto second = transforms->Get("Second");
+		auto second = transforms->Get("Camera", "Second");
 	}
 
 	renderer = make_unique<Renderer>(systems.get());
