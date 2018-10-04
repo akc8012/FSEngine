@@ -4,9 +4,11 @@
 #include "FSException.h"
 
 #include <map>
+#include <vector>
 #include <utility>
 #include <memory>
 using std::map;
+using std::vector;
 using std::pair;
 using std::make_pair;
 using std::shared_ptr;
@@ -19,8 +21,11 @@ private:
 
 public:
 	const shared_ptr<T>& Add(const string& key, const shared_ptr<T>& component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
+
 	shared_ptr<T> Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 	shared_ptr<T> TryGet(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
+
+	vector<T*> GetComponents(const string& key) const;
 };
 
 template <typename T>
@@ -54,4 +59,18 @@ shared_ptr<T> ComponentContainer<T>::TryGet(const string& key, const string& nam
 	{
 		return nullptr;
 	}
+}
+
+template <typename T>
+vector<T*> ComponentContainer<T>::GetComponents(const string& key) const
+{
+	vector<T*> componentsWithKey;
+
+	for (const auto& component : components)
+	{
+		if (component.first.first == key)
+			componentsWithKey.push_back(component.second.get());
+	}
+
+	return componentsWithKey;
 }

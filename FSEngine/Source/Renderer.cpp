@@ -77,13 +77,16 @@ void Renderer::RenderGameObject(const string& name, const Components* components
 {
 	SetTransformMatrices(components->transform->Get(name));
 
-	vector<string> textureNames = components->mesh->Get(name)->GetAssociatedTextureNames();
-	if (textureNames.size() != 0)
-		SetShadingParameters(components->shading->Get(name, textureNames.front()));
-	else
-		SetShadingParameters(components->shading->Get(name));
+	for (auto& mesh : components->mesh->GetComponents(name))
+	{
+		vector<string> textureNames = mesh->GetAssociatedTextureNames();
+		if (textureNames.size() != 0)
+			SetShadingParameters(components->shading->Get(name, textureNames.front()));
+		else
+			SetShadingParameters(components->shading->Get(name));
 
-	DrawMesh(components->mesh->Get(name));
+		DrawMesh(mesh);
+	}
 }
 
 void Renderer::SetTransformMatrices(shared_ptr<Transform> transform)
@@ -132,7 +135,7 @@ void Renderer::SetBlend(bool blend)
 	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
 }
 
-void Renderer::DrawMesh(shared_ptr<Mesh> mesh)
+void Renderer::DrawMesh(Mesh* mesh)
 {
 	mesh->BindVertexArray();
 
