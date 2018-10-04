@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "Window.h"
-#include "RenderText.h"
 
 class Camera : public GameObject
 {
@@ -44,7 +43,6 @@ private:
 	float GetRayIntersectFloorDistance(const ray& ray) const;
 
 	float GetFrameAdjustedSpeed() const;
-	void SetDebugText(const string& text) const;
 
 public:
 	Camera(Window* window);

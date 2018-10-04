@@ -9,9 +9,7 @@ PlayerShip::PlayerShip()
 void PlayerShip::Start()
 {
 	Model::Start();
-
 	transform = components->transform->Get(GetName()).get();
-	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
 	ResetValues();
 }
@@ -50,8 +48,8 @@ void PlayerShip::ControlShip()
 
 void PlayerShip::SetCamera()
 {
-	const float CameraDistance = 6;
-	camera->SetPosition(transform->GetPosition() + (-FSMath::Forward * CameraDistance));
+	//const float CameraDistance = 6;
+	//camera->SetPosition(transform->GetPosition() + (-FSMath::Forward * CameraDistance));
 }
 
 float PlayerShip::GetFrameAdjustedSpeed() const

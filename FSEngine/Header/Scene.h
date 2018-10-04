@@ -8,6 +8,7 @@
 #include "RenderText.h"
 #include "Model.h"
 #include "PlayerShip.h"
+#include "Camera.h"
 #include "ComponentContainer.h"
 
 #include <string>

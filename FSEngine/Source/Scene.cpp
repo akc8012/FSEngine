@@ -47,8 +47,8 @@ void Scene::AddGameObjects(Window* window)
 		components->transform->Get(gameObject->GetName())->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
 	}
 
-	gameObjectContainer->AddGameObject("DebugText", new RenderText(window));
-	RenderText* debugText = gameObjectContainer->GetGameObjectAs<RenderText>("DebugText");
+	gameObject = gameObjectContainer->AddGameObject("DebugText", new RenderText(window));
+	RenderText* debugText = dynamic_cast<RenderText*>(gameObject);
 	debugText->SetText("Debug text");
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);

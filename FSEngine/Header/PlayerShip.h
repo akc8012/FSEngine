@@ -1,12 +1,10 @@
 #pragma once
 #include "Model.h"
-#include "Camera.h"
 
 class PlayerShip : public Model
 {
 private:
 	Transform* transform = nullptr;
-	Camera* camera = nullptr;
 
 	vec3 direction;
 

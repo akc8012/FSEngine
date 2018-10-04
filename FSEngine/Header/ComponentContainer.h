@@ -21,6 +21,7 @@ private:
 
 public:
 	shared_ptr<T> Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
+	// Remove();
 
 	shared_ptr<T> Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 	shared_ptr<T> TryGet(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;

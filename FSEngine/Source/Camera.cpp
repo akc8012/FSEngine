@@ -248,8 +248,3 @@ vec3 Camera::GetOrientation() const
 {
 	return direction;
 }
-
-void Camera::SetDebugText(const string& text) const
-{
-	gameObjectContainer->GetGameObjectAs<RenderText>("DebugText")->SetText(text);
-}
