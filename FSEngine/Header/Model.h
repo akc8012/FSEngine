@@ -18,7 +18,7 @@ using std::unique_ptr;
 class Model : public GameObject
 {
 private:
-	string directory = "";
+	string filepath;
 
 	unique_ptr<Importer> LoadModelImporter(const string& filepath);
 
@@ -33,6 +33,10 @@ private:
 
 	string* TryGetLoadedTextureName(const string& textureName) const;
 
+	string GetDirectory() const;
+
 public:
 	Model(const string& filepath);
+
+	void Start() override;
 };

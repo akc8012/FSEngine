@@ -3,17 +3,20 @@
 RenderText::RenderText(Window* window)
 {
 	this->window = window;
+}
 
-	AddComponent(make_shared<Transform>());
-	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
+void RenderText::Start()
+{
+	components->transform->Add(GetName(), make_shared<Transform>());
+	shared_ptr<Mesh> meshComponent = components->mesh->Add(GetName(), CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	LoadFont("arial.ttf");
 
 	SetText(renderText);
-	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
-	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+	components->shading->Get(GetName())->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
+	components->shading->Get(GetName())->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const
@@ -49,7 +52,7 @@ void RenderText::LoadFont(const string& fontName)
 
 void RenderText::SetText(const string& text)
 {
-	if (renderText != text || TryGetComponent<Shading>() == nullptr)
+	if (renderText != text || components->shading->TryGet(GetName()) == nullptr)
 		CreateTextureComponent(text);
 }
 
@@ -61,10 +64,10 @@ void RenderText::CreateTextureComponent(const string& text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, text == "" ? " " : text.c_str(), textColor);
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
-	if (TryGetComponent<Shading>() == nullptr)
-		AddComponent(make_shared<Texture>(surface, true));
+	if (components->shading->TryGet(GetName()) == nullptr)
+		components->shading->Add(GetName(), make_shared<Texture>(surface, true));
 	else
-		dynamic_cast<Texture*>(GetComponent<Shading>().get())->GenerateTexture(surface, true);
+		dynamic_cast<Texture*>(components->shading->TryGet(GetName()).get())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }
@@ -89,14 +92,14 @@ void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
 	float width = (aspectRatio.x * (1 / aspectRatio.y)) / windowSize.x;
 	float height = 1 / windowSize.y;
 
-	GetComponent<Transform>()->SetScale(vec2(width, height));
-	GetComponent<Transform>()->Scale(pixelScaleFactor);
+	components->transform->Get(GetName())->SetScale(vec2(width, height));
+	components->transform->Get(GetName())->Scale(pixelScaleFactor);
 }
 
 void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
 {
 	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(windowSize), windowSize);
-	GetComponent<Transform>()->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
+	components->transform->Get(GetName())->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
 }
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
@@ -140,7 +143,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 
 vec2 RenderText::GetPixelScale(const vec2& windowSize) const
 {
-	shared_ptr<Transform> transform = GetComponent<Transform>();
+	shared_ptr<Transform> transform = components->transform->Get(GetName());
 	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
 }
 

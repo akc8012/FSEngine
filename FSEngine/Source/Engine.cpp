@@ -15,10 +15,8 @@ void Engine::Initialize()
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
 
-	renderer = make_unique<Renderer>(systems.get());
 	sceneManager = new SceneManager(systems.get(), window.get());
-
-	renderer->SetCamera(sceneManager->GetCurrentScene()->GetGameObjectContainer()->GetGameObject("Camera"));
+	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetComponents());
 
 	printFS("Success");
 	running = true;

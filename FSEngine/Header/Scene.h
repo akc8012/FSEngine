@@ -36,5 +36,5 @@ public:
 	void SaveScene() const;
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
-	const Components* GetComponents() const;
+	Components* GetComponents() const;
 };

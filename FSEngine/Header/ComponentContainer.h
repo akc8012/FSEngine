@@ -20,7 +20,7 @@ private:
 	map<pair<string, string>, shared_ptr<T>> components;
 
 public:
-	const shared_ptr<T>& Add(const string& key, const shared_ptr<T>& component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
+	shared_ptr<T> Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
 
 	shared_ptr<T> Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 	shared_ptr<T> TryGet(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
@@ -29,12 +29,13 @@ public:
 };
 
 template <typename T>
-const shared_ptr<T>& ComponentContainer<T>::Add(const string& key, const shared_ptr<T>& component, const string& name)
+shared_ptr<T> ComponentContainer<T>::Add(const string& key, shared_ptr<T> component, const string& name)
 {
 	auto result = components.emplace(make_pair(key, name), component);
 	if (!result.second)
 		throwFS("Component with name \"" + name + "\" already exists");
 
+	component->SetName(name);
 	return component;
 }
 

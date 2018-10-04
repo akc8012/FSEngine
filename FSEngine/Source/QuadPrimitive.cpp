@@ -2,12 +2,12 @@
 
 QuadPrimitive::QuadPrimitive(const shared_ptr<Shading>& shadingComponent)
 {
-	shared_ptr<Mesh> meshComponent = AddComponent(CreateMeshComponent());
+	shared_ptr<Mesh> meshComponent = components->mesh->Add(GetName(), CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
-	AddComponent(make_shared<Transform>());
-	AddComponent(shadingComponent);
+	components->transform->Add(GetName(), make_shared<Transform>());
+	components->shading->Add(GetName(), shadingComponent);
 }
 
 shared_ptr<Mesh> QuadPrimitive::CreateMeshComponent() const

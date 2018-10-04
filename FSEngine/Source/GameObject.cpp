@@ -36,44 +36,12 @@ void GameObject::Update()
 
 }
 
-const shared_ptr<Mesh>& GameObject::AddComponent(const shared_ptr<Mesh>& component, const string& name)
-{
-	auto result = meshComponents.emplace(name, component);
-	if (!result.second)
-		ThrowDuplicateNameException(name);
-
-	return component;
-}
-
-const shared_ptr<Shading>& GameObject::AddComponent(const shared_ptr<Shading>& component, const string& name)
-{
-	auto result = shadingComponents.emplace(name, component);
-	if (!result.second)
-		ThrowDuplicateNameException(name);
-
-	return component;
-}
-
-const shared_ptr<Transform>& GameObject::AddComponent(const shared_ptr<Transform>& component, const string& name)
-{
-	auto result = transformComponents.emplace(name, component);
-	if (!result.second)
-		ThrowDuplicateNameException(name);
-
-	return component;
-}
-
-void GameObject::ThrowDuplicateNameException(const string& name) const
-{
-	throwFS("Component with name " + name + " already exists");
-}
-
 ParameterCollection<GameObject::Parameters, GameObject::ParametersLength>* GameObject::GetParameterCollection() const
 {
 	return parameterCollection.get();
 }
 
-string GameObject::GetName() const
+const string& GameObject::GetName() const
 {
 	return name;
 }
@@ -86,24 +54,13 @@ void GameObject::SetName(const string& name)
 json GameObject::GetJson() const
 {
 	json j;
-	for (const auto& transformComponent : transformComponents)
-		j[transformComponent.first] = transformComponent.second->GetJson();
-
-	for (const auto& shadingComponent : shadingComponents)
-		j[shadingComponent.first] = shadingComponent.second->GetJson();
-
 	j["ParameterCollection"] = parameterCollection->GetJson();
+
 	return j;
 }
 
 void GameObject::SetFromJson(const json& j)
 {
-	for (auto& transformComponent : transformComponents)
-		transformComponent.second->SetFromJson(j[transformComponent.first]);
-
-	for (auto& shadingComponent : shadingComponents)
-		shadingComponent.second->SetFromJson(j[shadingComponent.first]);
-
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 

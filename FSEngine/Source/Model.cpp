@@ -2,13 +2,16 @@
 
 Model::Model(const string& filepath)
 {
-	this->directory = filepath.substr(0, filepath.find_last_of('/')+1);
+	this->filepath = filepath;
+}
 
+void Model::Start()
+{
 	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	const aiScene* scene = importer->GetScene();
 
 	ConvertMeshesOnNode(scene->mRootNode, scene);
-	AddComponent(make_shared<Transform>());
+	components->transform->Add(GetName(), make_shared<Transform>());
 }
 
 unique_ptr<Importer> Model::LoadModelImporter(const string& filepath)
@@ -28,7 +31,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		shared_ptr<Mesh> meshComponent = ConvertMeshToComponent(mesh);
-		AddComponent(meshComponent, mesh->mName.C_Str());
+		components->mesh->Add(GetName(), meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
@@ -97,7 +100,7 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 	if (loadedTextureName == nullptr)
 	{
 		meshComponent->AddAssociatedTextureName(textureName);
-		AddComponent(make_shared<Texture>(directory + textureName), textureName);
+		components->shading->Add(GetName(), make_shared<Texture>(GetDirectory() + textureName), textureName);
 	}
 	else
 		meshComponent->AddAssociatedTextureName(*loadedTextureName);
@@ -105,12 +108,17 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 
 string* Model::TryGetLoadedTextureName(const string& textureName) const
 {
-	for (const auto& textureComponent : GetComponents<Shading>())
+	for (const auto& textureComponent : components->shading->GetComponents(GetName()))
 	{
-		string loadedTextureName = textureComponent.first;
+		string loadedTextureName = textureComponent->GetName();
 		if (textureName == loadedTextureName)
 			return new string(loadedTextureName);
 	}
 
 	return nullptr;
+}
+
+string Model::GetDirectory() const
+{
+	return filepath.substr(0, filepath.find_last_of('/')+1);
 }

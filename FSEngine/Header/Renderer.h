@@ -12,10 +12,10 @@ class Renderer
 {
 private:
 	Systems* systems = nullptr;
-	GameObject* camera = nullptr;
+	Components* components = nullptr;
 
 	void ClearScreen();
-	void SetViewMatrices(Transform* viewTransform);
+	void SetViewMatrices(shared_ptr<Transform> viewTransform);
 
 	void DrawGrid();
 	void SetRenderParametersForGrid();
@@ -30,12 +30,10 @@ private:
 	void DrawMesh(Mesh* mesh);
 
 public:
-	Renderer(Systems* systems);
+	Renderer(Systems* systems, Components* components);
 	~Renderer();
 
-	void SetCamera(GameObject* camera);
-
 	void StartRender();
-	void RenderGameObject(const string& name, const Components* components);
+	void RenderGameObject(const string& name);
 	void EndRender(Window* window);
 };

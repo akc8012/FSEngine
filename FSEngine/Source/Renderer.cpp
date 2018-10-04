@@ -1,13 +1,9 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(Systems* systems)
+Renderer::Renderer(Systems* systems, Components* components)
 {
 	this->systems = systems;
-}
-
-void Renderer::SetCamera(GameObject* camera)
-{
-	this->camera = camera;
+	this->components = components;
 }
 
 #pragma region StartRender
@@ -15,7 +11,7 @@ void Renderer::StartRender()
 {
 	ClearScreen();
 
-	SetViewMatrices(camera->GetComponent<Transform>("View").get());
+	SetViewMatrices(components->transform->Get("Camera", "View"));
 
 	if (systems->fileSystem->GetSettingsValue<bool>("DrawGrid"))
 		DrawGrid();
@@ -30,7 +26,7 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::SetViewMatrices(Transform* viewTransform)
+void Renderer::SetViewMatrices(shared_ptr<Transform> viewTransform)
 {
 	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
@@ -67,13 +63,13 @@ void Renderer::SetRenderParametersForGrid()
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetVectorUniform("flatColor", vec4(1, 1, 0.6f, 1));
-	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<Transform>("Perspective")->GetMatrix());
+	systems->shaderProgram->SetMatrixUniform("projectionMatrix", components->transform->Get("Camera", "Perspective")->GetMatrix());
 	systems->shaderProgram->SetBoolUniform("renderPerspective", true);
 }
 #pragma endregion
 
 #pragma region RenderGameObject
-void Renderer::RenderGameObject(const string& name, const Components* components)
+void Renderer::RenderGameObject(const string& name)
 {
 	SetTransformMatrices(components->transform->Get(name));
 
@@ -119,7 +115,7 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 		return;
 
-	shared_ptr<Transform> projectionTransform = camera->GetComponent<Transform>(renderPerspective ? "Perspective" : "Orthographic");
+	shared_ptr<Transform> projectionTransform = components->transform->Get("Camera", renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);

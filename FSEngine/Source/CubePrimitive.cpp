@@ -7,7 +7,6 @@ void CubePrimitive::Start()
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	components->transform->Add(GetName(), make_shared<Transform>());
-	components->shading->Add(GetName(), make_shared<Shading>(0.1f, 0.6f, 0.3f));
 }
 
 shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const
