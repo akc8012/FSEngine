@@ -7,7 +7,7 @@ Scene::Scene(const string& name, Systems* systems, Window* window)
 	this->window = window;
 
 	components = make_unique<Components>();
-	gameObjectContainer = make_unique<GameObject::GameObjectContainer>(systems, components.get());
+	gameObjectContainer = make_unique<GameObjectContainer>(systems, components.get());
 
 	AddGameObjects(window);
 }
@@ -83,7 +83,7 @@ string Scene::GetFileName() const
 	return "Resource/Json/" + name + ".json";
 }
 
-GameObject::GameObjectContainer* Scene::GetGameObjectContainer() const
+GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
 }

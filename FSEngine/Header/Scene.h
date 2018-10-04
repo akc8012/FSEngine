@@ -9,7 +9,7 @@
 #include "Model.h"
 #include "PlayerShip.h"
 #include "Camera.h"
-#include "ComponentContainer.h"
+#include "GameObjectContainer.h"
 
 #include <string>
 #include <vector>
@@ -23,8 +23,8 @@ private:
 	Systems* systems = nullptr;
 	Window* window = nullptr;
 
-	unique_ptr<GameObject::GameObjectContainer> gameObjectContainer;
 	unique_ptr<Components> components;
+	unique_ptr<GameObjectContainer> gameObjectContainer;
 
 	void AddGameObjects(Window* window);
 	string GetFileName() const;
@@ -36,6 +36,6 @@ public:
 	void LoadScene();
 	void SaveScene() const;
 
-	GameObject::GameObjectContainer* GetGameObjectContainer() const;
+	GameObjectContainer* GetGameObjectContainer() const;
 	Components* GetComponents() const;
 };

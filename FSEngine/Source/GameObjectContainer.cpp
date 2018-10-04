@@ -1,13 +1,13 @@
-#include "../Header/GameObject.h"
+#include "../Header/GameObjectContainer.h"
 
-GameObject::GameObjectContainer::GameObjectContainer(Systems* systems, Components* components)
+GameObjectContainer::GameObjectContainer(Systems* systems, Components* components)
 {
 	this->systems = systems;
 	this->components = components;
 	gameObjectMapper = make_unique<GameObjectMapper>();
 }
 
-GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
+GameObject* GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
 	int index = (int)gameObjects.size();
 	gameObjectMapper->MapGameObject(name, index);
@@ -18,14 +18,14 @@ GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, G
 	return gameObject;
 }
 
-void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)
+void GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)
 {
-	gameObject->SetReferences(systems, this, components);
+	gameObject->SetReferences(systems, components);
 	gameObject->SetName(name);
 	gameObject->Start();
 }
 
-void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
+void GameObjectContainer::RemoveGameObject(const string& name)
 {
 	int index = gameObjectMapper->UnMapGameObject(name);
 	gameObjects.erase(gameObjects.begin() + index);
@@ -33,7 +33,7 @@ void GameObject::GameObjectContainer::RemoveGameObject(const string& name)
 	ReMapGameObjectNames(index);
 }
 
-void GameObject::GameObjectContainer::ReMapGameObjectNames(int startIndex)
+void GameObjectContainer::ReMapGameObjectNames(int startIndex)
 {
 	for (int index = startIndex; index < gameObjects.size(); index++)
 	{
@@ -42,7 +42,7 @@ void GameObject::GameObjectContainer::ReMapGameObjectNames(int startIndex)
 	}
 }
 
-GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) const
+GameObject* GameObjectContainer::GetGameObject(const string& name) const
 {
 	GameObject* gameObject = TryGetGameObject(name);
 	if (gameObject == nullptr)
@@ -51,13 +51,13 @@ GameObject* GameObject::GameObjectContainer::GetGameObject(const string& name) c
 	return gameObject;
 }
 
-GameObject* GameObject::GameObjectContainer::TryGetGameObject(const string& name) const
+GameObject* GameObjectContainer::TryGetGameObject(const string& name) const
 {
 	int index = gameObjectMapper->TryGetGameObjectIndex(name);
 	return TryGetGameObjectAtIndex(index);
 }
 
-GameObject* GameObject::GameObjectContainer::TryGetGameObjectAtIndex(int index) const
+GameObject* GameObjectContainer::TryGetGameObjectAtIndex(int index) const
 {
 	try
 	{
@@ -69,7 +69,7 @@ GameObject* GameObject::GameObjectContainer::TryGetGameObjectAtIndex(int index) 
 	}
 }
 
-const vector<unique_ptr<GameObject>>& GameObject::GameObjectContainer::GetGameObjects() const
+const vector<unique_ptr<GameObject>>& GameObjectContainer::GetGameObjects() const
 {
 	return gameObjects;
 }

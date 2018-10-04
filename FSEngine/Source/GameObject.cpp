@@ -19,10 +19,9 @@ void GameObject::SetDefaultParameters()
 		parameterCollection->SetParameter(parameter, false);
 }
 
-void GameObject::SetReferences(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer, Components* components)
+void GameObject::SetReferences(Systems* systems, Components* components)
 {
 	this->systems = systems;
-	this->gameObjectContainer = gameObjectContainer;
 	this->components = components;
 }
 

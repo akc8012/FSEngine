@@ -179,6 +179,7 @@
     <ClInclude Include="Header\FSDebug.h" />
     <ClInclude Include="Header\FSException.h" />
     <ClInclude Include="Header\GameObject.h" />
+    <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\GameObjectMapper.h" />
     <ClInclude Include="Header\GameTimer.h" />
     <ClInclude Include="Header\Input.h" />
