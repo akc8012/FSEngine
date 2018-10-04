@@ -73,10 +73,8 @@ void Renderer::SetRenderParametersForGrid()
 #pragma endregion
 
 #pragma region RenderGameObject
-void Renderer::RenderGameObject(const string& name)
+void Renderer::RenderGameObject(const string& name, const Components* components)
 {
-	auto& components = systems->components;
-
 	SetTransformMatrices(components->transform->Get(name));
 
 	vector<string> textureNames = components->mesh->Get(name)->GetAssociatedTextureNames();

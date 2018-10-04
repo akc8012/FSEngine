@@ -5,6 +5,7 @@
 #include "Shading.h"
 #include "Texture.h"
 #include "Transform.h"
+#include "Components.h"
 #include "GameObjectMapper.h"
 #include "ParameterCollection.h"
 
@@ -44,12 +45,13 @@ private:
 protected:
 	Systems* systems = nullptr;
 	GameObjectContainer* gameObjectContainer = nullptr;
+	Components* components = nullptr;
 
 public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetSystems(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer);
+	void SetReferences(Systems* systems, GameObject::GameObjectContainer* gameObjectContainer, Components* components);
 
 	virtual void Start();
 	virtual void Update();
@@ -117,6 +119,8 @@ class GameObject::GameObjectContainer
 {
 private:
 	Systems* systems = nullptr;
+	Components* components = nullptr;
+
 	unique_ptr<GameObjectMapper> gameObjectMapper;
 	vector<unique_ptr<GameObject>> gameObjects;
 
@@ -126,7 +130,7 @@ private:
 	void ReMapGameObjectNames(int startIndex);
 
 public:
-	GameObjectContainer(Systems* systems);
+	GameObjectContainer(Systems* systems, Components* components);
 
 	GameObject* AddGameObject(const string& name, GameObject* gameObject);
 	void RemoveGameObject(const string& name);

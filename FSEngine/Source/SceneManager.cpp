@@ -31,7 +31,7 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 	for (auto& gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoDraw) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateDraw) == doLateDraw)
-			renderer->RenderGameObject(gameObject->GetName());
+			renderer->RenderGameObject(gameObject->GetName(), currentScene->GetComponents());
 	}
 }
 

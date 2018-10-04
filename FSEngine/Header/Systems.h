@@ -4,7 +4,6 @@
 #include "ShaderProgram.h"
 #include "GameTimer.h"
 #include "Random.h"
-#include "Components.h"
 
 #include <memory>
 using std::unique_ptr;
@@ -17,5 +16,4 @@ struct Systems
 	unique_ptr<ShaderProgram> shaderProgram;
 	unique_ptr<GameTimer> gameTimer;
 	unique_ptr<Random> random;
-	unique_ptr<Components> components;
 };

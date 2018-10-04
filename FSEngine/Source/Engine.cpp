@@ -14,7 +14,6 @@ void Engine::Initialize()
 	systems->shaderProgram = make_unique<ShaderProgram>();
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
-	systems->components = make_unique<Components>();
 
 	renderer = make_unique<Renderer>(systems.get());
 	sceneManager = new SceneManager(systems.get(), window.get());

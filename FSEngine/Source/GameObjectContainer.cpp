@@ -1,8 +1,9 @@
 #include "../Header/GameObject.h"
 
-GameObject::GameObjectContainer::GameObjectContainer(Systems* systems)
+GameObject::GameObjectContainer::GameObjectContainer(Systems* systems, Components* components)
 {
 	this->systems = systems;
+	this->components = components;
 	gameObjectMapper = make_unique<GameObjectMapper>();
 }
 
@@ -19,7 +20,7 @@ GameObject* GameObject::GameObjectContainer::AddGameObject(const string& name, G
 
 void GameObject::GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)
 {
-	gameObject->SetSystems(systems, this);
+	gameObject->SetReferences(systems, this, components);
 	gameObject->SetName(name);
 	gameObject->Start();
 }

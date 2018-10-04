@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Components.h"
 #include "Renderer.h"
 #include "Window.h"
 #include "CubePrimitive.h"
@@ -22,6 +23,7 @@ private:
 	Window* window = nullptr;
 
 	unique_ptr<GameObject::GameObjectContainer> gameObjectContainer;
+	unique_ptr<Components> components;
 
 	void AddGameObjects(Window* window);
 	string GetFileName() const;
@@ -34,4 +36,5 @@ public:
 	void SaveScene() const;
 
 	GameObject::GameObjectContainer* GetGameObjectContainer() const;
+	const Components* GetComponents() const;
 };

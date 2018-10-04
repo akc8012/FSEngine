@@ -1,5 +1,6 @@
 #pragma once
 #include "Systems.h"
+#include "Components.h"
 #include "Window.h"
 #include "GameObject.h"
 
@@ -35,6 +36,6 @@ public:
 	void SetCamera(GameObject* camera);
 
 	void StartRender();
-	void RenderGameObject(const string& name);
+	void RenderGameObject(const string& name, const Components* components);
 	void EndRender(Window* window);
 };
