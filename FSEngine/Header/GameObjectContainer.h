@@ -26,12 +26,15 @@ public:
 
 	GameObject* GetGameObject(const string& name) const;
 	GameObject* TryGetGameObject(const string& name) const;
-	template <typename T> T* GetGameObjectAs(const string& name) const;
+
+	template <typename T>
+	T* GetGameObjectAs(const string& name) const;
 
 	vector<GameObject*> GetGameObjects() const;
 };
 
-template <typename T> T* GameObjectContainer::GetGameObjectAs(const string& name) const
+template <typename T>
+T* GameObjectContainer::GetGameObjectAs(const string& name) const
 {
 	return dynamic_cast<T*>(GetGameObject(name));
 }
