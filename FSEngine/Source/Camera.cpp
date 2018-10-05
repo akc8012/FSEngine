@@ -41,13 +41,13 @@ void Camera::Update()
 		forward = FSMath::EulerAngleToDirectionVector(direction);
 
 	mat4 viewMatrix = CalculateViewMatrix(forward);
-	components->transform->Get(GetName(), "View")->SetMatrix(viewMatrix);
+	GetComponent<Transform>("View")->SetMatrix(viewMatrix);
 
 	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective();
-	components->transform->Get(GetName(), "Perspective")->SetMatrix(perspectiveMatrix);
+	GetComponent<Transform>("Perspective")->SetMatrix(perspectiveMatrix);
 
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
-	components->transform->Get(GetName(), "Orthographic")->SetMatrix(orthographicMatrix);
+	GetComponent<Transform>("Orthographic")->SetMatrix(orthographicMatrix);
 }
 
 #pragma region Handle Input
@@ -199,11 +199,11 @@ mat4 Camera::CalculateProjectionMatrixOrthographic() const
 vec3 Camera::ProjectCursorPositionToWorldDirection() const
 {
 	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(systems->input->GetCursorPosition()), -1, 1);
-
-	mat4 projectionMatrix = components->transform->Get(GetName(), "Perspective")->GetMatrix();
+	
+	mat4 projectionMatrix = GetComponent<Transform>("Perspective")->GetMatrix();
 	vec4 eyeDirection = vec4(vec2(glm::inverse(projectionMatrix) * deviceNormalizedCursorPosition), -1, 0);
 
-	mat4 viewMatrix = components->transform->Get(GetName(), "View")->GetMatrix();
+	mat4 viewMatrix = GetComponent<Transform>("View")->GetMatrix();
 	vec3 worldDirection = glm::normalize(glm::inverse(viewMatrix) * eyeDirection);
 
 	return worldDirection;

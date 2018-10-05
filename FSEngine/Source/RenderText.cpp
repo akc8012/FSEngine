@@ -15,8 +15,8 @@ void RenderText::Start()
 	LoadFont("arial.ttf");
 
 	SetText(renderText);
-	components->shading->Get(GetName())->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
-	components->shading->Get(GetName())->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
+	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const
@@ -92,14 +92,14 @@ void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
 	float width = (aspectRatio.x * (1 / aspectRatio.y)) / windowSize.x;
 	float height = 1 / windowSize.y;
 
-	components->transform->Get(GetName())->SetScale(vec2(width, height));
-	components->transform->Get(GetName())->Scale(pixelScaleFactor);
+	GetComponent<Transform>()->SetScale(vec2(width, height));
+	GetComponent<Transform>()->Scale(pixelScaleFactor);
 }
 
 void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
 {
 	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(windowSize), windowSize);
-	components->transform->Get(GetName())->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
+	GetComponent<Transform>()->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
 }
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
@@ -143,7 +143,7 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 
 vec2 RenderText::GetPixelScale(const vec2& windowSize) const
 {
-	shared_ptr<Transform> transform = components->transform->Get(GetName());
+	Transform* transform = GetComponent<Transform>();
 	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
 }
 

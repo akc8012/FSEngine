@@ -47,7 +47,7 @@ public:
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 
 	template <typename T>
-	T* GetComponent(const string& name = "");
+	T* GetComponent(const string& name = "") const;
 
 	const string& GetName() const;
 	void SetName(const string& name);
@@ -57,7 +57,7 @@ public:
 };
 
 template<typename T>
-T* GameObject::GetComponent(const string& name)
+T* GameObject::GetComponent(const string& name) const
 {
 	if (typeid(T) == typeid(Mesh))
 		return reinterpret_cast<T*>(name == "" ? components->mesh->Get(GetName()).get() : components->mesh->Get(GetName(), name).get());
