@@ -52,7 +52,7 @@ void RenderText::LoadFont(const string& fontName)
 
 void RenderText::SetText(const string& text)
 {
-	if (renderText != text || components->shading->TryGet(GetName()) == nullptr)
+	if (renderText != text || TryGetComponent<Shading>() == nullptr)
 		CreateTextureComponent(text);
 }
 
@@ -64,10 +64,10 @@ void RenderText::CreateTextureComponent(const string& text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, text == "" ? " " : text.c_str(), textColor);
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
-	if (components->shading->TryGet(GetName()) == nullptr)
+	if (TryGetComponent<Shading>() == nullptr)
 		components->shading->Add(GetName(), make_shared<Texture>(surface, true));
 	else
-		dynamic_cast<Texture*>(components->shading->TryGet(GetName()).get())->GenerateTexture(surface, true);
+		dynamic_cast<Texture*>(TryGetComponent<Shading>())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }

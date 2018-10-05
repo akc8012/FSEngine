@@ -48,6 +48,8 @@ public:
 
 	template <typename T>
 	T* GetComponent(const string& name = "") const;
+	template <typename T>
+	T* TryGetComponent(const string& name = "") const;
 
 	const string& GetName() const;
 	void SetName(const string& name);
@@ -59,14 +61,24 @@ public:
 template<typename T>
 T* GameObject::GetComponent(const string& name) const
 {
+	auto component = TryGetComponent<T>(name);
+	if (component == nullptr)
+		throwFS("Could not find component on GameObject \"" + GetName() + "\" with name \"" + name + "\"");
+
+	return component;
+}
+
+template<typename T>
+T* GameObject::TryGetComponent(const string& name) const
+{
 	if (typeid(T) == typeid(Mesh))
-		return reinterpret_cast<T*>(name == "" ? components->mesh->Get(GetName()).get() : components->mesh->Get(GetName(), name).get());
+		return reinterpret_cast<T*>(name == "" ? components->mesh->TryGet(GetName()).get() : components->mesh->TryGet(GetName(), name).get());
 
 	if (typeid(T) == typeid(Shading))
-		return reinterpret_cast<T*>(name == "" ? components->shading->Get(GetName()).get() : components->shading->Get(GetName(), name).get());
+		return reinterpret_cast<T*>(name == "" ? components->shading->TryGet(GetName()).get() : components->shading->TryGet(GetName(), name).get());
 
 	if (typeid(T) == typeid(Transform))
-		return reinterpret_cast<T*>(name == "" ? components->transform->Get(GetName()).get() : components->transform->Get(GetName(), name).get());
+		return reinterpret_cast<T*>(name == "" ? components->transform->TryGet(GetName()).get() : components->transform->TryGet(GetName(), name).get());
 
 	throwFS("Unknown type used for GetComponent");
 }
