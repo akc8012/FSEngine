@@ -4,17 +4,15 @@ GameObjectContainer::GameObjectContainer(Systems* systems, Components* component
 {
 	this->systems = systems;
 	this->components = components;
-	gameObjectMapper = make_unique<GameObjectMapper>();
 }
 
 GameObject* GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
 {
-	int index = (int)gameObjects.size();
-	gameObjectMapper->MapGameObject(name, index);
+	auto result = gameObjects.emplace(name, gameObject);
+	if (!result.second)
+		throwFS("GameObject with name " + name + " already exists");
 
-	gameObjects.push_back(unique_ptr<GameObject>(gameObject));
 	InitializeGameObject(gameObject, name);
-
 	return gameObject;
 }
 
@@ -27,19 +25,11 @@ void GameObjectContainer::InitializeGameObject(GameObject* gameObject, const str
 
 void GameObjectContainer::RemoveGameObject(const string& name)
 {
-	int index = gameObjectMapper->UnMapGameObject(name);
-	gameObjects.erase(gameObjects.begin() + index);
+	GameObject* gameObject = TryGetGameObject(name);
+	if (gameObject == nullptr)
+		throwFS("Could not find GameObject to remove with name: " + name);
 
-	ReMapGameObjectNames(index);
-}
-
-void GameObjectContainer::ReMapGameObjectNames(int startIndex)
-{
-	for (int index = startIndex; index < gameObjects.size(); index++)
-	{
-		string name = gameObjects[index]->GetName();
-		gameObjectMapper->ReMapGameObject(name, index);
-	}
+	gameObjects.erase(name);
 }
 
 GameObject* GameObjectContainer::GetGameObject(const string& name) const
@@ -53,15 +43,9 @@ GameObject* GameObjectContainer::GetGameObject(const string& name) const
 
 GameObject* GameObjectContainer::TryGetGameObject(const string& name) const
 {
-	int index = gameObjectMapper->TryGetGameObjectIndex(name);
-	return TryGetGameObjectAtIndex(index);
-}
-
-GameObject* GameObjectContainer::TryGetGameObjectAtIndex(int index) const
-{
 	try
 	{
-		return gameObjects.at(index).get();
+		return gameObjects.at(name).get();
 	}
 	catch (std::out_of_range)
 	{
@@ -69,7 +53,12 @@ GameObject* GameObjectContainer::TryGetGameObjectAtIndex(int index) const
 	}
 }
 
-const vector<unique_ptr<GameObject>>& GameObjectContainer::GetGameObjects() const
+vector<GameObject*> GameObjectContainer::GetGameObjects() const
 {
-	return gameObjects;
+	vector<GameObject*> gameObjectVector;
+
+	for (const auto& gameObject : gameObjects)
+		gameObjectVector.push_back(gameObject.second.get());
+
+	return gameObjectVector;
 }

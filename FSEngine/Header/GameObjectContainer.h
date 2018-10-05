@@ -2,7 +2,11 @@
 #include "Systems.h"
 #include "Components.h"
 #include "GameObject.h"
-#include "GameObjectMapper.h"
+
+#include <string>
+#include <map>
+using std::string;
+using std::map;
 
 class GameObjectContainer
 {
@@ -10,13 +14,9 @@ private:
 	Systems* systems = nullptr;
 	Components* components = nullptr;
 
-	unique_ptr<GameObjectMapper> gameObjectMapper;
-	vector<unique_ptr<GameObject>> gameObjects;
+	map<string, unique_ptr<GameObject>> gameObjects;
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
-	GameObject* TryGetGameObjectAtIndex(int index) const;
-
-	void ReMapGameObjectNames(int startIndex);
 
 public:
 	GameObjectContainer(Systems* systems, Components* components);
@@ -28,7 +28,7 @@ public:
 	GameObject* TryGetGameObject(const string& name) const;
 	template <typename T> T* GetGameObjectAs(const string& name) const;
 
-	const vector<unique_ptr<GameObject>>& GetGameObjects() const;
+	vector<GameObject*> GetGameObjects() const;
 };
 
 template <typename T> T* GameObjectContainer::GetGameObjectAs(const string& name) const
