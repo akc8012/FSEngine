@@ -1,5 +1,4 @@
 #pragma once
-#include <typeinfo>
 #include "ComponentType.h"
 
 #include <nlohmann\json.hpp>
