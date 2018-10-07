@@ -7,7 +7,6 @@
 #include <map>
 using std::string;
 using std::map;
-using std::move;
 
 class GameObjectContainer
 {

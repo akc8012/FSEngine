@@ -12,6 +12,7 @@ using std::vector;
 using std::pair;
 using std::make_pair;
 using std::shared_ptr;
+using std::move;
 
 template <typename T>
 class ComponentContainer
@@ -20,7 +21,7 @@ private:
 	map<pair<string, string>, shared_ptr<T>> components;
 
 public:
-	shared_ptr<T> Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
+	T* Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
 	// Remove();
 
 	shared_ptr<T> Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
@@ -30,14 +31,15 @@ public:
 };
 
 template <typename T>
-shared_ptr<T> ComponentContainer<T>::Add(const string& key, shared_ptr<T> component, const string& name)
+T* ComponentContainer<T>::Add(const string& key, shared_ptr<T> component, const string& name)
 {
-	auto result = components.emplace(make_pair(key, name), component);
+	auto result = components.emplace(make_pair(key, name), move(component));
 	if (!result.second)
 		throwFS("Component with name \"" + name + "\" already exists");
 
-	component->SetName(name);
-	return component;
+	auto emplacedComponent = result.first->second.get();
+	emplacedComponent->SetName(name);
+	return emplacedComponent;
 }
 
 template <typename T>
