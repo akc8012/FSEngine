@@ -1,9 +1,9 @@
 #include "../Header/GameObjectContainer.h"
 
 GameObjectContainer::GameObjectContainer(Systems* systems, Components* components)
+ : systems(systems), components(components)
 {
-	this->systems = systems;
-	this->components = components;
+
 }
 
 GameObject* GameObjectContainer::AddGameObject(const string& name, unique_ptr<GameObject> gameObject)

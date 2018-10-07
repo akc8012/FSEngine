@@ -1,11 +1,8 @@
 #include "../Header/Scene.h"
 
 Scene::Scene(const string& name, Systems* systems, Window* window)
+ : name(name), systems(systems), window(window)
 {
-	this->name = name;
-	this->systems = systems;
-	this->window = window;
-
 	components = make_unique<Components>();
 	gameObjectContainer = make_unique<GameObjectContainer>(systems, components.get());
 

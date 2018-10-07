@@ -1,18 +1,14 @@
 #include "..\Header\Mesh.h"
 
 Mesh::Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices)
+ : vertices(vertices), indices(indices)
 {
-	this->vertices = vertices;
-	this->indices = indices;
-
 	Initialize();
 }
 
 Mesh::Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
+ : vertices(ConvertRawVertices(rawVertices, stride)), indices(indices)
 {
-	this->vertices = ConvertRawVertices(rawVertices, stride);
-	this->indices = indices;
-
 	Initialize();
 }
 

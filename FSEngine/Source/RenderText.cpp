@@ -1,8 +1,9 @@
 #include "../Header/RenderText.h"
 
 RenderText::RenderText(Window* window)
+ : window(window)
 {
-	this->window = window;
+
 }
 
 void RenderText::Start()

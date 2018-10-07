@@ -1,13 +1,12 @@
 #include "../Header/QuadPrimitive.h"
 
-QuadPrimitive::QuadPrimitive(const shared_ptr<Shading>& shadingComponent)
+void QuadPrimitive::Start()
 {
 	Mesh* meshComponent = components->mesh->Add(GetName(), CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	components->transform->Add(GetName(), make_shared<Transform>());
-	components->shading->Add(GetName(), shadingComponent);
 }
 
 shared_ptr<Mesh> QuadPrimitive::CreateMeshComponent() const

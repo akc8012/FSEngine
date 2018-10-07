@@ -1,8 +1,9 @@
 #include "..\Header\Model.h"
 
 Model::Model(const string& filepath)
+ : filepath(filepath)
 {
-	this->filepath = filepath;
+
 }
 
 void Model::Start()

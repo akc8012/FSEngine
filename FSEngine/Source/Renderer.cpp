@@ -1,9 +1,9 @@
 #include "../Header/Renderer.h"
 
 Renderer::Renderer(Systems* systems, Components* components)
+ : systems(systems), components(components)
 {
-	this->systems = systems;
-	this->components = components;
+
 }
 
 #pragma region StartRender

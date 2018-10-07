@@ -1,8 +1,9 @@
 #include "../Header/Camera.h"
 
 Camera::Camera(Window* window)
+ : window(window)
 {
-	this->window = window;
+
 }
 
 void Camera::Start()

@@ -1,8 +1,8 @@
 #include "../Header/Window.h"
 
 Window::Window(FileSystem* fileSystem)
+ : fileSystem(fileSystem)
 {
-	this->fileSystem = fileSystem;
 	CreateWindow(GetWindowSizeSettingsValue(), fileSystem->GetSettingsValue<bool>("Fullscreen"));
 }
 

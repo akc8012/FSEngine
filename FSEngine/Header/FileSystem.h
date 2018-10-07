@@ -27,10 +27,13 @@ public:
 
 	void LoadSettingsFile();
 	json GetSettingsValue(const string& key) const;
-	template <typename T> T GetSettingsValue(const string& key) const;
+
+	template <typename T>
+	T GetSettingsValue(const string& key) const;
 };
 
-template <typename T> T FileSystem::GetSettingsValue(const string& key) const
+template <typename T>
+T FileSystem::GetSettingsValue(const string& key) const
 {
 	return GetSettingsValue(key).get<T>();
 }
