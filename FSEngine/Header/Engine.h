@@ -22,8 +22,7 @@ private:
 	unique_ptr<Systems> systems;
 	unique_ptr<Window> window;
 	unique_ptr<Renderer> renderer;
-
-	SceneManager* sceneManager = nullptr;
+	unique_ptr<SceneManager> sceneManager;
 
 	void InitializeSDL();
 

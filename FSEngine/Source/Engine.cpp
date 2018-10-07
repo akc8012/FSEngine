@@ -15,7 +15,7 @@ void Engine::Initialize()
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
 
-	sceneManager = new SceneManager(systems.get(), window.get());
+	sceneManager = make_unique<SceneManager>(systems.get(), window.get());
 	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetComponents());
 
 	printFS("Success");
@@ -232,7 +232,7 @@ SDL_Window* Engine::GetSDLWindow() const
 
 Engine::~Engine()
 {
-	delete sceneManager;
+	sceneManager.reset();
 
 	SDL_GL_DeleteContext(openGlContext);
 	TTF_Quit();
