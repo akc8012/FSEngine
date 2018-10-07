@@ -6,14 +6,15 @@ GameObjectContainer::GameObjectContainer(Systems* systems, Components* component
 	this->components = components;
 }
 
-GameObject* GameObjectContainer::AddGameObject(const string& name, GameObject* gameObject)
+GameObject* GameObjectContainer::AddGameObject(const string& name, unique_ptr<GameObject> gameObject)
 {
-	auto result = gameObjects.emplace(name, gameObject);
+	auto result = gameObjects.emplace(name, move(gameObject));
 	if (!result.second)
 		throwFS("GameObject with name " + name + " already exists");
 
-	InitializeGameObject(gameObject, name);
-	return gameObject;
+	GameObject* emplacedGameObject = result.first->second.get();
+	InitializeGameObject(emplacedGameObject, name);
+	return emplacedGameObject;
 }
 
 void GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)

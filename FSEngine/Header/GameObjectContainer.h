@@ -7,6 +7,7 @@
 #include <map>
 using std::string;
 using std::map;
+using std::move;
 
 class GameObjectContainer
 {
@@ -21,7 +22,7 @@ private:
 public:
 	GameObjectContainer(Systems* systems, Components* components);
 
-	GameObject* AddGameObject(const string& name, GameObject* gameObject);
+	GameObject* AddGameObject(const string& name, unique_ptr<GameObject> gameObject);
 	void RemoveGameObject(const string& name);
 
 	GameObject* GetGameObject(const string& name) const;
