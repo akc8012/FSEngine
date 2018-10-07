@@ -72,13 +72,13 @@ template<typename T>
 T* GameObject::TryGetComponent(const string& name) const
 {
 	if (typeid(T) == typeid(Mesh))
-		return reinterpret_cast<T*>(name == "" ? components->mesh->TryGet(GetName()).get() : components->mesh->TryGet(GetName(), name).get());
+		return reinterpret_cast<T*>(name == "" ? components->mesh->TryGet(GetName()) : components->mesh->TryGet(GetName(), name));
 
 	if (typeid(T) == typeid(Shading))
-		return reinterpret_cast<T*>(name == "" ? components->shading->TryGet(GetName()).get() : components->shading->TryGet(GetName(), name).get());
+		return reinterpret_cast<T*>(name == "" ? components->shading->TryGet(GetName()) : components->shading->TryGet(GetName(), name));
 
 	if (typeid(T) == typeid(Transform))
-		return reinterpret_cast<T*>(name == "" ? components->transform->TryGet(GetName()).get() : components->transform->TryGet(GetName(), name).get());
+		return reinterpret_cast<T*>(name == "" ? components->transform->TryGet(GetName()) : components->transform->TryGet(GetName(), name));
 
 	throwFS("Unknown type used for GetComponent");
 }

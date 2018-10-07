@@ -24,8 +24,8 @@ public:
 	T* Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
 	// Remove();
 
-	shared_ptr<T> Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
-	shared_ptr<T> TryGet(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
+	T* Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
+	T* TryGet(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
 
 	vector<T*> GetComponents(const string& key) const;
 };
@@ -43,7 +43,7 @@ T* ComponentContainer<T>::Add(const string& key, shared_ptr<T> component, const 
 }
 
 template <typename T>
-shared_ptr<T> ComponentContainer<T>::Get(const string& key, const string& name) const
+T* ComponentContainer<T>::Get(const string& key, const string& name) const
 {
 	auto component = TryGet(key, name);
 	if (component == nullptr)
@@ -53,11 +53,11 @@ shared_ptr<T> ComponentContainer<T>::Get(const string& key, const string& name) 
 }
 
 template <typename T>
-shared_ptr<T> ComponentContainer<T>::TryGet(const string& key, const string& name) const
+T* ComponentContainer<T>::TryGet(const string& key, const string& name) const
 {
 	try
 	{
-		return components.at(make_pair(key, name));
+		return components.at(make_pair(key, name)).get();
 	}
 	catch (std::out_of_range)
 	{

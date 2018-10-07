@@ -26,7 +26,7 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::SetViewMatrices(shared_ptr<Transform> viewTransform)
+void Renderer::SetViewMatrices(Transform* viewTransform)
 {
 	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
@@ -85,13 +85,13 @@ void Renderer::RenderGameObject(const string& name)
 	}
 }
 
-void Renderer::SetTransformMatrices(shared_ptr<Transform> transform)
+void Renderer::SetTransformMatrices(Transform* transform)
 {
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-void Renderer::SetShadingParameters(shared_ptr<Shading> shading)
+void Renderer::SetShadingParameters(Shading* shading)
 {
 	SetDepthTest(shading->GetParameterCollection()->GetParameter(Shading::EnableDepthTest));
 	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(Shading::RenderPerspective));
@@ -115,7 +115,7 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 		return;
 
-	shared_ptr<Transform> projectionTransform = components->transform->Get("Camera", renderPerspective ? "Perspective" : "Orthographic");
+	Transform* projectionTransform = components->transform->Get("Camera", renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);

@@ -15,14 +15,14 @@ private:
 	Components* components = nullptr;
 
 	void ClearScreen();
-	void SetViewMatrices(shared_ptr<Transform> viewTransform);
+	void SetViewMatrices(Transform* viewTransform);
 
 	void DrawGrid();
 	void SetRenderParametersForGrid();
 
-	void SetTransformMatrices(shared_ptr<Transform> transform);
+	void SetTransformMatrices(Transform* transform);
 
-	void SetShadingParameters(shared_ptr<Shading> shading);
+	void SetShadingParameters(Shading* shading);
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);
