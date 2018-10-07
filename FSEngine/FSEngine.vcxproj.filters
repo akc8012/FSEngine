@@ -64,6 +64,7 @@
     <ClInclude Include="Header\ComponentContainer.h" />
     <ClInclude Include="Header\Components.h" />
     <ClInclude Include="Header\GameObjectContainer.h" />
+    <ClInclude Include="Header\KeyNamePair.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

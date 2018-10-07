@@ -1,16 +1,15 @@
 #pragma once
+#include "KeyNamePair.h"
 #include "Component.h"
 #include "ComponentType.h"
 #include "FSException.h"
 
-#include <map>
+#include <unordered_map>
 #include <vector>
 #include <utility>
 #include <memory>
-using std::map;
+using std::unordered_map;
 using std::vector;
-using std::pair;
-using std::make_pair;
 using std::shared_ptr;
 using std::move;
 
@@ -18,7 +17,7 @@ template <typename T>
 class ComponentContainer
 {
 private:
-	map<pair<string, string>, shared_ptr<T>> components;
+	unordered_map<KeyNamePair, shared_ptr<T>> components;
 
 public:
 	T* Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
@@ -33,7 +32,7 @@ public:
 template <typename T>
 T* ComponentContainer<T>::Add(const string& key, shared_ptr<T> component, const string& name)
 {
-	auto result = components.emplace(make_pair(key, name), move(component));
+	auto result = components.emplace(KeyNamePair(key, name), move(component));
 	if (!result.second)
 		throwFS("Component with name \"" + name + "\" already exists");
 
@@ -57,7 +56,7 @@ T* ComponentContainer<T>::TryGet(const string& key, const string& name) const
 {
 	try
 	{
-		return components.at(make_pair(key, name)).get();
+		return components.at(KeyNamePair(key, name)).get();
 	}
 	catch (std::out_of_range)
 	{
@@ -72,7 +71,7 @@ vector<T*> ComponentContainer<T>::GetComponents(const string& key) const
 
 	for (const auto& component : components)
 	{
-		if (component.first.first == key)
+		if (component.first.key == key)
 			componentsWithKey.push_back(component.second.get());
 	}
 
