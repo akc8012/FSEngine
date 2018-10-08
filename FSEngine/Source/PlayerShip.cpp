@@ -31,7 +31,7 @@ void PlayerShip::Update()
 			ResetValues();
 
 		ControlShip();
-		//SetCamera();
+		SetCamera();
 	}
 }
 
@@ -48,8 +48,13 @@ void PlayerShip::ControlShip()
 
 void PlayerShip::SetCamera()
 {
-	//const float CameraDistance = 6;
-	//camera->SetPosition(transform->GetPosition() + (-FSMath::Forward * CameraDistance));
+	const float CameraDistance = 6;
+	vec3 cameraPosition = transform->GetPosition() + (-FSMath::Forward * CameraDistance);
+
+	json j;
+	j["CameraPosition"] = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
+
+	systems->eventSystem->AddEvent(j);
 }
 
 float PlayerShip::GetFrameAdjustedSpeed() const

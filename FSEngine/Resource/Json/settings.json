@@ -12,8 +12,8 @@
   "WindowSize": [1280, 800],
   "Fullscreen": false,
 
-  "EditorMode": true,
-  "ShipSpeed": 3,
+  "EditorMode": false,
+  "ShipSpeed": 1,
 
   "CameraMoveSpeed": 2,
   "CameraScrollSpeed": 0.15

@@ -15,5 +15,6 @@ private:
 
 public:
 	void AddEvent(const json& event);
+	json ReadEvent();
 	void ClearEvents();
 };
