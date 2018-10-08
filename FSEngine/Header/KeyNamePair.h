@@ -19,6 +19,7 @@ struct KeyNamePair
 	}
 };
 
+// https://stackoverflow.com/questions/17016175/c-unordered-map-using-a-custom-class-type-as-the-key
 namespace std
 {
 	template <>
