@@ -7,12 +7,13 @@
 #include "Transform.h"
 #include "Components.h"
 #include "ParameterCollection.h"
+#include "IEventListener.h"
 
 #include <typeinfo>
 using std::shared_ptr;
 using std::make_shared;
 
-class GameObject
+class GameObject : public IEventListener
 {
 public:
 	enum Parameters
@@ -56,6 +57,8 @@ public:
 
 	json GetJson() const;
 	void SetFromJson(const json& j);
+
+	void GetEvent(const json& event) override;
 };
 
 template<typename T>

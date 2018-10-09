@@ -182,6 +182,7 @@
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\GameTimer.h" />
+    <ClInclude Include="Header\IEventListener.h" />
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\KeyNamePair.h" />
     <ClInclude Include="Header\Mesh.h" />

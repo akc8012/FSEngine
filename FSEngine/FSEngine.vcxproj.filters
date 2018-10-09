@@ -67,6 +67,7 @@
     <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\KeyNamePair.h" />
     <ClInclude Include="Header\EventSystem.h" />
+    <ClInclude Include="Header\IEventListener.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

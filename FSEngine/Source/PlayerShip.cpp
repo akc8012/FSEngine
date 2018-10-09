@@ -31,7 +31,7 @@ void PlayerShip::Update()
 			ResetValues();
 
 		ControlShip();
-		SetCamera();
+		//SetCamera();
 	}
 }
 

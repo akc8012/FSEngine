@@ -42,8 +42,8 @@ void Camera::Update()
 	{
 		forward = FSMath::EulerAngleToDirectionVector(direction);
 
-		json e = systems->eventSystem->ReadEvent()["CameraPosition"];
-		position = vec3(e[0], e[1], e[2]);
+		//json e = systems->eventSystem->ReadEvent()["CameraPosition"];
+		//position = vec3(e[0], e[1], e[2]);
 	}
 
 	mat4 viewMatrix = CalculateViewMatrix(forward);
