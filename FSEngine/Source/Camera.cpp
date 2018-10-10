@@ -18,12 +18,20 @@ void Camera::Start()
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 
 	cursorRay.origin = position;
+
+	systems->eventSystem->AddListener(this);
 }
 
 void Camera::ResetViewTransform()
 {
 	SetPosition(vec3(0, 1.5f, 5));
 	SetOrientation(vec3(-17, -90, 0));
+}
+
+void Camera::ReceiveEvent(const json& event)
+{
+	json pos = event["CameraPosition"];
+	position = vec3(pos[0], pos[1], pos[2]);
 }
 
 void Camera::Update()
@@ -39,12 +47,7 @@ void Camera::Update()
 		HandlePosition(forward);
 	}
 	else
-	{
 		forward = FSMath::EulerAngleToDirectionVector(direction);
-
-		//json e = systems->eventSystem->ReadEvent()["CameraPosition"];
-		//position = vec3(e[0], e[1], e[2]);
-	}
 
 	mat4 viewMatrix = CalculateViewMatrix(forward);
 	GetComponent<Transform>("View")->SetMatrix(viewMatrix);

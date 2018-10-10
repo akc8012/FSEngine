@@ -31,7 +31,7 @@ void PlayerShip::Update()
 			ResetValues();
 
 		ControlShip();
-		//SetCamera();
+		SetCamera();
 	}
 }
 
@@ -54,7 +54,7 @@ void PlayerShip::SetCamera()
 	json j;
 	j["CameraPosition"] = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
 
-	systems->eventSystem->AddEvent(j);
+	systems->eventSystem->SendEvent(j);
 }
 
 float PlayerShip::GetFrameAdjustedSpeed() const

@@ -63,7 +63,7 @@ void GameObject::SetFromJson(const json& j)
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 
-void GameObject::GetEvent(const json& event)
+void GameObject::ReceiveEvent(const json& event)
 {
 
 }

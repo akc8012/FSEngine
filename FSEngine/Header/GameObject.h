@@ -58,7 +58,7 @@ public:
 	json GetJson() const;
 	void SetFromJson(const json& j);
 
-	void GetEvent(const json& event) override;
+	void ReceiveEvent(const json& event) override;
 };
 
 template<typename T>

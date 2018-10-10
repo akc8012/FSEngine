@@ -11,5 +11,5 @@ public:
 
 	}
 
-	virtual void GetEvent(const json& event) = 0;
+	virtual void ReceiveEvent(const json& event) = 0;
 };
