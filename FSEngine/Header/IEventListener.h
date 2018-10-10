@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+using std::string;
+
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;
 
@@ -11,5 +14,5 @@ public:
 
 	}
 
-	virtual void ReceiveEvent(const json& event) = 0;
+	virtual void ReceiveEvent(const string& name, const json& event) = 0;
 };

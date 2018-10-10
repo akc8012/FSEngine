@@ -14,13 +14,7 @@ class EventSystem
 private:
 	vector<IEventListener*> listeners;
 
-	vector<json> events;
-
 public:
 	void AddListener(IEventListener* listener);
-	void SendEvent(const json& event);
-
-	void AddEvent(const json& event);
-	json ReadEvent();
-	void ClearEvents();
+	void SendEvent(const string& name, const json& event);
 };

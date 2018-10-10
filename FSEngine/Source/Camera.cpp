@@ -25,13 +25,13 @@ void Camera::Start()
 void Camera::ResetViewTransform()
 {
 	SetPosition(vec3(0, 1.5f, 5));
-	SetOrientation(vec3(-17, -90, 0));
+	SetOrientation(vec3(0, -90, 0));
 }
 
-void Camera::ReceiveEvent(const json& event)
+void Camera::ReceiveEvent(const string& name, const json& event)
 {
-	json pos = event["CameraPosition"];
-	position = vec3(pos[0], pos[1], pos[2]);
+	if (name == "CameraPosition")
+		position = vec3(event[0], event[1], event[2]);
 }
 
 void Camera::Update()

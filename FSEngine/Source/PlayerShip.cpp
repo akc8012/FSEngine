@@ -51,10 +51,8 @@ void PlayerShip::SetCamera()
 	const float CameraDistance = 6;
 	vec3 cameraPosition = transform->GetPosition() + (-FSMath::Forward * CameraDistance);
 
-	json j;
-	j["CameraPosition"] = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
-
-	systems->eventSystem->SendEvent(j);
+	auto event = json { cameraPosition.x, cameraPosition.y, cameraPosition.z };
+	systems->eventSystem->SendEvent("CameraPosition", event);
 }
 
 float PlayerShip::GetFrameAdjustedSpeed() const
