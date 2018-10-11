@@ -19,7 +19,7 @@ void Camera::Start()
 
 	cursorRay.origin = position;
 
-	systems->eventSystem->AddListener(this);
+	systems->eventSystem->AddListener("CameraPosition", this);
 }
 
 void Camera::ResetViewTransform()
@@ -28,10 +28,9 @@ void Camera::ResetViewTransform()
 	SetOrientation(vec3(0, -90, 0));
 }
 
-void Camera::ReceiveEvent(const string& name, const json& event)
+void Camera::ReceiveEvent(const string& key, const json& event)
 {
-	if (name == "CameraPosition")
-		position = vec3(event[0], event[1], event[2]);
+	position = vec3(event[0], event[1], event[2]);
 }
 
 void Camera::Update()

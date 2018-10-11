@@ -14,5 +14,5 @@ public:
 
 	}
 
-	virtual void ReceiveEvent(const string& name, const json& event) = 0;
+	virtual void ReceiveEvent(const string& key, const json& event) = 0;
 };

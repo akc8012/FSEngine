@@ -7,6 +7,12 @@ void QuadPrimitive::Start()
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	components->transform->Add(GetName(), make_shared<Transform>());
+	systems->eventSystem->AddListener("CameraPosition", this);
+}
+
+void QuadPrimitive::ReceiveEvent(const string& key, const json& event)
+{
+	printFS(vec3(event[0], event[1], event[2]));
 }
 
 shared_ptr<Mesh> QuadPrimitive::CreateMeshComponent() const
