@@ -1,5 +1,6 @@
 #pragma once
 #include "FileSystem.h"
+#include "IEventListener.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -11,7 +12,7 @@ using glm::tvec2;
 #include <string>
 using std::string;
 
-class Window
+class Window : public IEventListener
 {
 private:
 	FileSystem* fileSystem = nullptr;
@@ -20,6 +21,7 @@ private:
 	void SetWindowed();
 	void SetFullscreen();
 	void SetSurfaceSize(const tvec2<int>& surfaceSize);
+	void SetViewportToSurfaceSize();
 
 	void CreateWindow(const tvec2<int>& surfaceSize, bool fullscreen);
 	tvec2<int> GetSurfaceSizeSettingsValue() const;
@@ -30,7 +32,6 @@ public:
 	~Window();
 
 	void ToggleFullscreen();
-	void SetViewportToSurfaceSize();
 	void SetSurfaceSizeSizeFromSettingsValue();
 
 	tvec2<int> GetSurfaceSize() const;
@@ -40,4 +41,6 @@ public:
 	bool IsFullscreen() const;
 
 	void SwapWindow();
+
+	void ReceiveEvent(const string& key, const json& event) override;
 };

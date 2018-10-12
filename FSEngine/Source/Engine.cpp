@@ -14,7 +14,9 @@ void Engine::Initialize()
 	systems->shaderProgram = make_unique<ShaderProgram>();
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
+
 	systems->eventSystem = make_unique<EventSystem>();
+	systems->eventSystem->AddListener("SurfaceSizeChanged", window.get());
 
 	sceneManager = make_unique<SceneManager>(systems.get(), window.get());
 	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetComponents());
@@ -184,7 +186,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 	switch (windowEvent.event)
 	{
 	case SDL_WINDOWEVENT_SIZE_CHANGED:
-		window->SetViewportToSurfaceSize();
+		systems->eventSystem->SendEvent("SurfaceSizeChanged", json { windowEvent.data1, windowEvent.data2 });
 		break;
 
 	case SDL_WINDOWEVENT_FOCUS_GAINED:

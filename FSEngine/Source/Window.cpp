@@ -57,14 +57,6 @@ void Window::SetFullscreen()
 	SDL_SetWindowFullscreen(sdlWindow, SDL_WINDOW_FULLSCREEN);
 }
 
-void Window::SetViewportToSurfaceSize()
-{
-	tvec2<int> surfaceSize = GetSurfaceSize();
-
-	tvec2<int> position = tvec2<int>(0, 0);
-	glViewport(position.x, position.y, surfaceSize.x, surfaceSize.y);
-}
-
 tvec2<int> Window::GetSurfaceSize() const
 {
 	tvec2<int> surfaceSize = tvec2<int>(0, 0);
@@ -103,6 +95,20 @@ SDL_Window* Window::GetSDLWindow() const
 void Window::SwapWindow()
 {
 	SDL_GL_SwapWindow(sdlWindow);
+}
+
+void Window::ReceiveEvent(const string& key, const json& event)
+{
+	if (key == "SurfaceSizeChanged")
+		SetViewportToSurfaceSize();
+}
+
+void Window::SetViewportToSurfaceSize()
+{
+	tvec2<int> surfaceSize = GetSurfaceSize();
+
+	tvec2<int> position = tvec2<int>(0, 0);
+	glViewport(position.x, position.y, surfaceSize.x, surfaceSize.y);
 }
 
 Window::~Window()
