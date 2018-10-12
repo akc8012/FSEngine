@@ -18,19 +18,12 @@ void Camera::Start()
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 
 	cursorRay.origin = position;
-
-	systems->eventSystem->AddListener("CameraPosition", this);
 }
 
 void Camera::ResetViewTransform()
 {
 	SetPosition(vec3(0, 1.5f, 5));
-	SetOrientation(vec3(0, -90, 0));
-}
-
-void Camera::ReceiveEvent(const string& key, const json& event)
-{
-	position = vec3(event[0], event[1], event[2]);
+	SetOrientation(vec3(-17, -90, 0));
 }
 
 void Camera::Update()
@@ -181,7 +174,7 @@ mat4 Camera::CalculateViewMatrix(const vec3& forward) const
 
 mat4 Camera::CalculateProjectionMatrixPerspective() const
 {
-	vec2 windowSize = window->GetWindowSize();
+	vec2 windowSize = window->GetSurfaceSize();
 
 	const float FieldOfView = glm::radians(45.0f);
 	const float AspectRatio = windowSize.x / windowSize.y;
@@ -219,7 +212,7 @@ vec3 Camera::ProjectCursorPositionToWorldDirection() const
 
 vec2 Camera::GetDeviceNormalizedCursorPosition(const tvec2<int>& cursorPosition) const
 {
-	vec2 cursorCoordinates = (vec2)cursorPosition /= (vec2)window->GetWindowSize();
+	vec2 cursorCoordinates = (vec2)cursorPosition /= (vec2)window->GetSurfaceSize();
 	cursorCoordinates = (cursorCoordinates - 0.5f) * 2.f;
 	cursorCoordinates.y = -cursorCoordinates.y;
 

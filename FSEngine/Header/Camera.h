@@ -54,6 +54,4 @@ public:
 	void SetOrientation(const vec3& orientation);
 	vec3 GetPosition() const;
 	vec3 GetOrientation() const;
-
-	void ReceiveEvent(const string& key, const json& event) override;
 };

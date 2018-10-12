@@ -19,10 +19,10 @@ private:
 
 	void SetWindowed();
 	void SetFullscreen();
-	void SetWindowSize(const tvec2<int>& windowSize);
+	void SetSurfaceSize(const tvec2<int>& surfaceSize);
 
-	void CreateWindow(const tvec2<int>& windowSize, bool fullscreen);
-	tvec2<int> GetWindowSizeSettingsValue() const;
+	void CreateWindow(const tvec2<int>& surfaceSize, bool fullscreen);
+	tvec2<int> GetSurfaceSizeSettingsValue() const;
 	tvec2<int> GetScreenResolution() const;
 
 public:
@@ -30,13 +30,13 @@ public:
 	~Window();
 
 	void ToggleFullscreen();
-	void SetResolutionToWindowSize();
-	void SetWindowSizeFromSettingsValue();
+	void SetViewportToSurfaceSize();
+	void SetSurfaceSizeSizeFromSettingsValue();
 
-	tvec2<int> GetWindowSize() const;
+	tvec2<int> GetSurfaceSize() const;
 	SDL_Window* GetSDLWindow() const;
 
-	bool ContinuallyReloadWindowSizeSetting() const;
+	bool ContinuallyReloadSurfaceSizeSetting() const;
 	bool IsFullscreen() const;
 
 	void SwapWindow();

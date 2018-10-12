@@ -9,10 +9,10 @@
   "PolygonLineMode": false,
   "DrawGrid": true,
 
-  "WindowSize": [1280, 800],
+  "SurfaceSize": [1280, 800],
   "Fullscreen": false,
 
-  "EditorMode": false,
+  "EditorMode": true,
   "ShipSpeed": 1,
 
   "CameraMoveSpeed": 2,

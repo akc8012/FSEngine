@@ -83,48 +83,48 @@ vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
 
 void RenderText::Update()
 {
-	vec2 windowSize = window->GetWindowSize();
-	SetScaleFromWindowSize(windowSize);
-	SetPositionFromWindowSize(windowSize);
+	vec2 surfaceSize = window->GetSurfaceSize();
+	SetScaleFromSurfaceSize(surfaceSize);
+	SetPositionFromSurfaceSize(surfaceSize);
 }
 
-void RenderText::SetScaleFromWindowSize(const vec2& windowSize)
+void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 {
-	float width = (aspectRatio.x * (1 / aspectRatio.y)) / windowSize.x;
-	float height = 1 / windowSize.y;
+	float width = (aspectRatio.x * (1 / aspectRatio.y)) / surfaceSize.x;
+	float height = 1 / surfaceSize.y;
 
 	GetComponent<Transform>()->SetScale(vec2(width, height));
 	GetComponent<Transform>()->Scale(pixelScaleFactor);
 }
 
-void RenderText::SetPositionFromWindowSize(const vec2& windowSize)
+void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
 {
-	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(windowSize), windowSize);
-	GetComponent<Transform>()->SetPosition(vec2(alignedPixelPosition.x / windowSize.x, alignedPixelPosition.y / windowSize.y));
+	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(surfaceSize), surfaceSize);
+	GetComponent<Transform>()->SetPosition(vec2(alignedPixelPosition.x / surfaceSize.x, alignedPixelPosition.y / surfaceSize.y));
 }
 
-vec2 RenderText::GetPixelAnchoredPosition(const vec2& windowSize) const
+vec2 RenderText::GetPixelAnchoredPosition(const vec2& surfaceSize) const
 {
 	switch (anchorPosition)
 	{
 	case Center:
 		return pixelPosition;
 	case TopLeft:
-		return vec2(pixelPosition.x - windowSize.x, pixelPosition.y + windowSize.y);
+		return vec2(pixelPosition.x - surfaceSize.x, pixelPosition.y + surfaceSize.y);
 	case TopRight:
-		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y + windowSize.y);
+		return vec2(pixelPosition.x + surfaceSize.x, pixelPosition.y + surfaceSize.y);
 	case BottomLeft:
-		return vec2(pixelPosition.x - windowSize.x, pixelPosition.y - windowSize.y);
+		return vec2(pixelPosition.x - surfaceSize.x, pixelPosition.y - surfaceSize.y);
 	case BottomRight:
-		return vec2(pixelPosition.x + windowSize.x, pixelPosition.y - windowSize.y);
+		return vec2(pixelPosition.x + surfaceSize.x, pixelPosition.y - surfaceSize.y);
 	default:
 		throwFS("Could not recognize anchorPosition: " + std::to_string(anchorPosition));
 	}
 }
 
-vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowSize) const
+vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const
 {
-	vec2 pixelScale = GetPixelScale(windowSize);
+	vec2 pixelScale = GetPixelScale(surfaceSize);
 	switch (alignPosition)
 	{
 	case Center:
@@ -142,10 +142,10 @@ vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& windowS
 	}
 }
 
-vec2 RenderText::GetPixelScale(const vec2& windowSize) const
+vec2 RenderText::GetPixelScale(const vec2& surfaceSize) const
 {
 	Transform* transform = GetComponent<Transform>();
-	return vec2(transform->GetScale().x * windowSize.x, transform->GetScale().y * windowSize.y);
+	return vec2(transform->GetScale().x * surfaceSize.x, transform->GetScale().y * surfaceSize.y);
 }
 
 void RenderText::SetPixelScale(const vec2& pixelScaleFactor)

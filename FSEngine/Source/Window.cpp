@@ -3,16 +3,16 @@
 Window::Window(FileSystem* fileSystem)
  : fileSystem(fileSystem)
 {
-	CreateWindow(GetWindowSizeSettingsValue(), fileSystem->GetSettingsValue<bool>("Fullscreen"));
+	CreateWindow(GetSurfaceSizeSettingsValue(), fileSystem->GetSettingsValue<bool>("Fullscreen"));
 }
 
-tvec2<int> Window::GetWindowSizeSettingsValue() const
+tvec2<int> Window::GetSurfaceSizeSettingsValue() const
 {
-	json windowSize = fileSystem->GetSettingsValue("WindowSize");
-	return tvec2<int>(windowSize[0], windowSize[1]);
+	json surfaceSize = fileSystem->GetSettingsValue("SurfaceSize");
+	return tvec2<int>(surfaceSize[0], surfaceSize[1]);
 }
 
-void Window::CreateWindow(const tvec2<int>& windowSize, bool fullscreen)
+void Window::CreateWindow(const tvec2<int>& surfaceSize, bool fullscreen)
 {
 	if (sdlWindow != nullptr)
 		SDL_DestroyWindow(sdlWindow);
@@ -21,8 +21,8 @@ void Window::CreateWindow(const tvec2<int>& windowSize, bool fullscreen)
 	const int OnTopFlag = fileSystem->GetSettingsValue<bool>("ShowWindowOnTop") ? SDL_WINDOW_ALWAYS_ON_TOP : 0;
 	const int WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | OnTopFlag | FullscreenFlag;
 
-	const tvec2<int> WindowSize = fullscreen ? GetScreenResolution() : windowSize;
-	sdlWindow = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WindowSize.x, WindowSize.y, WindowFlags);
+	const tvec2<int> SurfaceSize = fullscreen ? GetScreenResolution() : surfaceSize;
+	sdlWindow = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SurfaceSize.x, SurfaceSize.y, WindowFlags);
 
 	if (sdlWindow == nullptr)
 		throwFS((string)"Window could not be created: " + SDL_GetError());
@@ -42,9 +42,9 @@ void Window::ToggleFullscreen()
 
 void Window::SetWindowed()
 {
-	tvec2<int> windowSizeSetting = GetWindowSizeSettingsValue();
+	tvec2<int> surfaceSizeSetting = GetSurfaceSizeSettingsValue();
 
-	SDL_SetWindowSize(sdlWindow, windowSizeSetting.x, windowSizeSetting.y);
+	SDL_SetWindowSize(sdlWindow, surfaceSizeSetting.x, surfaceSizeSetting.y);
 	SDL_SetWindowFullscreen(sdlWindow, 0);
 	SDL_SetWindowPosition(sdlWindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
@@ -57,35 +57,35 @@ void Window::SetFullscreen()
 	SDL_SetWindowFullscreen(sdlWindow, SDL_WINDOW_FULLSCREEN);
 }
 
-void Window::SetResolutionToWindowSize()
+void Window::SetViewportToSurfaceSize()
 {
-	tvec2<int> windowSize = GetWindowSize();
+	tvec2<int> surfaceSize = GetSurfaceSize();
 
 	tvec2<int> position = tvec2<int>(0, 0);
-	glViewport(position.x, position.y, windowSize.x, windowSize.y);
+	glViewport(position.x, position.y, surfaceSize.x, surfaceSize.y);
 }
 
-tvec2<int> Window::GetWindowSize() const
+tvec2<int> Window::GetSurfaceSize() const
 {
-	tvec2<int> windowSize = tvec2<int>(0, 0);
-	SDL_GetWindowSize(sdlWindow, &windowSize.x, &windowSize.y);
-	return windowSize;
+	tvec2<int> surfaceSize = tvec2<int>(0, 0);
+	SDL_GetWindowSize(sdlWindow, &surfaceSize.x, &surfaceSize.y);
+	return surfaceSize;
 }
 
-void Window::SetWindowSizeFromSettingsValue()
+void Window::SetSurfaceSizeSizeFromSettingsValue()
 {
-	SetWindowSize(GetWindowSizeSettingsValue());
+	SetSurfaceSize(GetSurfaceSizeSettingsValue());
 }
 
-void Window::SetWindowSize(const tvec2<int>& windowSize)
+void Window::SetSurfaceSize(const tvec2<int>& surfaceSize)
 {
-	if (windowSize == GetWindowSize())
+	if (surfaceSize == GetSurfaceSize())
 		return;
 
-	SDL_SetWindowSize(sdlWindow, windowSize.x, windowSize.y);
+	SDL_SetWindowSize(sdlWindow, surfaceSize.x, surfaceSize.y);
 }
 
-bool Window::ContinuallyReloadWindowSizeSetting() const
+bool Window::ContinuallyReloadSurfaceSizeSetting() const
 {
 	return !IsFullscreen();
 }

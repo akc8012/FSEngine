@@ -30,12 +30,12 @@ private:
 	void CreateTextureComponent(const string& text);
 
 	vec2 CalculateAspectRatio(const vec2& surfaceSize);
-	void SetScaleFromWindowSize(const vec2& windowSize);
+	void SetScaleFromSurfaceSize(const vec2& surfaceSize);
 
-	void SetPositionFromWindowSize(const vec2& windowSize);
-	vec2 GetPixelAnchoredPosition(const vec2& windowSize) const;
-	vec2 GetPixelAlignPosition(const vec2& position, const vec2& windowSize) const;
-	vec2 GetPixelScale(const vec2& windowSize) const;
+	void SetPositionFromSurfaceSize(const vec2& surfaceSize);
+	vec2 GetPixelAnchoredPosition(const vec2& surfaceSize) const;
+	vec2 GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const;
+	vec2 GetPixelScale(const vec2& surfaceSize) const;
 
 	void SetPixelPositionToTopLeftOrigin();
 
