@@ -100,15 +100,13 @@ void Window::SwapWindow()
 void Window::ReceiveEvent(const string& key, const json& event)
 {
 	if (key == "SurfaceSizeChanged")
-		SetViewportToSurfaceSize();
+		SetViewportSize(tvec2<int> { event[0], event[1] });
 }
 
-void Window::SetViewportToSurfaceSize()
+void Window::SetViewportSize(const tvec2<int>& viewportSize)
 {
-	tvec2<int> surfaceSize = GetSurfaceSize();
-
-	tvec2<int> position = tvec2<int>(0, 0);
-	glViewport(position.x, position.y, surfaceSize.x, surfaceSize.y);
+	const tvec2<int> ZeroPosition = tvec2<int>(0, 0);
+	glViewport(ZeroPosition.x, ZeroPosition.y, viewportSize.x, viewportSize.y);
 }
 
 Window::~Window()

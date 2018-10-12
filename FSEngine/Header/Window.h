@@ -21,7 +21,7 @@ private:
 	void SetWindowed();
 	void SetFullscreen();
 	void SetSurfaceSize(const tvec2<int>& surfaceSize);
-	void SetViewportToSurfaceSize();
+	void SetViewportSize(const tvec2<int>& viewportSize);
 
 	void CreateWindow(const tvec2<int>& surfaceSize, bool fullscreen);
 	tvec2<int> GetSurfaceSizeSettingsValue() const;
