@@ -185,6 +185,10 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 {
 	switch (windowEvent.event)
 	{
+	case SDL_WINDOWEVENT_SHOWN:
+		systems->eventSystem->SendEvent("SurfaceSizeChanged", json { window->GetSurfaceSize().x, window->GetSurfaceSize().y });
+		break;
+
 	case SDL_WINDOWEVENT_SIZE_CHANGED:
 		systems->eventSystem->SendEvent("SurfaceSizeChanged", json { windowEvent.data1, windowEvent.data2 });
 		break;

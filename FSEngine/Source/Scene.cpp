@@ -54,7 +54,7 @@ void Scene::AddGameObjects(Window* window)
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));
 
-	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>(window));
+	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
 	gameObjectContainer->AddGameObject("PlayerShip", make_unique<PlayerShip>());
 }
 

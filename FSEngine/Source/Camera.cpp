@@ -1,11 +1,5 @@
 #include "../Header/Camera.h"
 
-Camera::Camera(Window* window)
- : window(window)
-{
-
-}
-
 void Camera::Start()
 {
 	ResetViewTransform();
@@ -18,6 +12,7 @@ void Camera::Start()
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
 
 	cursorRay.origin = position;
+	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 }
 
 void Camera::ResetViewTransform()
@@ -44,11 +39,18 @@ void Camera::Update()
 	mat4 viewMatrix = CalculateViewMatrix(forward);
 	GetComponent<Transform>("View")->SetMatrix(viewMatrix);
 
-	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective();
-	GetComponent<Transform>("Perspective")->SetMatrix(perspectiveMatrix);
-
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
 	GetComponent<Transform>("Orthographic")->SetMatrix(orthographicMatrix);
+}
+
+void Camera::ReceiveEvent(const string& key, const json& event)
+{
+	if (key != "SurfaceSizeChanged")
+		return;
+
+	surfaceSize = tvec2<int> { event[0], event[1] };
+	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective(surfaceSize);
+	GetComponent<Transform>("Perspective")->SetMatrix(perspectiveMatrix);
 }
 
 #pragma region Handle Input
@@ -172,12 +174,10 @@ mat4 Camera::CalculateViewMatrix(const vec3& forward) const
 	return glm::lookAt(position, position + forward, FSMath::Up);
 }
 
-mat4 Camera::CalculateProjectionMatrixPerspective() const
+mat4 Camera::CalculateProjectionMatrixPerspective(const tvec2<int>& surfaceSize) const
 {
-	vec2 windowSize = window->GetSurfaceSize();
-
 	const float FieldOfView = glm::radians(45.0f);
-	const float AspectRatio = windowSize.x / windowSize.y;
+	const float AspectRatio = (float)surfaceSize.x / (float)surfaceSize.y;
 	const float NearPlane = 0.1f;
 	const float FarPlane = 100.0f;
 
@@ -212,7 +212,7 @@ vec3 Camera::ProjectCursorPositionToWorldDirection() const
 
 vec2 Camera::GetDeviceNormalizedCursorPosition(const tvec2<int>& cursorPosition) const
 {
-	vec2 cursorCoordinates = (vec2)cursorPosition /= (vec2)window->GetSurfaceSize();
+	vec2 cursorCoordinates = (vec2)cursorPosition /= (vec2)surfaceSize;
 	cursorCoordinates = (cursorCoordinates - 0.5f) * 2.f;
 	cursorCoordinates.y = -cursorCoordinates.y;
 

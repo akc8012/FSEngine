@@ -1,12 +1,10 @@
 #pragma once
 #include "GameObject.h"
-#include "Window.h"
 
 class Camera : public GameObject
 {
 private:
-	Window* window = nullptr;
-
+	tvec2<int> surfaceSize;
 	vec3 position;
 	vec3 direction;
 
@@ -16,7 +14,7 @@ private:
 	void ResetViewTransform();
 
 	mat4 CalculateViewMatrix(const vec3& forward) const;
-	mat4 CalculateProjectionMatrixPerspective() const;
+	mat4 CalculateProjectionMatrixPerspective(const tvec2<int>& surfaceSize) const;
 	mat4 CalculateProjectionMatrixOrthographic() const;
 
 	void HandleDirection();
@@ -45,8 +43,6 @@ private:
 	float GetFrameAdjustedSpeed() const;
 
 public:
-	Camera(Window* window);
-
 	void Start() override;
 	void Update() override;
 
@@ -54,4 +50,6 @@ public:
 	void SetOrientation(const vec3& orientation);
 	vec3 GetPosition() const;
 	vec3 GetOrientation() const;
+
+	void ReceiveEvent(const string& key, const json& event) override;
 };
