@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "Window.h"
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -15,7 +14,6 @@ public:
 
 private:
 	TTF_Font* font = nullptr;
-	Window* window = nullptr;
 
 	string renderText;
 	vec2 aspectRatio;
@@ -40,11 +38,10 @@ private:
 	void SetPixelPositionToTopLeftOrigin();
 
 public:
-	RenderText(Window* window);
 	~RenderText();
 
 	void Start() override;
-	void Update() override;
+	void ReceiveEvent(const string& key, const json& event) override;
 
 	void SetText(const string& text);
 

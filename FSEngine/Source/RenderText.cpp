@@ -1,11 +1,5 @@
 #include "../Header/RenderText.h"
 
-RenderText::RenderText(Window* window)
- : window(window)
-{
-
-}
-
 void RenderText::Start()
 {
 	components->transform->Add(GetName(), make_shared<Transform>());
@@ -18,6 +12,8 @@ void RenderText::Start()
 	SetText(renderText);
 	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
 	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+
+	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const
@@ -81,11 +77,16 @@ vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
 	return vec2(width, height);
 }
 
-void RenderText::Update()
+void RenderText::ReceiveEvent(const string& key, const json& event)
 {
-	vec2 surfaceSize = window->GetSurfaceSize();
+	if (key != "SurfaceSizeChanged")
+		return;
+
+	auto surfaceSize = vec2 { event[0], event[1] };
 	SetScaleFromSurfaceSize(surfaceSize);
 	SetPositionFromSurfaceSize(surfaceSize);
+
+	printFS("Text changed");
 }
 
 void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)

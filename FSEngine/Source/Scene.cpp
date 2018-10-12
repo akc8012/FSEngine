@@ -1,15 +1,15 @@
 #include "../Header/Scene.h"
 
-Scene::Scene(const string& name, Systems* systems, Window* window)
- : name(name), systems(systems), window(window)
+Scene::Scene(const string& name, Systems* systems)
+ : name(name), systems(systems)
 {
 	components = make_unique<Components>();
 	gameObjectContainer = make_unique<GameObjectContainer>(systems, components.get());
 
-	AddGameObjects(window);
+	AddGameObjects();
 }
 
-void Scene::AddGameObjects(Window* window)
+void Scene::AddGameObjects()
 {
 	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Texture>("Resource/Image/awesomeface.png"));
@@ -44,12 +44,10 @@ void Scene::AddGameObjects(Window* window)
 		gameObject->GetComponent<Transform>()->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
 	}
 
-	gameObject = gameObjectContainer->AddGameObject("DebugText", make_unique<RenderText>(window));
+	gameObject = gameObjectContainer->AddGameObject("DebugText", make_unique<RenderText>());
 	RenderText* debugText = dynamic_cast<RenderText*>(gameObject);
 	debugText->SetText("Debug text");
-	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
-	debugText->GetParameterCollection()->SetParameter(GameObject::DoLateDraw, true);
-	debugText->SetPixelScale(26);
+	debugText->SetPixelScale(42);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));

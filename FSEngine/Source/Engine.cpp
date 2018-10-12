@@ -18,7 +18,7 @@ void Engine::Initialize()
 	systems->eventSystem = make_unique<EventSystem>();
 	systems->eventSystem->AddListener("SurfaceSizeChanged", window.get());
 
-	sceneManager = make_unique<SceneManager>(systems.get(), window.get());
+	sceneManager = make_unique<SceneManager>(systems.get());
 	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetComponents());
 
 	printFS("Success");
@@ -219,6 +219,7 @@ void Engine::Update()
 	systems->gameTimer->Update();
 
 	sceneManager->Update();
+	sceneManager->GetCurrentScene()->GetGameObjectContainer()->GetGameObjectAs<RenderText>("DebugText")->SetText(std::to_string(systems->gameTimer->GetFrames()));
 
 	systems->input->Update();
 }

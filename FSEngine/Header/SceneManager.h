@@ -12,7 +12,7 @@ private:
 	void DrawGameObjects(Renderer* renderer, bool doLateDraw);
 
 public:
-	SceneManager(Systems* systems, Window* window);
+	SceneManager(Systems* systems);
 
 	void Update();
 	void Draw(Renderer* renderer);

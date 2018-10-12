@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "Components.h"
 #include "Renderer.h"
-#include "Window.h"
 #include "CubePrimitive.h"
 #include "QuadPrimitive.h"
 #include "RenderText.h"
@@ -10,11 +9,11 @@
 #include "PlayerShip.h"
 #include "Camera.h"
 #include "GameObjectContainer.h"
-
-#include <string>
-#include <vector>
-using std::string;
-using std::vector;
+//
+//#include <string>
+//#include <vector>
+//using std::string;
+//using std::vector;
 
 class Scene
 {
@@ -26,11 +25,11 @@ private:
 	unique_ptr<Components> components;
 	unique_ptr<GameObjectContainer> gameObjectContainer;
 
-	void AddGameObjects(Window* window);
+	void AddGameObjects();
 	string GetFileName() const;
 
 public:
-	Scene(const string& name, Systems* systems, Window* window);
+	Scene(const string& name, Systems* systems);
 	~Scene();
 
 	void LoadScene();

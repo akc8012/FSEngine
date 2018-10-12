@@ -1,8 +1,8 @@
 #include "../Header/SceneManager.h"
 
-SceneManager::SceneManager(Systems* systems, Window* window)
+SceneManager::SceneManager(Systems* systems)
 {
-	currentScene = make_unique<Scene>("scene", systems, window);
+	currentScene = make_unique<Scene>("scene", systems);
 }
 
 void SceneManager::Update()
