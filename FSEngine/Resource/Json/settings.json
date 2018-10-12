@@ -4,6 +4,7 @@
 
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
+  "WindowAllowResize": true,
 
   "SwapInterval": 0,
   "PolygonLineMode": false,

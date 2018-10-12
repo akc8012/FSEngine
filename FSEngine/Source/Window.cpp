@@ -19,7 +19,8 @@ void Window::CreateWindow(const tvec2<int>& surfaceSize, bool fullscreen)
 
 	const int FullscreenFlag = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
 	const int OnTopFlag = fileSystem->GetSettingsValue<bool>("ShowWindowOnTop") ? SDL_WINDOW_ALWAYS_ON_TOP : 0;
-	const int WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | OnTopFlag | FullscreenFlag;
+	const int AllowResizeFlag = fileSystem->GetSettingsValue<bool>("WindowAllowResize") ? SDL_WINDOW_RESIZABLE : 0;
+	const int WindowFlags = FullscreenFlag | OnTopFlag | AllowResizeFlag | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
 
 	const tvec2<int> SurfaceSize = fullscreen ? GetScreenResolution() : surfaceSize;
 	sdlWindow = SDL_CreateWindow("FSEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SurfaceSize.x, SurfaceSize.y, WindowFlags);
@@ -79,7 +80,7 @@ void Window::SetSurfaceSize(const tvec2<int>& surfaceSize)
 
 bool Window::ContinuallyReloadSurfaceSizeSetting() const
 {
-	return !IsFullscreen();
+	return !IsFullscreen() && !fileSystem->GetSettingsValue<bool>("WindowAllowResize");
 }
 
 bool Window::IsFullscreen() const
