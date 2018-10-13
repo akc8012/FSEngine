@@ -13,35 +13,35 @@ void Scene::AddGameObjects()
 {
 	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Texture>("Resource/Image/awesomeface.png"));
-	gameObject->GetComponent<Transform>()->SetPosition(4.5f, 0.2f, 0);
+	components->transform->Get(gameObject->GetName())->SetPosition(4.5f, 0.2f, 0);
 
 	gameObject = gameObjectContainer->AddGameObject("GreenCube", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Shading>(0.1f, 0.6f, 0.3f));
-	gameObject->GetComponent<Transform>()->SetPosition(6, -0.2f, 0.1f);
-	gameObject->GetComponent<Transform>()->SetScale(2, 0.8f, 2.8f);
+	components->transform->Get(gameObject->GetName())->SetPosition(6, -0.2f, 0.1f);
+	components->transform->Get(gameObject->GetName())->SetScale(2, 0.8f, 2.8f);
 
 	gameObject = gameObjectContainer->AddGameObject("Red", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Shading>(0.8f, 0.f, 0.f));
-	gameObject->GetComponent<Transform>()->SetPosition(1.5f, 1, -3);
+	components->transform->Get(gameObject->GetName())->SetPosition(1.5f, 1, -3);
 
 	gameObject = gameObjectContainer->AddGameObject("Green", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Shading>(0.f, 0.8f, 0.f));
-	gameObject->GetComponent<Transform>()->SetPosition(1, -1, -1);
+	components->transform->Get(gameObject->GetName())->SetPosition(1, -1, -1);
 
 	gameObject = gameObjectContainer->AddGameObject("Blue", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Shading>(0.f, 0.f, 0.8f));
-	gameObject->GetComponent<Transform>()->SetPosition(-0.8f, 0, -2);
+	components->transform->Get(gameObject->GetName())->SetPosition(-0.8f, 0, -2);
 
 	gameObject = gameObjectContainer->AddGameObject("Yellow", make_unique<CubePrimitive>());
 	components->shading->Add(gameObject->GetName(), make_shared<Shading>(0.6f, 0.6f, 0.f));
-	gameObject->GetComponent<Transform>()->SetPosition(-2, -1, 0);
+	components->transform->Get(gameObject->GetName())->SetPosition(-2, -1, 0);
 
 	for (int i = 0; i < 100; i++)
 	{
 		auto cube = make_unique<CubePrimitive>();
 		gameObject = gameObjectContainer->AddGameObject(std::to_string(i), move(cube));
 		components->shading->Add(gameObject->GetName(), make_shared<Shading>(systems->random->GetRandomUniformVector(0.f, 1.f)));
-		gameObject->GetComponent<Transform>()->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
+		components->transform->Get(gameObject->GetName())->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
 	}
 
 	gameObject = gameObjectContainer->AddGameObject("DebugText", make_unique<RenderText>());
@@ -58,19 +58,19 @@ void Scene::AddGameObjects()
 
 void Scene::LoadScene()
 {
-	json j = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
+	//json j = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
 
-	for (const auto& gameObject : gameObjectContainer->GetGameObjects())
-		gameObject->SetFromJson(j[gameObject->GetName()]);
+	//for (const auto& gameObject : gameObjectContainer->GetGameObjects())
+	//	gameObject->SetFromJson(j[gameObject->GetName()]);
 }
 
 void Scene::SaveScene() const
 {
-	json j;
-	for (const auto& gameObject : gameObjectContainer->GetGameObjects())
-		j[gameObject->GetName()] = gameObject->GetJson();
+	//json j;
+	//for (const auto& gameObject : gameObjectContainer->GetGameObjects())
+	//	j[gameObject->GetName()] = gameObject->GetJson();
 
-	FileSystem::WriteTextToFile(j.dump(2), GetFileName());
+	//FileSystem::WriteTextToFile(j.dump(2), GetFileName());
 }
 
 string Scene::GetFileName() const

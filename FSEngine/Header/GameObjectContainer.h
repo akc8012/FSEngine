@@ -1,7 +1,7 @@
 #pragma once
 #include "Systems.h"
 #include "Components.h"
-#include "GameObject.h"
+#include "IGameObject.h"
 
 #include <string>
 #include <map>
@@ -14,23 +14,23 @@ private:
 	Systems* systems = nullptr;
 	Components* components = nullptr;
 
-	map<string, unique_ptr<GameObject>> gameObjects;
+	map<string, unique_ptr<IGameObject>> gameObjects;
 
-	void InitializeGameObject(GameObject* gameObject, const string& name);
+	void InitializeGameObject(IGameObject* gameObject, const string& name);
 
 public:
 	GameObjectContainer(Systems* systems, Components* components);
 
-	GameObject* AddGameObject(const string& name, unique_ptr<GameObject> gameObject);
+	IGameObject* AddGameObject(const string& name, unique_ptr<IGameObject> gameObject);
 	void RemoveGameObject(const string& name);
 
-	GameObject* GetGameObject(const string& name) const;
-	GameObject* TryGetGameObject(const string& name) const;
+	IGameObject* GetGameObject(const string& name) const;
+	IGameObject* TryGetGameObject(const string& name) const;
 
 	template <typename T>
 	T* GetGameObjectAs(const string& name) const;
 
-	vector<GameObject*> GetGameObjects() const;
+	vector<IGameObject*> GetGameObjects() const;
 };
 
 template <typename T>

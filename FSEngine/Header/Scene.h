@@ -9,11 +9,6 @@
 #include "PlayerShip.h"
 #include "Camera.h"
 #include "GameObjectContainer.h"
-//
-//#include <string>
-//#include <vector>
-//using std::string;
-//using std::vector;
 
 class Scene
 {

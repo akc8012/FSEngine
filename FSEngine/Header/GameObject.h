@@ -1,31 +1,18 @@
 #pragma once
+#include "IGameObject.h"
 #include "FSException.h"
-#include "Systems.h"
 #include "Mesh.h"
 #include "Shading.h"
 #include "Texture.h"
 #include "Transform.h"
-#include "Components.h"
-#include "ParameterCollection.h"
 #include "IEventListener.h"
 
 #include <typeinfo>
 using std::shared_ptr;
 using std::make_shared;
 
-class GameObject : public IEventListener
+class GameObject : public IGameObject, public IEventListener
 {
-public:
-	enum Parameters
-	{
-		DoUpdate,
-		DoDraw,
-		DoLateUpdate,
-		DoLateDraw,
-
-		ParametersLength
-	};
-
 private:
 	string name;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
@@ -40,20 +27,20 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetReferences(Systems* systems, Components* components);
+	void SetReferences(Systems* systems, Components* components) override;
 
-	virtual void Start();
-	virtual void Update();
+	virtual void Start() override;
+	virtual void Update() override;
 
-	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
+	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const override;
 
 	template <typename T>
 	T* GetComponent(const string& name = "") const;
 	template <typename T>
 	T* TryGetComponent(const string& name = "") const;
 
-	const string& GetName() const;
-	void SetName(const string& name);
+	const string& GetName() const override;
+	void SetName(const string& name) override;
 
 	json GetJson() const;
 	void SetFromJson(const json& j);
