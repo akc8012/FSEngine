@@ -3,7 +3,7 @@
 Scene::Scene(const string& name, Systems* systems)
  : name(name), systems(systems)
 {
-	components = make_unique<Components>();
+	components = make_unique<ComponentContainer>();
 	gameObjectContainer = make_unique<GameObjectContainer>(systems, components.get());
 
 	AddGameObjects();
@@ -83,7 +83,7 @@ GameObjectContainer* Scene::GetGameObjectContainer() const
 	return gameObjectContainer.get();
 }
 
-Components* Scene::GetComponents() const
+ComponentContainer* Scene::GetComponents() const
 {
 	return components.get();
 }

@@ -62,12 +62,12 @@
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\Scene.h" />
-    <ClInclude Include="Header\ComponentContainer.h" />
-    <ClInclude Include="Header\Components.h" />
-    <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\KeyNamePair.h" />
     <ClInclude Include="Header\EventSystem.h" />
     <ClInclude Include="Header\IEventListener.h" />
+    <ClInclude Include="Header\GameObjectContainer.h" />
+    <ClInclude Include="Header\ComponentCollection.h" />
+    <ClInclude Include="Header\ComponentContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

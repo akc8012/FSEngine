@@ -5,7 +5,7 @@
 #include "Shading.h"
 #include "Texture.h"
 #include "Transform.h"
-#include "Components.h"
+#include "ComponentContainer.h"
 #include "ParameterCollection.h"
 #include "IEventListener.h"
 
@@ -34,13 +34,13 @@ private:
 
 protected:
 	Systems* systems = nullptr;
-	Components* components = nullptr;
+	ComponentContainer* components = nullptr;
 
 public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetReferences(Systems* systems, Components* components);
+	void SetReferences(Systems* systems, ComponentContainer* components);
 
 	virtual void Start();
 	virtual void Update();

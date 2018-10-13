@@ -1,6 +1,6 @@
 #pragma once
 #include "Systems.h"
-#include "Components.h"
+#include "ComponentContainer.h"
 #include "Window.h"
 #include "GameObject.h"
 
@@ -12,7 +12,7 @@ class Renderer
 {
 private:
 	Systems* systems = nullptr;
-	Components* components = nullptr;
+	ComponentContainer* components = nullptr;
 
 	void ClearScreen();
 	void SetViewMatrices(Transform* viewTransform);
@@ -30,7 +30,7 @@ private:
 	void DrawMesh(Mesh* mesh);
 
 public:
-	Renderer(Systems* systems, Components* components);
+	Renderer(Systems* systems, ComponentContainer* components);
 	~Renderer();
 
 	void StartRender();

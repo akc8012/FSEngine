@@ -1,6 +1,6 @@
 #pragma once
 #include "Systems.h"
-#include "Components.h"
+#include "ComponentContainer.h"
 #include "GameObject.h"
 
 #include <string>
@@ -12,14 +12,14 @@ class GameObjectContainer
 {
 private:
 	Systems* systems = nullptr;
-	Components* components = nullptr;
+	ComponentContainer* components = nullptr;
 
 	map<string, unique_ptr<GameObject>> gameObjects;
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 
 public:
-	GameObjectContainer(Systems* systems, Components* components);
+	GameObjectContainer(Systems* systems, ComponentContainer* components);
 
 	GameObject* AddGameObject(const string& name, unique_ptr<GameObject> gameObject);
 	void RemoveGameObject(const string& name);

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Components.h"
+#include "ComponentContainer.h"
 #include "Renderer.h"
 #include "CubePrimitive.h"
 #include "QuadPrimitive.h"
@@ -9,11 +9,6 @@
 #include "PlayerShip.h"
 #include "Camera.h"
 #include "GameObjectContainer.h"
-//
-//#include <string>
-//#include <vector>
-//using std::string;
-//using std::vector;
 
 class Scene
 {
@@ -22,7 +17,7 @@ private:
 	Systems* systems = nullptr;
 	Window* window = nullptr;
 
-	unique_ptr<Components> components;
+	unique_ptr<ComponentContainer> components;
 	unique_ptr<GameObjectContainer> gameObjectContainer;
 
 	void AddGameObjects();
@@ -36,5 +31,5 @@ public:
 	void SaveScene() const;
 
 	GameObjectContainer* GetGameObjectContainer() const;
-	Components* GetComponents() const;
+	ComponentContainer* GetComponents() const;
 };
