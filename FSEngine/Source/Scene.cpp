@@ -47,7 +47,7 @@ void Scene::AddGameObjects()
 	gameObject = gameObjectContainer->AddGameObject("DebugText", make_unique<RenderText>());
 	RenderText* debugText = dynamic_cast<RenderText*>(gameObject);
 	debugText->SetText("Debug text");
-	debugText->SetPixelScale(42);
+	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
 	debugText->SetPixelPosition(vec2(5, -5));

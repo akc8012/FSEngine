@@ -219,7 +219,6 @@ void Engine::Update()
 	systems->gameTimer->Update();
 
 	sceneManager->Update();
-	sceneManager->GetCurrentScene()->GetGameObjectContainer()->GetGameObjectAs<RenderText>("DebugText")->SetText(std::to_string(systems->gameTimer->GetFrames()));
 
 	systems->input->Update();
 }

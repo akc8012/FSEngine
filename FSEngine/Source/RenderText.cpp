@@ -1,19 +1,17 @@
 #include "../Header/RenderText.h"
 
+#pragma region Initialize
 void RenderText::Start()
 {
+	LoadFont("arial.ttf");
 	components->transform->Add(GetName(), make_shared<Transform>());
+
 	Mesh* meshComponent = components->mesh->Add(GetName(), CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
-	LoadFont("arial.ttf");
-
-	SetText(renderText);
-	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
-	GetComponent<Shading>()->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
-
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
+	GetParameterCollection()->SetParameter(DoDraw, false);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const
@@ -46,27 +44,48 @@ void RenderText::LoadFont(const string& fontName)
 	if (font == nullptr)
 		throwFS((string)"Failed to load font! SDL_ttf error: " + TTF_GetError());
 }
+#pragma endregion
 
+void RenderText::Update()
+{
+
+}
+
+#pragma region Set Text
 void RenderText::SetText(const string& text)
 {
 	if (renderText != text || TryGetComponent<Shading>() == nullptr)
-		CreateTextureComponent(text);
+	{
+		SetTextSurface(text);
+
+		if (surfaceSize != vec2(0, 0)) // TODO: Remove when scale bug is fixed
+			SetTransformFromSurfaceSize(surfaceSize);
+	}
 }
 
-void RenderText::CreateTextureComponent(const string& text)
+void RenderText::SetTextSurface(const string& text)
 {
-	renderText = text;
+	renderText = text == "" ? " " : text;
 
 	SDL_Color textColor = SDL_Color { 255, 255, 255, 255 };
-	SDL_Surface* surface = TTF_RenderText_Blended(font, text == "" ? " " : text.c_str(), textColor);
+	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), textColor);
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
 	if (TryGetComponent<Shading>() == nullptr)
-		components->shading->Add(GetName(), make_shared<Texture>(surface, true));
+		CreateTextureComponent(surface);
 	else
-		dynamic_cast<Texture*>(TryGetComponent<Shading>())->GenerateTexture(surface, true);
+		dynamic_cast<Texture*>(GetComponent<Shading>())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
+}
+
+void RenderText::CreateTextureComponent(SDL_Surface* surface)
+{
+	Shading* shading = components->shading->Add(GetName(), make_shared<Texture>(surface, true));
+	shading->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
+	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+
+	GetParameterCollection()->SetParameter(DoDraw, true);
 }
 
 vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
@@ -76,17 +95,24 @@ vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
 
 	return vec2(width, height);
 }
+#pragma endregion
 
 void RenderText::ReceiveEvent(const string& key, const json& event)
 {
 	if (key != "SurfaceSizeChanged")
 		return;
 
-	auto surfaceSize = vec2 { event[0], event[1] };
+	surfaceSize = vec2 { event[0], event[1] };
+
+	if (HasRenderText()) // TODO: Remove when scale bug is fixed
+		SetTransformFromSurfaceSize(surfaceSize);
+}
+
+#pragma region Set Transform From Surface Size
+void RenderText::SetTransformFromSurfaceSize(const vec2& surfaceSize)
+{
 	SetScaleFromSurfaceSize(surfaceSize);
 	SetPositionFromSurfaceSize(surfaceSize);
-
-	printFS("Text changed");
 }
 
 void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
@@ -148,7 +174,9 @@ vec2 RenderText::GetPixelScale(const vec2& surfaceSize) const
 	Transform* transform = GetComponent<Transform>();
 	return vec2(transform->GetScale().x * surfaceSize.x, transform->GetScale().y * surfaceSize.y);
 }
+#pragma endregion
 
+#pragma region Public Setters
 void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
 {
 	this->pixelScaleFactor = pixelScaleFactor;
@@ -178,6 +206,12 @@ void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
 void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 {
 	this->alignPosition = alignPosition;
+}
+#pragma endregion
+
+bool RenderText::HasRenderText() const
+{
+	return renderText != "";
 }
 
 RenderText::~RenderText()

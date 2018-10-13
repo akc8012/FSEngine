@@ -14,6 +14,7 @@ public:
 
 private:
 	TTF_Font* font = nullptr;
+	vec2 surfaceSize;
 
 	string renderText;
 	vec2 aspectRatio;
@@ -25,12 +26,16 @@ private:
 
 	shared_ptr<Mesh> CreateMeshComponent() const;
 	void LoadFont(const string& fontName);
-	void CreateTextureComponent(const string& text);
+
+	void CreateTextureComponent(SDL_Surface* surface);
+	void SetTextSurface(const string& text);
 
 	vec2 CalculateAspectRatio(const vec2& surfaceSize);
-	void SetScaleFromSurfaceSize(const vec2& surfaceSize);
 
+	void SetTransformFromSurfaceSize(const vec2& surfaceSize);
+	void SetScaleFromSurfaceSize(const vec2& surfaceSize);
 	void SetPositionFromSurfaceSize(const vec2& surfaceSize);
+
 	vec2 GetPixelAnchoredPosition(const vec2& surfaceSize) const;
 	vec2 GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const;
 	vec2 GetPixelScale(const vec2& surfaceSize) const;
@@ -41,6 +46,7 @@ public:
 	~RenderText();
 
 	void Start() override;
+	void Update() override;
 	void ReceiveEvent(const string& key, const json& event) override;
 
 	void SetText(const string& text);
@@ -50,4 +56,6 @@ public:
 	void SetPixelPosition(const vec2& pixelPosition);
 	void SetScreenAnchorPoint(AnchorPosition anchorPoint);
 	void SetTextAlignment(AnchorPosition alignPosition);
+
+	bool HasRenderText() const;
 };

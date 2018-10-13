@@ -7,6 +7,7 @@ using json = nlohmann::json;
 #include <string>
 #include <memory>
 using std::string;
+using std::to_string;
 using std::unique_ptr;
 using std::make_unique;
 
