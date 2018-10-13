@@ -60,13 +60,13 @@ public:
 	void ReceiveEvent(const string& key, const json& event) override;
 };
 
-template<typename T>
+template <typename T>
 T* GameObject::GetComponent(const string& name) const
 {
 	return components->GetComponent<T>(GetName(), name);
 }
 
-template<typename T>
+template <typename T>
 T* GameObject::TryGetComponent(const string& name) const
 {
 	return components->TryGetComponent<T>(GetName(), name);

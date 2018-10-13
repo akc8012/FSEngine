@@ -6,6 +6,10 @@
 
 class ComponentContainer
 {
+private:
+	template <typename T>
+	ComponentCollection<T>* GetCollectionOfType() const;
+
 public:
 	ComponentContainer();
 
@@ -19,7 +23,7 @@ public:
 	T* TryGetComponent(const string& key, const string& name = "") const;
 };
 
-template<typename T>
+template <typename T>
 T* ComponentContainer::GetComponent(const string& key, const string& name) const
 {
 	auto component = TryGetComponent<T>(key, name);
@@ -29,17 +33,27 @@ T* ComponentContainer::GetComponent(const string& key, const string& name) const
 	return component;
 }
 
-template<typename T>
+template <typename T>
 T* ComponentContainer::TryGetComponent(const string& key, const string& name) const
 {
-	if (T::ComponentTypeId == Mesh::ComponentTypeId)
-		return reinterpret_cast<T*>(name == "" ? mesh->TryGet(key) : mesh->TryGet(key, name));
+	return name == "" ? GetCollectionOfType<T>()->TryGet(key) : GetCollectionOfType<T>()->TryGet(key, name);
+}
 
-	if (T::ComponentTypeId == Shading::ComponentTypeId)
-		return reinterpret_cast<T*>(name == "" ? shading->TryGet(key) : shading->TryGet(key, name));
+template <typename T>
+ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
+{
+	switch (T::ComponentTypeId)
+	{
+	case Mesh::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
 
-	if (T::ComponentTypeId == Transform::ComponentTypeId)
-		return reinterpret_cast<T*>(name == "" ? transform->TryGet(key) : transform->TryGet(key, name));
+	case Shading::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
 
-	throwFS("Unknown type used for GetComponent");
+	case Transform::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
+
+	default:
+		throwFS("Unknown type used for GetCollectionOfType");
+	}
 }
