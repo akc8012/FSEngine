@@ -32,13 +32,13 @@ T* ComponentContainer::GetComponent(const string& key, const string& name) const
 template<typename T>
 T* ComponentContainer::TryGetComponent(const string& key, const string& name) const
 {
-	if (typeid(T) == typeid(Mesh))
+	if (T::ComponentTypeId == Mesh::ComponentTypeId)
 		return reinterpret_cast<T*>(name == "" ? mesh->TryGet(key) : mesh->TryGet(key, name));
 
-	if (typeid(T) == typeid(Shading))
+	if (T::ComponentTypeId == Shading::ComponentTypeId)
 		return reinterpret_cast<T*>(name == "" ? shading->TryGet(key) : shading->TryGet(key, name));
 
-	if (typeid(T) == typeid(Transform))
+	if (T::ComponentTypeId == Transform::ComponentTypeId)
 		return reinterpret_cast<T*>(name == "" ? transform->TryGet(key) : transform->TryGet(key, name));
 
 	throwFS("Unknown type used for GetComponent");

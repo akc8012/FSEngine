@@ -9,7 +9,6 @@
 #include "ParameterCollection.h"
 #include "IEventListener.h"
 
-#include <typeinfo>
 using std::shared_ptr;
 using std::make_shared;
 
