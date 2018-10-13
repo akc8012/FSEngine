@@ -11,17 +11,31 @@ private:
 	ComponentCollection<T>* GetCollectionOfType() const;
 
 public:
-	ComponentContainer();
+	ComponentContainer()
+	{
+		mesh = make_unique<ComponentCollection<Mesh>>();
+		shading = make_unique<ComponentCollection<Shading>>();
+		transform = make_unique<ComponentCollection<Transform>>();
+	}
 
 	unique_ptr<ComponentCollection<Mesh>> mesh;
 	unique_ptr<ComponentCollection<Shading>> shading;
 	unique_ptr<ComponentCollection<Transform>> transform;
 
 	template <typename T>
+	T* AddComponent(const string& key, shared_ptr<T> component, const string& name = "") const;
+
+	template <typename T>
 	T* GetComponent(const string& key, const string& name = "") const;
 	template <typename T>
 	T* TryGetComponent(const string& key, const string& name = "") const;
 };
+
+template <typename T>
+T* ComponentContainer::AddComponent(const string& key, shared_ptr<T> component, const string& name) const
+{
+	return name == "" ? GetCollectionOfType<T>()->Add(key, component) : GetCollectionOfType<T>()->Add(key, component, name);
+}
 
 template <typename T>
 T* ComponentContainer::GetComponent(const string& key, const string& name) const

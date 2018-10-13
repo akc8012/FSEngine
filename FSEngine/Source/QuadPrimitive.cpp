@@ -2,11 +2,11 @@
 
 void QuadPrimitive::Start()
 {
-	Mesh* meshComponent = components->mesh->Add(GetName(), CreateMeshComponent());
+	Mesh* meshComponent = AddComponent<Mesh>(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
-	components->transform->Add(GetName(), make_shared<Transform>());
+	AddComponent<Transform>(make_shared<Transform>());
 	systems->eventSystem->AddListener("CameraPosition", this);
 }
 

@@ -46,11 +46,6 @@ public:
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 
-	template <typename T>
-	T* GetComponent(const string& name = "") const;
-	template <typename T>
-	T* TryGetComponent(const string& name = "") const;
-
 	const string& GetName() const;
 	void SetName(const string& name);
 
@@ -58,7 +53,20 @@ public:
 	void SetFromJson(const json& j);
 
 	void ReceiveEvent(const string& key, const json& event) override;
+
+	template <typename T>
+	T* AddComponent(shared_ptr<T> component, const string& name = "") const;
+	template <typename T>
+	T* GetComponent(const string& name = "") const;
+	template <typename T>
+	T* TryGetComponent(const string& name = "") const;
 };
+
+template <typename T>
+T* GameObject::AddComponent(shared_ptr<T> component, const string& name) const
+{
+	return components->AddComponent(GetName(), component, name);
+}
 
 template <typename T>
 T* GameObject::GetComponent(const string& name) const

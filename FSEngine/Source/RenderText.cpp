@@ -4,9 +4,9 @@
 void RenderText::Start()
 {
 	LoadFont("arial.ttf");
-	components->transform->Add(GetName(), make_shared<Transform>());
+	AddComponent<Transform>(make_shared<Transform>());
 
-	Mesh* meshComponent = components->mesh->Add(GetName(), CreateMeshComponent());
+	Mesh* meshComponent = AddComponent<Mesh>(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
@@ -80,7 +80,7 @@ void RenderText::SetTextSurface(const string& text)
 
 void RenderText::CreateTextureComponent(SDL_Surface* surface)
 {
-	Shading* shading = components->shading->Add(GetName(), make_shared<Texture>(surface, true));
+	Shading* shading = AddComponent<Texture>(make_shared<Texture>(surface, true));
 	shading->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
 	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 
