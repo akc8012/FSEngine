@@ -64,24 +64,11 @@ public:
 template<typename T>
 T* GameObject::GetComponent(const string& name) const
 {
-	auto component = TryGetComponent<T>(name);
-	if (component == nullptr)
-		throwFS("Could not find component on GameObject \"" + GetName() + "\" with name \"" + name + "\"");
-
-	return component;
+	return components->GetComponent<T>(GetName(), name);
 }
 
 template<typename T>
 T* GameObject::TryGetComponent(const string& name) const
 {
-	if (typeid(T) == typeid(Mesh))
-		return reinterpret_cast<T*>(name == "" ? components->mesh->TryGet(GetName()) : components->mesh->TryGet(GetName(), name));
-
-	if (typeid(T) == typeid(Shading))
-		return reinterpret_cast<T*>(name == "" ? components->shading->TryGet(GetName()) : components->shading->TryGet(GetName(), name));
-
-	if (typeid(T) == typeid(Transform))
-		return reinterpret_cast<T*>(name == "" ? components->transform->TryGet(GetName()) : components->transform->TryGet(GetName(), name));
-
-	throwFS("Unknown type used for GetComponent");
+	return components->TryGetComponent<T>(GetName(), name);
 }
