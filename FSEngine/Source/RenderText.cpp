@@ -54,13 +54,12 @@ void RenderText::Update()
 #pragma region Set Text
 void RenderText::SetText(const string& text)
 {
-	if (renderText != text || TryGetComponent<Shading>() == nullptr)
-	{
-		SetTextSurface(text);
+	if (renderText == text)
+		return;
 
-		if (surfaceSize != vec2(0, 0)) // TODO: Remove when scale bug is fixed
-			SetTransformFromSurfaceSize(surfaceSize);
-	}
+	SetTextSurface(text);
+	if (surfaceSize != vec2(0, 0)) // TODO: Remove when scale bug is fixed
+		SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetTextSurface(const string& text)
