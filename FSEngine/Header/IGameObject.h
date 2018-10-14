@@ -47,18 +47,17 @@ public:
 template <typename T>
 T* IGameObject::AddComponent(shared_ptr<T> component, const string& name) const
 {
-	return components->AddComponent(GetName(), component, name);
+	return components->AddComponent(component, name);
 }
 
 template <typename T>
 T* IGameObject::GetComponent(const string& name) const
 {
-	return components->GetComponent<T>(GetName(), name);
+	return components->GetComponent<T>(name);
 }
 
 template <typename T>
 T* IGameObject::TryGetComponent(const string& name) const
 {
-	return components->TryGetComponent<T>(GetName(), name);
+	return components->TryGetComponent<T>(name);
 }
-

@@ -62,7 +62,6 @@
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\Scene.h" />
-    <ClInclude Include="Header\KeyNamePair.h" />
     <ClInclude Include="Header\EventSystem.h" />
     <ClInclude Include="Header\IEventListener.h" />
     <ClInclude Include="Header\IGameObject.h" />

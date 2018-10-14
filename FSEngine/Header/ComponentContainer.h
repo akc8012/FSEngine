@@ -23,35 +23,13 @@ public:
 	unique_ptr<ComponentCollection<Transform>> transform;
 
 	template <typename T>
-	T* AddComponent(const string& key, shared_ptr<T> component, const string& name = "") const;
+	T* AddComponent(shared_ptr<T> component, const string& name = "") const;
 
 	template <typename T>
-	T* GetComponent(const string& key, const string& name = "") const;
+	T* GetComponent(const string& name = "") const;
 	template <typename T>
-	T* TryGetComponent(const string& key, const string& name = "") const;
+	T* TryGetComponent(const string& name = "") const;
 };
-
-template <typename T>
-T* ComponentContainer::AddComponent(const string& key, shared_ptr<T> component, const string& name) const
-{
-	return name == "" ? GetCollectionOfType<T>()->Add(key, component) : GetCollectionOfType<T>()->Add(key, component, name);
-}
-
-template <typename T>
-T* ComponentContainer::GetComponent(const string& key, const string& name) const
-{
-	auto component = TryGetComponent<T>(key, name);
-	if (component == nullptr)
-		throwFS("Could not find component on key \"" + key + "\" with name \"" + name + "\"");
-
-	return component;
-}
-
-template <typename T>
-T* ComponentContainer::TryGetComponent(const string& key, const string& name) const
-{
-	return name == "" ? GetCollectionOfType<T>()->TryGet(key) : GetCollectionOfType<T>()->TryGet(key, name);
-}
 
 template <typename T>
 ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
@@ -70,4 +48,26 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
 	default:
 		throwFS("Unknown type used for GetCollectionOfType");
 	}
+}
+
+template <typename T>
+T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name) const
+{
+	return name == "" ? GetCollectionOfType<T>()->Add(component) : GetCollectionOfType<T>()->Add(component, name);
+}
+
+template <typename T>
+T* ComponentContainer::GetComponent(const string& name) const
+{
+	auto component = TryGetComponent<T>(name);
+	if (component == nullptr)
+		throwFS("Could not find component with name \"" + name + "\"");
+
+	return component;
+}
+
+template <typename T>
+T* ComponentContainer::TryGetComponent(const string& name) const
+{
+	return name == "" ? GetCollectionOfType<T>()->TryGet() : GetCollectionOfType<T>()->TryGet(name);
 }

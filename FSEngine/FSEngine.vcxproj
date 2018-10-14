@@ -186,7 +186,6 @@
     <ClInclude Include="Header\IGameObject.h" />
     <ClInclude Include="Header\IGameObjectContainer.h" />
     <ClInclude Include="Header\Input.h" />
-    <ClInclude Include="Header\KeyNamePair.h" />
     <ClInclude Include="Header\Mesh.h" />
     <ClInclude Include="Header\Model.h" />
     <ClInclude Include="Header\ParameterCollection.h" />
