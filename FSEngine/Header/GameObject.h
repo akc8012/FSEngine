@@ -29,7 +29,7 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetReferences(Systems* systems, ComponentContainer* components, IGameObjectContainer* gameObjectContainer);
+	void SetReferences(Systems* systems, IGameObjectContainer* gameObjectContainer);
 
 	virtual void Start() override;
 	virtual void Update() override;
@@ -38,6 +38,8 @@ public:
 
 	const string& GetName() const override;
 	void SetName(const string& name) override;
+
+	ComponentContainer* GetComponentContainer() const;
 
 	json GetJson() const;
 	void SetFromJson(const json& j);

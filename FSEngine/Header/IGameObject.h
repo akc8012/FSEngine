@@ -9,7 +9,7 @@ using std::string;
 class IGameObject
 {
 protected:
-	ComponentContainer* components = nullptr;
+	unique_ptr<ComponentContainer> components;
 
 public:
 	virtual ~IGameObject()
@@ -33,6 +33,8 @@ public:
 
 	virtual const string& GetName() const = 0;
 	virtual void SetName(const string& name) = 0;
+
+	virtual ComponentContainer* GetComponentContainer() const = 0;
 
 	template <typename T>
 	T* AddComponent(shared_ptr<T> component, const string& name = "") const;

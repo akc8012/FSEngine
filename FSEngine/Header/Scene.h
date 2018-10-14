@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "ComponentContainer.h"
 #include "Renderer.h"
 #include "CubePrimitive.h"
 #include "QuadPrimitive.h"
@@ -14,11 +13,10 @@ class Scene
 {
 private:
 	string name;
+	unique_ptr<GameObjectContainer> gameObjectContainer;
+
 	Systems* systems = nullptr;
 	Window* window = nullptr;
-
-	unique_ptr<ComponentContainer> components;
-	unique_ptr<GameObjectContainer> gameObjectContainer;
 
 	void AddGameObjects();
 	string GetFileName() const;
@@ -31,5 +29,4 @@ public:
 	void SaveScene() const;
 
 	GameObjectContainer* GetGameObjectContainer() const;
-	ComponentContainer* GetComponents() const;
 };

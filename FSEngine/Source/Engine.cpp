@@ -19,7 +19,7 @@ void Engine::Initialize()
 	systems->eventSystem->AddListener("SurfaceSizeChanged", window.get());
 
 	sceneManager = make_unique<SceneManager>(systems.get());
-	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetComponents());
+	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetGameObjectContainer()->GetGameObject("Camera"));
 
 	printFS("Success");
 	running = true;

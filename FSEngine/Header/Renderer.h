@@ -1,6 +1,5 @@
 #pragma once
 #include "Systems.h"
-#include "ComponentContainer.h"
 #include "Window.h"
 #include "GameObject.h"
 
@@ -12,7 +11,7 @@ class Renderer
 {
 private:
 	Systems* systems = nullptr;
-	ComponentContainer* components = nullptr;
+	IGameObject* camera = nullptr;
 
 	void ClearScreen();
 	void SetViewMatrices(Transform* viewTransform);
@@ -30,10 +29,10 @@ private:
 	void DrawMesh(Mesh* mesh);
 
 public:
-	Renderer(Systems* systems, ComponentContainer* components);
+	Renderer(Systems* systems, IGameObject* camera);
 	~Renderer();
 
 	void StartRender();
-	void RenderGameObject(const string& name);
+	void RenderGameObject(IGameObject* gameObject);
 	void EndRender(Window* window);
 };

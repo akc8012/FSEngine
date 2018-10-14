@@ -13,7 +13,7 @@ void SceneManager::Update()
 
 void SceneManager::UpdateGameObjects(bool doLateUpdate)
 {
-	for (auto& gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
+	for (auto gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoUpdate) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateUpdate) == doLateUpdate)
 			gameObject->Update();
@@ -28,10 +28,10 @@ void SceneManager::Draw(Renderer* renderer)
 
 void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 {
-	for (auto& gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
+	for (auto gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
 	{
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoDraw) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateDraw) == doLateDraw)
-			renderer->RenderGameObject(gameObject->GetName());
+			renderer->RenderGameObject(gameObject);
 	}
 }
 

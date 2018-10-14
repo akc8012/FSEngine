@@ -2,6 +2,8 @@
 
 GameObject::GameObject()
 {
+	components = make_unique<ComponentContainer>();
+
 	string parameterNames[] = { "DoUpdate", "DoDraw", "DoLateUpdate", "DoLateDraw" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 	SetDefaultParameters();
@@ -19,10 +21,9 @@ void GameObject::SetDefaultParameters()
 		parameterCollection->SetParameter(parameter, false);
 }
 
-void GameObject::SetReferences(Systems* systems, ComponentContainer* components, IGameObjectContainer* gameObjectContainer)
+void GameObject::SetReferences(Systems* systems, IGameObjectContainer* gameObjectContainer)
 {
 	this->systems = systems;
-	this->components = components;
 	this->gameObjectContainer = gameObjectContainer;
 }
 
@@ -49,6 +50,11 @@ const string& GameObject::GetName() const
 void GameObject::SetName(const string& name)
 {
 	this->name = name;
+}
+
+ComponentContainer* GameObject::GetComponentContainer() const
+{
+	return components.get();
 }
 
 json GameObject::GetJson() const

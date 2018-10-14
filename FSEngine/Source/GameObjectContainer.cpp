@@ -1,7 +1,7 @@
 #include "../Header/GameObjectContainer.h"
 
-GameObjectContainer::GameObjectContainer(Systems* systems, ComponentContainer* components)
- : systems(systems), components(components)
+GameObjectContainer::GameObjectContainer(Systems* systems)
+ : systems(systems)
 {
 
 }
@@ -19,7 +19,7 @@ IGameObject* GameObjectContainer::AddGameObject(const string& name, unique_ptr<I
 
 void GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)
 {
-	gameObject->SetReferences(systems, components, this);
+	gameObject->SetReferences(systems, this);
 	gameObject->SetName(name);
 	gameObject->Start();
 }

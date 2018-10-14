@@ -1,7 +1,6 @@
 #pragma once
 #include "IGameObjectContainer.h"
 #include "Systems.h"
-#include "ComponentContainer.h"
 #include "GameObject.h"
 
 #include <string>
@@ -13,14 +12,13 @@ class GameObjectContainer : public IGameObjectContainer
 {
 private:
 	Systems* systems = nullptr;
-	ComponentContainer* components = nullptr;
 
 	map<string, unique_ptr<IGameObject>> gameObjects;
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 
 public:
-	GameObjectContainer(Systems* systems, ComponentContainer* components);
+	GameObjectContainer(Systems* systems);
 
 	IGameObject* AddGameObject(const string& name, unique_ptr<IGameObject> gameObject);
 	void RemoveGameObject(const string& name) override;
