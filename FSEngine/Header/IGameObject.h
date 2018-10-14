@@ -8,9 +8,6 @@ using std::string;
 
 class IGameObject
 {
-protected:
-	unique_ptr<ComponentContainer> components;
-
 public:
 	virtual ~IGameObject()
 	{
@@ -47,17 +44,17 @@ public:
 template <typename T>
 T* IGameObject::AddComponent(shared_ptr<T> component, const string& name)
 {
-	return components->AddComponent<T>(component, name);
+	return GetComponentContainer()->AddComponent<T>(component, name);
 }
 
 template <typename T>
 T* IGameObject::GetComponent(const string& name) const
 {
-	return components->GetComponent<T>(name);
+	return GetComponentContainer()->GetComponent<T>(name);
 }
 
 template <typename T>
 T* IGameObject::TryGetComponent(const string& name) const
 {
-	return components->TryGetComponent<T>(name);
+	return GetComponentContainer()->TryGetComponent<T>(name);
 }

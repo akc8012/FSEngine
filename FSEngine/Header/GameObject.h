@@ -17,6 +17,7 @@ class GameObject : public IGameObject, public IEventListener
 {
 private:
 	string name;
+	unique_ptr<ComponentContainer> components;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	void SetDefaultParameters();
@@ -39,7 +40,7 @@ public:
 	const string& GetName() const override;
 	void SetName(const string& name) override;
 
-	ComponentContainer* GetComponentContainer() const;
+	ComponentContainer* GetComponentContainer() const override;
 
 	json GetJson() const;
 	void SetFromJson(const json& j);
