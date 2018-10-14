@@ -37,7 +37,7 @@ public:
 	virtual ComponentContainer* GetComponentContainer() const = 0;
 
 	template <typename T>
-	T* AddComponent(shared_ptr<T> component, const string& name = "") const;
+	T* AddComponent(shared_ptr<T> component, const string& name = "");
 	template <typename T>
 	T* GetComponent(const string& name = "") const;
 	template <typename T>
@@ -45,7 +45,7 @@ public:
 };
 
 template <typename T>
-T* IGameObject::AddComponent(shared_ptr<T> component, const string& name) const
+T* IGameObject::AddComponent(shared_ptr<T> component, const string& name)
 {
 	return components->AddComponent<T>(component, name);
 }

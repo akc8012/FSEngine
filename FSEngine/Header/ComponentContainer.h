@@ -23,7 +23,7 @@ public:
 	}
 
 	template <typename T>
-	T* AddComponent(shared_ptr<T> component, const string& name = "") const;
+	T* AddComponent(shared_ptr<T> component, const string& name = "");
 
 	template <typename T>
 	T* GetComponent(const string& name = "") const;
@@ -54,7 +54,7 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
 }
 
 template <typename T>
-T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name) const
+T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name)
 {
 	return name == "" ? GetCollectionOfType<T>()->Add(component) : GetCollectionOfType<T>()->Add(component, name);
 }
