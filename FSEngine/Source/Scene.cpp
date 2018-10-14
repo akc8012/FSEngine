@@ -10,35 +10,35 @@ Scene::Scene(const string& name, Systems* systems)
 void Scene::AddGameObjects()
 {
 	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
-	gameObject->AddComponent<Shading>(make_shared<Texture>("Resource/Image/awesomeface.png"));
+	gameObject->AddComponent(make_shared<Texture>("Resource/Image/awesomeface.png"));
 	gameObject->GetComponent<Transform>()->SetPosition(4.5f, 0.2f, 0);
 
 	gameObject = gameObjectContainer->AddGameObject("GreenCube", make_unique<CubePrimitive>());
-	gameObject->AddComponent<Shading>(make_shared<Shading>(0.1f, 0.6f, 0.3f));
+	gameObject->AddComponent(make_shared<Shading>(0.1f, 0.6f, 0.3f));
 	gameObject->GetComponent<Transform>()->SetPosition(6, -0.2f, 0.1f);
 	gameObject->GetComponent<Transform>()->SetScale(2, 0.8f, 2.8f);
 
 	gameObject = gameObjectContainer->AddGameObject("Red", make_unique<CubePrimitive>());
-	gameObject->AddComponent<Shading>(make_shared<Shading>(0.8f, 0.f, 0.f));
+	gameObject->AddComponent(make_shared<Shading>(0.8f, 0.f, 0.f));
 	gameObject->GetComponent<Transform>()->SetPosition(1.5f, 1, -3);
 
 	gameObject = gameObjectContainer->AddGameObject("Green", make_unique<CubePrimitive>());
-	gameObject->AddComponent<Shading>(make_shared<Shading>(0.f, 0.8f, 0.f));
+	gameObject->AddComponent(make_shared<Shading>(0.f, 0.8f, 0.f));
 	gameObject->GetComponent<Transform>()->SetPosition(1, -1, -1);
 
 	gameObject = gameObjectContainer->AddGameObject("Blue", make_unique<CubePrimitive>());
-	gameObject->AddComponent<Shading>(make_shared<Shading>(0.f, 0.f, 0.8f));
+	gameObject->AddComponent(make_shared<Shading>(0.f, 0.f, 0.8f));
 	gameObject->GetComponent<Transform>()->SetPosition(-0.8f, 0, -2);
 
 	gameObject = gameObjectContainer->AddGameObject("Yellow", make_unique<CubePrimitive>());
-	gameObject->AddComponent<Shading>(make_shared<Shading>(0.6f, 0.6f, 0.f));
+	gameObject->AddComponent(make_shared<Shading>(0.6f, 0.6f, 0.f));
 	gameObject->GetComponent<Transform>()->SetPosition(-2, -1, 0);
 
 	for (int i = 0; i < 100; i++)
 	{
 		auto cube = make_unique<CubePrimitive>();
 		gameObject = gameObjectContainer->AddGameObject(std::to_string(i), move(cube));
-		gameObject->AddComponent<Shading>(make_shared<Shading>(systems->random->GetRandomUniformVector(0.f, 1.f)));
+		gameObject->AddComponent(make_shared<Shading>(systems->random->GetRandomUniformVector(0.f, 1.f)));
 		gameObject->GetComponent<Transform>()->SetPosition(systems->random->GetRandomUniformVector(-20.f, 20.f));
 	}
 

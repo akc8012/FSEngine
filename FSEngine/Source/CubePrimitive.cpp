@@ -2,11 +2,11 @@
 
 void CubePrimitive::Start()
 {
-	Mesh* meshComponent = AddComponent<Mesh>(CreateMeshComponent());
+	Mesh* meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
-	AddComponent<Transform>(make_shared<Transform>());
+	AddComponent(make_shared<Transform>());
 }
 
 shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const

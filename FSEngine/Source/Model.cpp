@@ -12,7 +12,7 @@ void Model::Start()
 	const aiScene* scene = importer->GetScene();
 
 	ConvertMeshesOnNode(scene->mRootNode, scene);
-	AddComponent<Transform>(make_shared<Transform>());
+	AddComponent(make_shared<Transform>());
 }
 
 unique_ptr<Importer> Model::LoadModelImporter(const string& filepath)
@@ -32,7 +32,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		shared_ptr<Mesh> meshComponent = ConvertMeshToComponent(mesh);
-		AddComponent<Mesh>(meshComponent, mesh->mName.C_Str());
+		AddComponent(meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
@@ -101,7 +101,7 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 	if (loadedTextureName == nullptr)
 	{
 		meshComponent->AddAssociatedTextureName(textureName);
-		AddComponent<Shading>(make_shared<Texture>(GetDirectory() + textureName), textureName);
+		AddComponent(make_shared<Texture>(GetDirectory() + textureName), textureName);
 	}
 	else
 		meshComponent->AddAssociatedTextureName(*loadedTextureName);

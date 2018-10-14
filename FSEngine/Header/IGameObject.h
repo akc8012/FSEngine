@@ -47,7 +47,7 @@ public:
 template <typename T>
 T* IGameObject::AddComponent(shared_ptr<T> component, const string& name) const
 {
-	return components->AddComponent(component, name);
+	return components->AddComponent<T>(component, name);
 }
 
 template <typename T>

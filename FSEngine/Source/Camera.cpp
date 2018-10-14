@@ -4,9 +4,9 @@ void Camera::Start()
 {
 	ResetViewTransform();
 
-	AddComponent<Transform>(make_shared<Transform>(), "View");
-	AddComponent<Transform>(make_shared<Transform>(), "Perspective");
-	AddComponent<Transform>(make_shared<Transform>(), "Orthographic");
+	AddComponent(make_shared<Transform>(), "View");
+	AddComponent(make_shared<Transform>(), "Perspective");
+	AddComponent(make_shared<Transform>(), "Orthographic");
 
 	GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
