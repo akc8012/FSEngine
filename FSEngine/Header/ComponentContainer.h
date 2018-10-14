@@ -7,6 +7,10 @@
 class ComponentContainer
 {
 private:
+	unique_ptr<ComponentCollection<Mesh>> mesh;
+	unique_ptr<ComponentCollection<Shading>> shading;
+	unique_ptr<ComponentCollection<Transform>> transform;
+
 	template <typename T>
 	ComponentCollection<T>* GetCollectionOfType() const;
 
@@ -18,10 +22,6 @@ public:
 		transform = make_unique<ComponentCollection<Transform>>();
 	}
 
-	unique_ptr<ComponentCollection<Mesh>> mesh;
-	unique_ptr<ComponentCollection<Shading>> shading;
-	unique_ptr<ComponentCollection<Transform>> transform;
-
 	template <typename T>
 	T* AddComponent(shared_ptr<T> component, const string& name = "") const;
 
@@ -29,6 +29,9 @@ public:
 	T* GetComponent(const string& name = "") const;
 	template <typename T>
 	T* TryGetComponent(const string& name = "") const;
+
+	template <typename T>
+	vector<T*> GetComponents() const;
 };
 
 template <typename T>
@@ -70,4 +73,10 @@ template <typename T>
 T* ComponentContainer::TryGetComponent(const string& name) const
 {
 	return name == "" ? GetCollectionOfType<T>()->TryGet() : GetCollectionOfType<T>()->TryGet(name);
+}
+
+template<typename T>
+vector<T*> ComponentContainer::GetComponents() const
+{
+	return GetCollectionOfType<T>()->GetComponents();
 }

@@ -109,7 +109,7 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 
 string* Model::TryGetLoadedTextureName(const string& textureName) const
 {
-	for (const auto& textureComponent : components->shading->GetComponents())
+	for (const auto textureComponent : GetComponentContainer()->GetComponents<Shading>())
 	{
 		string loadedTextureName = textureComponent->GetName();
 		if (textureName == loadedTextureName)

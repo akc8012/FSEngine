@@ -73,7 +73,7 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<Transform>());
 
-	for (auto& mesh : gameObject->GetComponentContainer()->mesh->GetComponents())
+	for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
 		vector<string> textureNames = mesh->GetAssociatedTextureNames();
 		if (textureNames.size() != 0)
