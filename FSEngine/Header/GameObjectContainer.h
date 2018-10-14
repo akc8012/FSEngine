@@ -11,9 +11,8 @@ using std::map;
 class GameObjectContainer : public IGameObjectContainer
 {
 private:
-	Systems* systems = nullptr;
-
 	map<string, unique_ptr<IGameObject>> gameObjects;
+	Systems* systems = nullptr;
 
 	void InitializeGameObject(GameObject* gameObject, const string& name);
 

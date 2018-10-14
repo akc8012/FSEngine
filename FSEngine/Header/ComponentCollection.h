@@ -3,10 +3,10 @@
 #include "ComponentType.h"
 #include "FSException.h"
 
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <memory>
-using std::unordered_map;
+using std::map;
 using std::vector;
 using std::shared_ptr;
 using std::move;
@@ -15,7 +15,7 @@ template <typename T>
 class ComponentCollection
 {
 private:
-	unordered_map<string, shared_ptr<T>> components;
+	map<string, shared_ptr<T>> components;
 
 public:
 	T* Add(shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
