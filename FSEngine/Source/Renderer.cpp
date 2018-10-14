@@ -1,6 +1,6 @@
 #include "../Header/Renderer.h"
 
-Renderer::Renderer(Systems* systems, Components* components)
+Renderer::Renderer(Systems* systems, ComponentContainer* components)
  : systems(systems), components(components)
 {
 

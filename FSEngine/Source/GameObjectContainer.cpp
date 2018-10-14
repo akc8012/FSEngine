@@ -1,6 +1,6 @@
 #include "../Header/GameObjectContainer.h"
 
-GameObjectContainer::GameObjectContainer(Systems* systems, Components* components)
+GameObjectContainer::GameObjectContainer(Systems* systems, ComponentContainer* components)
  : systems(systems), components(components)
 {
 

@@ -1,50 +1,46 @@
 #pragma once
-#include "KeyNamePair.h"
-#include "Component.h"
-#include "ComponentType.h"
-#include "FSException.h"
+#include "ComponentCollection.h"
+#include "Mesh.h"
+#include "Shading.h"
+#include "Transform.h"
 
-#include <unordered_map>
-#include <vector>
-#include <utility>
-#include <memory>
-using std::unordered_map;
-using std::vector;
-using std::shared_ptr;
-using std::move;
-
-template <typename T>
 class ComponentContainer
 {
 private:
-	unordered_map<KeyNamePair, shared_ptr<T>> components;
+	template <typename T>
+	ComponentCollection<T>* GetCollectionOfType() const;
 
 public:
-	T* Add(const string& key, shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
-	// Remove();
+	ComponentContainer()
+	{
+		mesh = make_unique<ComponentCollection<Mesh>>();
+		shading = make_unique<ComponentCollection<Shading>>();
+		transform = make_unique<ComponentCollection<Transform>>();
+	}
 
-	T* Get(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
-	T* TryGet(const string& key, const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
+	unique_ptr<ComponentCollection<Mesh>> mesh;
+	unique_ptr<ComponentCollection<Shading>> shading;
+	unique_ptr<ComponentCollection<Transform>> transform;
 
-	vector<T*> GetComponents(const string& key) const;
+	template <typename T>
+	T* AddComponent(const string& key, shared_ptr<T> component, const string& name = "") const;
+
+	template <typename T>
+	T* GetComponent(const string& key, const string& name = "") const;
+	template <typename T>
+	T* TryGetComponent(const string& key, const string& name = "") const;
 };
 
 template <typename T>
-T* ComponentContainer<T>::Add(const string& key, shared_ptr<T> component, const string& name)
+T* ComponentContainer::AddComponent(const string& key, shared_ptr<T> component, const string& name) const
 {
-	auto result = components.emplace(KeyNamePair(key, name), move(component));
-	if (!result.second)
-		throwFS("Component with name \"" + name + "\" already exists");
-
-	auto emplacedComponent = result.first->second.get();
-	emplacedComponent->SetName(name);
-	return emplacedComponent;
+	return name == "" ? GetCollectionOfType<T>()->Add(key, component) : GetCollectionOfType<T>()->Add(key, component, name);
 }
 
 template <typename T>
-T* ComponentContainer<T>::Get(const string& key, const string& name) const
+T* ComponentContainer::GetComponent(const string& key, const string& name) const
 {
-	auto component = TryGet(key, name);
+	auto component = TryGetComponent<T>(key, name);
 	if (component == nullptr)
 		throwFS("Could not find component on key \"" + key + "\" with name \"" + name + "\"");
 
@@ -52,28 +48,26 @@ T* ComponentContainer<T>::Get(const string& key, const string& name) const
 }
 
 template <typename T>
-T* ComponentContainer<T>::TryGet(const string& key, const string& name) const
+T* ComponentContainer::TryGetComponent(const string& key, const string& name) const
 {
-	try
-	{
-		return components.at(KeyNamePair(key, name)).get();
-	}
-	catch (std::out_of_range)
-	{
-		return nullptr;
-	}
+	return name == "" ? GetCollectionOfType<T>()->TryGet(key) : GetCollectionOfType<T>()->TryGet(key, name);
 }
 
 template <typename T>
-vector<T*> ComponentContainer<T>::GetComponents(const string& key) const
+ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
 {
-	vector<T*> componentsWithKey;
-
-	for (const auto& component : components)
+	switch (T::ComponentTypeId)
 	{
-		if (component.first.key == key)
-			componentsWithKey.push_back(component.second.get());
-	}
+	case Mesh::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
 
-	return componentsWithKey;
+	case Shading::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
+
+	case Transform::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
+
+	default:
+		throwFS("Unknown type used for GetCollectionOfType");
+	}
 }
