@@ -69,6 +69,7 @@
     <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\ComponentCollection.h" />
     <ClInclude Include="Header\ComponentContainer.h" />
+    <ClInclude Include="Header\IGameObjectContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

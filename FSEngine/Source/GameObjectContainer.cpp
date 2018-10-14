@@ -13,13 +13,13 @@ IGameObject* GameObjectContainer::AddGameObject(const string& name, unique_ptr<I
 		throwFS("GameObject with name " + name + " already exists");
 
 	IGameObject* emplacedGameObject = result.first->second.get();
-	InitializeGameObject(emplacedGameObject, name);
+	InitializeGameObject(static_cast<GameObject*>(emplacedGameObject), name);
 	return emplacedGameObject;
 }
 
-void GameObjectContainer::InitializeGameObject(IGameObject* gameObject, const string& name)
+void GameObjectContainer::InitializeGameObject(GameObject* gameObject, const string& name)
 {
-	gameObject->SetReferences(systems, components);
+	gameObject->SetReferences(systems, components, this);
 	gameObject->SetName(name);
 	gameObject->Start();
 }

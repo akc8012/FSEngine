@@ -17,8 +17,6 @@ public:
 
 	}
 
-	virtual void SetReferences(Systems* systems, ComponentContainer* components) = 0;
-
 	virtual void Start() = 0;
 	virtual void Update() = 0;
 

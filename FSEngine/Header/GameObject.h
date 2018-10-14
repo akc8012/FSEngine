@@ -1,5 +1,6 @@
 #pragma once
 #include "IGameObject.h"
+#include "IGameObjectContainer.h"
 #include "FSException.h"
 #include "Mesh.h"
 #include "Shading.h"
@@ -22,12 +23,13 @@ private:
 
 protected:
 	Systems* systems = nullptr;
+	IGameObjectContainer* gameObjectContainer = nullptr;
 
 public:
 	GameObject();
 	virtual ~GameObject();
 
-	void SetReferences(Systems* systems, ComponentContainer* components);
+	void SetReferences(Systems* systems, ComponentContainer* components, IGameObjectContainer* gameObjectContainer);
 
 	virtual void Start() override;
 	virtual void Update() override;
