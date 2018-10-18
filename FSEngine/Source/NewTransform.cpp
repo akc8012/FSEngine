@@ -20,6 +20,16 @@ const vec3& NewTransform::GetScale() const
 	return scale;
 }
 
+void NewTransform::SetOrientation(float angle, const vec3& axis)
+{
+	this->orientation = glm::angleAxis(angle, axis);
+}
+
+const quat& NewTransform::GetOrientation() const
+{
+	return orientation;
+}
+
 mat4 NewTransform::GetMatrix() const
 {
 	return glm::translate(FSMath::IdentityMatrix, position) * glm::toMat4(orientation) * glm::scale(FSMath::IdentityMatrix, scale);

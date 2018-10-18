@@ -33,6 +33,9 @@ public:
 	void SetScale(const vec3& scale);
 	const vec3& GetScale() const;
 
+	void SetOrientation(float angle, const vec3& axis);
+	const quat& GetOrientation() const;
+
 	mat4 GetMatrix() const;
 
 	json GetJson() const override;
