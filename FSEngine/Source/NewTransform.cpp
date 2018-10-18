@@ -10,9 +10,19 @@ const vec3& NewTransform::GetPosition() const
 	return position;
 }
 
+void NewTransform::SetScale(const vec3& scale)
+{
+	this->scale = scale;
+}
+
+const vec3& NewTransform::GetScale() const
+{
+	return scale;
+}
+
 mat4 NewTransform::GetMatrix() const
 {
-	return glm::scale(FSMath::IdentityMatrix, scale) * glm::toMat4(orientation) * glm::translate(FSMath::IdentityMatrix, position);
+	return glm::translate(FSMath::IdentityMatrix, position) * glm::toMat4(orientation) * glm::scale(FSMath::IdentityMatrix, scale);
 }
 
 json NewTransform::GetJson() const

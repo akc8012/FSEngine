@@ -30,6 +30,9 @@ public:
 	void SetPosition(const vec3& position);
 	const vec3& GetPosition() const;
 
+	void SetScale(const vec3& scale);
+	const vec3& GetScale() const;
+
 	mat4 GetMatrix() const;
 
 	json GetJson() const override;

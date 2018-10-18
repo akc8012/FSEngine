@@ -17,5 +17,9 @@
   "ShipSpeed": 1,
 
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15
+  "CameraScrollSpeed": 0.15,
+
+
+  "Position": [-1, 0, 0],
+  "Scale": [0.5, 1, 0.5]
 }

@@ -69,5 +69,8 @@ shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const
 
 void CubePrimitive::Update()
 {
-	//GetComponent<NewTransform>()->SetPosition(vec3(0, 0, -systems->gameTimer->GetSeconds()));
+	auto position = systems->fileSystem->GetSettingsValue("Position");
+	auto scale = systems->fileSystem->GetSettingsValue("Scale");
+	GetComponent<NewTransform>()->SetPosition(vec3(position[0], position[1], position[2]));
+	GetComponent<NewTransform>()->SetScale(vec3(scale[0], scale[1], scale[2]));
 }
