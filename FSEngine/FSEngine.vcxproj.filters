@@ -30,6 +30,7 @@
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\EventSystem.cpp" />
+    <ClCompile Include="Source\NewTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Header\ComponentCollection.h" />
     <ClInclude Include="Header\ComponentContainer.h" />
     <ClInclude Include="Header\IGameObjectContainer.h" />
+    <ClInclude Include="Header\NewTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

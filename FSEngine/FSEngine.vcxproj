@@ -146,6 +146,7 @@
     <ClCompile Include="Source\GameTimer.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\NewTransform.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\QuadPrimitive.cpp" />
     <ClCompile Include="Source\Random.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\Mesh.h" />
     <ClInclude Include="Header\Model.h" />
+    <ClInclude Include="Header\NewTransform.h" />
     <ClInclude Include="Header\ParameterCollection.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\QuadPrimitive.h" />
