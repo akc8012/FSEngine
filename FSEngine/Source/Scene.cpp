@@ -9,11 +9,13 @@ Scene::Scene(const string& name, Systems* systems)
 
 void Scene::AddGameObjects()
 {
-	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Texture>("Resource/Image/awesomeface.png"));
-	gameObject->GetComponent<Transform>()->SetPosition(4.5f, 0.2f, 0);
+	auto gameObject = gameObjectContainer->AddGameObject("Cube", make_unique<CubePrimitive>());
+	gameObject->AddComponent(make_shared<Shading>(0.f, 0.2f, 0.8f));
 
-	gameObject = gameObjectContainer->AddGameObject("GreenCube", make_unique<CubePrimitive>());
+	auto newTransform = gameObject->AddComponent(make_shared<NewTransform>());
+	newTransform->SetPosition(vec3(1, 0, 0));
+
+	/*gameObject = gameObjectContainer->AddGameObject("GreenCube", make_unique<CubePrimitive>());
 	gameObject->AddComponent(make_shared<Shading>(0.1f, 0.6f, 0.3f));
 	gameObject->GetComponent<Transform>()->SetPosition(6, -0.2f, 0.1f);
 	gameObject->GetComponent<Transform>()->SetScale(2, 0.8f, 2.8f);
@@ -48,10 +50,10 @@ void Scene::AddGameObjects()
 	debugText->SetPixelScale(26);
 	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
 	debugText->SetTextAlignment(RenderText::TopLeft);
-	debugText->SetPixelPosition(vec2(5, -5));
+	debugText->SetPixelPosition(vec2(5, -5));*/
 
 	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
-	gameObjectContainer->AddGameObject("PlayerShip", make_unique<PlayerShip>());
+	//gameObjectContainer->AddGameObject("PlayerShip", make_unique<PlayerShip>());
 }
 
 void Scene::LoadScene()

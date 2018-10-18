@@ -69,5 +69,5 @@ shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const
 
 void CubePrimitive::Update()
 {
-	//GetComponent<Transform>()->SetOrientation(Timer::GetSeconds(), glm::normalize(vec3(1, 1, 0)));
+	//GetComponent<NewTransform>()->SetPosition(vec3(0, 0, -systems->gameTimer->GetSeconds()));
 }
