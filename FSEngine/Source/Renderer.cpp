@@ -11,7 +11,7 @@ void Renderer::StartRender()
 {
 	ClearScreen();
 
-	SetViewMatrices(camera->GetComponent<Transform>("View"));
+	SetViewMatrices(camera->GetComponent<NewTransform>("View"));
 
 	if (systems->fileSystem->GetSettingsValue<bool>("DrawGrid"))
 		DrawGrid();
@@ -26,7 +26,7 @@ void Renderer::ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::SetViewMatrices(Transform* viewTransform)
+void Renderer::SetViewMatrices(NewTransform* viewTransform)
 {
 	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
 	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
@@ -63,7 +63,7 @@ void Renderer::SetRenderParametersForGrid()
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetVectorUniform("flatColor", vec4(1, 1, 0.6f, 1));
-	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<Transform>("Perspective")->GetMatrix());
+	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<NewTransform>("Perspective")->GetMatrix());
 	systems->shaderProgram->SetBoolUniform("renderPerspective", true);
 }
 #pragma endregion
@@ -122,7 +122,7 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
 		return;
 
-	Transform* projectionTransform = camera->GetComponent<Transform>(renderPerspective ? "Perspective" : "Orthographic");
+	NewTransform* projectionTransform = camera->GetComponent<NewTransform>(renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
