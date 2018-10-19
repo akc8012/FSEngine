@@ -1,6 +1,11 @@
 #include "../Header/Transform.h"
 
 #pragma region Position
+void Transform::Translate(const vec3& position)
+{
+	SetPosition(this->position + position);
+}
+
 void Transform::SetPosition(float x, float y, float z)
 {
 	SetPosition(vec3(x, y, z));
@@ -24,6 +29,16 @@ const vec3& Transform::GetPosition() const
 #pragma endregion
 
 #pragma region Scale
+void Transform::Scale(const vec2& scale)
+{
+	SetScale(this->scale * vec3(scale.x, scale.y, 1));
+}
+
+void Transform::Scale(const vec3& scale)
+{
+	SetScale(this->scale * scale);
+}
+
 void Transform::SetScale(float x, float y, float z)
 {
 	SetScale(vec3(x, y, z));
@@ -70,6 +85,21 @@ void Transform::SetOrientation(float angle, const vec3& axis)
 	CalculateMatrix();
 }
 
+vec3 Transform::GetForward() const
+{
+	return GetOrientation() * FSMath::Forward;
+}
+
+vec3 Transform::GetUp() const
+{
+	return GetOrientation() * FSMath::Up;
+}
+
+vec3 Transform::GetRight() const
+{
+	return GetOrientation() * FSMath::Right;
+}
+
 const quat& Transform::GetOrientation() const
 {
 	return orientation;
@@ -88,6 +118,11 @@ void Transform::SetMatrix(const mat4& matrix)
 
 	vec3 unusedSkew; vec4 unusedPerspective;
 	glm::decompose(this->matrix, scale, orientation, position, unusedSkew, unusedPerspective);
+}
+
+mat3 Transform::CalculateNormalMatrix() const
+{
+	return mat3(glm::transpose(glm::inverse(matrix)));
 }
 
 const mat4& Transform::GetMatrix() const

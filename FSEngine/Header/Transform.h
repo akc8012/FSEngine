@@ -30,11 +30,14 @@ private:
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Transform;
 
+	void Translate(const vec3& position);
 	void SetPosition(float x, float y, float z);
 	void SetPosition(const vec2& position);
 	void SetPosition(const vec3& position);
 	const vec3& GetPosition() const;
 
+	void Scale(const vec2& scale);
+	void Scale(const vec3& scale);
 	void SetScale(float x, float y, float z);
 	void SetScale(const vec2& scale);
 	void SetScale(const vec3& scale);
@@ -44,9 +47,13 @@ public:
 	void SetOrientation(const vec3& eulerAngles);
 	void SetOrientation(const quat& orientation);
 	void SetOrientation(float angle, const vec3& axis);
+	vec3 GetForward() const;
+	vec3 GetUp() const;
+	vec3 GetRight() const;
 	const quat& GetOrientation() const;
 
 	void SetMatrix(const mat4& matrix);
+	mat3 CalculateNormalMatrix() const;
 	const mat4& GetMatrix() const;
 
 	json GetJson() const override;
