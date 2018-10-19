@@ -58,8 +58,7 @@ void RenderText::SetText(const string& text)
 		return;
 
 	SetTextSurface(text);
-	if (surfaceSize != vec2(0, 0)) // TODO: Remove when scale bug is fixed
-		SetTransformFromSurfaceSize(surfaceSize);
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetTextSurface(const string& text)
@@ -103,8 +102,7 @@ void RenderText::ReceiveEvent(const string& key, const json& event)
 
 	surfaceSize = vec2 { event[0], event[1] };
 
-	if (HasRenderText()) // TODO: Remove when scale bug is fixed
-		SetTransformFromSurfaceSize(surfaceSize);
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 #pragma region Set Transform From Surface Size
@@ -207,11 +205,6 @@ void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 	this->alignPosition = alignPosition;
 }
 #pragma endregion
-
-bool RenderText::HasRenderText() const
-{
-	return renderText != "";
-}
 
 RenderText::~RenderText()
 {
