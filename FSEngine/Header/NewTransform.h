@@ -30,12 +30,19 @@ private:
 public:
 	static const Types::ComponentType ComponentTypeId = Types::NewTransform;
 
+	void SetPosition(float x, float y, float z);
+	void SetPosition(const vec2& position);
 	void SetPosition(const vec3& position);
 	const vec3& GetPosition() const;
 
+	void SetScale(float x, float y, float z);
+	void SetScale(const vec2& scale);
 	void SetScale(const vec3& scale);
 	const vec3& GetScale() const;
 
+	void SetOrientation(float eulerX, float eulerY, float eulerZ);
+	void SetOrientation(const vec3& eulerAngles);
+	void SetOrientation(const quat& orientation);
 	void SetOrientation(float angle, const vec3& axis);
 	const quat& GetOrientation() const;
 
