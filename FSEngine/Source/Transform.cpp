@@ -69,7 +69,9 @@ void Transform::SetOrientation(float eulerX, float eulerY, float eulerZ)
 
 void Transform::SetOrientation(const vec3& eulerAngles)
 {
-	this->orientation = glm::orientate4(glm::radians(eulerAngles));
+	vec3 yawPitchRoll = glm::radians(vec3(eulerAngles.x, eulerAngles.z, eulerAngles.y));
+	this->orientation = glm::orientate4(yawPitchRoll);
+
 	CalculateMatrix();
 }
 
