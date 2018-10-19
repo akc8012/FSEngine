@@ -69,8 +69,5 @@ shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const
 
 void CubePrimitive::Update()
 {
-	auto sca = systems->fileSystem->GetSettingsValue("Scale");
-	mat4 scale = glm::scale(FSMath::IdentityMatrix, vec3(sca[0], sca[1], sca[2]));
 
-	GetComponent<Transform>()->SetMatrix(scale);
 }
