@@ -72,7 +72,7 @@ void RenderText::SetTextSurface(const string& text)
 	if (TryGetComponent<Shading>() == nullptr)
 		CreateTextureComponent(surface);
 	else
-		dynamic_cast<Texture*>(GetComponent<Shading>())->GenerateTexture(surface, true);
+		static_cast<Texture*>(GetComponent<Shading>())->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }

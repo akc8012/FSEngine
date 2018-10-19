@@ -24,5 +24,5 @@ public:
 template <typename T>
 T* IGameObjectContainer::GetGameObjectAs(const string& name) const
 {
-	return dynamic_cast<T*>(GetGameObject(name));
+	return static_cast<T*>(GetGameObject(name));
 }

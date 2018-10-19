@@ -18,7 +18,7 @@ void PlayerShip::ResetValues()
 {
 	transform->SetPosition(vec3(0, 0, 4));
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
-	transform->SetOrientation(vec3(0, 0, 180));
+	transform->SetOrientation(vec3(0, 180, 0));
 
 	direction = vec3(0, 0, 180);
 }
