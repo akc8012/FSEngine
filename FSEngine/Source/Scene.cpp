@@ -12,10 +12,6 @@ void Scene::AddGameObjects()
 	auto gameObject = gameObjectContainer->AddGameObject("Cube", make_unique<CubePrimitive>());
 	gameObject->AddComponent(make_shared<Shading>(0.f, 0.2f, 0.8f));
 
-	auto newTransform = gameObject->AddComponent(make_shared<NewTransform>());
-	//newTransform->SetPosition(vec3(1, 0, 0));
-	//newTransform->SetScale(vec3(0.5f, 1, 0.5f));
-
 	/*gameObject = gameObjectContainer->AddGameObject("GreenCube", make_unique<CubePrimitive>());
 	gameObject->AddComponent(make_shared<Shading>(0.1f, 0.6f, 0.3f));
 	gameObject->GetComponent<Transform>()->SetPosition(6, -0.2f, 0.1f);

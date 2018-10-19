@@ -72,5 +72,5 @@ void CubePrimitive::Update()
 	auto sca = systems->fileSystem->GetSettingsValue("Scale");
 	mat4 scale = glm::scale(FSMath::IdentityMatrix, vec3(sca[0], sca[1], sca[2]));
 
-	GetComponent<NewTransform>()->SetMatrix(scale);
+	GetComponent<Transform>()->SetMatrix(scale);
 }

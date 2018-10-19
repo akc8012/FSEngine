@@ -14,7 +14,7 @@ private:
 	IGameObject* camera = nullptr;
 
 	void ClearScreen();
-	void SetViewMatrices(NewTransform* viewTransform);
+	void SetViewMatrices(Transform* viewTransform);
 
 	void DrawGrid();
 	void SetRenderParametersForGrid();

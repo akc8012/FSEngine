@@ -27,10 +27,9 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Shading.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\EventSystem.cpp" />
-    <ClCompile Include="Source\NewTransform.cpp" />
+    <ClCompile Include="Source\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -61,7 +60,6 @@
     <ClInclude Include="Header\Mesh.h" />
     <ClInclude Include="Header\Shading.h" />
     <ClInclude Include="Header\Texture.h" />
-    <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\Scene.h" />
     <ClInclude Include="Header\EventSystem.h" />
     <ClInclude Include="Header\IEventListener.h" />
@@ -70,7 +68,7 @@
     <ClInclude Include="Header\ComponentCollection.h" />
     <ClInclude Include="Header\ComponentContainer.h" />
     <ClInclude Include="Header\IGameObjectContainer.h" />
-    <ClInclude Include="Header\NewTransform.h" />
+    <ClInclude Include="Header\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

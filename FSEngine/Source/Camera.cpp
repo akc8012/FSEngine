@@ -4,9 +4,9 @@ void Camera::Start()
 {
 	ResetViewTransform();
 
-	AddComponent(make_shared<NewTransform>(), "View");
-	AddComponent(make_shared<NewTransform>(), "Perspective");
-	AddComponent(make_shared<NewTransform>(), "Orthographic");
+	AddComponent(make_shared<Transform>(), "View");
+	AddComponent(make_shared<Transform>(), "Perspective");
+	AddComponent(make_shared<Transform>(), "Orthographic");
 
 	GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
@@ -37,10 +37,10 @@ void Camera::Update()
 		forward = FSMath::EulerAngleToDirectionVector(direction);
 
 	mat4 viewMatrix = CalculateViewMatrix(forward);
-	GetComponent<NewTransform>("View")->SetMatrix(viewMatrix);
+	GetComponent<Transform>("View")->SetMatrix(viewMatrix);
 
 	mat4 orthographicMatrix = CalculateProjectionMatrixOrthographic();
-	GetComponent<NewTransform>("Orthographic")->SetMatrix(orthographicMatrix);
+	GetComponent<Transform>("Orthographic")->SetMatrix(orthographicMatrix);
 }
 
 void Camera::ReceiveEvent(const string& key, const json& event)
@@ -50,7 +50,7 @@ void Camera::ReceiveEvent(const string& key, const json& event)
 
 	surfaceSize = tvec2<int> { event[0], event[1] };
 	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective(surfaceSize);
-	GetComponent<NewTransform>("Perspective")->SetMatrix(perspectiveMatrix);
+	GetComponent<Transform>("Perspective")->SetMatrix(perspectiveMatrix);
 }
 
 #pragma region Handle Input
@@ -201,10 +201,10 @@ vec3 Camera::ProjectCursorPositionToWorldDirection() const
 {
 	vec4 deviceNormalizedCursorPosition = vec4(GetDeviceNormalizedCursorPosition(systems->input->GetCursorPosition()), -1, 1);
 	
-	mat4 projectionMatrix = GetComponent<NewTransform>("Perspective")->GetMatrix();
+	mat4 projectionMatrix = GetComponent<Transform>("Perspective")->GetMatrix();
 	vec4 eyeDirection = vec4(vec2(glm::inverse(projectionMatrix) * deviceNormalizedCursorPosition), -1, 0);
 
-	mat4 viewMatrix = GetComponent<NewTransform>("View")->GetMatrix();
+	mat4 viewMatrix = GetComponent<Transform>("View")->GetMatrix();
 	vec3 worldDirection = glm::normalize(glm::inverse(viewMatrix) * eyeDirection);
 
 	return worldDirection;

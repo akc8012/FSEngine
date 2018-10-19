@@ -1,182 +1,107 @@
 #include "../Header/Transform.h"
 
-const mat4& Transform::GetMatrix() const
+#pragma region Position
+void Transform::SetPosition(float x, float y, float z)
 {
-	return transform;
+	SetPosition(vec3(x, y, z));
+}
+
+void Transform::SetPosition(const vec2& position)
+{
+	SetPosition(vec3(position.x, position.y, 0));
+}
+
+void Transform::SetPosition(const vec3& position)
+{
+	this->position = position;
+	CalculateMatrix();
+}
+
+const vec3& Transform::GetPosition() const
+{
+	return position;
+}
+#pragma endregion
+
+#pragma region Scale
+void Transform::SetScale(float x, float y, float z)
+{
+	SetScale(vec3(x, y, z));
+}
+
+void Transform::SetScale(const vec2& scale)
+{
+	SetScale(vec3(scale.x, scale.y, 1));
+}
+
+void Transform::SetScale(const vec3& scale)
+{
+	this->scale = scale;
+	CalculateMatrix();
+}
+
+const vec3& Transform::GetScale() const
+{
+	return scale;
+}
+#pragma endregion
+
+#pragma region Orientation
+void Transform::SetOrientation(float eulerX, float eulerY, float eulerZ)
+{
+	SetOrientation(vec3(eulerX, eulerY, eulerZ));
+}
+
+void Transform::SetOrientation(const vec3& eulerAngles)
+{
+	this->orientation = glm::orientate4(glm::radians(eulerAngles));
+	CalculateMatrix();
+}
+
+void Transform::SetOrientation(const quat& orientation)
+{
+	this->orientation = glm::toMat4(orientation);
+	CalculateMatrix();
+}
+
+void Transform::SetOrientation(float angle, const vec3& axis)
+{
+	this->orientation = glm::angleAxis(glm::radians(angle), axis);
+	CalculateMatrix();
+}
+
+const quat& Transform::GetOrientation() const
+{
+	return orientation;
+}
+#pragma endregion
+
+#pragma region Matrix
+void Transform::CalculateMatrix()
+{
+	matrix = glm::translate(FSMath::IdentityMatrix, position) * glm::toMat4(orientation) * glm::scale(FSMath::IdentityMatrix, scale);
 }
 
 void Transform::SetMatrix(const mat4& matrix)
 {
-	transform = matrix;
+	this->matrix = matrix;
+
+	vec3 unusedSkew; vec4 unusedPerspective;
+	glm::decompose(this->matrix, scale, orientation, position, unusedSkew, unusedPerspective);
 }
 
-mat3 Transform::CalculateNormalMatrix() const
+const mat4& Transform::GetMatrix() const
 {
-	return mat3(transpose(inverse(transform)));
+	return matrix;
 }
-
-vec3 Transform::GetScale() const
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	return matrixValues.scale;
-}
-
-quat Transform::GetOrientation() const
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	return matrixValues.orientation;
-}
-
-vec3 Transform::GetEulerAngles() const
-{
-	return glm::degrees(glm::eulerAngles(GetOrientation()));
-}
-
-vec3 Transform::GetPosition() const
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	return matrixValues.translation;
-}
-
-vec3 Transform::GetForward() const
-{
-	return GetOrientation() * FSMath::Forward;
-}
-
-vec3 Transform::GetUp() const
-{
-	return GetOrientation() * FSMath::Up;
-}
-
-vec3 Transform::GetRight() const
-{
-	return GetOrientation() * FSMath::Right;
-}
-
-Transform::MatrixValues Transform::DecomposeTransformMatrix() const
-{
-	MatrixValues matrixValues;
-	decompose(transform, matrixValues.scale, matrixValues.orientation, matrixValues.translation, matrixValues.skew, matrixValues.perspective);
-	return matrixValues;
-}
-
-const mat4& Transform::Scale(const vec2& scaleVector)
-{
-	return Scale(vec3(scaleVector, 1));
-}
-
-const mat4& Transform::Scale(float scaleFactor)
-{
-	return Scale(vec3(scaleFactor, scaleFactor, scaleFactor));
-}
-
-const mat4& Transform::Scale(const vec3& scaleVector)
-{
-	transform = scale(transform, scaleVector);
-	return transform;
-}
-
-const mat4& Transform::Translate(const vec2& translation)
-{
-	return Translate(vec3(translation, 0));
-}
-
-const mat4& Transform::Translate(const vec3& translation)
-{
-	vec3 currentPosition = DecomposeTransformMatrix().translation;
-	transform = SetPosition(currentPosition + translation);
-	return transform;
-}
-
-const mat4& Transform::SetScale(const vec2& scaleVector)
-{
-	return SetScale(vec3(scaleVector, 1));
-}
-
-const mat4& Transform::SetScale(float scaleFactor)
-{
-	return SetScale(vec3(scaleFactor, scaleFactor, scaleFactor));
-}
-
-const mat4& Transform::SetScale(float x, float y, float z)
-{
-	return SetScale(vec3(x, y, z));
-}
-
-const mat4& Transform::SetScale(const vec3& scaleVector)
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * toMat4(matrixValues.orientation) * scale(FSMath::IdentityMatrix, scaleVector);
-	return transform;
-}
-
-const mat4& Transform::SetOrientation(const quat& orientation)
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * glm::toMat4(orientation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
-	return transform;
-}
-
-const mat4& Transform::SetOrientation(float eulerX, float eulerY, float eulerZ)
-{
-	return SetOrientation(vec3(eulerX, eulerY, eulerZ));
-}
-
-const mat4& Transform::SetOrientation(const vec3& eulerAngles)
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * glm::orientate4(glm::radians(eulerAngles)) * scale(FSMath::IdentityMatrix, matrixValues.scale);
-	return transform;
-}
-
-const mat4& Transform::SetOrientation(float angle, const vec3& axis)
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, matrixValues.translation) * rotate(FSMath::IdentityMatrix, angle, axis) * scale(FSMath::IdentityMatrix, matrixValues.scale);
-	return transform;
-}
-
-const mat4& Transform::SetPosition(const vec2& position)
-{
-	return SetPosition(vec3(position, 0));
-}
-
-const mat4& Transform::SetPosition(float x, float y, float z)
-{
-	return SetPosition(vec3(x, y, z));
-}
-
-const mat4& Transform::SetPosition(const vec3& position)
-{
-	MatrixValues matrixValues = DecomposeTransformMatrix();
-	transform = translate(FSMath::IdentityMatrix, position) * toMat4(matrixValues.orientation) * scale(FSMath::IdentityMatrix, matrixValues.scale);
-	return transform;
-}
+#pragma endregion
 
 json Transform::GetJson() const
 {
-	json j;
-
-	vec3 position = GetPosition();
-	j["Position"] = { position.x, position.y, position.z };
-
-	vec3 eulerAngles = GetEulerAngles();
-	j["EulerAngles"] = { eulerAngles.x, eulerAngles.y, eulerAngles.z };
-
-	vec3 scale = GetScale();
-	j["Scale"] = { scale.x, scale.y, scale.z };
-
-	return j;
+	return json();
 }
 
 void Transform::SetFromJson(const json& j)
 {
-	json position = j["Position"];
-	SetPosition(position[0], position[1], position[2]);
 
-	json eulerAngles = j["EulerAngles"];
-	SetOrientation(eulerAngles[0], eulerAngles[1], eulerAngles[2]);
-
-	json scale = j["Scale"];
-	SetScale(scale[0], scale[1], scale[2]);
 }

@@ -146,14 +146,13 @@
     <ClCompile Include="Source\GameTimer.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
-    <ClCompile Include="Source\NewTransform.cpp" />
+    <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\QuadPrimitive.cpp" />
     <ClCompile Include="Source\Random.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\Component.cpp" />
     <ClCompile Include="Source\CubePrimitive.cpp" />
     <ClCompile Include="Source\FileSystem.cpp" />
@@ -189,7 +188,7 @@
     <ClInclude Include="Header\Input.h" />
     <ClInclude Include="Header\Mesh.h" />
     <ClInclude Include="Header\Model.h" />
-    <ClInclude Include="Header\NewTransform.h" />
+    <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\ParameterCollection.h" />
     <ClInclude Include="Header\PlayerShip.h" />
     <ClInclude Include="Header\QuadPrimitive.h" />
@@ -204,7 +203,6 @@
     <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Timer.h" />
-    <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\RenderText.h" />

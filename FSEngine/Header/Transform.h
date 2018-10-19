@@ -20,52 +20,34 @@ using glm::vec2;
 class Transform : public Component
 {
 private:
-	struct MatrixValues
-	{
-		vec3 scale;
-		quat orientation;
-		vec3 translation;
-		vec3 skew;
-		vec4 perspective;
-	};
+	mat4 matrix;
+	vec3 position;
+	vec3 scale = FSMath::One;
+	quat orientation;
 
-	mat4 transform = FSMath::IdentityMatrix;
-
-	MatrixValues DecomposeTransformMatrix() const;
+	void CalculateMatrix();
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Transform;
 
-	const mat4& GetMatrix() const;
+	void SetPosition(float x, float y, float z);
+	void SetPosition(const vec2& position);
+	void SetPosition(const vec3& position);
+	const vec3& GetPosition() const;
+
+	void SetScale(float x, float y, float z);
+	void SetScale(const vec2& scale);
+	void SetScale(const vec3& scale);
+	const vec3& GetScale() const;
+
+	void SetOrientation(float eulerX, float eulerY, float eulerZ);
+	void SetOrientation(const vec3& eulerAngles);
+	void SetOrientation(const quat& orientation);
+	void SetOrientation(float angle, const vec3& axis);
+	const quat& GetOrientation() const;
+
 	void SetMatrix(const mat4& matrix);
-	mat3 CalculateNormalMatrix() const;
-
-	vec3 GetScale() const;
-	vec3 GetEulerAngles() const;
-	quat GetOrientation() const;
-	vec3 GetPosition() const;
-
-	vec3 GetForward() const;
-	vec3 GetUp() const;
-	vec3 GetRight() const;
-
-	const mat4& Scale(const vec2& scaleVector);
-	const mat4& Scale(float scaleFactor);
-	const mat4& Scale(const vec3& scaleVector);
-	const mat4& Translate(const vec2& translation);
-	const mat4& Translate(const vec3& translation);
-
-	const mat4& SetScale(const vec2& scaleVector);
-	const mat4& SetScale(float scaleFactor);
-	const mat4& SetScale(float x, float y, float z);
-	const mat4& SetScale(const vec3& scaleVector);
-	const mat4& SetOrientation(const quat& orientation);
-	const mat4& SetOrientation(float eulerX, float eulerY, float eulerZ);
-	const mat4& SetOrientation(const vec3& eulerAngles);
-	const mat4& SetOrientation(float angle, const vec3& axis);
-	const mat4& SetPosition(const vec2& position);
-	const mat4& SetPosition(float x, float y, float z);
-	const mat4& SetPosition(const vec3& position);
+	const mat4& GetMatrix() const;
 
 	json GetJson() const override;
 	void SetFromJson(const json& j) override;

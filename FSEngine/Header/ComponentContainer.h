@@ -3,7 +3,6 @@
 #include "Mesh.h"
 #include "Shading.h"
 #include "Transform.h"
-#include "NewTransform.h"
 
 class ComponentContainer
 {
@@ -11,7 +10,6 @@ private:
 	unique_ptr<ComponentCollection<Mesh>> mesh;
 	unique_ptr<ComponentCollection<Shading>> shading;
 	unique_ptr<ComponentCollection<Transform>> transform;
-	unique_ptr<ComponentCollection<NewTransform>> newTransform;
 
 	template <typename T>
 	ComponentCollection<T>* GetCollectionOfType() const;
@@ -22,7 +20,6 @@ public:
 		mesh = make_unique<ComponentCollection<Mesh>>();
 		shading = make_unique<ComponentCollection<Shading>>();
 		transform = make_unique<ComponentCollection<Transform>>();
-		newTransform = make_unique<ComponentCollection<NewTransform>>();
 	}
 
 	template <typename T>
@@ -50,9 +47,6 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
 
 	case Transform::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
-
-	case NewTransform::ComponentTypeId:
-		return reinterpret_cast<ComponentCollection<T>*>(newTransform.get());
 
 	default:
 		throwFS("Unknown type used for GetCollectionOfType");
