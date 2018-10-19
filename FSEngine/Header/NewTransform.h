@@ -20,9 +20,12 @@ using glm::vec2;
 class NewTransform : public Component
 {
 private:
+	mat4 matrix;
 	vec3 position;
 	vec3 scale = FSMath::One;
 	quat orientation;
+
+	void CalculateMatrix();
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::NewTransform;
@@ -36,7 +39,8 @@ public:
 	void SetOrientation(float angle, const vec3& axis);
 	const quat& GetOrientation() const;
 
-	mat4 GetMatrix() const;
+	void SetMatrix(const mat4& matrix);
+	const mat4& GetMatrix() const;
 
 	json GetJson() const override;
 	void SetFromJson(const json& j) override;

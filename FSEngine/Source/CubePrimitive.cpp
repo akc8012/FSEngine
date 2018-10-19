@@ -69,11 +69,8 @@ shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const
 
 void CubePrimitive::Update()
 {
-	auto position = systems->fileSystem->GetSettingsValue("Position");
-	auto scale = systems->fileSystem->GetSettingsValue("Scale");
-	auto angle = systems->fileSystem->GetSettingsValue("AngleAxis")[0];
-	auto axis = systems->fileSystem->GetSettingsValue("AngleAxis");
-	GetComponent<NewTransform>()->SetPosition(vec3(position[0], position[1], position[2]));
-	GetComponent<NewTransform>()->SetScale(vec3(scale[0], scale[1], scale[2]));
-	GetComponent<NewTransform>()->SetOrientation(glm::radians((float)angle), vec3(axis[1], axis[2], axis[3]));
+	auto sca = systems->fileSystem->GetSettingsValue("Scale");
+	mat4 scale = glm::scale(FSMath::IdentityMatrix, vec3(sca[0], sca[1], sca[2]));
+
+	GetComponent<NewTransform>()->SetMatrix(scale);
 }

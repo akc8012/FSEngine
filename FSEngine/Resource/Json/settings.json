@@ -20,7 +20,7 @@
   "CameraScrollSpeed": 0.15,
 
 
-  "Position": [-1, 0, 0],
-  "Scale": [0.5, 1, 0.5],
+  "Position": [0, 0, 0],
+  "Scale": [1, 1, 1],
   "AngleAxis": [35, 0, 0, 1]
 }
