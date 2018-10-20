@@ -30,6 +30,8 @@ private:
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Transform;
 
+	Transform();
+
 	void Translate(const vec3& position);
 	void SetPosition(float x, float y, float z);
 	void SetPosition(const vec2& position);
@@ -51,6 +53,7 @@ public:
 	vec3 GetUp() const;
 	vec3 GetRight() const;
 	const quat& GetOrientation() const;
+	vec3 GetEulerAngles() const;
 
 	void SetMatrix(const mat4& matrix);
 	mat3 CalculateNormalMatrix() const;

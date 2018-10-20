@@ -56,19 +56,19 @@ void Scene::AddGameObjects()
 
 void Scene::LoadScene()
 {
-	//json j = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
+	json j = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
 
-	//for (const auto& gameObject : gameObjectContainer->GetGameObjects())
-	//	gameObject->SetFromJson(j[gameObject->GetName()]);
+	for (const auto gameObject : gameObjectContainer->GetGameObjects())
+		gameObject->SetFromJson(j[gameObject->GetName()]);
 }
 
 void Scene::SaveScene() const
 {
-	//json j;
-	//for (const auto& gameObject : gameObjectContainer->GetGameObjects())
-	//	j[gameObject->GetName()] = gameObject->GetJson();
+	json j;
+	for (const auto gameObject : gameObjectContainer->GetGameObjects())
+		j[gameObject->GetName()] = gameObject->GetJson();
 
-	//FileSystem::WriteTextToFile(j.dump(2), GetFileName());
+	FileSystem::WriteTextToFile(j.dump(2), GetFileName());
 }
 
 string Scene::GetFileName() const
