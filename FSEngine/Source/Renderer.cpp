@@ -71,14 +71,7 @@ void Renderer::SetRenderParametersForGrid()
 #pragma region RenderGameObject
 void Renderer::RenderGameObject(IGameObject* gameObject)
 {
-	auto newTransform = gameObject->TryGetComponent<Transform>();
-	if (newTransform != nullptr)
-	{
-		systems->shaderProgram->SetMatrixUniform("modelMatrix", newTransform->GetMatrix());
-		systems->shaderProgram->SetMatrixUniform("normalMatrix", gameObject->GetComponent<Transform>()->CalculateNormalMatrix());
-	}
-	else
-		SetTransformMatrices(gameObject->GetComponent<Transform>());
+	SetTransformMatrices(gameObject->GetComponent<Transform>());
 
 	for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
