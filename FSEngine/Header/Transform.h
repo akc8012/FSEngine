@@ -20,10 +20,10 @@ using glm::vec2;
 class Transform : public Component
 {
 private:
-	mat4 matrix;
-	vec3 position;
+	mat4 matrix = FSMath::IdentityMatrix;
+	vec3 position = FSMath::Zero;
 	vec3 scale = FSMath::One;
-	quat orientation;
+	quat orientation = FSMath::IdentityQuaternion;
 
 	void CalculateMatrix();
 
