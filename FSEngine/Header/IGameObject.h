@@ -33,6 +33,9 @@ public:
 
 	virtual ComponentContainer* GetComponentContainer() const = 0;
 
+	virtual json GetJson() const = 0;
+	virtual void SetFromJson(const json& j) = 0;
+
 	template <typename T>
 	T* AddComponent(shared_ptr<T> component, const string& name = "");
 	template <typename T>
