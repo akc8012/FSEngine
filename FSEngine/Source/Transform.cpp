@@ -106,6 +106,11 @@ const quat& Transform::GetOrientation() const
 {
 	return orientation;
 }
+
+vec3 Transform::GetEulerAngles() const
+{
+	return glm::degrees(glm::eulerAngles(GetOrientation()));
+}
 #pragma endregion
 
 #pragma region Matrix
