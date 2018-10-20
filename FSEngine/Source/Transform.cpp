@@ -140,10 +140,28 @@ const mat4& Transform::GetMatrix() const
 
 json Transform::GetJson() const
 {
-	return json();
+	json j;
+
+	vec3 position = GetPosition();
+	j["Position"] = { position.x, position.y, position.z };
+
+	vec3 eulerAngles = GetEulerAngles();
+	j["EulerAngles"] = { eulerAngles.x, eulerAngles.y, eulerAngles.z };
+
+	vec3 scale = GetScale();
+	j["Scale"] = { scale.x, scale.y, scale.z };
+
+	return j;
 }
 
 void Transform::SetFromJson(const json& j)
 {
+	json position = j["Position"];
+	SetPosition(position[0], position[1], position[2]);
 
+	json eulerAngles = j["EulerAngles"];
+	SetOrientation(eulerAngles[0], eulerAngles[1], eulerAngles[2]);
+
+	json scale = j["Scale"];
+	SetScale(scale[0], scale[1], scale[2]);
 }
