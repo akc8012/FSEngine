@@ -60,24 +60,13 @@ ComponentContainer* GameObject::GetComponentContainer() const
 json GameObject::GetJson() const
 {
 	json j;
-	for (const auto transform : components->GetComponents<Transform>())
-		j[transform->GetName()] = transform->GetJson();
-
-	for (const auto shading : components->GetComponents<Shading>())
-		j[shading->GetName()] = shading->GetJson();
-
 	j["ParameterCollection"] = parameterCollection->GetJson();
+
 	return j;
 }
 
 void GameObject::SetFromJson(const json& j)
 {
-	for (auto transform : components->GetComponents<Transform>())
-		transform->SetFromJson(j[transform->GetName()]);
-
-	for (auto shading : components->GetComponents<Shading>())
-		shading->SetFromJson(j[shading->GetName()]);
-
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 

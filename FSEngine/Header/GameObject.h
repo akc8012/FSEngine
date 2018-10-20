@@ -42,8 +42,8 @@ public:
 
 	ComponentContainer* GetComponentContainer() const override;
 
-	json GetJson() const override;
-	void SetFromJson(const json& j) override;
+	json GetJson() const;
+	void SetFromJson(const json& j);
 
 	void ReceiveEvent(const string& key, const json& event) override;
 };
