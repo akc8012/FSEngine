@@ -1,4 +1,5 @@
 #pragma once
+#include "IEventListener.h"
 #include "GameObject.h"
 #include "Renderer.h"
 #include "CubePrimitive.h"
@@ -9,7 +10,7 @@
 #include "Camera.h"
 #include "GameObjectContainer.h"
 
-class Scene
+class Scene : public IEventListener
 {
 private:
 	string name;
@@ -27,6 +28,8 @@ public:
 
 	void LoadScene();
 	void SaveScene() const;
+	
+	void ReceiveEvent(const string& key, const json& event) override;
 
 	GameObjectContainer* GetGameObjectContainer() const;
 };

@@ -96,6 +96,8 @@ void Engine::GameLoop()
 {
 	PollEvents();
 
+	HandleKeyboardShortcuts();
+
 	Update();
 
 	Draw();
@@ -204,6 +206,18 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 			systems->shaderProgram->CompileShaders();
 
 		break;
+	}
+}
+
+void Engine::HandleKeyboardShortcuts()
+{
+	if (systems->input->IsButtonHeld(SDL_SCANCODE_LCTRL))
+	{
+		if (systems->input->IsButtonPressed(SDL_SCANCODE_S))
+			systems->eventSystem->SendEvent("SaveKeyPressed", json());
+
+		if (systems->input->IsButtonPressed(SDL_SCANCODE_O))
+			systems->eventSystem->SendEvent("LoadKeyPressed", json());
 	}
 }
 #pragma endregion

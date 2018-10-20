@@ -5,6 +5,9 @@ Scene::Scene(const string& name, Systems* systems)
 {
 	gameObjectContainer = make_unique<GameObjectContainer>(systems);
 	AddGameObjects();
+
+	systems->eventSystem->AddListener("SaveKeyPressed", this);
+	systems->eventSystem->AddListener("LoadKeyPressed", this);
 }
 
 void Scene::AddGameObjects()
@@ -36,6 +39,14 @@ void Scene::SaveScene() const
 	}
 
 	FileSystem::WriteTextToFile(j.dump(2), GetFileName());
+}
+
+void Scene::ReceiveEvent(const string& key, const json& event)
+{
+	if (key == "SaveKeyPressed")
+		printFS("Save!");
+	else if (key == "LoadKeyPressed")
+		printFS("Load!");
 }
 
 string Scene::GetFileName() const

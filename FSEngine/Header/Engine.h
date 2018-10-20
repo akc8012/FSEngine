@@ -36,6 +36,7 @@ private:
 	void SetSwapInterval(int interval);
 
 	void PollEvents();
+	void HandleKeyboardShortcuts();
 	void Update();
 	void Draw();
 

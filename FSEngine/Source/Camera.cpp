@@ -134,6 +134,9 @@ vec3 Camera::GetPositionMouseInput(const vec3& cursorPosition) const
 
 vec3 Camera::GetPositionKeyInput(const vec3& right, const vec3& forward) const
 {
+	if (systems->input->IsButtonHeld(SDL_SCANCODE_LCTRL))
+		return FSMath::Zero;
+
 	vec2 inputDelta = vec2(systems->input->GetHorizontalAxis(), -systems->input->GetVerticalAxis());
 
 	vec3 horizontalMovement = inputDelta.x * right;
