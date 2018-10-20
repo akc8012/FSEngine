@@ -19,5 +19,5 @@ private:
 
 public:
 	void AddListener(const string& key, IEventListener* listener);
-	void SendEvent(const string& key, const json& event);
+	void SendEvent(const string& key, const json& event = nullptr);
 };
