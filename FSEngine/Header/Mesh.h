@@ -58,6 +58,7 @@ private:
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Mesh;
 
+	Mesh();
 	Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices);
 	Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
 	~Mesh();

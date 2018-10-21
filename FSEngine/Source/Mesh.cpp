@@ -1,5 +1,10 @@
 #include "..\Header\Mesh.h"
 
+Mesh::Mesh()
+{
+
+}
+
 Mesh::Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices)
  : vertices(vertices), indices(indices)
 {
