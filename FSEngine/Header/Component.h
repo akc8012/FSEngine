@@ -20,7 +20,6 @@ public:
 	virtual ~Component();
 
 	static const Types::ComponentType ComponentTypeId = Types::Component;
-
 	virtual Types::ComponentType GetComponentTypeId() const;
 
 	const string& GetName() const;

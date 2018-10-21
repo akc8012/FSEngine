@@ -12,10 +12,7 @@ private:
 	unique_ptr<ComponentCollection<Transform>> transform;
 
 	template <typename T>
-	ComponentCollection<T>* GetCollectionOfType() const;
-
-	template <typename T>
-	ComponentCollection<T>* GetCollectionOfType(T* component) const;
+	ComponentCollection<T>* GetCollectionOfType(Types::ComponentType type) const;
 
 public:
 	ComponentContainer()
@@ -37,10 +34,10 @@ public:
 	vector<T*> GetComponents() const;
 };
 
-template <typename T>
-ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
+template<typename T>
+ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::ComponentType type) const
 {
-	switch (T::ComponentTypeId)
+	switch (type)
 	{
 	case Mesh::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
@@ -56,26 +53,10 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
 	}
 }
 
-template<typename T>
-ComponentCollection<T>* ComponentContainer::GetCollectionOfType(T* component) const
-{
-	if (component->GetComponentTypeId() == Mesh::ComponentTypeId)
-		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
-
-	else if (component->GetComponentTypeId() == Shading::ComponentTypeId)
-		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
-
-	else if (component->GetComponentTypeId() == Transform::ComponentTypeId)
-		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
-
-	else
-		throwFS("Unknown type used for GetCollectionOfType");
-}
-
 template <typename T>
 T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name)
 {
-	return name == "" ? GetCollectionOfType<T>(component.get())->Add(component) : GetCollectionOfType<T>(component.get())->Add(component, name);
+	return name == "" ? GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component) : GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component, name);
 }
 
 template <typename T>
@@ -91,11 +72,11 @@ T* ComponentContainer::GetComponent(const string& name) const
 template <typename T>
 T* ComponentContainer::TryGetComponent(const string& name) const
 {
-	return name == "" ? GetCollectionOfType<T>()->TryGet() : GetCollectionOfType<T>()->TryGet(name);
+	return name == "" ? GetCollectionOfType<T>(T::ComponentTypeId)->TryGet() : GetCollectionOfType<T>(T::ComponentTypeId)->TryGet(name);
 }
 
 template<typename T>
 vector<T*> ComponentContainer::GetComponents() const
 {
-	return GetCollectionOfType<T>()->GetComponents();
+	return GetCollectionOfType<T>(T::ComponentTypeId)->GetComponents();
 }
