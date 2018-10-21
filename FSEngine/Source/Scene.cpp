@@ -4,7 +4,9 @@ Scene::Scene(const string& name, Systems* systems)
  : name(name), systems(systems)
 {
 	gameObjectContainer = make_unique<GameObjectContainer>(systems);
+
 	AddGameObjects();
+	LoadScene();
 
 	systems->eventSystem->AddListener("SaveKeyPressed", this);
 	systems->eventSystem->AddListener("LoadKeyPressed", this);
@@ -20,33 +22,33 @@ void Scene::AddGameObjects()
 
 void Scene::LoadScene()
 {
-	json j = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
+	json sceneJson = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
 
 	for (const auto gameObject : gameObjectContainer->GetGameObjects())
 	{
 		if (gameObject->GetName() != "Camera")
-			gameObject->SetFromJson(j[gameObject->GetName()]);
+			gameObject->SetFromJson(sceneJson[gameObject->GetName()]);
 	}
 }
 
 void Scene::SaveScene() const
 {
-	json j;
+	json sceneJson;
 	for (const auto gameObject : gameObjectContainer->GetGameObjects())
 	{
 		if (gameObject->GetName() != "Camera")
-			j[gameObject->GetName()] = gameObject->GetJson();
+			sceneJson[gameObject->GetName()] = gameObject->GetJson();
 	}
 
-	FileSystem::WriteTextToFile(j.dump(2), GetFileName());
+	FileSystem::WriteTextToFile(sceneJson.dump(2), GetFileName());
 }
 
 void Scene::ReceiveEvent(const string& key, const json& event)
 {
 	if (key == "SaveKeyPressed")
-		printFS("Save!");
+		SaveScene();
 	else if (key == "LoadKeyPressed")
-		printFS("Load!");
+		LoadScene();
 }
 
 string Scene::GetFileName() const

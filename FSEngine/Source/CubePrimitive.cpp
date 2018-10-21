@@ -71,3 +71,8 @@ void CubePrimitive::Update()
 {
 
 }
+
+string CubePrimitive::GetGameObjectType() const
+{
+	return "CubePrimitive";
+}

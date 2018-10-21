@@ -39,6 +39,7 @@ public:
 
 	const string& GetName() const override;
 	void SetName(const string& name) override;
+	virtual string GetGameObjectType() const override;
 
 	ComponentContainer* GetComponentContainer() const override;
 

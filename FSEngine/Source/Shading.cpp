@@ -62,6 +62,7 @@ ParameterCollection<Shading::Parameters, Shading::ParametersLength>* Shading::Ge
 json Shading::GetJson() const
 {
 	json j;
+	j["type"] = Types::ComponentTypeString[ComponentTypeId];
 	j["FlatColor"] = { flatColor.r, flatColor.g, flatColor.b, flatColor.a };
 	j["ParameterCollection"] = parameterCollection->GetJson();
 

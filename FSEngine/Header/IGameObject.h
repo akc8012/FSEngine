@@ -30,6 +30,7 @@ public:
 
 	virtual const string& GetName() const = 0;
 	virtual void SetName(const string& name) = 0;
+	virtual string GetGameObjectType() const = 0;
 
 	virtual ComponentContainer* GetComponentContainer() const = 0;
 

@@ -17,7 +17,8 @@
         "Blend": 1,
         "EnableDepthTest": 1,
         "RenderPerspective": 1
-      }
+      },
+      "type": "Shading"
     },
     "Transform": {
       "EulerAngles": [
@@ -34,7 +35,9 @@
         1.0,
         1.0,
         1.0
-      ]
-    }
+      ],
+      "type": "Transform"
+    },
+    "type": "CubePrimitive"
   }
 }
