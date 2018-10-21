@@ -64,26 +64,32 @@ ComponentContainer* GameObject::GetComponentContainer() const
 
 json GameObject::GetJson() const
 {
-	json j;
-	j["type"] = GetGameObjectType();
+	json gameObjectJson;
+	gameObjectJson["type"] = GetGameObjectType();
+
+	json componentJson;
 
 	for (const auto transform : components->GetComponents<Transform>())
-		j[transform->GetName()] = transform->GetJson();
+		componentJson[transform->GetName()] = transform->GetJson();
 
 	for (const auto shading : components->GetComponents<Shading>())
-		j[shading->GetName()] = shading->GetJson();
+		componentJson[shading->GetName()] = shading->GetJson();
 
-	j["ParameterCollection"] = parameterCollection->GetJson();
-	return j;
+	gameObjectJson["Components"] = componentJson;
+
+	gameObjectJson["ParameterCollection"] = parameterCollection->GetJson();
+	return gameObjectJson;
 }
 
 void GameObject::SetFromJson(const json& j)
 {
+	json componentJson = j["Components"];
+
 	for (auto transform : components->GetComponents<Transform>())
-		transform->SetFromJson(j[transform->GetName()]);
+		transform->SetFromJson(componentJson[transform->GetName()]);
 
 	for (auto shading : components->GetComponents<Shading>())
-		shading->SetFromJson(j[shading->GetName()]);
+		shading->SetFromJson(componentJson[shading->GetName()]);
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
