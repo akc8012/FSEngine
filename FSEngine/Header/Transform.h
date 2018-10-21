@@ -29,6 +29,7 @@ private:
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Transform;
+	Types::ComponentType GetComponentTypeId() const override;
 
 	void Translate(const vec3& position);
 	void SetPosition(float x, float y, float z);

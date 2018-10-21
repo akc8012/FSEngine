@@ -76,3 +76,8 @@ void Shading::SetFromJson(const json& j)
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
+
+Types::ComponentType Shading::GetComponentTypeId() const
+{
+	return ComponentTypeId;
+}

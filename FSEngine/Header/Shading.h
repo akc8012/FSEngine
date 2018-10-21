@@ -27,6 +27,7 @@ private:
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Shading;
+	Types::ComponentType GetComponentTypeId() const override;
 
 	Shading();
 	Shading(const vec3& flatColor);

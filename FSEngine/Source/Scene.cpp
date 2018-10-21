@@ -14,9 +14,7 @@ Scene::Scene(const string& name, Systems* systems)
 
 void Scene::AddGameObjects()
 {
-	auto gameObject = gameObjectContainer->AddGameObject("BlueCube", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Shading>(0.f, 0.f, 0.8f));
-
+	gameObjectContainer->AddGameObject("Cube", make_unique<CubePrimitive>());
 	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
 }
 

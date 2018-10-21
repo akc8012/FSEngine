@@ -5,6 +5,11 @@ Component::~Component()
 
 }
 
+Types::ComponentType Component::GetComponentTypeId() const
+{
+	return ComponentTypeId;
+}
+
 const string& Component::GetName() const
 {
 	return name;

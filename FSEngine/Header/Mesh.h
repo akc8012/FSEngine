@@ -57,6 +57,7 @@ private:
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Mesh;
+	Types::ComponentType GetComponentTypeId() const override;
 
 	Mesh();
 	Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices);

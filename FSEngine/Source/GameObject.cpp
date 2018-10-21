@@ -83,13 +83,13 @@ json GameObject::GetJson() const
 
 void GameObject::SetFromJson(const json& j)
 {
-	json componentJson = j["Components"];
+	json componentObjects = j["Components"];
 
-	for (auto transform : components->GetComponents<Transform>())
-		transform->SetFromJson(componentJson[transform->GetName()]);
-
-	for (auto shading : components->GetComponents<Shading>())
-		shading->SetFromJson(componentJson[shading->GetName()]);
+	for (const auto componentJson : componentObjects.items())
+	{
+		auto component = ComponentFactory::MakeComponent(componentJson.value()["type"]);
+		AddComponent(component, componentJson.key())->SetFromJson(componentJson.value());
+	}
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }

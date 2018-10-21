@@ -14,6 +14,9 @@ private:
 	template <typename T>
 	ComponentCollection<T>* GetCollectionOfType() const;
 
+	template <typename T>
+	ComponentCollection<T>* GetCollectionOfType(T* component) const;
+
 public:
 	ComponentContainer()
 	{
@@ -53,10 +56,26 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType() const
 	}
 }
 
+template<typename T>
+ComponentCollection<T>* ComponentContainer::GetCollectionOfType(T* component) const
+{
+	if (component->GetComponentTypeId() == Mesh::ComponentTypeId)
+		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
+
+	else if (component->GetComponentTypeId() == Shading::ComponentTypeId)
+		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
+
+	else if (component->GetComponentTypeId() == Transform::ComponentTypeId)
+		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
+
+	else
+		throwFS("Unknown type used for GetCollectionOfType");
+}
+
 template <typename T>
 T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name)
 {
-	return name == "" ? GetCollectionOfType<T>()->Add(component) : GetCollectionOfType<T>()->Add(component, name);
+	return name == "" ? GetCollectionOfType<T>(component.get())->Add(component) : GetCollectionOfType<T>(component.get())->Add(component, name);
 }
 
 template <typename T>

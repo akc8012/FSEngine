@@ -2,6 +2,6 @@
 
 namespace Types
 {
-	enum ComponentType { Mesh, Shading, Transform };
-	static const char*  ComponentTypeString[] = { "Mesh", "Shading", "Transform" };
+	enum ComponentType { Component, Mesh, Shading, Transform };
+	static const char*  ComponentTypeString[] = { "Component", "Mesh", "Shading", "Transform" };
 }

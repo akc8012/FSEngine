@@ -166,3 +166,8 @@ void Transform::SetFromJson(const json& j)
 	json scale = j["Scale"];
 	SetScale(scale[0], scale[1], scale[2]);
 }
+
+Types::ComponentType Transform::GetComponentTypeId() const
+{
+	return ComponentTypeId;
+}

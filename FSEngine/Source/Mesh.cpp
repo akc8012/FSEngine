@@ -190,6 +190,11 @@ void Mesh::SetFromJson(const json& j)
 
 }
 
+Types::ComponentType Mesh::GetComponentTypeId() const
+{
+	return ComponentTypeId;
+}
+
 Mesh::~Mesh()
 {
 	const int Amount = 1;
