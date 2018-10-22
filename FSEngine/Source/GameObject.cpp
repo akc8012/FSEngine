@@ -87,13 +87,16 @@ void GameObject::SetFromJson(const json& j)
 
 	for (const auto componentJson : componentObjects.items())
 	{
-		string type = componentJson.value()["type"];
+		string name = componentJson.key();
+		auto componentType = Types::StringToComponentType(componentJson.value()["type"]);
 
-		if (GetComponentContainer()->HasComponent<Component>((Types::StringToComponentType(type)), componentJson.key()))
-			continue;
-
-		shared_ptr<Component> component = ComponentFactory::MakeComponent(type);
-		AddComponent(component, componentJson.key())->SetFromJson(componentJson.value());
+		if (GetComponentContainer()->HasComponent<Component>(componentType, name))
+			GetComponentContainer()->GetCollectionOfType<Component>(componentType)->Get(name)->SetFromJson(componentJson.value());
+		else
+ 		{
+			shared_ptr<Component> component = ComponentFactory::MakeComponent(componentJson.value()["type"]);
+			AddComponent(component, name)->SetFromJson(componentJson.value());
+		}
 	}
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);

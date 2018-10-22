@@ -11,9 +11,6 @@ private:
 	unique_ptr<ComponentCollection<Shading>> shading;
 	unique_ptr<ComponentCollection<Transform>> transform;
 
-	template <typename T>
-	ComponentCollection<T>* GetCollectionOfType(Types::ComponentType type) const;
-
 public:
 	ComponentContainer()
 	{
@@ -21,6 +18,9 @@ public:
 		shading = make_unique<ComponentCollection<Shading>>();
 		transform = make_unique<ComponentCollection<Transform>>();
 	}
+
+	template <typename T>
+	ComponentCollection<T>* GetCollectionOfType(Types::ComponentType type) const;
 
 	template <typename T>
 	T* AddComponent(shared_ptr<T> component, const string& name = "");
