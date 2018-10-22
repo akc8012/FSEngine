@@ -11,5 +11,5 @@ shared_ptr<Component> ComponentFactory::MakeComponent(const string& type)
 	else if (type == Types::ComponentTypeString[Transform::ComponentTypeId])
 		return make_shared<Transform>();
 
-	throwFS("Cannot make component of unrecognized type: " + type);
+	throwFS("Cannot make Component of unrecognized type: " + type);
 }

@@ -145,6 +145,7 @@
     <ClCompile Include="Source\FSException.cpp" />
     <ClCompile Include="Source\FSMath.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
+    <ClCompile Include="Source\GameObjectFactory.cpp" />
     <ClCompile Include="Source\GameTimer.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Header\FSException.h" />
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\GameObjectContainer.h" />
+    <ClInclude Include="Header\GameObjectFactory.h" />
     <ClInclude Include="Header\GameTimer.h" />
     <ClInclude Include="Header\IEventListener.h" />
     <ClInclude Include="Header\IGameObject.h" />

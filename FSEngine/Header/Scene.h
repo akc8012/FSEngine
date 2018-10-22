@@ -9,6 +9,7 @@
 #include "PlayerShip.h"
 #include "Camera.h"
 #include "GameObjectContainer.h"
+#include "GameObjectFactory.h"
 
 class Scene : public IEventListener
 {
