@@ -31,6 +31,7 @@
     <ClCompile Include="Source\EventSystem.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\ComponentFactory.cpp" />
+    <ClCompile Include="Source\ComponentType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />

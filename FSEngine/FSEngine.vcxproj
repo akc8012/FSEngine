@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\ComponentFactory.cpp" />
+    <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\EventSystem.cpp" />
     <ClCompile Include="Source\FSDebug.cpp" />
     <ClCompile Include="Source\FSException.cpp" />

@@ -27,6 +27,8 @@ void Scene::LoadScene()
 		if (gameObject->GetName() != "Camera")
 			gameObject->SetFromJson(sceneJson[gameObject->GetName()]);
 	}
+
+	printFS("Load!");
 }
 
 void Scene::SaveScene() const
@@ -39,6 +41,8 @@ void Scene::SaveScene() const
 	}
 
 	FileSystem::WriteTextToFile(sceneJson.dump(2), GetFileName());
+
+	printFS("Save!");
 }
 
 void Scene::ReceiveEvent(const string& key, const json& event)

@@ -87,7 +87,12 @@ void GameObject::SetFromJson(const json& j)
 
 	for (const auto componentJson : componentObjects.items())
 	{
-		shared_ptr<Component> component = ComponentFactory::MakeComponent(componentJson.value()["type"]);
+		string type = componentJson.value()["type"];
+
+		if (GetComponentContainer()->HasComponent<Component>((Types::StringToComponentType(type)), componentJson.key()))
+			continue;
+
+		shared_ptr<Component> component = ComponentFactory::MakeComponent(type);
 		AddComponent(component, componentJson.key())->SetFromJson(componentJson.value());
 	}
 
