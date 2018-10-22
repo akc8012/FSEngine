@@ -29,8 +29,6 @@ public:
 	T* GetComponent(const string& name = "") const;
 	template <typename T>
 	T* TryGetComponent(const string& name = "") const;
-	template <typename T>
-	bool HasComponent(Types::ComponentType type, const string& name = "") const;
 
 	template <typename T>
 	vector<T*> GetComponents() const;
@@ -75,12 +73,6 @@ template <typename T>
 T* ComponentContainer::TryGetComponent(const string& name) const
 {
 	return name == "" ? GetCollectionOfType<T>(T::ComponentTypeId)->TryGet() : GetCollectionOfType<T>(T::ComponentTypeId)->TryGet(name);
-}
-
-template <typename T>
-bool ComponentContainer::HasComponent(Types::ComponentType type, const string& name) const
-{
-	return (name == "" ? GetCollectionOfType<T>(type)->TryGet() : GetCollectionOfType<T>(type)->TryGet(name)) != nullptr;
 }
 
 template <typename T>

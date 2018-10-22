@@ -22,6 +22,7 @@ private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	void SetDefaultParameters();
+	Component* TryGetComponentOfType(const string& type, const string& name);
 
 protected:
 	Systems* systems = nullptr;

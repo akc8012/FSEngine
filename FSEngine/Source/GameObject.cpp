@@ -88,18 +88,21 @@ void GameObject::SetFromJson(const json& j)
 	for (const auto componentJson : componentObjects.items())
 	{
 		string name = componentJson.key();
-		auto componentType = Types::StringToComponentType(componentJson.value()["type"]);
+		string type = componentJson.value()["type"];
 
-		if (GetComponentContainer()->HasComponent<Component>(componentType, name))
-			GetComponentContainer()->GetCollectionOfType<Component>(componentType)->Get(name)->SetFromJson(componentJson.value());
+		auto component = TryGetComponentOfType(type, name);
+		if (component != nullptr)
+			component->SetFromJson(componentJson.value());
 		else
- 		{
-			shared_ptr<Component> component = ComponentFactory::MakeComponent(componentJson.value()["type"]);
-			AddComponent(component, name)->SetFromJson(componentJson.value());
-		}
+			AddComponent(ComponentFactory::MakeComponent(type), name)->SetFromJson(componentJson.value());
 	}
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
+}
+
+Component* GameObject::TryGetComponentOfType(const string& type, const string& name)
+{
+	return GetComponentContainer()->GetCollectionOfType<Component>(Types::StringToComponentType(type))->TryGet(name);
 }
 
 void GameObject::ReceiveEvent(const string& key, const json& event)
