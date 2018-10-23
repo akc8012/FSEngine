@@ -67,7 +67,11 @@ shared_ptr<Mesh> CubePrimitive::CreateMeshComponent() const
 
 void CubePrimitive::Update()
 {
+	if (systems->input->IsButtonPressed(SDL_SCANCODE_SPACE))
+		GetComponent<Transform>()->Translate(GetComponent<Transform>()->GetForward());
 
+	if (systems->input->IsButtonPressed(SDL_SCANCODE_BACKSPACE))
+		GetComponent<Transform>()->Translate(-GetComponent<Transform>()->GetForward());
 }
 
 string CubePrimitive::GetGameObjectType() const
