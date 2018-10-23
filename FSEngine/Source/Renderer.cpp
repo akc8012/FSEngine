@@ -75,11 +75,17 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 
 	for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
-		vector<string> textureNames = mesh->GetAssociatedTextureNames();
-		if (textureNames.size() != 0)
-			SetDrawableParameters(gameObject->GetComponent<IDrawable>(textureNames.front()));
-		else
-			SetDrawableParameters(gameObject->GetComponent<IDrawable>());
+		//vector<string> textureNames = mesh->GetAssociatedTextureNames();
+		//if (textureNames.size() != 0)
+		//	SetDrawableParameters(gameObject->GetComponent<IDrawable>(textureNames.front()));
+		//else
+		//	SetDrawableParameters(gameObject->GetComponent<IDrawable>());
+
+		IDrawable* drawable = gameObject->TryGetComponent<Shading>();
+		if (drawable == nullptr)
+			drawable = gameObject->GetComponent<Texture>();
+
+		SetDrawableParameters(drawable);
 
 		DrawMesh(mesh);
 	}
@@ -97,7 +103,7 @@ void Renderer::SetDrawableParameters(IDrawable* drawable)
 	SetRenderPerspective(drawable->GetParameterCollection()->GetParameter(IDrawable::RenderPerspective));
 	SetBlend(drawable->GetParameterCollection()->GetParameter(IDrawable::Blend));
 
-	//systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetFlatColor());
+	systems->shaderProgram->SetVectorUniform("flatColor", vec4(0));
 	drawable->BindTexture();
 }
 

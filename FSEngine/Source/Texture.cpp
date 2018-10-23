@@ -108,7 +108,7 @@ Texture::TextureType Texture::GetTextureType() const
 
 json Texture::GetJson() const
 {
-	json j;
+	json j = IDrawable::GetJson();
 	j["type"] = Types::ComponentTypeString[ComponentTypeId];
 	j["Filepath"] = filepath;
 	j["TextureType"] = textureType;
@@ -118,6 +118,8 @@ json Texture::GetJson() const
 
 void Texture::SetFromJson(const json& j)
 {
+	IDrawable::SetFromJson(j);
+
 	filepath = j["Filepath"].get<string>();
 	textureType = (TextureType)j["TextureType"].get<int>();
 

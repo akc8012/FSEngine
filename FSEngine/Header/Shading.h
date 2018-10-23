@@ -12,8 +12,6 @@ class Shading : public IDrawable
 private:
 	vec4 flatColor;
 
-	void Initialize();
-
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Shading;
 	Types::ComponentType GetComponentTypeId() const override;
@@ -30,6 +28,6 @@ public:
 	void SetFlatColor(const vec4& flatColor);
 	vec4 GetFlatColor() const;
 
-	virtual json GetJson() const override;
-	virtual void SetFromJson(const json& j) override;
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 };
