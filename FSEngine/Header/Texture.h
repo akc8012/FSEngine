@@ -1,5 +1,5 @@
 #pragma once
-#include "IDrawableComponent.h"
+#include "IDrawable.h"
 #include "FSException.h"
 
 #include <SDL.h>
@@ -10,7 +10,7 @@
 #include <string>
 using std::string;
 
-class Texture : public IDrawableComponent
+class Texture : public IDrawable
 {
 public:
 	enum TextureType { Diffuse, Specular };

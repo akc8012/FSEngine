@@ -1,10 +1,10 @@
 #pragma once
 #include "Component.h"
 
-class IDrawableComponent : public Component
+class IDrawable : public Component
 {
 public:
-	virtual ~IDrawableComponent()
+	virtual ~IDrawable()
 	{
 
 	}

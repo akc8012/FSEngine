@@ -1,5 +1,5 @@
 #pragma once
-#include "IDrawableComponent.h"
+#include "IDrawable.h"
 #include "ShaderProgram.h"
 #include "ParameterCollection.h"
 
@@ -7,7 +7,7 @@
 using glm::vec4;
 using glm::vec3;
 
-class Shading : public IDrawableComponent
+class Shading : public IDrawable
 {
 public:
 	enum Parameters
