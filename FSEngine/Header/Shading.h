@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "IDrawableComponent.h"
 #include "ShaderProgram.h"
 #include "ParameterCollection.h"
 
@@ -7,7 +7,7 @@
 using glm::vec4;
 using glm::vec3;
 
-class Shading : public Component
+class Shading : public IDrawableComponent
 {
 public:
 	enum Parameters
@@ -34,7 +34,8 @@ public:
 	Shading(float r, float g, float b);
 	Shading(int r, int g, int b);
 
-	virtual void BindTexture();
+	void BindTexture() override;
+	bool HasFlatColor() const override;
 
 	void SetFlatColor(const vec3& flatColor);
 	void SetFlatColor(const vec4& flatColor);

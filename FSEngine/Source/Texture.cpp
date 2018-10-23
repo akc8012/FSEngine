@@ -91,6 +91,11 @@ void Texture::BindTexture()
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
+bool Texture::HasFlatColor() const
+{
+	return false;
+}
+
 Texture::TextureType Texture::GetTextureType() const
 {
 	return textureType;

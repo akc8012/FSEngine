@@ -1,5 +1,6 @@
 #pragma once
-#include "Shading.h"
+#include "IDrawableComponent.h"
+#include "FSException.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -9,7 +10,7 @@
 #include <string>
 using std::string;
 
-class Texture : public Shading
+class Texture : public IDrawableComponent
 {
 public:
 	enum TextureType { Diffuse, Specular };
@@ -32,7 +33,9 @@ public:
 	Texture(SDL_Surface* surface, bool flipSurface = false);
 	~Texture();
 
-	void BindTexture();
+	void BindTexture() override;
+	bool HasFlatColor() const override;
+
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 
 	TextureType GetTextureType() const;

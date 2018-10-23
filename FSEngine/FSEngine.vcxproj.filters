@@ -74,6 +74,7 @@
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\ComponentFactory.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
+    <ClInclude Include="Header\IDrawableComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
