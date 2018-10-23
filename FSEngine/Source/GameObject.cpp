@@ -91,10 +91,10 @@ void GameObject::SetFromJson(const json& j)
 		string type = componentJson.value()["type"];
 
 		auto component = TryGetComponentOfType(type, name);
-		if (component != nullptr)
-			component->SetFromJson(componentJson.value());
-		else
-			AddComponent(ComponentFactory::MakeComponent(type), name)->SetFromJson(componentJson.value());
+		if (component == nullptr)
+			component = AddComponent(ComponentFactory::MakeComponent(type), name);
+
+		component->SetFromJson(componentJson.value());
 	}
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
