@@ -1,6 +1,12 @@
 #include "../Header/Texture.h"
 
 Texture::Texture(const string& filepath)
+ : filepath(filepath)
+{
+	CreateTextureFromFilepath(filepath);
+}
+
+void Texture::CreateTextureFromFilepath(const string& filepath)
 {
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
@@ -92,12 +98,21 @@ Texture::TextureType Texture::GetTextureType() const
 
 json Texture::GetJson() const
 {
-	return json();
+	json j;
+	j["type"] = Types::ComponentTypeString[ComponentTypeId];
+	j["Filepath"] = filepath;
+	j["TextureType"] = textureType;
+
+	return j;
 }
 
 void Texture::SetFromJson(const json& j)
 {
+	filepath = j["Filepath"].get<string>();
+	textureType = (TextureType)j["TextureType"].get<int>();
 
+	DeleteTexture();
+	CreateTextureFromFilepath(filepath);
 }
 
 Texture::~Texture()

@@ -15,8 +15,11 @@ public:
 	enum TextureType { Diffuse, Specular };
 
 private:
+	string filepath;
 	Uint32 textureId = NULL;
 	TextureType textureType = Diffuse;
+
+	void CreateTextureFromFilepath(const string& filepath);
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 	void FlipSurface(SDL_Surface* surface);

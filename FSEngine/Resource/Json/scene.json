@@ -1,61 +1,9 @@
 {
-  "Dank": {
+  "MemeFaceCube": {
     "Components": {
       "Shading": {
-        "FlatColor": [
-          0.0,
-          0.15000000596046448,
-          0.5,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Shading"
-      },
-      "Transform": {
-        "EulerAngles": [
-          65.00000762939453,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "Scale": [
-          0.20000000298023224,
-          0.20000000298023224,
-          2.5
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "FAAACCEE": {
-    "Components": {
-      "Shading": {
-        "FlatColor": [
-          0.6000000238418579,
-          0.15000000596046448,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
+        "Filepath": "Resource/Image/awesomeface.png",
+        "TextureType": 0,
         "type": "Shading"
       },
       "Transform": {
@@ -65,100 +13,14 @@
           0.0
         ],
         "Position": [
-          -3.0,
-          1.0,
+          0.0,
+          0.0,
           0.0
         ],
         "Scale": [
           1.0,
           1.0,
           1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "InYO": {
-    "Components": {
-      "Shading": {
-        "FlatColor": [
-          0.0,
-          1.0,
-          1.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Shading"
-      },
-      "Transform": {
-        "EulerAngles": [
-          41.9774055480957,
-          -47.733673095703125,
-          6.261719226837158
-        ],
-        "Position": [
-          0.0,
-          0.0,
-          -3.0
-        ],
-        "Scale": [
-          1.0,
-          40.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "Meme": {
-    "Components": {
-      "Shading": {
-        "FlatColor": [
-          0.6000000238418579,
-          0.15000000596046448,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Shading"
-      },
-      "Transform": {
-        "EulerAngles": [
-          65.00000762939453,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          3.0,
-          0.0,
-          0.0
-        ],
-        "Scale": [
-          0.20000000298023224,
-          0.20000000298023224,
-          2.5
         ],
         "type": "Transform"
       }

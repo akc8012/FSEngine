@@ -14,6 +14,10 @@ Scene::Scene(const string& name, Systems* systems)
 
 void Scene::AddGameObjects()
 {
+	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
+	gameObject->AddComponent(make_shared<Transform>());
+	gameObject->AddComponent(make_shared<Texture>("Resource/Image/awesomeface.png"));
+
 	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
 }
 
@@ -62,9 +66,4 @@ string Scene::GetFileName() const
 GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
-}
-
-Scene::~Scene()
-{
-	SaveScene();
 }
