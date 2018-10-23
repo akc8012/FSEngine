@@ -14,7 +14,6 @@ Scene::Scene(const string& name, Systems* systems)
 
 void Scene::AddGameObjects()
 {
-	gameObjectContainer->AddGameObject("Cube", make_unique<CubePrimitive>());
 	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
 }
 
@@ -22,13 +21,17 @@ void Scene::LoadScene()
 {
 	json sceneJson = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
 
-	for (const auto gameObject : gameObjectContainer->GetGameObjects())
+	for (const auto gameObjectJson : sceneJson.items())
 	{
-		if (gameObject->GetName() != "Camera")
-			gameObject->SetFromJson(sceneJson[gameObject->GetName()]);
-	}
+		string name = gameObjectJson.key();
+		string type = gameObjectJson.value()["type"];
 
-	printFS("Load!");
+		auto gameObject = gameObjectContainer->TryGetGameObject(name);
+		if (gameObject == nullptr)
+			gameObject = gameObjectContainer->AddGameObject(name, GameObjectFactory::MakeGameObject(type));
+
+		gameObject->SetFromJson(gameObjectJson.value());
+	}
 }
 
 void Scene::SaveScene() const
@@ -41,8 +44,6 @@ void Scene::SaveScene() const
 	}
 
 	FileSystem::WriteTextToFile(sceneJson.dump(2), GetFileName());
-
-	printFS("Save!");
 }
 
 void Scene::ReceiveEvent(const string& key, const json& event)
