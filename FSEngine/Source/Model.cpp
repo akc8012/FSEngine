@@ -123,3 +123,8 @@ string Model::GetDirectory() const
 {
 	return filepath.substr(0, filepath.find_last_of('/')+1);
 }
+
+string Model::GetGameObjectType() const
+{
+	return "Model";
+}

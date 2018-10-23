@@ -252,3 +252,8 @@ vec3 Camera::GetOrientation() const
 {
 	return direction;
 }
+
+string Camera::GetGameObjectType() const
+{
+	return "Camera";
+}

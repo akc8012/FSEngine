@@ -59,3 +59,8 @@ float PlayerShip::GetFrameAdjustedSpeed() const
 {
 	return systems->fileSystem->GetSettingsValue<float>("ShipSpeed") * systems->gameTimer->GetDeltaTime();
 }
+
+string PlayerShip::GetGameObjectType() const
+{
+	return "PlayerShip";
+}

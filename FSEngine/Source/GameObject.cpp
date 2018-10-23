@@ -52,11 +52,6 @@ void GameObject::SetName(const string& name)
 	this->name = name;
 }
 
-string GameObject::GetGameObjectType() const
-{
-	return "GameObject";
-}
-
 ComponentContainer* GameObject::GetComponentContainer() const
 {
 	return components.get();

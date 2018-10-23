@@ -52,4 +52,6 @@ public:
 	vec3 GetOrientation() const;
 
 	void ReceiveEvent(const string& key, const json& event) override;
+
+	string GetGameObjectType() const override;
 };

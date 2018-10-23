@@ -1,6 +1,10 @@
 #pragma once
 #include "GameObject.h"
 #include "CubePrimitive.h"
+#include "Camera.h"
+#include "RenderText.h"
+#include "PlayerShip.h"
+#include "QuadPrimitive.h"
 
 #include <string>
 #include <memory>

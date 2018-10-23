@@ -206,6 +206,11 @@ void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 }
 #pragma endregion
 
+string RenderText::GetGameObjectType() const
+{
+	return "RenderText";
+}
+
 RenderText::~RenderText()
 {
 	TTF_CloseFont(font);

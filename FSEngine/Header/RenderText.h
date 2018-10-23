@@ -56,4 +56,6 @@ public:
 	void SetPixelPosition(const vec2& pixelPosition);
 	void SetScreenAnchorPoint(AnchorPosition anchorPoint);
 	void SetTextAlignment(AnchorPosition alignPosition);
+
+	string GetGameObjectType() const override;
 };
