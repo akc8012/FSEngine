@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "Mesh.h"
 #include "Shading.h"
+#include "Texture.h"
 #include "Transform.h"
 
 #include <string>

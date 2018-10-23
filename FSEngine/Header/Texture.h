@@ -29,6 +29,10 @@ private:
 	void DeleteTexture();
 
 public:
+	static const Types::ComponentType ComponentTypeId = Types::Texture;
+	Types::ComponentType GetComponentTypeId() const override;
+
+	Texture();
 	Texture(const string& filepath);
 	Texture(SDL_Surface* surface, bool flipSurface = false);
 	~Texture();

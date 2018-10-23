@@ -1,6 +1,7 @@
 #pragma once
 #include "ComponentCollection.h"
 #include "Mesh.h"
+#include "IDrawable.h"
 #include "Shading.h"
 #include "Transform.h"
 
@@ -8,14 +9,14 @@ class ComponentContainer
 {
 private:
 	unique_ptr<ComponentCollection<Mesh>> mesh;
-	unique_ptr<ComponentCollection<Shading>> shading;
+	unique_ptr<ComponentCollection<IDrawable>> drawable;
 	unique_ptr<ComponentCollection<Transform>> transform;
 
 public:
 	ComponentContainer()
 	{
 		mesh = make_unique<ComponentCollection<Mesh>>();
-		shading = make_unique<ComponentCollection<Shading>>();
+		drawable = make_unique<ComponentCollection<IDrawable>>();
 		transform = make_unique<ComponentCollection<Transform>>();
 	}
 
@@ -43,7 +44,8 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
 
 	case Shading::ComponentTypeId:
-		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
+	case Texture::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(drawable.get());
 
 	case Transform::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(transform.get());

@@ -33,6 +33,7 @@
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
+    <ClCompile Include="Source\IDrawable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />

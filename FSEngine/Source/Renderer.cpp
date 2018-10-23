@@ -77,9 +77,9 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 	{
 		vector<string> textureNames = mesh->GetAssociatedTextureNames();
 		if (textureNames.size() != 0)
-			SetShadingParameters(gameObject->GetComponent<Shading>(textureNames.front()));
+			SetDrawableParameters(gameObject->GetComponent<IDrawable>(textureNames.front()));
 		else
-			SetShadingParameters(gameObject->GetComponent<Shading>());
+			SetDrawableParameters(gameObject->GetComponent<IDrawable>());
 
 		DrawMesh(mesh);
 	}
@@ -91,14 +91,14 @@ void Renderer::SetTransformMatrices(Transform* transform)
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-void Renderer::SetShadingParameters(Shading* shading)
+void Renderer::SetDrawableParameters(IDrawable* drawable)
 {
-	SetDepthTest(shading->GetParameterCollection()->GetParameter(Shading::EnableDepthTest));
-	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(Shading::RenderPerspective));
-	SetBlend(shading->GetParameterCollection()->GetParameter(Shading::Blend));
+	SetDepthTest(drawable->GetParameterCollection()->GetParameter(IDrawable::EnableDepthTest));
+	SetRenderPerspective(drawable->GetParameterCollection()->GetParameter(IDrawable::RenderPerspective));
+	SetBlend(drawable->GetParameterCollection()->GetParameter(IDrawable::Blend));
 
-	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
-	shading->BindTexture();
+	//systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetFlatColor());
+	drawable->BindTexture();
 }
 
 void Renderer::SetDepthTest(bool enableDepthTest)

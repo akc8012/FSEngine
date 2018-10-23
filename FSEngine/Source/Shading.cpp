@@ -59,11 +59,6 @@ vec4 Shading::GetFlatColor() const
 	return flatColor;
 }
 
-ParameterCollection<Shading::Parameters, Shading::ParametersLength>* Shading::GetParameterCollection() const
-{
-	return parameterCollection.get();
-}
-
 json Shading::GetJson() const
 {
 	json j;

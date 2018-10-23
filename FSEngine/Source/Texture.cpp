@@ -1,5 +1,10 @@
 #include "../Header/Texture.h"
 
+Texture::Texture()
+{
+
+}
+
 Texture::Texture(const string& filepath)
  : filepath(filepath)
 {
@@ -131,5 +136,11 @@ void Texture::DeleteTexture()
 	{
 		const int Amount = 1;
 		glDeleteTextures(Amount, &textureId);
+		textureId = NULL;
 	}
+}
+
+Types::ComponentType Texture::GetComponentTypeId() const
+{
+	return ComponentTypeId;
 }

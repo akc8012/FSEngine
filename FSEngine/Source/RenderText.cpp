@@ -72,16 +72,16 @@ void RenderText::SetTextSurface(const string& text)
 	if (TryGetComponent<Shading>() == nullptr)
 		CreateTextureComponent(surface);
 	else
-		static_cast<Texture*>(GetComponent<Shading>())->GenerateTexture(surface, true);
+		GetComponent<Texture>()->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }
 
 void RenderText::CreateTextureComponent(SDL_Surface* surface)
 {
-	Shading* shading = AddComponent(make_shared<Texture>(surface, true));
-	shading->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
-	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+	Texture* texture = AddComponent(make_shared<Texture>(surface, true));
+	texture->GetParameterCollection()->SetParameter(IDrawable::RenderPerspective, false);
+	texture->GetParameterCollection()->SetParameter(IDrawable::EnableDepthTest, false);
 
 	GetParameterCollection()->SetParameter(DoDraw, true);
 }
