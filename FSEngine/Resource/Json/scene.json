@@ -1,3 +1,41 @@
 {
-
+  "MemeFaceCube": {
+    "Components": {
+      "Texture": {
+        "Filepath": "Resource/Image/wall.png",
+        "ParameterCollection": {
+          "Blend": 1,
+          "EnableDepthTest": 1,
+          "RenderPerspective": 1
+        },
+        "TextureType": 0,
+        "type": "Texture"
+      },
+      "Transform": {
+        "EulerAngles": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "Transform"
+      }
+    },
+    "ParameterCollection": {
+      "DoDraw": 1,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 0,
+      "DoUpdate": 1
+    },
+    "type": "CubePrimitive"
+  }
 }

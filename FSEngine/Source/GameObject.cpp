@@ -70,6 +70,9 @@ json GameObject::GetJson() const
 	for (const auto shading : components->GetComponents<Shading>())
 		componentJson[shading->GetName()] = shading->GetJson();
 
+	for (const auto texture : components->GetComponents<Texture>())
+		componentJson[texture->GetName()] = texture->GetJson();
+
 	gameObjectJson["Components"] = componentJson;
 
 	gameObjectJson["ParameterCollection"] = parameterCollection->GetJson();
