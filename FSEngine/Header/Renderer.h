@@ -21,7 +21,7 @@ private:
 
 	void SetTransformMatrices(Transform* transform);
 
-	void SetDrawableParameters(IDrawable* drawable);
+	void SetDrawableParameters(Drawable* drawable);
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);

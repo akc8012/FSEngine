@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "ParameterCollection.h"
 
-class IDrawable : public Component
+class Drawable : public Component
 {
 public:
 	enum Parameters
@@ -18,8 +18,8 @@ private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 public:
-	IDrawable();
-	virtual ~IDrawable();
+	Drawable();
+	virtual ~Drawable();
 
 	virtual void BindTexture() = 0;
 	virtual bool HasFlatColor() const = 0;

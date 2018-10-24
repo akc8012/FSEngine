@@ -1,6 +1,6 @@
-#include "../Header/IDrawable.h"
+#include "../Header/Drawable.h"
 
-IDrawable::IDrawable()
+Drawable::Drawable()
 {
 	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
@@ -8,27 +8,26 @@ IDrawable::IDrawable()
 	parameterCollection->SetParameter(EnableDepthTest, true);
 	parameterCollection->SetParameter(RenderPerspective, true);
 	parameterCollection->SetParameter(Blend, true);
-
 }
 
-json IDrawable::GetJson() const
+json Drawable::GetJson() const
 {
 	json j;
 	j["ParameterCollection"] = parameterCollection->GetJson();
 	return j;
 }
 
-void IDrawable::SetFromJson(const json& j)
+void Drawable::SetFromJson(const json& j)
 {
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 
-ParameterCollection<IDrawable::Parameters, IDrawable::ParametersLength>* IDrawable::GetParameterCollection() const
+ParameterCollection<Drawable::Parameters, Drawable::ParametersLength>* Drawable::GetParameterCollection() const
 {
 	return parameterCollection.get();
 }
 
-IDrawable::~IDrawable()
+Drawable::~Drawable()
 {
 
 }

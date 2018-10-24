@@ -33,7 +33,7 @@
     <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
-    <ClCompile Include="Source\IDrawable.cpp" />
+    <ClCompile Include="Source\Drawable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -75,7 +75,7 @@
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\ComponentFactory.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
-    <ClInclude Include="Header\IDrawable.h" />
+    <ClInclude Include="Header\Drawable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

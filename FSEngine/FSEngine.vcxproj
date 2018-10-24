@@ -147,7 +147,7 @@
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
     <ClCompile Include="Source\GameTimer.cpp" />
-    <ClCompile Include="Source\IDrawable.cpp" />
+    <ClCompile Include="Source\Drawable.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
@@ -188,7 +188,7 @@
     <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
     <ClInclude Include="Header\GameTimer.h" />
-    <ClInclude Include="Header\IDrawable.h" />
+    <ClInclude Include="Header\Drawable.h" />
     <ClInclude Include="Header\IEventListener.h" />
     <ClInclude Include="Header\IGameObject.h" />
     <ClInclude Include="Header\IGameObjectContainer.h" />

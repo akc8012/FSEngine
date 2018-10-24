@@ -1,5 +1,5 @@
 #pragma once
-#include "IDrawable.h"
+#include "Drawable.h"
 #include "ShaderProgram.h"
 #include "ParameterCollection.h"
 
@@ -7,7 +7,7 @@
 using glm::vec4;
 using glm::vec3;
 
-class Shading : public IDrawable
+class Shading : public Drawable
 {
 private:
 	vec4 flatColor;
