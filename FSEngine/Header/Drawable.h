@@ -2,6 +2,10 @@
 #include "Component.h"
 #include "ParameterCollection.h"
 
+#include <glm\glm.hpp>
+using glm::vec4;
+using glm::vec3;
+
 class Drawable : public Component
 {
 public:
@@ -22,7 +26,7 @@ public:
 	virtual ~Drawable();
 
 	virtual void BindTexture() = 0;
-	virtual bool HasFlatColor() const = 0;
+	virtual vec4 GetFlatColor() const; // TODO: BETTER WAY OF HANDLING THIS
 
 	virtual json GetJson() const override;
 	virtual void SetFromJson(const json& j) override;

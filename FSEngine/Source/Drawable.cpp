@@ -10,6 +10,11 @@ Drawable::Drawable()
 	parameterCollection->SetParameter(Blend, true);
 }
 
+vec4 Drawable::GetFlatColor() const
+{
+	return vec4(0);
+}
+
 json Drawable::GetJson() const
 {
 	json j;

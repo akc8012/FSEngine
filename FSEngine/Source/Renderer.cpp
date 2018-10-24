@@ -99,11 +99,13 @@ void Renderer::SetTransformMatrices(Transform* transform)
 
 void Renderer::SetDrawableParameters(Drawable* drawable)
 {
-	SetDepthTest(drawable->GetParameterCollection()->GetParameter(Drawable::EnableDepthTest));
-	SetRenderPerspective(drawable->GetParameterCollection()->GetParameter(Drawable::RenderPerspective));
-	SetBlend(drawable->GetParameterCollection()->GetParameter(Drawable::Blend));
+	auto parameterCollection = drawable->GetParameterCollection();
 
-	systems->shaderProgram->SetVectorUniform("flatColor", vec4(0));
+	SetDepthTest(parameterCollection->GetParameter(Drawable::EnableDepthTest));
+	SetRenderPerspective(parameterCollection->GetParameter(Drawable::RenderPerspective));
+	SetBlend(parameterCollection->GetParameter(Drawable::Blend));
+
+	systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetFlatColor());
 	drawable->BindTexture();
 }
 

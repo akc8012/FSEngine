@@ -38,7 +38,6 @@ public:
 	~Texture();
 
 	void BindTexture() override;
-	bool HasFlatColor() const override;
 
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 

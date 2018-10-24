@@ -25,11 +25,6 @@ void Shading::BindTexture()
 	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
-bool Shading::HasFlatColor() const
-{
-	return true;
-}
-
 void Shading::SetFlatColor(const vec3& flatColor)
 {
 	SetFlatColor(vec4(flatColor, 1.0f));
