@@ -12,9 +12,7 @@ using std::string;
 using std::unique_ptr;
 using std::make_unique;
 
-class GameObjectFactory
+namespace GameObjectFactory
 {
-public:
-	static unique_ptr<GameObject> MakeGameObject(const string& type);
-
-};
+	unique_ptr<GameObject> MakeGameObject(const string& type);
+}
