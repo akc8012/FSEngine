@@ -1,37 +1,53 @@
 {
-  "Cube": {
+  "PlayerShip": {
     "Components": {
-      "Shading": {
-        "FlatColor": [
-          0.2,
-          0.2,
-          1.0,
-          1.0
+      "Transform": {
+        "EulerAngles": [
+          -180.0,
+          -5.008956122765085e-06,
+          180.0
         ],
+        "Position": [
+          3.0,
+          0.0,
+          -4.0
+        ],
+        "Scale": [
+          0.02500000037252903,
+          0.02500000037252903,
+          0.02500000037252903
+        ],
+        "type": "Transform"
+      },
+      "arwing_01.png": {
+        "Filepath": "C:/Model/Arwing/arwing_01.png",
         "ParameterCollection": {
           "Blend": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "type": "Shading"
+        "TextureType": 0,
+        "type": "Texture"
       },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          3.0,
-          0.0,
-          -3.0
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
+      "arwing_03.png": {
+        "Filepath": "C:/Model/Arwing/arwing_03.png",
+        "ParameterCollection": {
+          "Blend": 1,
+          "EnableDepthTest": 1,
+          "RenderPerspective": 1
+        },
+        "TextureType": 0,
+        "type": "Texture"
+      },
+      "starfox_147_GfoxJet.png": {
+        "Filepath": "C:/Model/Arwing/starfox_147_GfoxJet.png",
+        "ParameterCollection": {
+          "Blend": 1,
+          "EnableDepthTest": 1,
+          "RenderPerspective": 1
+        },
+        "TextureType": 0,
+        "type": "Texture"
       }
     },
     "ParameterCollection": {
@@ -40,6 +56,6 @@
       "DoLateUpdate": 0,
       "DoUpdate": 1
     },
-    "type": "CubePrimitive"
+    "type": "PlayerShip"
   }
 }

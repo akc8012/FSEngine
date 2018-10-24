@@ -38,6 +38,4 @@ private:
 
 public:
 	Model(const string& filepath);
-
-	void Start() override;
 };

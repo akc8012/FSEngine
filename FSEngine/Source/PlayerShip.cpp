@@ -8,7 +8,6 @@ PlayerShip::PlayerShip()
 
 void PlayerShip::Start()
 {
-	Model::Start();
 	transform = GetComponent<Transform>();
 
 	ResetValues();
