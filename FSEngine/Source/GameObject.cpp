@@ -62,18 +62,15 @@ json GameObject::GetJson() const
 	json gameObjectJson;
 	gameObjectJson["type"] = GetGameObjectType();
 
-	json componentJson;
+	json componentsJson;
+	for (const auto component : components->GetAllComponents())
+	{
+		json componentJson = component->GetJson();
+		if (componentJson != nullptr)
+			componentsJson[component->GetName()] = componentJson;
+	}
 
-	for (const auto transform : components->GetComponents<Transform>())
-		componentJson[transform->GetName()] = transform->GetJson();
-
-	for (const auto shading : components->GetComponents<Shading>())
-		componentJson[shading->GetName()] = shading->GetJson();
-
-	for (const auto texture : components->GetComponents<Texture>())
-		componentJson[texture->GetName()] = texture->GetJson();
-
-	gameObjectJson["Components"] = componentJson;
+	gameObjectJson["Components"] = componentsJson;
 
 	gameObjectJson["ParameterCollection"] = parameterCollection->GetJson();
 	return gameObjectJson;

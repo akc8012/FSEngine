@@ -14,13 +14,7 @@ private:
 	unique_ptr<ComponentCollection<Transform>> transform;
 
 public:
-	ComponentContainer()
-	{
-		mesh = make_unique<ComponentCollection<Mesh>>();
-		shading = make_unique<ComponentCollection<Shading>>();
-		texture = make_unique<ComponentCollection<Texture>>();
-		transform = make_unique<ComponentCollection<Transform>>();
-	}
+	ComponentContainer();
 
 	template <typename T>
 	ComponentCollection<T>* GetCollectionOfType(Types::ComponentType type) const;
@@ -35,6 +29,8 @@ public:
 
 	template <typename T>
 	vector<T*> GetComponents() const;
+
+	vector<Component*> GetAllComponents() const;
 };
 
 template<typename T>
