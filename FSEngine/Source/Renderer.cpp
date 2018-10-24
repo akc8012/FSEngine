@@ -75,16 +75,7 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 
 	for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
-		//vector<string> textureNames = mesh->GetAssociatedTextureNames();
-		//if (textureNames.size() != 0)
-		//	SetDrawableParameters(gameObject->GetComponent<Drawable>(textureNames.front()));
-		//else
-		//	SetDrawableParameters(gameObject->GetComponent<Drawable>());
-
-		Drawable* drawable = gameObject->TryGetComponent<Shading>();
-		if (drawable == nullptr)
-			drawable = gameObject->GetComponent<Texture>();
-
+		auto drawable = FindDrawable(gameObject, mesh->GetAssociatedTextureNames());
 		SetDrawableParameters(drawable);
 
 		DrawMesh(mesh);
@@ -95,6 +86,17 @@ void Renderer::SetTransformMatrices(Transform* transform)
 {
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
+}
+
+Drawable* Renderer::FindDrawable(const IGameObject* gameObject, const vector<string>& textureNames) const
+{
+	if (textureNames.size() != 0)
+		return gameObject->GetComponent<Texture>(textureNames.front());
+
+	if (gameObject->TryGetComponent<Texture>() != nullptr)
+		return gameObject->GetComponent<Texture>();
+
+	return gameObject->GetComponent<Shading>();
 }
 
 void Renderer::SetDrawableParameters(Drawable* drawable)

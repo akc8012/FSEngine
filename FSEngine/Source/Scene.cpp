@@ -14,9 +14,10 @@ Scene::Scene(const string& name, Systems* systems)
 
 void Scene::AddGameObjects()
 {
-	//auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
+	//auto gameObject = gameObjectContainer->AddGameObject("Cube", make_unique<CubePrimitive>());
 	//gameObject->AddComponent(make_shared<Transform>());
-	//gameObject->AddComponent(make_shared<Texture>("Resource/Image/awesomeface.png"));
+	//gameObject->AddComponent(make_shared<Texture>("Resource/Image/wall.png"));
+	//gameObject->AddComponent(make_shared<Shading>(vec3(0.2f, 0.2f, 1.f)));
 
 	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
 }

@@ -21,7 +21,9 @@ private:
 
 	void SetTransformMatrices(Transform* transform);
 
+	Drawable* FindDrawable(const IGameObject* gameObject, const vector<string>& textureNames) const;
 	void SetDrawableParameters(Drawable* drawable);
+
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);

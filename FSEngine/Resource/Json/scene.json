@@ -1,15 +1,19 @@
 {
-  "MemeFaceCube": {
+  "Cube": {
     "Components": {
-      "Texture": {
-        "Filepath": "Resource/Image/wall.png",
+      "Shading": {
+        "FlatColor": [
+          0.2,
+          0.2,
+          1.0,
+          1.0
+        ],
         "ParameterCollection": {
           "Blend": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "TextureType": 0,
-        "type": "Texture"
+        "type": "Shading"
       },
       "Transform": {
         "EulerAngles": [
@@ -18,9 +22,9 @@
           0.0
         ],
         "Position": [
+          3.0,
           0.0,
-          0.0,
-          0.0
+          -3.0
         ],
         "Scale": [
           1.0,
