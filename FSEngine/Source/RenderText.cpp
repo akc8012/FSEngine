@@ -69,7 +69,7 @@ void RenderText::SetTextSurface(const string& text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), textColor);
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
-	if (TryGetComponent<Shading>() == nullptr)
+	if (TryGetComponent<Texture>() == nullptr)
 		CreateTextureComponent(surface);
 	else
 		GetComponent<Texture>()->GenerateTexture(surface, true);
