@@ -5,6 +5,13 @@
 #include "Texture.h"
 #include "Transform.h"
 
+using std::make_shared;
+
+namespace ComponentFactory
+{
+	shared_ptr<Component> MakeComponent(const string& type);
+}
+
 class ComponentContainer
 {
 private:

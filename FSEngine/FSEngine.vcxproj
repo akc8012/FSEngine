@@ -139,7 +139,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\ComponentContainer.cpp" />
-    <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\EventSystem.cpp" />
     <ClCompile Include="Source\FSDebug.cpp" />
@@ -176,7 +175,6 @@
   <ItemGroup>
     <ClInclude Include="Header\ComponentCollection.h" />
     <ClInclude Include="Header\ComponentContainer.h" />
-    <ClInclude Include="Header\ComponentFactory.h" />
     <ClInclude Include="Header\ComponentType.h" />
     <ClInclude Include="Header\EventSystem.h" />
     <ClInclude Include="Header\FileSystem.h" />

@@ -9,7 +9,6 @@
 #include "ComponentContainer.h"
 #include "ParameterCollection.h"
 #include "IEventListener.h"
-#include "ComponentFactory.h"
 
 using std::shared_ptr;
 using std::make_shared;

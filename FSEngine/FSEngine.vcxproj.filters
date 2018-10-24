@@ -30,7 +30,6 @@
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\EventSystem.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
-    <ClCompile Include="Source\ComponentFactory.cpp" />
     <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
     <ClCompile Include="Source\Drawable.cpp" />
@@ -74,7 +73,6 @@
     <ClInclude Include="Header\ComponentContainer.h" />
     <ClInclude Include="Header\IGameObjectContainer.h" />
     <ClInclude Include="Header\Transform.h" />
-    <ClInclude Include="Header\ComponentFactory.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
     <ClInclude Include="Header\Drawable.h" />
   </ItemGroup>

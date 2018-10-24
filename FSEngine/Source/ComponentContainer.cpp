@@ -1,5 +1,25 @@
 #include "../Header/ComponentContainer.h"
 
+namespace ComponentFactory
+{
+	shared_ptr<Component> MakeComponent(const string& type)
+	{
+		if (type == Types::ComponentTypeString[Mesh::ComponentTypeId])
+			return make_shared<Mesh>();
+
+		else if (type == Types::ComponentTypeString[Shading::ComponentTypeId])
+			return make_shared<Shading>();
+
+		else if (type == Types::ComponentTypeString[Texture::ComponentTypeId])
+			return make_shared<Texture>();
+
+		else if (type == Types::ComponentTypeString[Transform::ComponentTypeId])
+			return make_shared<Transform>();
+
+		throwFS("Cannot make Component of unrecognized type: " + type);
+	}
+}
+
 ComponentContainer::ComponentContainer()
 {
 	mesh = make_unique<ComponentCollection<Mesh>>();
