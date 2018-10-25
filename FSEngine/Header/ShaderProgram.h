@@ -1,6 +1,5 @@
 #pragma once
 #include "FileSystem.h"
-#include "ParameterCollection.h"
 
 #include <SDL.h>
 #include <GL\glew.h>
@@ -24,22 +23,10 @@ using std::make_unique;
 
 class ShaderProgram
 {
-public:
-	enum Parameters
-	{
-		IsUsing,
-		RenderPerspective,
-		EnableDepthTest,
-		Blend,
-
-		ParametersLength
-	};
-
 private:
-	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
-
 	Uint32 shaderProgramId = NULL;
 	unordered_map<string, Uint32> uniformLocations;
+	bool isUsing = false;
 
 	void CreateShaderProgram();
 	void MapUniformValues();
@@ -73,6 +60,4 @@ public:
 
 	void SetMatrixUniform(const string& name, const mat3& value);
 	void SetMatrixUniform(const string& name, const mat4& value);
-
-	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 };

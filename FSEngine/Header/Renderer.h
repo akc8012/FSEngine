@@ -10,6 +10,16 @@
 class Renderer
 {
 private:
+	enum Parameters
+	{
+		EnableDepthTest,
+		RenderPerspective,
+		Blend,
+
+		ParametersLength
+	};
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
+
 	Systems* systems = nullptr;
 	IGameObject* camera = nullptr;
 

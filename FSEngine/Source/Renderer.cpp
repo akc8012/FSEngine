@@ -3,7 +3,8 @@
 Renderer::Renderer(Systems* systems, IGameObject* camera)
  : systems(systems), camera(camera)
 {
-
+	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 }
 
 #pragma region StartRender
@@ -115,32 +116,32 @@ void Renderer::SetDrawableParameters(Drawable* drawable)
 
 void Renderer::SetDepthTest(bool enableDepthTest)
 {
-	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
+	if (parameterCollection->IsInitializedAndEqualTo(EnableDepthTest, enableDepthTest))
 		return;
 
 	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
+	parameterCollection->SetParameter(EnableDepthTest, enableDepthTest);
 }
 
 void Renderer::SetRenderPerspective(bool renderPerspective)
 {
-	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
+	if (parameterCollection->IsInitializedAndEqualTo(RenderPerspective, renderPerspective))
 		return;
 
 	Transform* projectionTransform = camera->GetComponent<Transform>(renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
-	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
+	parameterCollection->SetParameter(RenderPerspective, renderPerspective);
 }
 
 void Renderer::SetBlend(bool blend)
 {
-	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::Blend, blend))
+	if (parameterCollection->IsInitializedAndEqualTo(Blend, blend))
 		return;
 
 	blend ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
-	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
+	parameterCollection->SetParameter(Blend, blend);
 }
 
 void Renderer::DrawMesh(Mesh* mesh)
