@@ -52,14 +52,11 @@ T* ComponentCollection<T>::Get(const string& name) const
 template <typename T>
 T* ComponentCollection<T>::TryGet(const string& name) const
 {
-	try
-	{
-		return components.at(name).get();
-	}
-	catch (std::out_of_range)
-	{
-		return nullptr;
-	}
+	auto component = components.find(name);
+	if (component != components.end())
+		return component->second.get();
+
+	return nullptr;
 }
 
 template <typename T>

@@ -90,13 +90,14 @@ void Renderer::SetTransformMatrices(Transform* transform)
 
 Drawable* Renderer::FindDrawable(const IGameObject* gameObject, const vector<string>& textureNames) const
 {
+	auto shading = gameObject->TryGetComponent<Shading>();
+	if (shading != nullptr)
+		return shading;
+
 	if (textureNames.size() != 0)
 		return gameObject->GetComponent<Texture>(textureNames.front());
 
-	if (gameObject->TryGetComponent<Texture>() != nullptr)
-		return gameObject->GetComponent<Texture>();
-
-	return gameObject->GetComponent<Shading>();
+	return gameObject->GetComponent<Texture>();
 }
 
 void Renderer::SetDrawableParameters(Drawable* drawable)
