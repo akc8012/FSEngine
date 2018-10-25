@@ -17,12 +17,14 @@ class ComponentCollection
 private:
 	map<string, shared_ptr<T>> components;
 
+	string GetName(const string& name) const;
+
 public:
-	T* Add(shared_ptr<T> component, const string& name = Types::ComponentTypeString[T::ComponentTypeId]);
+	T* Add(shared_ptr<T> component, const string& name);
 	// Remove();
 
-	T* Get(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
-	T* TryGet(const string& name = Types::ComponentTypeString[T::ComponentTypeId]) const;
+	T* Get(const string& name) const;
+	T* TryGet(const string& name) const;
 
 	vector<T*> GetComponents() const;
 };
@@ -30,21 +32,21 @@ public:
 template <typename T>
 T* ComponentCollection<T>::Add(shared_ptr<T> component, const string& name)
 {
-	auto result = components.emplace(name, move(component));
+	auto result = components.emplace(GetName(name), move(component));
 	if (!result.second)
 		throwFS("Component with name \"" + name + "\" already exists");
 
 	auto emplacedComponent = result.first->second.get();
-	emplacedComponent->SetName(name);
+	emplacedComponent->SetName(GetName(name));
 	return emplacedComponent;
 }
 
 template <typename T>
 T* ComponentCollection<T>::Get(const string& name) const
 {
-	auto component = TryGet(name);
+	auto component = TryGet(GetName(name));
 	if (component == nullptr)
-		throwFS("Could not find component with name \"" + name + "\"");
+		throwFS("Could not find component with name \"" + GetName(name) + "\"");
 
 	return component;
 }
@@ -52,11 +54,17 @@ T* ComponentCollection<T>::Get(const string& name) const
 template <typename T>
 T* ComponentCollection<T>::TryGet(const string& name) const
 {
-	auto component = components.find(name);
+	auto component = components.find(GetName(name));
 	if (component != components.end())
 		return component->second.get();
 
 	return nullptr;
+}
+
+template <typename T>
+string ComponentCollection<T>::GetName(const string& name) const
+{
+	return name == "" ? Types::ComponentTypeString[T::ComponentTypeId] : name;
 }
 
 template <typename T>

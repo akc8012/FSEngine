@@ -65,23 +65,19 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 template <typename T>
 T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name)
 {
-	return name == "" ? GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component) : GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component, name);
+	return GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component, name);
 }
 
 template <typename T>
 T* ComponentContainer::GetComponent(const string& name) const
 {
-	auto component = TryGetComponent<T>(name);
-	if (component == nullptr)
-		throwFS("Could not find component with name \"" + name + "\"");
-
-	return component;
+	return GetCollectionOfType<T>(T::ComponentTypeId)->Get(name);
 }
 
 template <typename T>
 T* ComponentContainer::TryGetComponent(const string& name) const
 {
-	return name == "" ? GetCollectionOfType<T>(T::ComponentTypeId)->TryGet() : GetCollectionOfType<T>(T::ComponentTypeId)->TryGet(name);
+	return GetCollectionOfType<T>(T::ComponentTypeId)->TryGet(name);
 }
 
 template <typename T>
