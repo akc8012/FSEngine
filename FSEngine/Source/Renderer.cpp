@@ -57,8 +57,9 @@ void Renderer::DrawGrid()
 
 void Renderer::SetRenderParametersForGrid()
 {
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
+	SetDepthTest(true);
+	SetRenderPerspective(true);
+	SetBlend(true);
 
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
