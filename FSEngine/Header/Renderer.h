@@ -18,6 +18,7 @@ private:
 
 		ParametersLength
 	};
+
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	Systems* systems = nullptr;
