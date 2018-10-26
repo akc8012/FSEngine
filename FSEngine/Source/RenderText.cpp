@@ -101,7 +101,6 @@ void RenderText::ReceiveEvent(const string& key, const json& event)
 		return;
 
 	surfaceSize = vec2 { event[0], event[1] };
-
 	SetTransformFromSurfaceSize(surfaceSize);
 }
 
@@ -184,26 +183,31 @@ vec2 RenderText::GetPixelScale(const vec2& surfaceSize) const
 void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
 {
 	this->pixelScaleFactor = pixelScaleFactor;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetPixelScale(float pixelScaleFactor)
 {
 	this->pixelScaleFactor = vec2(pixelScaleFactor, pixelScaleFactor);
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetPixelPosition(const vec2& pixelPosition)
 {
 	this->pixelPosition = pixelPosition;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
 {
 	this->anchorPosition = anchorPoint;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 {
 	this->alignPosition = alignPosition;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 #pragma endregion
 
