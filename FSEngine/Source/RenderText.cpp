@@ -12,6 +12,7 @@ void RenderText::Start()
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 	GetParameterCollection()->SetParameter(DoDraw, false);
+	GetParameterCollection()->SetParameter(DoLateDraw, true);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const

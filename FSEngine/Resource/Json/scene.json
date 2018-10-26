@@ -57,7 +57,7 @@
     },
     "ParameterCollection": {
       "DoDraw": 1,
-      "DoLateDraw": 0,
+      "DoLateDraw": 1,
       "DoLateUpdate": 0,
       "DoUpdate": 1
     },
