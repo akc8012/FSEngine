@@ -4,7 +4,7 @@
 void RenderText::Start()
 {
 	LoadFont("arial.ttf");
-	AddComponent(make_shared<Transform>());
+	AddComponent(make_shared<Transform>())->SetSerializable(false);
 
 	Mesh* meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);

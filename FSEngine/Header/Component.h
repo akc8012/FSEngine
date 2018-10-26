@@ -15,6 +15,7 @@ class Component
 {
 private:
 	string name;
+	bool serializable = true;
 
 public:
 	virtual ~Component();
@@ -27,4 +28,7 @@ public:
 
 	virtual json GetJson() const = 0;
 	virtual void SetFromJson(const json& j) = 0;
+
+	void SetSerializable(bool serializable);
+	bool GetSerializable() const;
 };

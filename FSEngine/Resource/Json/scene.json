@@ -53,24 +53,6 @@
         },
         "TextureType": 0,
         "type": "Texture"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          -0.9075520634651184,
-          0.9549999833106995,
-          0.0
-        ],
-        "Scale": [
-          0.0846354141831398,
-          0.032499998807907104,
-          1.0
-        ],
-        "type": "Transform"
       }
     },
     "ParameterCollection": {
@@ -79,7 +61,17 @@
       "DoLateUpdate": 0,
       "DoUpdate": 1
     },
+    "PixelPosition": [
+      5.0,
+      -5.0
+    ],
+    "PixelScale": [
+      26.0,
+      26.0
+    ],
     "RenderText": "Debug text",
+    "ScreenAnchorPoint": 1,
+    "TextAlignment": 1,
     "type": "RenderText"
   },
   "Green": {
@@ -212,7 +204,7 @@
       "Transform": {
         "EulerAngles": [
           -180.0,
-          5.008956577512436e-06,
+          -5.008956122765085e-06,
           180.0
         ],
         "Position": [

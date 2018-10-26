@@ -19,3 +19,13 @@ void Component::SetName(const string& name)
 {
 	this->name = name;
 }
+
+void Component::SetSerializable(bool serializable)
+{
+	this->serializable = serializable;
+}
+
+bool Component::GetSerializable() const
+{
+	return serializable;
+}

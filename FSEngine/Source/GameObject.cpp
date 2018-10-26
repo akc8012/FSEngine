@@ -65,6 +65,9 @@ json GameObject::GetJson() const
 	json componentsJson;
 	for (const auto component : components->GetAllComponents())
 	{
+		if (!component->GetSerializable())
+			continue;
+
 		json componentJson = component->GetJson();
 		if (componentJson != nullptr)
 			componentsJson[component->GetName()] = componentJson;
