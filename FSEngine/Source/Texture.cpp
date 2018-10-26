@@ -116,10 +116,13 @@ void Texture::SetFromJson(const json& j)
 	Drawable::SetFromJson(j);
 
 	filepath = j["Filepath"].get<string>();
-	textureType = (TextureType)j["TextureType"].get<int>();
+	if (filepath != "")
+	{
+		DeleteTexture();
+		CreateTextureFromFilepath(filepath);
+	}
 
-	DeleteTexture();
-	CreateTextureFromFilepath(filepath);
+	textureType = (TextureType)j["TextureType"].get<int>();
 }
 
 Texture::~Texture()

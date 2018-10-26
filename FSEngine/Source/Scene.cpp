@@ -73,7 +73,7 @@ void Scene::SaveScene() const
 	json sceneJson;
 	for (const auto gameObject : gameObjectContainer->GetGameObjects())
 	{
-		if (gameObject->GetName() != "Camera" && gameObject->GetName() != "DebugText")
+		if (gameObject->GetName() != "Camera")
 			sceneJson[gameObject->GetName()] = gameObject->GetJson();
 	}
 

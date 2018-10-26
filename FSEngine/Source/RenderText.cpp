@@ -206,6 +206,20 @@ void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 }
 #pragma endregion
 
+json RenderText::GetJson() const
+{
+	json j = GameObject::GetJson();
+	j["RenderText"] = renderText;
+
+	return j;
+}
+
+void RenderText::SetFromJson(const json& j)
+{
+	GameObject::SetFromJson(j);
+	SetText(j["RenderText"].get<string>());
+}
+
 string RenderText::GetGameObjectType() const
 {
 	return "RenderText";

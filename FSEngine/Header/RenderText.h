@@ -14,9 +14,8 @@ public:
 
 private:
 	TTF_Font* font = nullptr;
-	vec2 surfaceSize;
-
 	string renderText;
+	vec2 surfaceSize;
 	vec2 aspectRatio;
 
 	vec2 pixelScaleFactor = vec2(1, 1);
@@ -56,6 +55,9 @@ public:
 	void SetPixelPosition(const vec2& pixelPosition);
 	void SetScreenAnchorPoint(AnchorPosition anchorPoint);
 	void SetTextAlignment(AnchorPosition alignPosition);
+
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 
 	string GetGameObjectType() const override;
 };
