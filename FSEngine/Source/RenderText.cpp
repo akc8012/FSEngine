@@ -129,21 +129,28 @@ void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& surfaceSize) const
 {
+	vec2 position = GetPixelPositionFromTopLeftOrigin();
+
 	switch (anchorPosition)
 	{
 	case Center:
-		return pixelPosition;
+		return position;
 	case TopLeft:
-		return vec2(pixelPosition.x - surfaceSize.x, pixelPosition.y + surfaceSize.y);
+		return vec2(position.x - surfaceSize.x, position.y + surfaceSize.y);
 	case TopRight:
-		return vec2(pixelPosition.x + surfaceSize.x, pixelPosition.y + surfaceSize.y);
+		return vec2(position.x + surfaceSize.x, position.y + surfaceSize.y);
 	case BottomLeft:
-		return vec2(pixelPosition.x - surfaceSize.x, pixelPosition.y - surfaceSize.y);
+		return vec2(position.x - surfaceSize.x, position.y - surfaceSize.y);
 	case BottomRight:
-		return vec2(pixelPosition.x + surfaceSize.x, pixelPosition.y - surfaceSize.y);
+		return vec2(position.x + surfaceSize.x, position.y - surfaceSize.y);
 	default:
 		throwFS("Could not recognize anchorPosition: " + std::to_string(anchorPosition));
 	}
+}
+
+vec2 RenderText::GetPixelPositionFromTopLeftOrigin() const
+{
+	return pixelPosition * 2.f;
 }
 
 vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const
@@ -187,12 +194,6 @@ void RenderText::SetPixelScale(float pixelScaleFactor)
 void RenderText::SetPixelPosition(const vec2& pixelPosition)
 {
 	this->pixelPosition = pixelPosition;
-	SetPixelPositionToTopLeftOrigin();
-}
-
-void RenderText::SetPixelPositionToTopLeftOrigin()
-{
-	pixelPosition *= 2.f;
 }
 
 void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
@@ -209,7 +210,12 @@ void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 json RenderText::GetJson() const
 {
 	json j = GameObject::GetJson();
+
 	j["RenderText"] = renderText;
+	j["ScreenAnchorPoint"] = anchorPosition;
+	j["TextAlignment"] = alignPosition;
+	j["PixelPosition"] = json { pixelPosition.x, pixelPosition.y };
+	j["PixelScale"] = json { pixelScaleFactor.x, pixelScaleFactor.y };
 
 	return j;
 }
@@ -217,7 +223,12 @@ json RenderText::GetJson() const
 void RenderText::SetFromJson(const json& j)
 {
 	GameObject::SetFromJson(j);
+
 	SetText(j["RenderText"].get<string>());
+	SetScreenAnchorPoint((AnchorPosition)j["ScreenAnchorPoint"].get<int>());
+	SetTextAlignment((AnchorPosition)j["TextAlignment"].get<int>());
+	SetPixelPosition(vec2(j["PixelPosition"][0], j["PixelPosition"][1]));
+	SetPixelScale(vec2(j["PixelScale"][0], j["PixelScale"][1]));
 }
 
 string RenderText::GetGameObjectType() const
