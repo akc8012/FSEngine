@@ -9,13 +9,12 @@ PlayerShip::PlayerShip()
 void PlayerShip::Start()
 {
 	transform = GetComponent<Transform>();
-
 	ResetValues();
 }
 
 void PlayerShip::ResetValues()
 {
-	transform->SetPosition(vec3(0, 0, 4));
+	transform->SetPosition(FSMath::Zero);
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
 	transform->SetOrientation(vec3(0, 180, 0));
 
@@ -26,9 +25,6 @@ void PlayerShip::Update()
 {
 	if (!systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
 	{
-		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
-			ResetValues();
-
 		ControlShip();
 		//SetCamera();
 	}
