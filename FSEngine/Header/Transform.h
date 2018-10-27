@@ -8,8 +8,10 @@
 using glm::mat4;
 using glm::mat3;
 using glm::quat;
+using glm::tquat;
 using glm::vec4;
 using glm::vec3;
+using glm::tvec3;
 using glm::vec2;
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -23,7 +25,7 @@ private:
 	mat4 matrix = FSMath::IdentityMatrix;
 	vec3 position = FSMath::Zero;
 	vec3 scale = FSMath::One;
-	quat orientation = FSMath::IdentityQuaternion;
+	tquat<double> orientation = FSMath::IdentityQuaternion;
 
 	void CalculateMatrix();
 
@@ -46,12 +48,12 @@ public:
 
 	void SetOrientation(float eulerX, float eulerY, float eulerZ);
 	void SetOrientation(const vec3& eulerAngles);
-	void SetOrientation(const quat& orientation);
+	void SetOrientation(const tquat<double>& orientation);
 	void SetOrientation(float angle, const vec3& axis);
 	vec3 GetForward() const;
 	vec3 GetUp() const;
 	vec3 GetRight() const;
-	const quat& GetOrientation() const;
+	const tquat<double>& GetOrientation() const;
 	vec3 GetEulerAngles() const;
 
 	void SetMatrix(const mat4& matrix);

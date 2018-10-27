@@ -69,15 +69,13 @@ void Transform::SetOrientation(float eulerX, float eulerY, float eulerZ)
 
 void Transform::SetOrientation(const vec3& eulerAngles)
 {
-	vec3 yawPitchRoll = glm::radians(vec3(eulerAngles.x, eulerAngles.z, eulerAngles.y));
-	this->orientation = glm::orientate4(yawPitchRoll);
-
+	this->orientation = quat(glm::radians(eulerAngles));
 	CalculateMatrix();
 }
 
-void Transform::SetOrientation(const quat& orientation)
+void Transform::SetOrientation(const tquat<double>& orientation)
 {
-	this->orientation = glm::toMat4(orientation);
+	this->orientation = orientation;
 	CalculateMatrix();
 }
 
@@ -89,42 +87,44 @@ void Transform::SetOrientation(float angle, const vec3& axis)
 
 vec3 Transform::GetForward() const
 {
-	return GetOrientation() * FSMath::Forward;
+	return GetOrientation() * tvec3<double>(FSMath::Forward);
 }
 
 vec3 Transform::GetUp() const
 {
-	return GetOrientation() * FSMath::Up;
+	return GetOrientation() * tvec3<double>(FSMath::Up);
 }
 
 vec3 Transform::GetRight() const
 {
-	return GetOrientation() * FSMath::Right;
+	return GetOrientation() * tvec3<double>(FSMath::Right);
 }
 
-const quat& Transform::GetOrientation() const
+const tquat<double>& Transform::GetOrientation() const
 {
 	return orientation;
 }
 
 vec3 Transform::GetEulerAngles() const
 {
-	return glm::degrees(glm::eulerAngles(GetOrientation()));
+	vec3 euler = glm::eulerAngles(orientation);
+	return glm::degrees(euler);
 }
 #pragma endregion
 
 #pragma region Matrix
 void Transform::CalculateMatrix()
 {
-	matrix = glm::translate(FSMath::IdentityMatrix, position) * glm::toMat4(orientation) * glm::scale(FSMath::IdentityMatrix, scale);
+	matrix = glm::translate(FSMath::IdentityMatrix, position) * glm::toMat4(quat(orientation)) * glm::scale(FSMath::IdentityMatrix, scale);
 }
 
 void Transform::SetMatrix(const mat4& matrix)
 {
 	this->matrix = matrix;
 
-	vec3 unusedSkew; vec4 unusedPerspective;
-	glm::decompose(this->matrix, scale, orientation, position, unusedSkew, unusedPerspective);
+	vec3 unusedSkew; vec4 unusedPerspective; quat floatOrientation;
+	glm::decompose(this->matrix, scale, floatOrientation, position, unusedSkew, unusedPerspective);
+	this->orientation = floatOrientation;
 }
 
 mat3 Transform::CalculateNormalMatrix() const
