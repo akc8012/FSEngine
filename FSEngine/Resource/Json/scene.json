@@ -42,6 +42,81 @@
     },
     "type": "CubePrimitive"
   },
+  "Camera": {
+    "Components": {
+      "Orthographic": {
+        "EulerAngles": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "Position": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "Scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "Transform"
+      },
+      "Perspective": {
+        "EulerAngles": [
+          90.0,
+          -0.0,
+          90.0
+        ],
+        "Position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "Transform"
+      },
+      "View": {
+        "EulerAngles": [
+          17.0000057220459,
+          -2.3950449303811183e-06,
+          -7.322389592445688e-07
+        ],
+        "Position": [
+          2.1855699117168115e-07,
+          0.02740180492401123,
+          -5.220081329345703
+        ],
+        "Scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "Transform"
+      }
+    },
+    "Direction": [
+      -17.0,
+      -90.0,
+      0.0
+    ],
+    "ParameterCollection": {
+      "DoDraw": 0,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 1,
+      "DoUpdate": 1
+    },
+    "Position": [
+      0.0,
+      1.5,
+      5.0
+    ],
+    "type": "Camera"
+  },
   "DebugText": {
     "Components": {
       "Texture": {

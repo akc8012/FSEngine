@@ -53,5 +53,8 @@ public:
 
 	void ReceiveEvent(const string& key, const json& event) override;
 
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
+
 	string GetGameObjectType() const override;
 };

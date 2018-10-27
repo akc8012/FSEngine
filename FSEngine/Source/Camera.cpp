@@ -253,6 +253,23 @@ vec3 Camera::GetOrientation() const
 	return direction;
 }
 
+json Camera::GetJson() const
+{
+	json j = GameObject::GetJson();
+	j["Position"] = json { position.x, position.y, position.z };
+	j["Direction"] = json { direction.x, direction.y, direction.z };
+
+	return j;
+}
+
+void Camera::SetFromJson(const json& j)
+{
+	GameObject::SetFromJson(j);
+
+	position = vec3(j["Position"][0], j["Position"][1], j["Position"][2]);
+	direction = vec3(j["Direction"][0], j["Direction"][1], j["Direction"][2]);
+}
+
 string Camera::GetGameObjectType() const
 {
 	return "Camera";
