@@ -32,6 +32,8 @@ void Scene::LoadScene()
 
 		gameObject->SetFromJson(gameObjectJson.value());
 	}
+
+	printFS("Load");
 }
 
 void Scene::SaveScene() const
@@ -44,6 +46,8 @@ void Scene::SaveScene() const
 	}
 
 	FileSystem::WriteTextToFile(sceneJson.dump(2), GetFileName());
+
+	printFS("Save");
 }
 
 void Scene::ReceiveEvent(const string& key, const json& event)
