@@ -234,32 +234,7 @@ void Engine::Update()
 
 	sceneManager->Update();
 
-	if (systems->input->IsButtonPressed(SDL_SCANCODE_M))
-		DoStuff();
-
 	systems->input->Update();
-}
-
-void Engine::DoStuff()
-{
-	json j = systems->fileSystem->GetSettingsValue("Angles");
-	vec3 eulerAngles = vec3(j[0], j[1], j[2]);
-	printcFS(eulerAngles, "Original euler");
-
-	eulerAngles = glm::radians(eulerAngles);
-	printFS(eulerAngles, "Euler to radians");
-
-	glm::tquat<double> quaternion(vec3(eulerAngles.y, eulerAngles.x, eulerAngles.z));
-	printFS(vec4(quaternion.w, quaternion.x, quaternion.y, quaternion.z), "Quaternion");
-
-	printFS("");
-
-	vec3 quatToEuler = glm::eulerAngles(quaternion);
-	quatToEuler = vec3(quatToEuler.y, quatToEuler.x, quatToEuler.z);
-	printFS(quatToEuler, "Quat to euler");
-
-	quatToEuler = glm::degrees(quatToEuler);
-	printFS(quatToEuler, "To degrees");
 }
 
 void Engine::Draw()

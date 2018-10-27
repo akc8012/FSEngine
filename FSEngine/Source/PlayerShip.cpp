@@ -25,6 +25,9 @@ void PlayerShip::Update()
 {
 	if (!systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
 	{
+		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
+			ResetValues();
+
 		ControlShip();
 		//SetCamera();
 	}

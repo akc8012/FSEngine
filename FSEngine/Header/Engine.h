@@ -39,7 +39,6 @@ private:
 	void HandleKeyboardShortcuts();
 	void Update();
 	void Draw();
-	void DoStuff();
 
 	void HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent);
 	void HandleWindowEvent(const SDL_WindowEvent& windowEvent);

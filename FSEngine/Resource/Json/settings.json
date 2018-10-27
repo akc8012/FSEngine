@@ -1,23 +1,21 @@
 {
   "LoadSettingsOnFocus": true,
-  "ContinualSettingsReload": false,
+  "ContinualSettingsReload": true,
 
   "LoadShadersOnFocus": true,
   "ShowWindowOnTop": false,
   "WindowAllowResize": true,
 
-  "SwapInterval": -1,
+  "SwapInterval": 0,
   "PolygonLineMode": false,
   "DrawGrid": true,
 
-  "SurfaceSize": [960, 600],
+  "SurfaceSize": [1280, 800],
   "Fullscreen": false,
 
   "EditorMode": true,
   "ShipSpeed": 1,
 
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15,
-
-  "Angles": [17.377899, 89.13243, 24.533]
+  "CameraScrollSpeed": 0.15
 }
