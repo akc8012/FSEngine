@@ -14,41 +14,7 @@ Scene::Scene(const string& name, Systems* systems)
 
 void Scene::AddGameObjects()
 {
-	auto gameObject = gameObjectContainer->AddGameObject("MemeFaceCube", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Texture>("Resource/Image/awesomeface.png"));
-	gameObject->GetComponent<Transform>()->SetPosition(4.5f, 0.2f, 0);
-
-	gameObject = gameObjectContainer->AddGameObject("GreenCube", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Shading>(0.1f, 0.6f, 0.3f));
-	gameObject->GetComponent<Transform>()->SetPosition(6, -0.2f, 0.1f);
-	gameObject->GetComponent<Transform>()->SetScale(2, 0.8f, 2.8f);
-
-	gameObject = gameObjectContainer->AddGameObject("Red", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Shading>(0.8f, 0.f, 0.f));
-	gameObject->GetComponent<Transform>()->SetPosition(1.5f, 1, -3);
-
-	gameObject = gameObjectContainer->AddGameObject("Green", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Shading>(0.f, 0.8f, 0.f));
-	gameObject->GetComponent<Transform>()->SetPosition(1, -1, -1);
-
-	gameObject = gameObjectContainer->AddGameObject("Blue", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Shading>(0.f, 0.f, 0.8f));
-	gameObject->GetComponent<Transform>()->SetPosition(-0.8f, 0, -2);
-
-	gameObject = gameObjectContainer->AddGameObject("Yellow", make_unique<CubePrimitive>());
-	gameObject->AddComponent(make_shared<Shading>(0.6f, 0.6f, 0.f));
-	gameObject->GetComponent<Transform>()->SetPosition(-2, -1, 0);
-
-	gameObject = gameObjectContainer->AddGameObject("DebugText", make_unique<RenderText>());
-	RenderText* debugText = static_cast<RenderText*>(gameObject);
-	debugText->SetText("Debug text");
-	debugText->SetPixelScale(26);
-	debugText->SetScreenAnchorPoint(RenderText::TopLeft);
-	debugText->SetTextAlignment(RenderText::TopLeft);
-	debugText->SetPixelPosition(vec2(5, -5));
-
 	gameObjectContainer->AddGameObject("Camera", make_unique<Camera>());
-	gameObjectContainer->AddGameObject("PlayerShip", make_unique<PlayerShip>());
 }
 
 void Scene::LoadScene()
@@ -96,4 +62,9 @@ string Scene::GetFileName() const
 GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
+}
+
+Scene::~Scene()
+{
+	SaveScene();
 }

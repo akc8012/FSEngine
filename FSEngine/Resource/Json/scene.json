@@ -1,11 +1,11 @@
 {
-  "Blue": {
+  "Dank": {
     "Components": {
       "Shading": {
         "FlatColor": [
           0.0,
-          0.0,
-          0.800000011920929,
+          0.15000000596046448,
+          0.5,
           1.0
         ],
         "ParameterCollection": {
@@ -17,170 +17,56 @@
       },
       "Transform": {
         "EulerAngles": [
-          0.0,
+          65.00000762939453,
           -0.0,
           0.0
         ],
         "Position": [
-          -0.800000011920929,
           0.0,
-          -2.0
+          0.0,
+          0.0
         ],
         "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "DebugText": {
-    "Components": {
-      "Texture": {
-        "Filepath": "",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 0,
-          "RenderPerspective": 0
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 1,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "PixelPosition": [
-      5.0,
-      -5.0
-    ],
-    "PixelScale": [
-      26.0,
-      26.0
-    ],
-    "RenderText": "Debug text",
-    "ScreenAnchorPoint": 1,
-    "TextAlignment": 1,
-    "type": "RenderText"
-  },
-  "Green": {
-    "Components": {
-      "Shading": {
-        "FlatColor": [
-          0.0,
-          0.800000011920929,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Shading"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          1.0,
-          -1.0,
-          -1.0
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "GreenCube": {
-    "Components": {
-      "Shading": {
-        "FlatColor": [
-          0.10000000149011612,
-          0.6000000238418579,
-          0.30000001192092896,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Shading"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          6.0,
-          -0.20000000298023224,
-          0.10000000149011612
-        ],
-        "Scale": [
-          2.0,
-          0.800000011920929,
-          2.799999952316284
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "MemeFaceCube": {
-    "Components": {
-      "Texture": {
-        "Filepath": "Resource/Image/awesomeface.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          4.5,
           0.20000000298023224,
+          0.20000000298023224,
+          2.5
+        ],
+        "type": "Transform"
+      }
+    },
+    "ParameterCollection": {
+      "DoDraw": 1,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 0,
+      "DoUpdate": 1
+    },
+    "type": "CubePrimitive"
+  },
+  "FAAACCEE": {
+    "Components": {
+      "Shading": {
+        "FlatColor": [
+          0.6000000238418579,
+          0.15000000596046448,
+          0.0,
+          1.0
+        ],
+        "ParameterCollection": {
+          "Blend": 1,
+          "EnableDepthTest": 1,
+          "RenderPerspective": 1
+        },
+        "type": "Shading"
+      },
+      "Transform": {
+        "EulerAngles": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "Position": [
+          -3.0,
+          1.0,
           0.0
         ],
         "Scale": [
@@ -199,72 +85,13 @@
     },
     "type": "CubePrimitive"
   },
-  "PlayerShip": {
-    "Components": {
-      "Transform": {
-        "EulerAngles": [
-          180.0,
-          -5.008956122765085e-06,
-          180.0
-        ],
-        "Position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "Scale": [
-          0.02500000037252903,
-          0.02500000037252903,
-          0.02500000037252903
-        ],
-        "type": "Transform"
-      },
-      "arwing_01.png": {
-        "Filepath": "C:/Model/Arwing/arwing_01.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      },
-      "arwing_03.png": {
-        "Filepath": "C:/Model/Arwing/arwing_03.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      },
-      "starfox_147_GfoxJet.png": {
-        "Filepath": "C:/Model/Arwing/starfox_147_GfoxJet.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "PlayerShip"
-  },
-  "Red": {
+  "InYO": {
     "Components": {
       "Shading": {
         "FlatColor": [
-          0.800000011920929,
           0.0,
-          0.0,
+          1.0,
+          1.0,
           1.0
         ],
         "ParameterCollection": {
@@ -276,18 +103,18 @@
       },
       "Transform": {
         "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
+          41.9774055480957,
+          -47.733673095703125,
+          6.261719226837158
         ],
         "Position": [
-          1.5,
-          1.0,
+          0.0,
+          0.0,
           -3.0
         ],
         "Scale": [
           1.0,
-          1.0,
+          40.0,
           1.0
         ],
         "type": "Transform"
@@ -301,12 +128,12 @@
     },
     "type": "CubePrimitive"
   },
-  "Yellow": {
+  "Meme": {
     "Components": {
       "Shading": {
         "FlatColor": [
           0.6000000238418579,
-          0.6000000238418579,
+          0.15000000596046448,
           0.0,
           1.0
         ],
@@ -319,19 +146,19 @@
       },
       "Transform": {
         "EulerAngles": [
-          0.0,
+          65.00000762939453,
           -0.0,
           0.0
         ],
         "Position": [
-          -2.0,
-          -1.0,
+          3.0,
+          0.0,
           0.0
         ],
         "Scale": [
-          1.0,
-          1.0,
-          1.0
+          0.20000000298023224,
+          0.20000000298023224,
+          2.5
         ],
         "type": "Transform"
       }
