@@ -73,7 +73,7 @@ void Transform::SetOrientation(const vec3& eulerAngles)
 	CalculateMatrix();
 }
 
-void Transform::SetOrientation(const tquat<double>& orientation)
+void Transform::SetOrientation(const dquat& orientation)
 {
 	this->orientation = orientation;
 	CalculateMatrix();
@@ -100,7 +100,7 @@ vec3 Transform::GetRight() const
 	return GetOrientation() * tvec3<double>(FSMath::Right);
 }
 
-const tquat<double>& Transform::GetOrientation() const
+const dquat& Transform::GetOrientation() const
 {
 	return orientation;
 }

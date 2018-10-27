@@ -8,11 +8,11 @@
 using glm::mat4;
 using glm::mat3;
 using glm::quat;
-using glm::tquat;
 using glm::vec4;
 using glm::vec3;
 using glm::tvec3;
 using glm::vec2;
+using FSMath::dquat;
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm\gtx\matrix_decompose.hpp>
@@ -25,7 +25,7 @@ private:
 	mat4 matrix = FSMath::IdentityMatrix;
 	vec3 position = FSMath::Zero;
 	vec3 scale = FSMath::One;
-	tquat<double> orientation = FSMath::IdentityQuaternion;
+	dquat orientation = FSMath::IdentityQuaternion;
 
 	void CalculateMatrix();
 
@@ -48,12 +48,12 @@ public:
 
 	void SetOrientation(float eulerX, float eulerY, float eulerZ);
 	void SetOrientation(const vec3& eulerAngles);
-	void SetOrientation(const tquat<double>& orientation);
+	void SetOrientation(const dquat& orientation);
 	void SetOrientation(float angle, const vec3& axis);
 	vec3 GetForward() const;
 	vec3 GetUp() const;
 	vec3 GetRight() const;
-	const tquat<double>& GetOrientation() const;
+	const dquat& GetOrientation() const;
 	vec3 GetEulerAngles() const;
 
 	void SetMatrix(const mat4& matrix);
