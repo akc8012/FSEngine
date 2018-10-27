@@ -2,17 +2,13 @@
 
 ShaderProgram::ShaderProgram()
 {
-	string parameterNames[] = { "IsUsing", "RenderPerspective", "EnableDepthTest", "Blend" };
-	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
-
 	shaderProgramId = glCreateProgram();
 	CompileShaders();
 }
 
 void ShaderProgram::CompileShaders()
 {
-	parameterCollection->SetParameter(IsUsing, false);
-
+	isUsing = false;
 	CreateShaderProgram();
 
 	uniformLocations.clear();
@@ -126,7 +122,7 @@ string ShaderProgram::GetShaderTypeText(Uint32 type)
 
 void ShaderProgram::Use()
 {
-	parameterCollection->SetParameter(IsUsing, true);
+	isUsing = true;
 	glUseProgram(shaderProgramId);
 }
 
@@ -206,13 +202,8 @@ Uint32 ShaderProgram::GetUniformLocationFromGl(const string& name) const
 
 void ShaderProgram::ShowUseWarning() const
 {
-	if (!parameterCollection->GetParameter(IsUsing))
+	if (!isUsing)
 		printFS("Warning: Use() has not been called on this shader");
-}
-
-ParameterCollection<ShaderProgram::Parameters, ShaderProgram::ParametersLength>* ShaderProgram::GetParameterCollection() const
-{
-	return parameterCollection.get();
 }
 
 ShaderProgram::~ShaderProgram()

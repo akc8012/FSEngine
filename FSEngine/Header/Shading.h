@@ -1,29 +1,12 @@
 #pragma once
-#include "Component.h"
+#include "Drawable.h"
 #include "ShaderProgram.h"
 #include "ParameterCollection.h"
 
-#include <glm\glm.hpp>
-using glm::vec4;
-using glm::vec3;
-
-class Shading : public Component
+class Shading : public Drawable
 {
-public:
-	enum Parameters
-	{
-		EnableDepthTest,
-		RenderPerspective,
-		Blend,
-
-		ParametersLength
-	};
-
 private:
-	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 	vec4 flatColor;
-
-	void Initialize();
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Shading;
@@ -34,14 +17,12 @@ public:
 	Shading(float r, float g, float b);
 	Shading(int r, int g, int b);
 
-	virtual void BindTexture();
+	void BindTexture() override;
 
 	void SetFlatColor(const vec3& flatColor);
 	void SetFlatColor(const vec4& flatColor);
-	vec4 GetFlatColor() const;
+	vec4 GetFlatColor() const override;
 
-	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
-
-	virtual json GetJson() const override;
-	virtual void SetFromJson(const json& j) override;
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 };

@@ -1,6 +1,17 @@
 #include "../Header/Texture.h"
 
+Texture::Texture()
+{
+
+}
+
 Texture::Texture(const string& filepath)
+ : filepath(filepath)
+{
+	CreateTextureFromFilepath(filepath);
+}
+
+void Texture::CreateTextureFromFilepath(const string& filepath)
 {
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
@@ -92,12 +103,26 @@ Texture::TextureType Texture::GetTextureType() const
 
 json Texture::GetJson() const
 {
-	return json();
+	json j = Drawable::GetJson();
+	j["type"] = Types::ComponentTypeString[ComponentTypeId];
+	j["Filepath"] = filepath;
+	j["TextureType"] = textureType;
+
+	return j;
 }
 
 void Texture::SetFromJson(const json& j)
 {
+	Drawable::SetFromJson(j);
 
+	filepath = j["Filepath"].get<string>();
+	if (filepath != "")
+	{
+		DeleteTexture();
+		CreateTextureFromFilepath(filepath);
+	}
+
+	textureType = (TextureType)j["TextureType"].get<int>();
 }
 
 Texture::~Texture()
@@ -111,5 +136,11 @@ void Texture::DeleteTexture()
 	{
 		const int Amount = 1;
 		glDeleteTextures(Amount, &textureId);
+		textureId = NULL;
 	}
+}
+
+Types::ComponentType Texture::GetComponentTypeId() const
+{
+	return ComponentTypeId;
 }

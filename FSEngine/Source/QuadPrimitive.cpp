@@ -37,3 +37,8 @@ shared_ptr<Mesh> QuadPrimitive::CreateMeshComponent() const
 	const int Stride = 8;
 	return make_shared<Mesh>(rawVertices, Stride, indices);
 }
+
+string QuadPrimitive::GetGameObjectType() const
+{
+	return "QuadPrimitive";
+}

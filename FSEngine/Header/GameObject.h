@@ -9,7 +9,6 @@
 #include "ComponentContainer.h"
 #include "ParameterCollection.h"
 #include "IEventListener.h"
-#include "ComponentFactory.h"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -41,12 +40,11 @@ public:
 
 	const string& GetName() const override;
 	void SetName(const string& name) override;
-	virtual string GetGameObjectType() const override;
 
 	ComponentContainer* GetComponentContainer() const override;
 
-	json GetJson() const override;
-	void SetFromJson(const json& j) override;
+	virtual json GetJson() const override;
+	virtual void SetFromJson(const json& j) override;
 
 	void ReceiveEvent(const string& key, const json& event) override;
 };

@@ -1,5 +1,6 @@
 #pragma once
-#include "Shading.h"
+#include "Drawable.h"
+#include "FSException.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -9,14 +10,17 @@
 #include <string>
 using std::string;
 
-class Texture : public Shading
+class Texture : public Drawable
 {
 public:
 	enum TextureType { Diffuse, Specular };
 
 private:
+	string filepath;
 	Uint32 textureId = NULL;
 	TextureType textureType = Diffuse;
+
+	void CreateTextureFromFilepath(const string& filepath);
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 	void FlipSurface(SDL_Surface* surface);
@@ -25,11 +29,16 @@ private:
 	void DeleteTexture();
 
 public:
+	static const Types::ComponentType ComponentTypeId = Types::Texture;
+	Types::ComponentType GetComponentTypeId() const override;
+
+	Texture();
 	Texture(const string& filepath);
 	Texture(SDL_Surface* surface, bool flipSurface = false);
 	~Texture();
 
-	void BindTexture();
+	void BindTexture() override;
+
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
 
 	TextureType GetTextureType() const;

@@ -4,7 +4,7 @@
 void RenderText::Start()
 {
 	LoadFont("arial.ttf");
-	AddComponent(make_shared<Transform>());
+	AddComponent(make_shared<Transform>())->SetSerializable(false);
 
 	Mesh* meshComponent = AddComponent(CreateMeshComponent());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
@@ -12,6 +12,7 @@ void RenderText::Start()
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 	GetParameterCollection()->SetParameter(DoDraw, false);
+	GetParameterCollection()->SetParameter(DoLateDraw, true);
 }
 
 shared_ptr<Mesh> RenderText::CreateMeshComponent() const
@@ -69,19 +70,19 @@ void RenderText::SetTextSurface(const string& text)
 	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), textColor);
 	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
 
-	if (TryGetComponent<Shading>() == nullptr)
+	if (TryGetComponent<Texture>() == nullptr)
 		CreateTextureComponent(surface);
 	else
-		static_cast<Texture*>(GetComponent<Shading>())->GenerateTexture(surface, true);
+		GetComponent<Texture>()->GenerateTexture(surface, true);
 
 	SDL_FreeSurface(surface);
 }
 
 void RenderText::CreateTextureComponent(SDL_Surface* surface)
 {
-	Shading* shading = AddComponent(make_shared<Texture>(surface, true));
-	shading->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
-	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+	Texture* texture = AddComponent(make_shared<Texture>(surface, true));
+	texture->GetParameterCollection()->SetParameter(Drawable::RenderPerspective, false);
+	texture->GetParameterCollection()->SetParameter(Drawable::EnableDepthTest, false);
 
 	GetParameterCollection()->SetParameter(DoDraw, true);
 }
@@ -101,7 +102,6 @@ void RenderText::ReceiveEvent(const string& key, const json& event)
 		return;
 
 	surfaceSize = vec2 { event[0], event[1] };
-
 	SetTransformFromSurfaceSize(surfaceSize);
 }
 
@@ -129,21 +129,28 @@ void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& surfaceSize) const
 {
+	vec2 position = GetPixelPositionFromTopLeftOrigin();
+
 	switch (anchorPosition)
 	{
 	case Center:
-		return pixelPosition;
+		return position;
 	case TopLeft:
-		return vec2(pixelPosition.x - surfaceSize.x, pixelPosition.y + surfaceSize.y);
+		return vec2(position.x - surfaceSize.x, position.y + surfaceSize.y);
 	case TopRight:
-		return vec2(pixelPosition.x + surfaceSize.x, pixelPosition.y + surfaceSize.y);
+		return vec2(position.x + surfaceSize.x, position.y + surfaceSize.y);
 	case BottomLeft:
-		return vec2(pixelPosition.x - surfaceSize.x, pixelPosition.y - surfaceSize.y);
+		return vec2(position.x - surfaceSize.x, position.y - surfaceSize.y);
 	case BottomRight:
-		return vec2(pixelPosition.x + surfaceSize.x, pixelPosition.y - surfaceSize.y);
+		return vec2(position.x + surfaceSize.x, position.y - surfaceSize.y);
 	default:
 		throwFS("Could not recognize anchorPosition: " + std::to_string(anchorPosition));
 	}
+}
+
+vec2 RenderText::GetPixelPositionFromTopLeftOrigin() const
+{
+	return pixelPosition * 2.f;
 }
 
 vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const
@@ -177,34 +184,62 @@ vec2 RenderText::GetPixelScale(const vec2& surfaceSize) const
 void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
 {
 	this->pixelScaleFactor = pixelScaleFactor;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetPixelScale(float pixelScaleFactor)
 {
 	this->pixelScaleFactor = vec2(pixelScaleFactor, pixelScaleFactor);
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetPixelPosition(const vec2& pixelPosition)
 {
 	this->pixelPosition = pixelPosition;
-	SetPixelPositionToTopLeftOrigin();
-}
-
-void RenderText::SetPixelPositionToTopLeftOrigin()
-{
-	pixelPosition *= 2.f;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
 {
 	this->anchorPosition = anchorPoint;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 
 void RenderText::SetTextAlignment(AnchorPosition alignPosition)
 {
 	this->alignPosition = alignPosition;
+	SetTransformFromSurfaceSize(surfaceSize);
 }
 #pragma endregion
+
+json RenderText::GetJson() const
+{
+	json j = GameObject::GetJson();
+
+	j["RenderText"] = renderText;
+	j["ScreenAnchorPoint"] = anchorPosition;
+	j["TextAlignment"] = alignPosition;
+	j["PixelPosition"] = json { pixelPosition.x, pixelPosition.y };
+	j["PixelScale"] = json { pixelScaleFactor.x, pixelScaleFactor.y };
+
+	return j;
+}
+
+void RenderText::SetFromJson(const json& j)
+{
+	GameObject::SetFromJson(j);
+
+	SetText(j["RenderText"].get<string>());
+	SetScreenAnchorPoint((AnchorPosition)j["ScreenAnchorPoint"].get<int>());
+	SetTextAlignment((AnchorPosition)j["TextAlignment"].get<int>());
+	SetPixelPosition(vec2(j["PixelPosition"][0], j["PixelPosition"][1]));
+	SetPixelScale(vec2(j["PixelScale"][0], j["PixelScale"][1]));
+}
+
+string RenderText::GetGameObjectType() const
+{
+	return "RenderText";
+}
 
 RenderText::~RenderText()
 {

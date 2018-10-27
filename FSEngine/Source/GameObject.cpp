@@ -52,11 +52,6 @@ void GameObject::SetName(const string& name)
 	this->name = name;
 }
 
-string GameObject::GetGameObjectType() const
-{
-	return "GameObject";
-}
-
 ComponentContainer* GameObject::GetComponentContainer() const
 {
 	return components.get();
@@ -67,15 +62,18 @@ json GameObject::GetJson() const
 	json gameObjectJson;
 	gameObjectJson["type"] = GetGameObjectType();
 
-	json componentJson;
+	json componentsJson;
+	for (const auto component : components->GetAllComponents())
+	{
+		if (!component->GetSerializable())
+			continue;
 
-	for (const auto transform : components->GetComponents<Transform>())
-		componentJson[transform->GetName()] = transform->GetJson();
+		json componentJson = component->GetJson();
+		if (componentJson != nullptr)
+			componentsJson[component->GetName()] = componentJson;
+	}
 
-	for (const auto shading : components->GetComponents<Shading>())
-		componentJson[shading->GetName()] = shading->GetJson();
-
-	gameObjectJson["Components"] = componentJson;
+	gameObjectJson["Components"] = componentsJson;
 
 	gameObjectJson["ParameterCollection"] = parameterCollection->GetJson();
 	return gameObjectJson;

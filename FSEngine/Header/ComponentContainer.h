@@ -2,22 +2,26 @@
 #include "ComponentCollection.h"
 #include "Mesh.h"
 #include "Shading.h"
+#include "Texture.h"
 #include "Transform.h"
+
+using std::make_shared;
+
+namespace ComponentFactory
+{
+	shared_ptr<Component> MakeComponent(const string& type);
+}
 
 class ComponentContainer
 {
 private:
 	unique_ptr<ComponentCollection<Mesh>> mesh;
 	unique_ptr<ComponentCollection<Shading>> shading;
+	unique_ptr<ComponentCollection<Texture>> texture;
 	unique_ptr<ComponentCollection<Transform>> transform;
 
 public:
-	ComponentContainer()
-	{
-		mesh = make_unique<ComponentCollection<Mesh>>();
-		shading = make_unique<ComponentCollection<Shading>>();
-		transform = make_unique<ComponentCollection<Transform>>();
-	}
+	ComponentContainer();
 
 	template <typename T>
 	ComponentCollection<T>* GetCollectionOfType(Types::ComponentType type) const;
@@ -32,6 +36,8 @@ public:
 
 	template <typename T>
 	vector<T*> GetComponents() const;
+
+	vector<Component*> GetAllComponents() const;
 };
 
 template<typename T>
@@ -45,6 +51,9 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 	case Shading::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
 
+	case Texture::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(texture.get());
+
 	case Transform::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
 
@@ -56,23 +65,19 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 template <typename T>
 T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name)
 {
-	return name == "" ? GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component) : GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component, name);
+	return GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component, name);
 }
 
 template <typename T>
 T* ComponentContainer::GetComponent(const string& name) const
 {
-	auto component = TryGetComponent<T>(name);
-	if (component == nullptr)
-		throwFS("Could not find component with name \"" + name + "\"");
-
-	return component;
+	return GetCollectionOfType<T>(T::ComponentTypeId)->Get(name);
 }
 
 template <typename T>
 T* ComponentContainer::TryGetComponent(const string& name) const
 {
-	return name == "" ? GetCollectionOfType<T>(T::ComponentTypeId)->TryGet() : GetCollectionOfType<T>(T::ComponentTypeId)->TryGet(name);
+	return GetCollectionOfType<T>(T::ComponentTypeId)->TryGet(name);
 }
 
 template <typename T>

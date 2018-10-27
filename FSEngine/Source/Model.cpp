@@ -3,11 +3,6 @@
 Model::Model(const string& filepath)
  : filepath(filepath)
 {
-
-}
-
-void Model::Start()
-{
 	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	const aiScene* scene = importer->GetScene();
 
@@ -109,9 +104,9 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 
 string* Model::TryGetLoadedTextureName(const string& textureName) const
 {
-	for (const auto textureComponent : GetComponentContainer()->GetComponents<Shading>())
+	for (const auto texture : GetComponentContainer()->GetComponents<Texture>())
 	{
-		string loadedTextureName = textureComponent->GetName();
+		string loadedTextureName = texture->GetName();
 		if (textureName == loadedTextureName)
 			return new string(loadedTextureName);
 	}
@@ -122,4 +117,9 @@ string* Model::TryGetLoadedTextureName(const string& textureName) const
 string Model::GetDirectory() const
 {
 	return filepath.substr(0, filepath.find_last_of('/')+1);
+}
+
+string Model::GetGameObjectType() const
+{
+	return "Model";
 }

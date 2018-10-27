@@ -19,4 +19,6 @@ public:
 
 	void Start() override;
 	void Update() override;
+
+	string GetGameObjectType() const override;
 };

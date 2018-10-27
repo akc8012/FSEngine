@@ -3,7 +3,8 @@
 Renderer::Renderer(Systems* systems, IGameObject* camera)
  : systems(systems), camera(camera)
 {
-
+	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
+	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 }
 
 #pragma region StartRender
@@ -57,8 +58,9 @@ void Renderer::DrawGrid()
 
 void Renderer::SetRenderParametersForGrid()
 {
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
+	SetDepthTest(true);
+	SetRenderPerspective(true);
+	SetBlend(true);
 
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
@@ -75,11 +77,8 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 
 	for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
-		vector<string> textureNames = mesh->GetAssociatedTextureNames();
-		if (textureNames.size() != 0)
-			SetShadingParameters(gameObject->GetComponent<Shading>(textureNames.front()));
-		else
-			SetShadingParameters(gameObject->GetComponent<Shading>());
+		auto drawable = FindDrawable(gameObject, mesh->GetAssociatedTextureNames());
+		SetDrawableParameters(drawable);
 
 		DrawMesh(mesh);
 	}
@@ -91,44 +90,58 @@ void Renderer::SetTransformMatrices(Transform* transform)
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-void Renderer::SetShadingParameters(Shading* shading)
+Drawable* Renderer::FindDrawable(const IGameObject* gameObject, const vector<string>& textureNames) const
 {
-	SetDepthTest(shading->GetParameterCollection()->GetParameter(Shading::EnableDepthTest));
-	SetRenderPerspective(shading->GetParameterCollection()->GetParameter(Shading::RenderPerspective));
-	SetBlend(shading->GetParameterCollection()->GetParameter(Shading::Blend));
+	auto shading = gameObject->TryGetComponent<Shading>();
+	if (shading != nullptr)
+		return shading;
 
-	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetFlatColor());
-	shading->BindTexture();
+	if (textureNames.size() != 0)
+		return gameObject->GetComponent<Texture>(textureNames.front());
+
+	return gameObject->GetComponent<Texture>();
+}
+
+void Renderer::SetDrawableParameters(Drawable* drawable)
+{
+	auto parameterCollection = drawable->GetParameterCollection();
+
+	SetDepthTest(parameterCollection->GetParameter(Drawable::EnableDepthTest));
+	SetRenderPerspective(parameterCollection->GetParameter(Drawable::RenderPerspective));
+	SetBlend(parameterCollection->GetParameter(Drawable::Blend));
+
+	systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetFlatColor());
+	drawable->BindTexture();
 }
 
 void Renderer::SetDepthTest(bool enableDepthTest)
 {
-	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::EnableDepthTest, enableDepthTest))
+	if (parameterCollection->IsInitializedAndEqualTo(EnableDepthTest, enableDepthTest))
 		return;
 
 	enableDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::EnableDepthTest, enableDepthTest);
+	parameterCollection->SetParameter(EnableDepthTest, enableDepthTest);
 }
 
 void Renderer::SetRenderPerspective(bool renderPerspective)
 {
-	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::RenderPerspective, renderPerspective))
+	if (parameterCollection->IsInitializedAndEqualTo(RenderPerspective, renderPerspective))
 		return;
 
 	Transform* projectionTransform = camera->GetComponent<Transform>(renderPerspective ? "Perspective" : "Orthographic");
 	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
-	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::RenderPerspective, renderPerspective);
+	parameterCollection->SetParameter(RenderPerspective, renderPerspective);
 }
 
 void Renderer::SetBlend(bool blend)
 {
-	if (systems->shaderProgram->GetParameterCollection()->IsInitializedAndEqualTo(ShaderProgram::Blend, blend))
+	if (parameterCollection->IsInitializedAndEqualTo(Blend, blend))
 		return;
 
 	blend ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
-	systems->shaderProgram->GetParameterCollection()->SetParameter(ShaderProgram::Blend, blend);
+	parameterCollection->SetParameter(Blend, blend);
 }
 
 void Renderer::DrawMesh(Mesh* mesh)

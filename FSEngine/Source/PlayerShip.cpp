@@ -8,15 +8,13 @@ PlayerShip::PlayerShip()
 
 void PlayerShip::Start()
 {
-	Model::Start();
 	transform = GetComponent<Transform>();
-
 	ResetValues();
 }
 
 void PlayerShip::ResetValues()
 {
-	transform->SetPosition(vec3(0, 0, 4));
+	transform->SetPosition(FSMath::Zero);
 	transform->SetScale(vec3(0.025f, 0.025f, 0.025f));
 	transform->SetOrientation(vec3(0, 180, 0));
 
@@ -58,4 +56,9 @@ void PlayerShip::SetCamera()
 float PlayerShip::GetFrameAdjustedSpeed() const
 {
 	return systems->fileSystem->GetSettingsValue<float>("ShipSpeed") * systems->gameTimer->GetDeltaTime();
+}
+
+string PlayerShip::GetGameObjectType() const
+{
+	return "PlayerShip";
 }

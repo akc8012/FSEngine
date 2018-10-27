@@ -10,6 +10,17 @@
 class Renderer
 {
 private:
+	enum Parameters
+	{
+		EnableDepthTest,
+		RenderPerspective,
+		Blend,
+
+		ParametersLength
+	};
+
+	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
+
 	Systems* systems = nullptr;
 	IGameObject* camera = nullptr;
 
@@ -21,7 +32,9 @@ private:
 
 	void SetTransformMatrices(Transform* transform);
 
-	void SetShadingParameters(Shading* shading);
+	Drawable* FindDrawable(const IGameObject* gameObject, const vector<string>& textureNames) const;
+	void SetDrawableParameters(Drawable* drawable);
+
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);

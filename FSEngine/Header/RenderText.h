@@ -15,14 +15,13 @@ public:
 private:
 	TTF_Font* font = nullptr;
 	vec2 surfaceSize;
-
-	string renderText;
 	vec2 aspectRatio;
 
-	vec2 pixelScaleFactor = vec2(1, 1);
-	vec2 pixelPosition = vec2(0, 0);
+	string renderText;
 	AnchorPosition anchorPosition = Center;
 	AnchorPosition alignPosition = Center;
+	vec2 pixelPosition = vec2(0, 0);
+	vec2 pixelScaleFactor = vec2(1, 1);
 
 	shared_ptr<Mesh> CreateMeshComponent() const;
 	void LoadFont(const string& fontName);
@@ -40,7 +39,7 @@ private:
 	vec2 GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const;
 	vec2 GetPixelScale(const vec2& surfaceSize) const;
 
-	void SetPixelPositionToTopLeftOrigin();
+	vec2 GetPixelPositionFromTopLeftOrigin() const;
 
 public:
 	~RenderText();
@@ -56,4 +55,9 @@ public:
 	void SetPixelPosition(const vec2& pixelPosition);
 	void SetScreenAnchorPoint(AnchorPosition anchorPoint);
 	void SetTextAlignment(AnchorPosition alignPosition);
+
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
+
+	string GetGameObjectType() const override;
 };

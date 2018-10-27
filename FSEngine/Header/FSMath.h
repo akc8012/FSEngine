@@ -10,6 +10,7 @@
 using glm::vec3;
 using glm::mat4;
 using glm::quat;
+using glm::tquat;
 
 namespace FSMath
 {
@@ -20,6 +21,8 @@ namespace FSMath
 	const vec3 Right = vec3(1, 0, 0);
 	const vec3 Zero = vec3(0, 0, 0);
 	const vec3 One = vec3(1, 1, 1);
+
+	using dquat = tquat<double>;
 
 	vec3 EulerAngleToDirectionVector(const vec3& angle);
 	vec3 NanToZero(vec3 vector);

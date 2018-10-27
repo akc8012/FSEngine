@@ -34,9 +34,8 @@ private:
 	string* TryGetLoadedTextureName(const string& textureName) const;
 
 	string GetDirectory() const;
+	string GetGameObjectType() const override;
 
 public:
 	Model(const string& filepath);
-
-	void Start() override;
 };
