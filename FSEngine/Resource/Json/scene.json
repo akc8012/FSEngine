@@ -221,6 +221,10 @@
   },
   "PlayerShip": {
     "Components": {
+      "Model": {
+        "Filepath": "C:/Model/Arwing/arwing.dae",
+        "type": "Model"
+      },
       "Transform": {
         "EulerAngles": [
           -180.0,
@@ -238,36 +242,6 @@
           0.02500000037252903
         ],
         "type": "Transform"
-      },
-      "arwing_01.png": {
-        "Filepath": "C:/Model/Arwing/arwing_01.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      },
-      "arwing_03.png": {
-        "Filepath": "C:/Model/Arwing/arwing_03.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      },
-      "starfox_147_GfoxJet.png": {
-        "Filepath": "C:/Model/Arwing/starfox_147_GfoxJet.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
       }
     },
     "ParameterCollection": {

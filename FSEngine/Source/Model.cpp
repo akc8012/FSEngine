@@ -2,13 +2,13 @@
 
 Model::Model()
 {
-	meshComponents = make_unique< ComponentCollection<Mesh>>();
+	meshComponents = make_unique<ComponentCollection<Mesh>>();
 	textureComponents = make_unique<ComponentCollection<Texture>>();
 }
 
 Model::Model(const string& filepath)
 {
-	meshComponents = make_unique< ComponentCollection<Mesh>>();
+	meshComponents = make_unique<ComponentCollection<Mesh>>();
 	textureComponents = make_unique<ComponentCollection<Texture>>();
 
 	Load(filepath);
@@ -145,12 +145,21 @@ ComponentCollection<Texture>* Model::GetTextureCollection() const
 
 json Model::GetJson() const
 {
-	return json();
+	json j;
+	j["type"] = Types::ComponentTypeString[ComponentTypeId];
+	j["Filepath"] = filepath;
+	return j;
 }
 
 void Model::SetFromJson(const json& j)
 {
-
+	filepath = j["Filepath"].get<string>();
+	if (filepath != "")
+	{
+		meshComponents->Clear();
+		textureComponents->Clear();
+		Load(filepath);
+	}
 }
 
 Types::ComponentType Model::GetComponentTypeId() const

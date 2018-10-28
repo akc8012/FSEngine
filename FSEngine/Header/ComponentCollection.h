@@ -26,6 +26,8 @@ public:
 	T* Get(const string& name) const;
 	T* TryGet(const string& name) const;
 
+	void Clear();
+
 	vector<T*> GetComponents() const;
 };
 
@@ -59,6 +61,12 @@ T* ComponentCollection<T>::TryGet(const string& name) const
 		return component->second.get();
 
 	return nullptr;
+}
+
+template<typename T>
+void ComponentCollection<T>::Clear()
+{
+	components.clear();
 }
 
 template <typename T>
