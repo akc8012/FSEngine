@@ -3,7 +3,7 @@
 #pragma region Initialize
 void RenderText::Start()
 {
-	LoadFont("arial.ttf");
+	LoadFont("consola.ttf");
 	AddComponent(make_shared<Transform>())->SetSerializable(false);
 
 	Mesh* meshComponent = AddComponent(CreateMeshComponent());
