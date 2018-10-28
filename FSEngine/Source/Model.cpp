@@ -17,6 +17,8 @@ Model::Model(const string& filepath)
 void Model::Load(const string& filepath)
 {
 	this->filepath = filepath;
+	meshComponents->Clear();
+	textureComponents->Clear();
 
 	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	const aiScene* scene = importer->GetScene();
@@ -153,13 +155,9 @@ json Model::GetJson() const
 
 void Model::SetFromJson(const json& j)
 {
-	filepath = j["Filepath"].get<string>();
-	if (filepath != "")
-	{
-		meshComponents->Clear();
-		textureComponents->Clear();
-		Load(filepath);
-	}
+	string jsonFilepath = j["Filepath"].get<string>();
+	if (jsonFilepath != filepath)
+		Load(jsonFilepath);
 }
 
 Types::ComponentType Model::GetComponentTypeId() const
