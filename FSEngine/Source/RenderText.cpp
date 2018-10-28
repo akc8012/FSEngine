@@ -19,13 +19,13 @@ shared_ptr<Mesh> RenderText::CreateMeshComponent() const
 {
 	vector<float> rawVertices =
 	{
-		 // positions        // texture coords
-		-1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
-		 1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-		 1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
-		-1.0f,  1.0f, 0.0f,  0.0f, 1.0f,
-		-1.0f, -1.0f, 0.0f,  0.0f, 0.0f
+		 // positions        // normals          // texture coords
+		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,
+		 0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 0.0f,
+		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
+		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f,
+		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f
 	};
 
 	vector<Uint32> indices =
@@ -34,7 +34,7 @@ shared_ptr<Mesh> RenderText::CreateMeshComponent() const
 		1, 2, 3    // second triangle
 	};
 
-	const int Stride = 5;
+	const int Stride = 8;
 	return make_shared<Mesh>(rawVertices, Stride, indices);
 }
 
@@ -118,7 +118,9 @@ void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 	float height = 1 / surfaceSize.y;
 
 	GetComponent<Transform>()->SetScale(vec2(width, height));
-	GetComponent<Transform>()->Scale(pixelScaleFactor);
+
+	const float AdjustmentForQuadSize = 2.f;
+	GetComponent<Transform>()->Scale(pixelScaleFactor * AdjustmentForQuadSize);
 }
 
 void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
@@ -129,7 +131,8 @@ void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
 
 vec2 RenderText::GetPixelAnchoredPosition(const vec2& surfaceSize) const
 {
-	vec2 position = GetPixelPositionFromTopLeftOrigin();
+	const float AdjustmentForTopLeftOrigin = 2.f;
+	vec2 position = pixelPosition * AdjustmentForTopLeftOrigin;
 
 	switch (anchorPosition)
 	{
@@ -148,14 +151,11 @@ vec2 RenderText::GetPixelAnchoredPosition(const vec2& surfaceSize) const
 	}
 }
 
-vec2 RenderText::GetPixelPositionFromTopLeftOrigin() const
-{
-	return pixelPosition * 2.f;
-}
-
 vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const
 {
-	vec2 pixelScale = GetPixelScale(surfaceSize);
+	const float AdjustmentForQuadSize = 0.5f;
+	vec2 pixelScale = GetPixelScale(surfaceSize) * AdjustmentForQuadSize;
+
 	switch (alignPosition)
 	{
 	case Center:

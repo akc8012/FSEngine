@@ -252,6 +252,49 @@
     },
     "type": "PlayerShip"
   },
+  "Quad": {
+    "Components": {
+      "Shading": {
+        "FlatColor": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "ParameterCollection": {
+          "Blend": 1,
+          "EnableDepthTest": 1,
+          "RenderPerspective": 1
+        },
+        "type": "Shading"
+      },
+      "Transform": {
+        "EulerAngles": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "Position": [
+          1.5,
+          2.0,
+          -2.5
+        ],
+        "Scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "Transform"
+      }
+    },
+    "ParameterCollection": {
+      "DoDraw": 1,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 0,
+      "DoUpdate": 1
+    },
+    "type": "QuadPrimitive"
+  },
   "Red": {
     "Components": {
       "Shading": {

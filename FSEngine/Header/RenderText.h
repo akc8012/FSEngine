@@ -39,8 +39,6 @@ private:
 	vec2 GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const;
 	vec2 GetPixelScale(const vec2& surfaceSize) const;
 
-	vec2 GetPixelPositionFromTopLeftOrigin() const;
-
 public:
 	~RenderText();
 
