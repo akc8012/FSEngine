@@ -105,7 +105,6 @@ Texture::TextureType Texture::GetTextureType() const
 json Texture::GetJson() const
 {
 	json j = Drawable::GetJson();
-	j["type"] = Types::ComponentTypeString[ComponentTypeId];
 	j["Filepath"] = filepath;
 	j["TextureType"] = textureType;
 

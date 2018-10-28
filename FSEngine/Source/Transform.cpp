@@ -140,8 +140,7 @@ const mat4& Transform::GetMatrix() const
 
 json Transform::GetJson() const
 {
-	json j;
-	j["type"] = Types::ComponentTypeString[ComponentTypeId];
+	json j = Component::GetJson();
 
 	vec3 position = GetPosition();
 	j["Position"] = { position.x, position.y, position.z };
@@ -157,6 +156,8 @@ json Transform::GetJson() const
 
 void Transform::SetFromJson(const json& j)
 {
+	Component::SetFromJson(j);
+
 	json position = j["Position"];
 	SetPosition(position[0], position[1], position[2]);
 

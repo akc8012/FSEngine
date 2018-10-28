@@ -27,8 +27,8 @@ public:
 	const string& GetName() const;
 	void SetName(const string& name);
 
-	virtual json GetJson() const = 0;
-	virtual void SetFromJson(const json& j) = 0;
+	virtual json GetJson() const;
+	virtual void SetFromJson(const json& j);
 
 	void SetSerializable(bool serializable);
 	bool GetSerializable() const;

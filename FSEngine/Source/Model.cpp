@@ -147,14 +147,15 @@ ComponentCollection<Texture>* Model::GetTextureCollection() const
 
 json Model::GetJson() const
 {
-	json j;
-	j["type"] = Types::ComponentTypeString[ComponentTypeId];
+	json j = Component::GetJson();
 	j["Filepath"] = filepath;
 	return j;
 }
 
 void Model::SetFromJson(const json& j)
 {
+	Component::SetFromJson(j);
+
 	string jsonFilepath = j["Filepath"].get<string>();
 	if (jsonFilepath != filepath)
 		Load(jsonFilepath);

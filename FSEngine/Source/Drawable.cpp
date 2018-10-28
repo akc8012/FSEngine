@@ -17,13 +17,14 @@ vec4 Drawable::GetFlatColor() const
 
 json Drawable::GetJson() const
 {
-	json j;
+	json j = Component::GetJson();
 	j["ParameterCollection"] = parameterCollection->GetJson();
 	return j;
 }
 
 void Drawable::SetFromJson(const json& j)
 {
+	Component::SetFromJson(j);
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 

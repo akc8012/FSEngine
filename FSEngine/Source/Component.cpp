@@ -20,6 +20,19 @@ void Component::SetName(const string& name)
 	this->name = name;
 }
 
+json Component::GetJson() const
+{
+	json j;
+	j["type"] = Types::ComponentTypeString[GetComponentTypeId()];
+
+	return j;
+}
+
+void Component::SetFromJson(const json& j)
+{
+
+}
+
 void Component::SetSerializable(bool serializable)
 {
 	this->serializable = serializable;

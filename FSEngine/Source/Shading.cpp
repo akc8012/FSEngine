@@ -43,7 +43,6 @@ vec4 Shading::GetFlatColor() const
 json Shading::GetJson() const
 {
 	json j = Drawable::GetJson();
-	j["type"] = Types::ComponentTypeString[ComponentTypeId];
 	j["FlatColor"] = { flatColor.r, flatColor.g, flatColor.b, flatColor.a };
 
 	return j;
