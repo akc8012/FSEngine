@@ -4,9 +4,9 @@ void Camera::Start()
 {
 	ResetViewTransform();
 
-	AddComponent(make_shared<Transform>(), "View");
-	AddComponent(make_shared<Transform>(), "Perspective");
-	AddComponent(make_shared<Transform>(), "Orthographic");
+	AddComponent(make_shared<Transform>(), "View")->SetSerializable(false);
+	AddComponent(make_shared<Transform>(), "Perspective")->SetSerializable(false);
+	AddComponent(make_shared<Transform>(), "Orthographic")->SetSerializable(false);
 
 	GetParameterCollection()->SetParameter(GameObject::DoLateUpdate, true);
 	GetParameterCollection()->SetParameter(GameObject::DoDraw, false);
