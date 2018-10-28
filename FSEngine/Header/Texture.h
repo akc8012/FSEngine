@@ -20,8 +20,6 @@ private:
 	Uint32 textureId = NULL;
 	TextureType textureType = Diffuse;
 
-	void CreateTextureFromFilepath(const string& filepath);
-
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 	void FlipSurface(SDL_Surface* surface);
 	int GetPixelIndex(int x, int y, int surfaceWidth) const;
@@ -37,6 +35,7 @@ public:
 	Texture(SDL_Surface* surface, bool flipSurface = false);
 	~Texture();
 
+	void Load(const string& filepath);
 	void BindTexture() override;
 
 	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);

@@ -6,13 +6,14 @@ Texture::Texture()
 }
 
 Texture::Texture(const string& filepath)
- : filepath(filepath)
 {
-	CreateTextureFromFilepath(filepath);
+	Load(filepath);
 }
 
-void Texture::CreateTextureFromFilepath(const string& filepath)
+void Texture::Load(const string& filepath)
 {
+	this->filepath = filepath;
+
 	SDL_Surface* surface = IMG_Load(filepath.c_str());
 	if (surface == nullptr)
 		throwFS((string)"Unable to load image at path: " + filepath + ", " + IMG_GetError());
@@ -115,14 +116,11 @@ void Texture::SetFromJson(const json& j)
 {
 	Drawable::SetFromJson(j);
 
-	filepath = j["Filepath"].get<string>();
-	if (filepath != "")
-	{
-		DeleteTexture();
-		CreateTextureFromFilepath(filepath);
-	}
-
 	textureType = (TextureType)j["TextureType"].get<int>();
+
+	string jsonFilepath = j["Filepath"].get<string>();
+	if (jsonFilepath != filepath)
+		Load(jsonFilepath);
 }
 
 Texture::~Texture()
