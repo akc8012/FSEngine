@@ -1,7 +1,7 @@
 #pragma once
-#include "Model.h"
+#include "GameObject.h"
 
-class PlayerShip : public Model
+class PlayerShip : public GameObject
 {
 private:
 	Transform* transform = nullptr;

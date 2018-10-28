@@ -3,11 +3,13 @@
 Model::Model(const string& filepath)
  : filepath(filepath)
 {
+	meshComponents = make_unique< ComponentCollection<Mesh>>();
+	textureComponents = make_unique<ComponentCollection<Texture>>();
+
 	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	const aiScene* scene = importer->GetScene();
 
 	ConvertMeshesOnNode(scene->mRootNode, scene);
-	AddComponent(make_shared<Transform>());
 }
 
 unique_ptr<Importer> Model::LoadModelImporter(const string& filepath)
@@ -27,7 +29,7 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		shared_ptr<Mesh> meshComponent = ConvertMeshToComponent(mesh);
-		AddComponent(meshComponent, mesh->mName.C_Str());
+		meshComponents->Add(meshComponent, mesh->mName.C_Str());
 
 		bool hasMaterials = mesh->mMaterialIndex >= 0;
 		if (hasMaterials)
@@ -96,7 +98,7 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 	if (loadedTextureName == nullptr)
 	{
 		meshComponent->AddAssociatedTextureName(textureName);
-		AddComponent(make_shared<Texture>(GetDirectory() + textureName), textureName);
+		textureComponents->Add(make_shared<Texture>(GetDirectory() + textureName), textureName);
 	}
 	else
 		meshComponent->AddAssociatedTextureName(*loadedTextureName);
@@ -104,7 +106,7 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 
 string* Model::TryGetLoadedTextureName(const string& textureName) const
 {
-	for (const auto texture : GetComponentContainer()->GetComponents<Texture>())
+	for (const auto texture : textureComponents->GetComponents())
 	{
 		string loadedTextureName = texture->GetName();
 		if (textureName == loadedTextureName)
@@ -117,9 +119,4 @@ string* Model::TryGetLoadedTextureName(const string& textureName) const
 string Model::GetDirectory() const
 {
 	return filepath.substr(0, filepath.find_last_of('/')+1);
-}
-
-string Model::GetGameObjectType() const
-{
-	return "Model";
 }

@@ -1,6 +1,9 @@
 #pragma once
-#include "GameObject.h"
-#include "Timer.h"
+#include "Component.h"
+#include "ComponentCollection.h"
+#include "Mesh.h"
+#include "Texture.h"
+#include "FSDebug.h"
 #include "Vertex.h"
 
 #include <assimp/Importer.hpp>
@@ -14,11 +17,15 @@ using Assimp::Importer;
 using std::string;
 using std::vector;
 using std::unique_ptr;
+using std::shared_ptr;
+using std::make_shared;
 
-class Model : public GameObject
+class Model
 {
 private:
 	string filepath;
+	unique_ptr<ComponentCollection<Mesh>> meshComponents;
+	unique_ptr<ComponentCollection<Texture>> textureComponents;
 
 	unique_ptr<Importer> LoadModelImporter(const string& filepath);
 
@@ -34,7 +41,6 @@ private:
 	string* TryGetLoadedTextureName(const string& textureName) const;
 
 	string GetDirectory() const;
-	string GetGameObjectType() const override;
 
 public:
 	Model(const string& filepath);

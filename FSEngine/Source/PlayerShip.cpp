@@ -1,14 +1,12 @@
 #include "../Header/PlayerShip.h"
 
 PlayerShip::PlayerShip()
- : Model("C:/Model/Arwing/arwing.dae")
 {
-
+	transform = AddComponent(make_shared<Transform>());
 }
 
 void PlayerShip::Start()
 {
-	transform = GetComponent<Transform>();
 	ResetValues();
 }
 
