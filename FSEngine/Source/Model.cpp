@@ -1,10 +1,22 @@
 #include "..\Header\Model.h"
 
-Model::Model(const string& filepath)
- : filepath(filepath)
+Model::Model()
 {
 	meshComponents = make_unique< ComponentCollection<Mesh>>();
 	textureComponents = make_unique<ComponentCollection<Texture>>();
+}
+
+Model::Model(const string& filepath)
+{
+	meshComponents = make_unique< ComponentCollection<Mesh>>();
+	textureComponents = make_unique<ComponentCollection<Texture>>();
+
+	Load(filepath);
+}
+
+void Model::Load(const string& filepath)
+{
+	this->filepath = filepath;
 
 	unique_ptr<Importer> importer = LoadModelImporter(filepath.c_str());
 	const aiScene* scene = importer->GetScene();
@@ -119,4 +131,19 @@ string* Model::TryGetLoadedTextureName(const string& textureName) const
 string Model::GetDirectory() const
 {
 	return filepath.substr(0, filepath.find_last_of('/')+1);
+}
+
+json Model::GetJson() const
+{
+	return json();
+}
+
+void Model::SetFromJson(const json& j)
+{
+
+}
+
+Types::ComponentType Model::GetComponentTypeId() const
+{
+	return ComponentTypeId;
 }

@@ -4,6 +4,7 @@
 #include "Shading.h"
 #include "Texture.h"
 #include "Transform.h"
+#include "Model.h"
 
 using std::make_shared;
 
@@ -19,6 +20,7 @@ private:
 	unique_ptr<ComponentCollection<Shading>> shading;
 	unique_ptr<ComponentCollection<Texture>> texture;
 	unique_ptr<ComponentCollection<Transform>> transform;
+	unique_ptr<ComponentCollection<Model>> model;
 
 public:
 	ComponentContainer();
@@ -56,6 +58,9 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 
 	case Transform::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
+
+	case Model::ComponentTypeId:
+		return reinterpret_cast<ComponentCollection<T>*>(model.get());
 
 	default:
 		throwFS("Unknown type used for GetCollectionOfType");

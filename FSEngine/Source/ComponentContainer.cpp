@@ -16,6 +16,9 @@ namespace ComponentFactory
 		else if (type == Types::ComponentTypeString[Transform::ComponentTypeId])
 			return make_shared<Transform>();
 
+		else if (type == Types::ComponentTypeString[Model::ComponentTypeId])
+			return make_shared<Model>();
+
 		throwFS("Cannot make Component of unrecognized type: " + type);
 	}
 }
@@ -26,6 +29,7 @@ ComponentContainer::ComponentContainer()
 	shading = make_unique<ComponentCollection<Shading>>();
 	texture = make_unique<ComponentCollection<Texture>>();
 	transform = make_unique<ComponentCollection<Transform>>();
+	model = make_unique<ComponentCollection<Model>>();
 }
 
 vector<Component*> ComponentContainer::GetAllComponents() const
@@ -43,6 +47,9 @@ vector<Component*> ComponentContainer::GetAllComponents() const
 
 	auto transformComponents = transform->GetComponents();
 	components.insert(components.end(), transformComponents.begin(), transformComponents.end());
+
+	auto modelComponents = model->GetComponents();
+	components.insert(components.end(), modelComponents.begin(), modelComponents.end());
 
 	return components;
 }

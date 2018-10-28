@@ -20,7 +20,7 @@ using std::unique_ptr;
 using std::shared_ptr;
 using std::make_shared;
 
-class Model
+class Model : public Component
 {
 private:
 	string filepath;
@@ -43,5 +43,14 @@ private:
 	string GetDirectory() const;
 
 public:
+	static const Types::ComponentType ComponentTypeId = Types::Model;
+	Types::ComponentType GetComponentTypeId() const override;
+
+	Model();
 	Model(const string& filepath);
+
+	void Load(const string& filepath);
+
+	json GetJson() const override;
+	void SetFromJson(const json& j) override;
 };
