@@ -1,16 +1,17 @@
 #include "../Header/FSDebug.h"
+#include <windows.h>
 
-void FSDebug::Print(int message)
+void FSDebug::Print(int message, const string& label)
 {
-	Print(std::to_string(message));
+	Print(std::to_string(message), label);
 }
 
-void FSDebug::Print(float message)
+void FSDebug::Print(float message, const string& label)
 {
-	Print(std::to_string(message));
+	Print(std::to_string(message), label);
 }
 
-void FSDebug::Print(const mat4& matrix)
+void FSDebug::Print(const mat4& matrix, const string& label)
 {
 	string matrixString = "";
 
@@ -26,28 +27,31 @@ void FSDebug::Print(const mat4& matrix)
 		matrixString += "\n";
 	}
 
-	Print(matrixString);
+	Print(matrixString, label);
 }
 
-void FSDebug::Print(const vec4& message)
+void FSDebug::Print(const vec4& message, const string& label)
 {
 	string vectorString = "(" + std::to_string(message.x) + ", " + std::to_string(message.y) + ", " + std::to_string(message.z) + ", " + std::to_string(message.w) + ")";
-	Print(vectorString);
+	Print(vectorString, label);
 }
 
-void FSDebug::Print(const vec3& message)
+void FSDebug::Print(const vec3& message, const string& label)
 {
 	string vectorString = "(" + std::to_string(message.x) + ", " + std::to_string(message.y) + ", " + std::to_string(message.z) + ")";
-	Print(vectorString);
+	Print(vectorString, label);
 }
 
-void FSDebug::Print(const vec2& vector)
+void FSDebug::Print(const vec2& vector, const string& label)
 {
 	string vectorString = "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ")";
-	Print(vectorString);
+	Print(vectorString, label);
 }
 
-void FSDebug::Print(const string& message)
+void FSDebug::Print(const string& message, const string& label)
 {
-	printf("%s\n", message.c_str());
+	string labelText = (label != "") ? (label + ": ") : ("");
+
+	printf("%s\n", (labelText + message).c_str());
+	OutputDebugString((labelText + message + "\n").c_str());
 }

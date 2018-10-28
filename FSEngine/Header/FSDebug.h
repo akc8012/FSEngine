@@ -12,29 +12,24 @@ using std::string;
 class FSDebug
 {
 public:
-	static void Print(int message);
-	static void Print(float message);
-	static void Print(const mat4& message);
-	static void Print(const vec4& message);
-	static void Print(const vec3& message);
-	static void Print(const vec2& message);
-	static void Print(const string& message);
+	static void Print(int message, const string& label);
+	static void Print(float message, const string& label);
+	static void Print(const mat4& message, const string& label);
+	static void Print(const vec4& message, const string& label);
+	static void Print(const vec3& message, const string& label);
+	static void Print(const vec2& message, const string& label);
+	static void Print(const string& message, const string& label);
 };
 
-template<typename T> constexpr auto printFS(const T& message, const string& label = "")
+template <typename T>
+constexpr auto printFS(const T& message, const string& label = "")
 {
-	if (label != "")
-		printf((label + ": ").c_str());
-
-	return FSDebug::Print(message);
+	return FSDebug::Print(message, label);
 }
 
-template<typename T> constexpr auto printcFS(const T& message, const string& label = "")
+template <typename T>
+constexpr auto printcFS(const T& message, const string& label = "")
 {
 	system("cls");
-
-	if (label != "")
-		printf((label + ": ").c_str());
-
-	return FSDebug::Print(message);
+	return FSDebug::Print(message, label);
 }
