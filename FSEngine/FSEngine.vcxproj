@@ -213,6 +213,7 @@
     <ClInclude Include="Header\RenderText.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resource\Json\scene.json" />
     <None Include="Resource\Json\settings.json" />
     <None Include="Resource\Shader\FragmentPhongShader.glsl" />
     <None Include="Resource\Shader\VertexShader.glsl" />
@@ -223,6 +224,10 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Font\arial.ttf" />
+    <Font Include="Resource\Font\consola.ttf" />
+    <Font Include="Resource\Font\consolab.ttf" />
+    <Font Include="Resource\Font\consolai.ttf" />
+    <Font Include="Resource\Font\consolaz.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
