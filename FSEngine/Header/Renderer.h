@@ -32,7 +32,8 @@ private:
 
 	void SetTransformMatrices(Transform* transform);
 
-	Drawable* FindDrawable(const IGameObject* gameObject, const vector<string>& textureNames) const;
+	Drawable* FindDrawable(const Model* model, const vector<string>& textureNames) const;
+	Drawable* FindDrawable(const IGameObject* gameObject) const;
 	void SetDrawableParameters(Drawable* drawable);
 
 	void SetDepthTest(bool enableDepthTest);
