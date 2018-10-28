@@ -9,17 +9,16 @@ using glm::vec2;
 #include <string>
 using std::string;
 
-class FSDebug
+namespace FSDebug
 {
-public:
-	static void Print(int message, const string& label);
-	static void Print(float message, const string& label);
-	static void Print(const mat4& message, const string& label);
-	static void Print(const vec4& message, const string& label);
-	static void Print(const vec3& message, const string& label);
-	static void Print(const vec2& message, const string& label);
-	static void Print(const string& message, const string& label);
-};
+	void Print(int message, const string& label);
+	void Print(float message, const string& label);
+	void Print(const mat4& message, const string& label);
+	void Print(const vec4& message, const string& label);
+	void Print(const vec3& message, const string& label);
+	void Print(const vec2& message, const string& label);
+	void Print(const string& message, const string& label);
+}
 
 template <typename T>
 constexpr auto printFS(const T& message, const string& label = "")
