@@ -8,6 +8,7 @@ using glm::vec2;
 
 #include <string>
 using std::string;
+using std::to_string;
 
 namespace FSDebug
 {
@@ -18,6 +19,11 @@ namespace FSDebug
 	void Print(const vec3& message, const string& label);
 	void Print(const vec2& message, const string& label);
 	void Print(const string& message, const string& label);
+
+	string GetMatrixString(const mat4& matrix);
+	string GetVectorString(const vec4& vector);
+	string GetVectorString(const vec3& vector);
+	string GetVectorString(const vec2& vector);
 }
 
 template <typename T>
