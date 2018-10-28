@@ -16,6 +16,7 @@ int main(int argc, char* args[])
 	catch (const std::exception& exception)
 	{
 		HandleException("INITIALIZE ERROR", exception.what());
+		engine->Stop(true);
 	}
 
 	while (engine->IsRunning())
@@ -27,7 +28,7 @@ int main(int argc, char* args[])
 		catch (const std::exception& exception)
 		{
 			HandleException("GAMELOOP ERROR", exception.what(), engine->GetSDLWindow());
-			engine->Stop();
+			engine->Stop(true);
 		}
 	}
 

@@ -50,7 +50,7 @@ public:
 	void Initialize();
 
 	void GameLoop();
-	void Stop();
+	void Stop(bool caughtException = false);
 
 	SDL_Window* GetSDLWindow() const;
 };

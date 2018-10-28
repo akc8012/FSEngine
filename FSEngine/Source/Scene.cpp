@@ -10,6 +10,7 @@ Scene::Scene(const string& name, Systems* systems)
 
 	systems->eventSystem->AddListener("SaveKeyPressed", this);
 	systems->eventSystem->AddListener("LoadKeyPressed", this);
+	systems->eventSystem->AddListener("GameStopped", this);
 }
 
 void Scene::AddGameObjects()
@@ -47,8 +48,12 @@ void Scene::ReceiveEvent(const string& key, const json& event)
 {
 	if (key == "SaveKeyPressed")
 		SaveScene();
+
 	else if (key == "LoadKeyPressed")
 		LoadScene();
+
+	else if (key == "GameStopped")
+		SaveScene();
 }
 
 string Scene::GetFileName() const
@@ -59,9 +64,4 @@ string Scene::GetFileName() const
 GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
-}
-
-Scene::~Scene()
-{
-	SaveScene();
 }

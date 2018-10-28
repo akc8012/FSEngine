@@ -86,8 +86,11 @@ bool Engine::IsRunning() const
 	return running;
 }
 
-void Engine::Stop()
+void Engine::Stop(bool caughtException)
 {
+	if (!caughtException)
+		systems->eventSystem->SendEvent("GameStopped");
+
 	running = false;
 }
 #pragma endregion
@@ -112,14 +115,14 @@ void Engine::PollEvents()
 		switch (sdlEvent.type)
 		{
 		case SDL_QUIT:
-			running = false;
+			Stop();
 			break;
 
 		case SDL_KEYDOWN:
 			HandleKeyboardEvent(sdlEvent.key);
 
 			if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
-				running = false;
+				Stop();
 			break;
 
 		case SDL_WINDOWEVENT:
@@ -259,6 +262,4 @@ Engine::~Engine()
 	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
-
-	running = false;
 }
