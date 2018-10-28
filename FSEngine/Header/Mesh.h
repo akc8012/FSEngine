@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "Vertex.h"
+#include "FSMath.h"
 #include "ParameterCollection.h"
 
 #include <SDL.h>
@@ -27,20 +27,20 @@ private:
 		int location;
 		int size;
 		bool normalize = false;
-		int stride = sizeof(Vertex);
+		int stride = sizeof(vertex);
 		size_t offset;
 	};
 
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
-	vector<Vertex> vertices;
+	vector<vertex> vertices;
 	vector<Uint32> indices;
 	vector<string> associatedTextureNames;
 
 	Uint32 vertexArrayId = NULL;
 
 	void Initialize();
-	vector<Vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
+	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
 	void CreateVertexArray();
 
 	void SendVertices(Uint32 vertexBufferId);
@@ -60,7 +60,7 @@ public:
 	Types::ComponentType GetComponentTypeId() const override;
 
 	Mesh();
-	Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices);
+	Mesh(const vector<vertex>& vertices, const vector<Uint32>& indices);
 	Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
 	~Mesh();
 

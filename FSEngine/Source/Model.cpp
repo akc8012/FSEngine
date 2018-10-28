@@ -54,18 +54,18 @@ void Model::ConvertMeshesOnNode(const aiNode* node, const aiScene* scene)
 
 shared_ptr<Mesh> Model::ConvertMeshToComponent(const aiMesh* mesh)
 {
-	vector<Vertex> vertices = ConvertVertices(mesh);
+	vector<vertex> vertices = ConvertVertices(mesh);
 	vector<Uint32> indices = ConvertIndices(mesh);
 
 	return make_shared<Mesh>(vertices, indices);
 }
 
-vector<Vertex> Model::ConvertVertices(const aiMesh* mesh)
+vector<vertex> Model::ConvertVertices(const aiMesh* mesh)
 {
-	vector<Vertex> vertices;
+	vector<vertex> vertices;
 	for (Uint32 i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		vertex vertex;
 		vertex.position = vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
 		vertex.normal = vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 

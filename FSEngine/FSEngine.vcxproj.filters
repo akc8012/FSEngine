@@ -47,7 +47,6 @@
     <ClInclude Include="Header\Component.h" />
     <ClInclude Include="Header\FileSystem.h" />
     <ClInclude Include="Header\Model.h" />
-    <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\CubePrimitive.h" />
     <ClInclude Include="Header\RenderText.h" />
     <ClInclude Include="Header\ComponentType.h" />

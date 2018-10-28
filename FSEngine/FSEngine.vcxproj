@@ -209,7 +209,6 @@
     <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Timer.h" />
-    <ClInclude Include="Header\Vertex.h" />
     <ClInclude Include="Header\Window.h" />
     <ClInclude Include="Header\RenderText.h" />
   </ItemGroup>

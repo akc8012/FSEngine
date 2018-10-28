@@ -4,7 +4,6 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "FSDebug.h"
-#include "Vertex.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -32,7 +31,7 @@ private:
 	void ConvertMeshesOnNode(const aiNode* node, const aiScene* scene);
 
 	shared_ptr<Mesh> ConvertMeshToComponent(const aiMesh* mesh);
-	vector<Vertex> ConvertVertices(const aiMesh* mesh);
+	vector<vertex> ConvertVertices(const aiMesh* mesh);
 	vector<Uint32> ConvertIndices(const aiMesh* mesh);
 
 	void ConvertMaterialToTextures(Mesh* meshComponent, const aiMaterial* material);

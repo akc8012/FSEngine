@@ -5,7 +5,7 @@ Mesh::Mesh()
 
 }
 
-Mesh::Mesh(const vector<Vertex>& vertices, const vector<Uint32>& indices)
+Mesh::Mesh(const vector<vertex>& vertices, const vector<Uint32>& indices)
  : vertices(vertices), indices(indices)
 {
 	Initialize();
@@ -27,12 +27,12 @@ void Mesh::Initialize()
 	CreateVertexArray();
 }
 
-vector<Vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
+vector<vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
 {
-	vector<Vertex> vertices;
+	vector<vertex> vertices;
 	for (int i = 0; i < rawVertices.size(); i += stride)
 	{
-		Vertex vertex;
+		vertex vertex;
 		int j = 0;
 
 		vertex.position.x = rawVertices[i + j++];
@@ -79,7 +79,7 @@ void Mesh::CreateVertexArray()
 void Mesh::SendVertices(Uint32 vertexBufferId)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices.front(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertex), &vertices.front(), GL_STATIC_DRAW);
 
 	SendPositionAttribute();
 	SendNormalAttribute();
@@ -101,7 +101,7 @@ void Mesh::SendNormalAttribute()
 	VertexAttribute normalAttribute;
 	normalAttribute.location = 1;
 	normalAttribute.size = 3;
-	normalAttribute.offset = offsetof(Vertex, normal);
+	normalAttribute.offset = offsetof(vertex, normal);
 
 	SendVertexAttribute(normalAttribute);
 }
@@ -111,7 +111,7 @@ void Mesh::SendTextureAttribute()
 	VertexAttribute textureAttribute;
 	textureAttribute.location = 2;
 	textureAttribute.size = 2;
-	textureAttribute.offset = offsetof(Vertex, textureCoord);
+	textureAttribute.offset = offsetof(vertex, textureCoord);
 
 	SendVertexAttribute(textureAttribute);
 }
