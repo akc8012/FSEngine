@@ -75,12 +75,27 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<Transform>());
 
-	for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
+	auto model = gameObject->TryGetComponent<Model>();
+	if (model != nullptr)
 	{
-		auto drawable = FindDrawable(gameObject, mesh->GetAssociatedTextureNames());
-		SetDrawableParameters(drawable);
+		for (auto mesh : model->GetMeshCollection()->GetComponents())
+		{
+			auto textureNames = mesh->GetAssociatedTextureNames();
+			Drawable* drawable = model->GetTextureCollection()->Get(textureNames.front());
+			SetDrawableParameters(drawable);
 
-		DrawMesh(mesh);
+			DrawMesh(mesh);
+		}
+	}
+	else
+	{
+		for (auto mesh : gameObject->GetComponentContainer()->GetComponents<Mesh>())
+		{
+			Drawable* drawable = FindDrawable(gameObject, mesh->GetAssociatedTextureNames());
+			SetDrawableParameters(drawable);
+
+			DrawMesh(mesh);
+		}
 	}
 }
 

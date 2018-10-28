@@ -133,6 +133,16 @@ string Model::GetDirectory() const
 	return filepath.substr(0, filepath.find_last_of('/')+1);
 }
 
+ComponentCollection<Mesh>* Model::GetMeshCollection() const
+{
+	return meshComponents.get();
+}
+
+ComponentCollection<Texture>* Model::GetTextureCollection() const
+{
+	return textureComponents.get();
+}
+
 json Model::GetJson() const
 {
 	return json();

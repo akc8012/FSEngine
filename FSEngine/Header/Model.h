@@ -51,6 +51,9 @@ public:
 
 	void Load(const string& filepath);
 
+	ComponentCollection<Mesh>* GetMeshCollection() const;
+	ComponentCollection<Texture>* GetTextureCollection() const;
+
 	json GetJson() const override;
 	void SetFromJson(const json& j) override;
 };

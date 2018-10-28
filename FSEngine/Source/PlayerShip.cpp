@@ -2,6 +2,7 @@
 
 PlayerShip::PlayerShip()
 {
+	AddComponent(make_shared<Model>("C:/Model/Arwing/arwing.dae"));
 	transform = AddComponent(make_shared<Transform>());
 }
 
