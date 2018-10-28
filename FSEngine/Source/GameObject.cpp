@@ -98,6 +98,16 @@ void GameObject::SetFromJson(const json& j)
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 
+void GameObject::SetSerializable(bool serializable)
+{
+	this->serializable = serializable;
+}
+
+bool GameObject::GetSerializable() const
+{
+	return serializable;
+}
+
 Component* GameObject::TryGetComponentOfType(const string& type, const string& name)
 {
 	return GetComponentContainer()->GetCollectionOfType<Component>(Types::StringToComponentType(type))->TryGet(name);

@@ -39,7 +39,12 @@ void Scene::SaveScene() const
 {
 	json sceneJson;
 	for (const auto gameObject : gameObjectContainer->GetGameObjects())
+	{
+		if (!gameObject->GetSerializable())
+			continue;
+
 		sceneJson[gameObject->GetName()] = gameObject->GetJson();
+	}
 
 	FileSystem::WriteTextToFile(sceneJson.dump(2), GetFileName());
 }

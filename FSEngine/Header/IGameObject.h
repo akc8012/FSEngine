@@ -43,6 +43,9 @@ public:
 	T* GetComponent(const string& name = "") const;
 	template <typename T>
 	T* TryGetComponent(const string& name = "") const;
+
+	virtual void SetSerializable(bool serializable) = 0;
+	virtual bool GetSerializable() const = 0;
 };
 
 template <typename T>

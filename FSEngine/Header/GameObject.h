@@ -17,6 +17,7 @@ class GameObject : public IGameObject, public IEventListener
 {
 private:
 	string name;
+	bool serializable = true;
 	unique_ptr<ComponentContainer> components;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
@@ -45,6 +46,9 @@ public:
 
 	virtual json GetJson() const override;
 	virtual void SetFromJson(const json& j) override;
+
+	void SetSerializable(bool serializable) override;
+	bool GetSerializable() const override;
 
 	void ReceiveEvent(const string& key, const json& event) override;
 };
