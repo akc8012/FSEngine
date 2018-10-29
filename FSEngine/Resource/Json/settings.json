@@ -10,7 +10,7 @@
   "PolygonLineMode": false,
   "DrawGrid": true,
 
-  "SurfaceSize": [960, 600],
+  "SurfaceSize": [1280, 800],
   "Fullscreen": false,
 
   "EditorMode": true,

@@ -34,6 +34,7 @@
     <ClCompile Include="Source\GameObjectFactory.cpp" />
     <ClCompile Include="Source\Drawable.cpp" />
     <ClCompile Include="Source\ComponentContainer.cpp" />
+    <ClCompile Include="Source\QuadMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -74,6 +75,7 @@
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
     <ClInclude Include="Header\Drawable.h" />
+    <ClInclude Include="Header\QuadMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

@@ -21,6 +21,13 @@ public:
 		ParametersLength
 	};
 
+protected:
+	vector<vertex> vertices;
+	vector<Uint32> indices;
+
+	void Initialize();
+	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
+
 private:
 	struct VertexAttribute
 	{
@@ -32,15 +39,9 @@ private:
 	};
 
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
-
-	vector<vertex> vertices;
-	vector<Uint32> indices;
 	vector<string> associatedTextureNames;
-
 	Uint32 vertexArrayId = NULL;
 
-	void Initialize();
-	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
 	void CreateVertexArray();
 
 	void SendVertices(Uint32 vertexBufferId);

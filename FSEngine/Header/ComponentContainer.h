@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "Transform.h"
 #include "Model.h"
+#include "QuadMesh.h"
 
 using std::make_shared;
 

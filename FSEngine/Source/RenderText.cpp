@@ -6,36 +6,13 @@ void RenderText::Start()
 	LoadFont("consola.ttf");
 	AddComponent(make_shared<Transform>())->SetSerializable(false);
 
-	Mesh* meshComponent = AddComponent(CreateMeshComponent());
+	Mesh* meshComponent = AddComponent(make_shared<QuadMesh>());
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 	GetParameterCollection()->SetParameter(DoDraw, false);
 	GetParameterCollection()->SetParameter(DoLateDraw, true);
-}
-
-shared_ptr<Mesh> RenderText::CreateMeshComponent() const
-{
-	vector<float> rawVertices =
-	{
-		 // positions        // normals          // texture coords
-		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f,
-		 0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
-		 0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,
-		-0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f
-	};
-
-	vector<Uint32> indices =
-	{
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
-
-	const int Stride = 8;
-	return make_shared<Mesh>(rawVertices, Stride, indices);
 }
 
 void RenderText::LoadFont(const string& fontName)

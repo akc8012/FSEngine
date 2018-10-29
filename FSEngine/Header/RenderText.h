@@ -23,7 +23,6 @@ private:
 	vec2 pixelPosition = vec2(0, 0);
 	vec2 pixelScaleFactor = vec2(1, 1);
 
-	shared_ptr<Mesh> CreateMeshComponent() const;
 	void LoadFont(const string& fontName);
 
 	void CreateTextureComponent(SDL_Surface* surface);
