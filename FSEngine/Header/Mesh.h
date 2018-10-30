@@ -49,9 +49,6 @@ private:
 
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
-	void DrawTriangleElements();
-	void DrawTriangleArrays();
-
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Mesh;
 	Types::ComponentType GetComponentTypeId() const override;
@@ -61,11 +58,10 @@ public:
 	Mesh();
 	~Mesh();
 
-	void BindVertexArray();
-	void DrawMesh();
-
 	int GetVerticeCount() const;
 	int GetIndiceCount() const;
+
+	void BindVertexArray();
 
 	void AddAssociatedTextureName(const string& textureName);
 	const vector<string>& GetAssociatedTextureNames() const;

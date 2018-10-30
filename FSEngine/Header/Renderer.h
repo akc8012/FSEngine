@@ -41,6 +41,8 @@ private:
 	void SetBlend(bool blend);
 
 	void DrawMesh(Mesh* mesh);
+	void DrawTriangleElements(const Mesh* mesh);
+	void DrawTriangleArrays(const Mesh* mesh);
 
 public:
 	Renderer(Systems* systems, IGameObject* camera);

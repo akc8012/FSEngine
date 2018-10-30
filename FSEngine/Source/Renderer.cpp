@@ -152,7 +152,19 @@ void Renderer::DrawMesh(Mesh* mesh)
 	mesh->BindVertexArray();
 
 	mesh->GetParameterCollection()->GetParameter(Mesh::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
-	mesh->DrawMesh();
+	mesh->GetParameterCollection()->GetParameter(Mesh::DrawElements) ? DrawTriangleElements(mesh) : DrawTriangleArrays(mesh);
+}
+
+void Renderer::DrawTriangleElements(const Mesh* mesh)
+{
+	const int Offset = 0;
+	glDrawElements(GL_TRIANGLES, mesh->GetIndiceCount(), GL_UNSIGNED_INT, Offset);
+}
+
+void Renderer::DrawTriangleArrays(const Mesh* mesh)
+{
+	const int First = 0;
+	glDrawArrays(GL_TRIANGLES, First, mesh->GetVerticeCount());
 }
 #pragma endregion
 

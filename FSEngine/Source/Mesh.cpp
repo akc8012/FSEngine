@@ -124,26 +124,9 @@ void Mesh::SendIndices(Uint32 elementBufferId, const vector<Uint32>& indices)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Uint32), &indices.front(), GL_STATIC_DRAW);
 }
 
-void Mesh::BindVertexArray()
+int Mesh::GetVerticeCount() const
 {
-	glBindVertexArray(vertexArrayId);
-}
-
-void Mesh::DrawMesh()
-{
-	parameterCollection->GetParameter(DrawElements) ? DrawTriangleElements() : DrawTriangleArrays();
-}
-
-void Mesh::DrawTriangleElements()
-{
-	const int Offset = 0;
-	glDrawElements(GL_TRIANGLES, GetIndiceCount(), GL_UNSIGNED_INT, Offset);
-}
-
-void Mesh::DrawTriangleArrays()
-{
-	const int First = 0;
-	glDrawArrays(GL_TRIANGLES, First, GetVerticeCount());
+	return verticeCount;
 }
 
 int Mesh::GetIndiceCount() const
@@ -151,9 +134,9 @@ int Mesh::GetIndiceCount() const
 	return indiceCount;
 }
 
-int Mesh::GetVerticeCount() const
+void Mesh::BindVertexArray()
 {
-	return verticeCount;
+	glBindVertexArray(vertexArrayId);
 }
 
 void Mesh::AddAssociatedTextureName(const string& textureName)
