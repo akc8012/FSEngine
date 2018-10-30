@@ -31,19 +31,17 @@ private:
 		size_t offset;
 	};
 
+	int verticeCount;
+	int indiceCount;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
-
-	vector<vertex> vertices;
-	vector<Uint32> indices;
 	vector<string> associatedTextureNames;
-
 	Uint32 vertexArrayId = NULL;
 
 	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
 	void CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32>& indices);
 
-	void SendVertices(Uint32 vertexBufferId);
-	void SendIndices(Uint32 elementBufferId);
+	void SendVertices(Uint32 vertexBufferId, const vector<vertex>& vertices);
+	void SendIndices(Uint32 elementBufferId, const vector<Uint32>& indices);
 
 	void SendPositionAttribute();
 	void SendNormalAttribute();
@@ -66,8 +64,8 @@ public:
 	void BindVertexArray();
 	void DrawMesh();
 
-	int GetIndiceCount() const;
 	int GetVerticeCount() const;
+	int GetIndiceCount() const;
 
 	void AddAssociatedTextureName(const string& textureName);
 	const vector<string>& GetAssociatedTextureNames() const;

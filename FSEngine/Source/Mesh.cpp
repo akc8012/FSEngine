@@ -51,8 +51,8 @@ vector<vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int st
 
 void Mesh::CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32>& indices)
 {
-	this->vertices = vertices;
-	this->indices = indices;
+	verticeCount = (int)vertices.size();
+	indiceCount = (int)indices.size();
 
 	Uint32 vertexBufferId, elementBufferId;
 	const int Amount = 1;
@@ -62,8 +62,8 @@ void Mesh::CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32
 
 	BindVertexArray();
 
-	SendVertices(vertexBufferId);
-	SendIndices(elementBufferId);
+	SendVertices(vertexBufferId, vertices);
+	SendIndices(elementBufferId, indices);
 
 	glBindBuffer(GL_ARRAY_BUFFER, NULL);
 	glBindVertexArray(NULL);
@@ -72,7 +72,7 @@ void Mesh::CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32
 	glDeleteBuffers(Amount, &vertexBufferId);
 }
 
-void Mesh::SendVertices(Uint32 vertexBufferId)
+void Mesh::SendVertices(Uint32 vertexBufferId, const vector<vertex>& vertices)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertex), &vertices.front(), GL_STATIC_DRAW);
@@ -118,7 +118,7 @@ void Mesh::SendVertexAttribute(const VertexAttribute& attribute)
 	glEnableVertexAttribArray(attribute.location);
 }
 
-void Mesh::SendIndices(Uint32 elementBufferId)
+void Mesh::SendIndices(Uint32 elementBufferId, const vector<Uint32>& indices)
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Uint32), &indices.front(), GL_STATIC_DRAW);
@@ -148,12 +148,12 @@ void Mesh::DrawTriangleArrays()
 
 int Mesh::GetIndiceCount() const
 {
-	return (int)indices.size();
+	return indiceCount;
 }
 
 int Mesh::GetVerticeCount() const
 {
-	return (int)vertices.size();
+	return verticeCount;
 }
 
 void Mesh::AddAssociatedTextureName(const string& textureName)
