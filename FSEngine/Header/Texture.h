@@ -1,5 +1,5 @@
 #pragma once
-#include "Drawable.h"
+#include "Shading.h"
 #include "FSException.h"
 
 #include <SDL.h>
@@ -10,7 +10,7 @@
 #include <string>
 using std::string;
 
-class Texture : public Drawable
+class Texture : public Shading
 {
 public:
 	enum TextureType { Diffuse, Specular };

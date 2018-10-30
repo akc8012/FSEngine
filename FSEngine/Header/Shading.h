@@ -2,11 +2,15 @@
 #include "Component.h"
 #include "ParameterCollection.h"
 
+#include <SDL.h>
+#include <GL\glew.h>
+#include <SDL_opengl.h>
+
 #include <glm\glm.hpp>
 using glm::vec4;
 using glm::vec3;
 
-class Drawable : public Component
+class Shading : public Component
 {
 public:
 	enum Parameters
@@ -22,11 +26,11 @@ private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 public:
-	Drawable();
-	virtual ~Drawable();
+	Shading();
+	virtual ~Shading();
 
-	virtual void BindTexture() = 0;
-	virtual vec4 GetColor() const; // TODO: BETTER WAY OF HANDLING THIS
+	virtual void BindTexture();
+	virtual vec4 GetColor() const;
 
 	virtual json GetJson() const override;
 	virtual void SetFromJson(const json& j) override;

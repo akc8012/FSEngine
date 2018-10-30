@@ -1,6 +1,6 @@
-#include "../Header/Drawable.h"
+#include "../Header/Shading.h"
 
-Drawable::Drawable()
+Shading::Shading()
 {
 	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
@@ -10,30 +10,35 @@ Drawable::Drawable()
 	parameterCollection->SetParameter(Blend, true);
 }
 
-vec4 Drawable::GetColor() const
+void Shading::BindTexture()
+{
+	glBindTexture(GL_TEXTURE_2D, NULL);
+}
+
+vec4 Shading::GetColor() const
 {
 	return vec4(0);
 }
 
-json Drawable::GetJson() const
+json Shading::GetJson() const
 {
 	json j = Component::GetJson();
 	j["ParameterCollection"] = parameterCollection->GetJson();
 	return j;
 }
 
-void Drawable::SetFromJson(const json& j)
+void Shading::SetFromJson(const json& j)
 {
 	Component::SetFromJson(j);
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
 }
 
-ParameterCollection<Drawable::Parameters, Drawable::ParametersLength>* Drawable::GetParameterCollection() const
+ParameterCollection<Shading::Parameters, Shading::ParametersLength>* Shading::GetParameterCollection() const
 {
 	return parameterCollection.get();
 }
 
-Drawable::~Drawable()
+Shading::~Shading()
 {
 
 }

@@ -1,9 +1,8 @@
 #pragma once
-#include "Drawable.h"
-#include "ShaderProgram.h"
+#include "Shading.h"
 #include "ParameterCollection.h"
 
-class Color : public Drawable
+class Color : public Shading
 {
 private:
 	vec4 color;
@@ -16,8 +15,6 @@ public:
 	Color(const vec3& color);
 	Color(float r, float g, float b);
 	Color(int r, int g, int b);
-
-	void BindTexture() override;
 
 	void SetColor(const vec3& color);
 	void SetColor(const vec4& color);

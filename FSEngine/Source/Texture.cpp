@@ -104,7 +104,7 @@ Texture::TextureType Texture::GetTextureType() const
 
 json Texture::GetJson() const
 {
-	json j = Drawable::GetJson();
+	json j = Shading::GetJson();
 	j["Filepath"] = filepath;
 	j["TextureType"] = textureType;
 
@@ -113,7 +113,7 @@ json Texture::GetJson() const
 
 void Texture::SetFromJson(const json& j)
 {
-	Drawable::SetFromJson(j);
+	Shading::SetFromJson(j);
 
 	textureType = (TextureType)j["TextureType"].get<int>();
 

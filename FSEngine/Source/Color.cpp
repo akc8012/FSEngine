@@ -20,11 +20,6 @@ Color::Color(int r, int g, int b)
 	SetColor(vec3((float)r, (float)g, (float)b));
 }
 
-void Color::BindTexture()
-{
-	glBindTexture(GL_TEXTURE_2D, NULL);
-}
-
 void Color::SetColor(const vec3& color)
 {
 	SetColor(vec4(color, 1.0f));
@@ -42,7 +37,7 @@ vec4 Color::GetColor() const
 
 json Color::GetJson() const
 {
-	json j = Drawable::GetJson();
+	json j = Shading::GetJson();
 	j["Color"] = { color.r, color.g, color.b, color.a };
 
 	return j;
@@ -50,7 +45,7 @@ json Color::GetJson() const
 
 void Color::SetFromJson(const json& j)
 {
-	Drawable::SetFromJson(j);
+	Shading::SetFromJson(j);
 
 	json color = j["Color"];
 	SetColor(vec4(color[0], color[1], color[2], color[3]));
