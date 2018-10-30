@@ -7,8 +7,6 @@ void RenderText::Start()
 	AddComponent(make_shared<Transform>())->SetSerializable(false);
 
 	Mesh* meshComponent = AddComponent(make_shared<QuadMesh>());
-	meshComponent->GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
-	meshComponent->GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 	GetParameterCollection()->SetParameter(DoDraw, false);

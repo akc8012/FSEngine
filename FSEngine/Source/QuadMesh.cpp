@@ -21,4 +21,7 @@ QuadMesh::QuadMesh()
 
 	const int Stride = 8;
 	CreateVertexArray(ConvertRawVertices(rawVertices, Stride), indices);
+
+	GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
+	GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 }
