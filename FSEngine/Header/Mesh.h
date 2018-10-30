@@ -39,9 +39,8 @@ private:
 
 	Uint32 vertexArrayId = NULL;
 
-	void Initialize();
 	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
-	void CreateVertexArray();
+	void CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32>& indices);
 
 	void SendVertices(Uint32 vertexBufferId);
 	void SendIndices(Uint32 elementBufferId);
@@ -59,9 +58,9 @@ public:
 	static const Types::ComponentType ComponentTypeId = Types::Mesh;
 	Types::ComponentType GetComponentTypeId() const override;
 
-	Mesh();
 	Mesh(const vector<vertex>& vertices, const vector<Uint32>& indices);
 	Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
+	Mesh();
 	~Mesh();
 
 	void BindVertexArray();
@@ -71,7 +70,6 @@ public:
 	int GetVerticeCount() const;
 
 	void AddAssociatedTextureName(const string& textureName);
-	void AddAssociatedTextureIndices(const vector<string>& textureNames);
 	const vector<string>& GetAssociatedTextureNames() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;

@@ -1,30 +1,23 @@
 #include "..\Header\Mesh.h"
 
-Mesh::Mesh()
-{
-
-}
-
 Mesh::Mesh(const vector<vertex>& vertices, const vector<Uint32>& indices)
- : vertices(vertices), indices(indices)
+ : Mesh()
 {
-	Initialize();
+	CreateVertexArray(vertices, indices);
 }
 
 Mesh::Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices)
- : vertices(ConvertRawVertices(rawVertices, stride)), indices(indices)
+ : Mesh()
 {
-	Initialize();
+	CreateVertexArray(ConvertRawVertices(rawVertices, stride), indices);
 }
 
-void Mesh::Initialize()
+Mesh::Mesh()
 {
 	string parameterNames[] = { "RenderBackfaces", "DrawElements" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 	parameterCollection->SetParameter(RenderBackfaces, false);
 	parameterCollection->SetParameter(DrawElements, true);
-
-	CreateVertexArray();
 }
 
 vector<vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
@@ -56,8 +49,11 @@ vector<vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int st
 	return vertices;
 }
 
-void Mesh::CreateVertexArray()
+void Mesh::CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32>& indices)
 {
+	this->vertices = vertices;
+	this->indices = indices;
+
 	Uint32 vertexBufferId, elementBufferId;
 	const int Amount = 1;
 	glGenVertexArrays(Amount, &vertexArrayId);
@@ -163,11 +159,6 @@ int Mesh::GetVerticeCount() const
 void Mesh::AddAssociatedTextureName(const string& textureName)
 {
 	associatedTextureNames.push_back(textureName);
-}
-
-void Mesh::AddAssociatedTextureIndices(const vector<string>& textureNames)
-{
-	associatedTextureNames.insert(associatedTextureNames.end(), textureNames.begin(), textureNames.end());
 }
 
 const vector<string>& Mesh::GetAssociatedTextureNames() const
