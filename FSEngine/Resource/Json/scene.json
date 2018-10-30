@@ -1,8 +1,8 @@
 {
   "Blue": {
     "Components": {
-      "Shading": {
-        "FlatColor": [
+      "Color": {
+        "Color": [
           0.0,
           0.0,
           0.800000011920929,
@@ -13,7 +13,7 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "type": "Shading"
+        "type": "Color"
       },
       "Transform": {
         "EulerAngles": [
@@ -96,8 +96,8 @@
   },
   "Green": {
     "Components": {
-      "Shading": {
-        "FlatColor": [
+      "Color": {
+        "Color": [
           0.0,
           0.800000011920929,
           0.0,
@@ -108,7 +108,7 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "type": "Shading"
+        "type": "Color"
       },
       "Transform": {
         "EulerAngles": [
@@ -139,8 +139,8 @@
   },
   "GreenCube": {
     "Components": {
-      "Shading": {
-        "FlatColor": [
+      "Color": {
+        "Color": [
           0.10000000149011612,
           0.6000000238418579,
           0.30000001192092896,
@@ -151,7 +151,7 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "type": "Shading"
+        "type": "Color"
       },
       "Transform": {
         "EulerAngles": [
@@ -227,9 +227,9 @@
       },
       "Transform": {
         "EulerAngles": [
-          -180.0,
+          180.0,
           -5.008956122765085e-06,
-          -180.0
+          180.0
         ],
         "Position": [
           0.0,
@@ -297,8 +297,8 @@
   },
   "Red": {
     "Components": {
-      "Shading": {
-        "FlatColor": [
+      "Color": {
+        "Color": [
           0.800000011920929,
           0.0,
           0.0,
@@ -309,7 +309,7 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "type": "Shading"
+        "type": "Color"
       },
       "Transform": {
         "EulerAngles": [
@@ -340,8 +340,8 @@
   },
   "Yellow": {
     "Components": {
-      "Shading": {
-        "FlatColor": [
+      "Color": {
+        "Color": [
           0.6000000238418579,
           0.6000000238418579,
           0.0,
@@ -352,7 +352,7 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "type": "Shading"
+        "type": "Color"
       },
       "Transform": {
         "EulerAngles": [

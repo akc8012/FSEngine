@@ -32,15 +32,18 @@ private:
 
 	void SetTransformMatrices(Transform* transform);
 
-	Drawable* FindDrawable(const Model* model, const vector<string>& textureNames) const;
-	Drawable* FindDrawable(const IGameObject* gameObject) const;
-	void SetDrawableParameters(Drawable* drawable);
+	Shading* FindShading(const Model* model, const vector<string>& textureNames) const;
+	Shading* FindShading(const IGameObject* gameObject) const;
+	void SetShadingParameters(const Shading* shading);
+	void ApplyShading(Shading* shading);
 
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
 	void SetBlend(bool blend);
 
 	void DrawMesh(Mesh* mesh);
+	void DrawTriangleElements(const Mesh* mesh);
+	void DrawTriangleArrays(const Mesh* mesh);
 
 public:
 	Renderer(Systems* systems, IGameObject* camera);

@@ -58,8 +58,8 @@ void RenderText::SetTextSurface(const string& text)
 void RenderText::CreateTextureComponent(SDL_Surface* surface)
 {
 	Texture* texture = AddComponent(make_shared<Texture>(surface, true));
-	texture->GetParameterCollection()->SetParameter(Drawable::RenderPerspective, false);
-	texture->GetParameterCollection()->SetParameter(Drawable::EnableDepthTest, false);
+	texture->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
+	texture->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 
 	GetParameterCollection()->SetParameter(DoDraw, true);
 }

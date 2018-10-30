@@ -3,7 +3,7 @@
 #include "IGameObjectContainer.h"
 #include "FSException.h"
 #include "Mesh.h"
-#include "Shading.h"
+#include "Color.h"
 #include "Texture.h"
 #include "Transform.h"
 #include "ComponentContainer.h"

@@ -80,7 +80,11 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 
 	for (auto mesh : hasModel ? model->GetMeshCollection()->GetComponents() : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
-		SetDrawableParameters(hasModel ? FindDrawable(model, mesh->GetAssociatedTextureNames()) : FindDrawable(gameObject));
+		auto shading = hasModel ? FindShading(model, mesh->GetAssociatedTextureNames()) : FindShading(gameObject);
+
+		SetShadingParameters(shading);
+		ApplyShading(shading);
+
 		DrawMesh(mesh);
 	}
 }
@@ -91,30 +95,27 @@ void Renderer::SetTransformMatrices(Transform* transform)
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
-Drawable* Renderer::FindDrawable(const Model* model, const vector<string>& textureNames) const
+Shading* Renderer::FindShading(const Model* model, const vector<string>& textureNames) const
 {
 	return model->GetTextureCollection()->Get(textureNames.front());
 }
 
-Drawable* Renderer::FindDrawable(const IGameObject* gameObject) const
+Shading* Renderer::FindShading(const IGameObject* gameObject) const
 {
-	auto shading = gameObject->TryGetComponent<Shading>();
-	if (shading != nullptr)
-		return shading;
+	auto color = gameObject->TryGetComponent<Color>();
+	if (color != nullptr)
+		return color;
 
 	return gameObject->GetComponent<Texture>();
 }
 
-void Renderer::SetDrawableParameters(Drawable* drawable)
+void Renderer::SetShadingParameters(const Shading* shading)
 {
-	auto parameterCollection = drawable->GetParameterCollection();
+	auto shadingParameters = shading->GetParameterCollection();
 
-	SetDepthTest(parameterCollection->GetParameter(Drawable::EnableDepthTest));
-	SetRenderPerspective(parameterCollection->GetParameter(Drawable::RenderPerspective));
-	SetBlend(parameterCollection->GetParameter(Drawable::Blend));
-
-	systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetFlatColor());
-	drawable->BindTexture();
+	SetDepthTest(shadingParameters->GetParameter(Shading::EnableDepthTest));
+	SetRenderPerspective(shadingParameters->GetParameter(Shading::RenderPerspective));
+	SetBlend(shadingParameters->GetParameter(Shading::Blend));
 }
 
 void Renderer::SetDepthTest(bool enableDepthTest)
@@ -147,12 +148,30 @@ void Renderer::SetBlend(bool blend)
 	parameterCollection->SetParameter(Blend, blend);
 }
 
+void Renderer::ApplyShading(Shading* shading)
+{
+	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetColor());
+	shading->BindTexture();
+}
+
 void Renderer::DrawMesh(Mesh* mesh)
 {
 	mesh->BindVertexArray();
 
 	mesh->GetParameterCollection()->GetParameter(Mesh::RenderBackfaces) ? glDisable(GL_CULL_FACE) : glEnable(GL_CULL_FACE);
-	mesh->DrawMesh();
+	mesh->GetParameterCollection()->GetParameter(Mesh::DrawElements) ? DrawTriangleElements(mesh) : DrawTriangleArrays(mesh);
+}
+
+void Renderer::DrawTriangleElements(const Mesh* mesh)
+{
+	const int Offset = 0;
+	glDrawElements(GL_TRIANGLES, mesh->GetIndiceCount(), GL_UNSIGNED_INT, Offset);
+}
+
+void Renderer::DrawTriangleArrays(const Mesh* mesh)
+{
+	const int First = 0;
+	glDrawArrays(GL_TRIANGLES, First, mesh->GetVerticeCount());
 }
 #pragma endregion
 

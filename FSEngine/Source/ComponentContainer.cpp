@@ -7,8 +7,8 @@ namespace ComponentFactory
 		if (type == Types::ComponentTypeString[Mesh::ComponentTypeId])
 			return make_shared<Mesh>();
 
-		else if (type == Types::ComponentTypeString[Shading::ComponentTypeId])
-			return make_shared<Shading>();
+		else if (type == Types::ComponentTypeString[Color::ComponentTypeId])
+			return make_shared<Color>();
 
 		else if (type == Types::ComponentTypeString[Texture::ComponentTypeId])
 			return make_shared<Texture>();
@@ -26,7 +26,7 @@ namespace ComponentFactory
 ComponentContainer::ComponentContainer()
 {
 	mesh = make_unique<ComponentCollection<Mesh>>();
-	shading = make_unique<ComponentCollection<Shading>>();
+	color = make_unique<ComponentCollection<Color>>();
 	texture = make_unique<ComponentCollection<Texture>>();
 	transform = make_unique<ComponentCollection<Transform>>();
 	model = make_unique<ComponentCollection<Model>>();
@@ -39,8 +39,8 @@ vector<Component*> ComponentContainer::GetAllComponents() const
 	auto meshComponents = mesh->GetComponents();
 	components.insert(components.end(), meshComponents.begin(), meshComponents.end());
 
-	auto shadingComponents = shading->GetComponents();
-	components.insert(components.end(), shadingComponents.begin(), shadingComponents.end());
+	auto colorComponents = color->GetComponents();
+	components.insert(components.end(), colorComponents.begin(), colorComponents.end());
 
 	auto textureComponents = texture->GetComponents();
 	components.insert(components.end(), textureComponents.begin(), textureComponents.end());

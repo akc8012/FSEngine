@@ -22,11 +22,8 @@ public:
 	};
 
 protected:
-	vector<vertex> vertices;
-	vector<Uint32> indices;
-
-	void Initialize();
 	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;
+	void CreateVertexArray(const vector<vertex>& vertices, const vector<Uint32>& indices);
 
 private:
 	struct VertexAttribute
@@ -38,14 +35,14 @@ private:
 		size_t offset;
 	};
 
+	int verticeCount;
+	int indiceCount;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 	vector<string> associatedTextureNames;
 	Uint32 vertexArrayId = NULL;
 
-	void CreateVertexArray();
-
-	void SendVertices(Uint32 vertexBufferId);
-	void SendIndices(Uint32 elementBufferId);
+	void SendVertices(Uint32 vertexBufferId, const vector<vertex>& vertices);
+	void SendIndices(Uint32 elementBufferId, const vector<Uint32>& indices);
 
 	void SendPositionAttribute();
 	void SendNormalAttribute();
@@ -53,26 +50,21 @@ private:
 
 	void SendVertexAttribute(const VertexAttribute& attribute);
 
-	void DrawTriangleElements();
-	void DrawTriangleArrays();
-
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Mesh;
 	Types::ComponentType GetComponentTypeId() const override;
 
-	Mesh();
 	Mesh(const vector<vertex>& vertices, const vector<Uint32>& indices);
 	Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& indices);
+	Mesh();
 	~Mesh();
 
-	void BindVertexArray();
-	void DrawMesh();
-
-	int GetIndiceCount() const;
 	int GetVerticeCount() const;
+	int GetIndiceCount() const;
+
+	void BindVertexArray();
 
 	void AddAssociatedTextureName(const string& textureName);
-	void AddAssociatedTextureIndices(const vector<string>& textureNames);
 	const vector<string>& GetAssociatedTextureNames() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;

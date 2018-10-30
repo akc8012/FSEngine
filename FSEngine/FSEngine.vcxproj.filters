@@ -25,16 +25,16 @@
     <ClCompile Include="Source\FSMath.cpp" />
     <ClCompile Include="Source\Random.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
-    <ClCompile Include="Source\Shading.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\EventSystem.cpp" />
     <ClCompile Include="Source\Transform.cpp" />
     <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
-    <ClCompile Include="Source\Drawable.cpp" />
     <ClCompile Include="Source\ComponentContainer.cpp" />
     <ClCompile Include="Source\QuadMesh.cpp" />
+    <ClCompile Include="Source\Color.cpp" />
+    <ClCompile Include="Source\Shading.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -62,7 +62,6 @@
     <ClInclude Include="Header\FSMath.h" />
     <ClInclude Include="Header\Random.h" />
     <ClInclude Include="Header\Mesh.h" />
-    <ClInclude Include="Header\Shading.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Scene.h" />
     <ClInclude Include="Header\EventSystem.h" />
@@ -74,8 +73,9 @@
     <ClInclude Include="Header\IGameObjectContainer.h" />
     <ClInclude Include="Header\Transform.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
-    <ClInclude Include="Header\Drawable.h" />
     <ClInclude Include="Header\QuadMesh.h" />
+    <ClInclude Include="Header\Color.h" />
+    <ClInclude Include="Header\Shading.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

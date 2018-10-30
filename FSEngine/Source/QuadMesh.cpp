@@ -13,14 +13,12 @@ QuadMesh::QuadMesh()
 		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  0.0f, 0.0f
 	};
 
-	const int Stride = 8;
-	vertices = ConvertRawVertices(rawVertices, Stride);
-
-	indices =
+	vector<Uint32> indices =
 	{
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
 
-	Initialize();
+	const int Stride = 8;
+	CreateVertexArray(ConvertRawVertices(rawVertices, Stride), indices);
 }
