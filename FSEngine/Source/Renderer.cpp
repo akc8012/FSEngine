@@ -98,9 +98,9 @@ Drawable* Renderer::FindDrawable(const Model* model, const vector<string>& textu
 
 Drawable* Renderer::FindDrawable(const IGameObject* gameObject) const
 {
-	auto shading = gameObject->TryGetComponent<Shading>();
-	if (shading != nullptr)
-		return shading;
+	auto color = gameObject->TryGetComponent<Color>();
+	if (color != nullptr)
+		return color;
 
 	return gameObject->GetComponent<Texture>();
 }
@@ -113,7 +113,7 @@ void Renderer::SetDrawableParameters(Drawable* drawable)
 	SetRenderPerspective(parameterCollection->GetParameter(Drawable::RenderPerspective));
 	SetBlend(parameterCollection->GetParameter(Drawable::Blend));
 
-	systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetFlatColor());
+	systems->shaderProgram->SetVectorUniform("flatColor", drawable->GetColor());
 	drawable->BindTexture();
 }
 

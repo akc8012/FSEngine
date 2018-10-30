@@ -167,7 +167,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
-    <ClCompile Include="Source\Shading.cpp" />
+    <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\RenderText.cpp" />
@@ -205,7 +205,7 @@
     <ClInclude Include="Header\Scene.h" />
     <ClInclude Include="Header\SceneManager.h" />
     <ClInclude Include="Header\ShaderProgram.h" />
-    <ClInclude Include="Header\Shading.h" />
+    <ClInclude Include="Header\Color.h" />
     <ClInclude Include="Header\Systems.h" />
     <ClInclude Include="Header\Texture.h" />
     <ClInclude Include="Header\Timer.h" />

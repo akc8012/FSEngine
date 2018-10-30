@@ -26,7 +26,7 @@ public:
 	virtual ~Drawable();
 
 	virtual void BindTexture() = 0;
-	virtual vec4 GetFlatColor() const; // TODO: BETTER WAY OF HANDLING THIS
+	virtual vec4 GetColor() const; // TODO: BETTER WAY OF HANDLING THIS
 
 	virtual json GetJson() const override;
 	virtual void SetFromJson(const json& j) override;

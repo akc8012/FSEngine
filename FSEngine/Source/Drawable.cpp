@@ -10,7 +10,7 @@ Drawable::Drawable()
 	parameterCollection->SetParameter(Blend, true);
 }
 
-vec4 Drawable::GetFlatColor() const
+vec4 Drawable::GetColor() const
 {
 	return vec4(0);
 }
