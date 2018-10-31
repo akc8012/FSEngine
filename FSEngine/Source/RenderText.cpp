@@ -4,8 +4,7 @@ void RenderText::Start()
 {
 	AddComponent(make_shared<FontTexture>())->LoadFont("consola.ttf");
 	AddComponent(make_shared<Transform>())->SetSerializable(false);
-
-	Mesh* meshComponent = AddComponent(make_shared<QuadMesh>());
+	AddComponent(make_shared<QuadMesh>());
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 	GetParameterCollection()->SetParameter(DoDraw, false);
