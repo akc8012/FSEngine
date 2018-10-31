@@ -1,9 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-#include <SDL.h>
-#include <SDL_ttf.h>
-
 using std::vector;
 using std::string;
 
@@ -13,34 +10,24 @@ public:
 	enum AnchorPosition { Center, TopLeft, TopRight, BottomLeft, BottomRight };
 
 private:
-	TTF_Font* font = nullptr;
-	vec2 surfaceSize;
-	vec2 aspectRatio;
-
 	string renderText;
 	AnchorPosition anchorPosition = Center;
 	AnchorPosition alignPosition = Center;
 	vec2 pixelPosition = vec2(0, 0);
 	vec2 pixelScaleFactor = vec2(1, 1);
 
-	void LoadFont(const string& fontName);
-
-	void CreateTextureComponent(SDL_Surface* surface);
-	void SetTextSurface(const string& text);
-
-	vec2 CalculateAspectRatio(const vec2& surfaceSize);
+	vec2 surfaceSize;
 
 	void SetTransformFromSurfaceSize(const vec2& surfaceSize);
 	void SetScaleFromSurfaceSize(const vec2& surfaceSize);
 	void SetPositionFromSurfaceSize(const vec2& surfaceSize);
 
+	vec2 CalculateAspectRatio(const vec2& surfaceSize) const;
 	vec2 GetPixelAnchoredPosition(const vec2& surfaceSize) const;
 	vec2 GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const;
 	vec2 GetPixelScale(const vec2& surfaceSize) const;
 
 public:
-	~RenderText();
-
 	void Start() override;
 	void Update() override;
 	void ReceiveEvent(const string& key, const json& event) override;

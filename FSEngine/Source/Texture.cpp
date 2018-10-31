@@ -22,11 +22,6 @@ void Texture::Load(const string& filepath)
 	SDL_FreeSurface(surface);
 }
 
-Texture::Texture(SDL_Surface* surface, bool flipSurface)
-{
-	GenerateTexture(surface, flipSurface);
-}
-
 void Texture::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 {
 	DeleteTexture();
@@ -47,7 +42,8 @@ void Texture::GenerateTexture(SDL_Surface* surface, bool flipSurface)
 	Uint32 colors = surface->format->BytesPerPixel;
 	GLenum textureFormat = GetTextureFormat(colors, surface->format->Rmask);
 
-	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, colors, surface->w, surface->h, Border, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
+	surfaceSize = tvec2<int>(surface->w, surface->h);
+	glTexImage2D(GL_TEXTURE_2D, MipmapLevel, colors, surfaceSize.x, surfaceSize.y, Border, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
@@ -100,6 +96,11 @@ void Texture::BindTexture()
 Texture::TextureType Texture::GetTextureType() const
 {
 	return textureType;
+}
+
+const tvec2<int>& Texture::GetSurfaceSize() const
+{
+	return surfaceSize;
 }
 
 json Texture::GetJson() const

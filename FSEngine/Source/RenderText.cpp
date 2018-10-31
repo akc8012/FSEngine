@@ -1,9 +1,8 @@
 #include "../Header/RenderText.h"
 
-#pragma region Initialize
 void RenderText::Start()
 {
-	LoadFont("consola.ttf");
+	AddComponent(make_shared<FontTexture>())->LoadFont("consola.ttf");
 	AddComponent(make_shared<Transform>())->SetSerializable(false);
 
 	Mesh* meshComponent = AddComponent(make_shared<QuadMesh>());
@@ -13,63 +12,20 @@ void RenderText::Start()
 	GetParameterCollection()->SetParameter(DoLateDraw, true);
 }
 
-void RenderText::LoadFont(const string& fontName)
-{
-	const int FontSize = 32;
-	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
-	if (font == nullptr)
-		throwFS((string)"Failed to load font! SDL_ttf error: " + TTF_GetError());
-}
-#pragma endregion
-
 void RenderText::Update()
 {
 
 }
 
-#pragma region Set Text
 void RenderText::SetText(const string& text)
 {
 	if (renderText == text)
 		return;
 
-	SetTextSurface(text);
+	renderText = text;
+	GetComponent<FontTexture>()->GenerateFontTexture(text);
 	SetTransformFromSurfaceSize(surfaceSize);
 }
-
-void RenderText::SetTextSurface(const string& text)
-{
-	renderText = text == "" ? " " : text;
-
-	SDL_Color textColor = SDL_Color { 255, 255, 255, 255 };
-	SDL_Surface* surface = TTF_RenderText_Blended(font, renderText.c_str(), textColor);
-	aspectRatio = CalculateAspectRatio(vec2(surface->w, surface->h));
-
-	if (TryGetComponent<Texture>() == nullptr)
-		CreateTextureComponent(surface);
-	else
-		GetComponent<Texture>()->GenerateTexture(surface, true);
-
-	SDL_FreeSurface(surface);
-}
-
-void RenderText::CreateTextureComponent(SDL_Surface* surface)
-{
-	Texture* texture = AddComponent(make_shared<Texture>(surface, true));
-	texture->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
-	texture->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
-
-	GetParameterCollection()->SetParameter(DoDraw, true);
-}
-
-vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize)
-{
-	float width = std::max((float)surfaceSize.x / (float)surfaceSize.y, 1.f);
-	float height = std::max((float)surfaceSize.y / (float)surfaceSize.x, 1.f);
-
-	return vec2(width, height);
-}
-#pragma endregion
 
 void RenderText::ReceiveEvent(const string& key, const json& event)
 {
@@ -89,6 +45,7 @@ void RenderText::SetTransformFromSurfaceSize(const vec2& surfaceSize)
 
 void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 {
+	const auto aspectRatio = CalculateAspectRatio(GetComponent<FontTexture>()->GetSurfaceSize());
 	float width = (aspectRatio.x * (1 / aspectRatio.y)) / surfaceSize.x;
 	float height = 1 / surfaceSize.y;
 
@@ -96,6 +53,14 @@ void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 
 	const float AdjustmentForQuadSize = 2.f;
 	GetComponent<Transform>()->Scale(pixelScaleFactor * AdjustmentForQuadSize);
+}
+
+vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize) const
+{
+	float width = std::max((float)surfaceSize.x / (float)surfaceSize.y, 1.f);
+	float height = std::max((float)surfaceSize.y / (float)surfaceSize.x, 1.f);
+
+	return vec2(width, height);
 }
 
 void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
@@ -214,9 +179,4 @@ void RenderText::SetFromJson(const json& j)
 string RenderText::GetGameObjectType() const
 {
 	return "RenderText";
-}
-
-RenderText::~RenderText()
-{
-	TTF_CloseFont(font);
 }

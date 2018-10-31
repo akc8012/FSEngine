@@ -9,6 +9,7 @@
 
 #include <string>
 using std::string;
+using glm::tvec2;
 
 class Texture : public Shading
 {
@@ -18,6 +19,7 @@ public:
 private:
 	string filepath;
 	Uint32 textureId = NULL;
+	tvec2<int> surfaceSize;
 	TextureType textureType = Diffuse;
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
@@ -26,21 +28,22 @@ private:
 
 	void DeleteTexture();
 
+protected:
+	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
+
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Texture;
 	Types::ComponentType GetComponentTypeId() const override;
 
 	Texture();
 	Texture(const string& filepath);
-	Texture(SDL_Surface* surface, bool flipSurface = false);
 	~Texture();
 
 	void Load(const string& filepath);
 	void BindTexture() override;
 
-	void GenerateTexture(SDL_Surface* surface, bool flipSurface = false);
-
 	TextureType GetTextureType() const;
+	const tvec2<int>& GetSurfaceSize() const;
 
 	json GetJson() const override;
 	void SetFromJson(const json& j) override;
