@@ -71,6 +71,7 @@
           "EnableDepthTest": 0,
           "RenderPerspective": 0
         },
+        "Text": "Testing text test",
         "TextureType": 0,
         "type": "Texture"
       }
@@ -89,7 +90,6 @@
       26.0,
       26.0
     ],
-    "RenderText": "Debug text",
     "ScreenAnchorPoint": 1,
     "TextAlignment": 1,
     "type": "RenderText"

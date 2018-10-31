@@ -45,6 +45,6 @@ public:
 	TextureType GetTextureType() const;
 	const tvec2<int>& GetSurfaceSize() const;
 
-	json GetJson() const override;
-	void SetFromJson(const json& j) override;
+	virtual json GetJson() const override;
+	virtual void SetFromJson(const json& j) override;
 };

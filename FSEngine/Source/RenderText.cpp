@@ -18,10 +18,9 @@ void RenderText::Update()
 
 void RenderText::SetText(const string& text)
 {
-	if (renderText == text)
+	if (GetComponent<FontTexture>()->GetText() == text)
 		return;
 
-	renderText = text;
 	GetComponent<FontTexture>()->GenerateFontTexture(text);
 	SetTransformFromSurfaceSize(surfaceSize);
 }
@@ -155,7 +154,6 @@ json RenderText::GetJson() const
 {
 	json j = GameObject::GetJson();
 
-	j["RenderText"] = renderText;
 	j["ScreenAnchorPoint"] = anchorPosition;
 	j["TextAlignment"] = alignPosition;
 	j["PixelPosition"] = json { pixelPosition.x, pixelPosition.y };
@@ -168,7 +166,6 @@ void RenderText::SetFromJson(const json& j)
 {
 	GameObject::SetFromJson(j);
 
-	SetText(j["RenderText"].get<string>());
 	SetScreenAnchorPoint((AnchorPosition)j["ScreenAnchorPoint"].get<int>());
 	SetTextAlignment((AnchorPosition)j["TextAlignment"].get<int>());
 	SetPixelPosition(vec2(j["PixelPosition"][0], j["PixelPosition"][1]));

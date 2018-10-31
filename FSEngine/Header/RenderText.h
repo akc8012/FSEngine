@@ -10,7 +10,6 @@ public:
 	enum AnchorPosition { Center, TopLeft, TopRight, BottomLeft, BottomRight };
 
 private:
-	string renderText;
 	AnchorPosition anchorPosition = Center;
 	AnchorPosition alignPosition = Center;
 	vec2 pixelPosition = vec2(0, 0);
