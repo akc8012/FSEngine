@@ -3,7 +3,7 @@
 void RenderText::Start()
 {
 	AddComponent(make_shared<FontTexture>(), "Texture")->LoadFont("consola.ttf");
-	AddComponent(make_shared<Transform>())->SetSerializable(false);
+	AddComponent(make_shared<Transform2D>(), "Transform");
 	AddComponent(make_shared<QuadMesh>());
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
@@ -22,7 +22,7 @@ void RenderText::SetText(const string& text)
 		return;
 
 	GetComponent<FontTexture>("Texture")->GenerateFontTexture(text);
-	SetTransformFromSurfaceSize(surfaceSize);
+	GetComponent<Transform2D>("Transform")->SetTransform(surfaceSize, GetComponent<FontTexture>("Texture")->GetSurfaceSize());
 }
 
 void RenderText::ReceiveEvent(const string& key, const json& event)
@@ -31,145 +31,7 @@ void RenderText::ReceiveEvent(const string& key, const json& event)
 		return;
 
 	surfaceSize = vec2 { event[0], event[1] };
-	SetTransformFromSurfaceSize(surfaceSize);
-}
-
-#pragma region Set Transform From Surface Size
-void RenderText::SetTransformFromSurfaceSize(const vec2& surfaceSize)
-{
-	SetScaleFromSurfaceSize(surfaceSize);
-	SetPositionFromSurfaceSize(surfaceSize);
-}
-
-void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
-{
-	const auto aspectRatio = CalculateAspectRatio(GetComponent<FontTexture>("Texture")->GetSurfaceSize());
-	float width = (aspectRatio.x * (1 / aspectRatio.y)) / surfaceSize.x;
-	float height = 1 / surfaceSize.y;
-
-	GetComponent<Transform>()->SetScale(vec2(width, height));
-
-	const float AdjustmentForQuadSize = 2.f;
-	GetComponent<Transform>()->Scale(pixelScaleFactor * AdjustmentForQuadSize);
-}
-
-vec2 RenderText::CalculateAspectRatio(const vec2& surfaceSize) const
-{
-	float width = std::max((float)surfaceSize.x / (float)surfaceSize.y, 1.f);
-	float height = std::max((float)surfaceSize.y / (float)surfaceSize.x, 1.f);
-
-	return vec2(width, height);
-}
-
-void RenderText::SetPositionFromSurfaceSize(const vec2& surfaceSize)
-{
-	vec2 alignedPixelPosition = GetPixelAlignPosition(GetPixelAnchoredPosition(surfaceSize), surfaceSize);
-	GetComponent<Transform>()->SetPosition(vec2(alignedPixelPosition.x / surfaceSize.x, alignedPixelPosition.y / surfaceSize.y));
-}
-
-vec2 RenderText::GetPixelAnchoredPosition(const vec2& surfaceSize) const
-{
-	const float AdjustmentForTopLeftOrigin = 2.f;
-	vec2 position = pixelPosition * AdjustmentForTopLeftOrigin;
-
-	switch (anchorPosition)
-	{
-	case Center:
-		return position;
-	case TopLeft:
-		return vec2(position.x - surfaceSize.x, position.y + surfaceSize.y);
-	case TopRight:
-		return vec2(position.x + surfaceSize.x, position.y + surfaceSize.y);
-	case BottomLeft:
-		return vec2(position.x - surfaceSize.x, position.y - surfaceSize.y);
-	case BottomRight:
-		return vec2(position.x + surfaceSize.x, position.y - surfaceSize.y);
-	default:
-		throwFS("Could not recognize anchorPosition: " + std::to_string(anchorPosition));
-	}
-}
-
-vec2 RenderText::GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const
-{
-	const float AdjustmentForQuadSize = 0.5f;
-	vec2 pixelScale = GetPixelScale(surfaceSize) * AdjustmentForQuadSize;
-
-	switch (alignPosition)
-	{
-	case Center:
-		return position;
-	case TopLeft:
-		return vec2(position.x + pixelScale.x, position.y - pixelScale.y);
-	case TopRight:
-		return vec2(position.x - pixelScale.x, position.y - pixelScale.y);
-	case BottomLeft:
-		return vec2(position.x + pixelScale.x, position.y + pixelScale.y);
-	case BottomRight:
-		return vec2(position.x - pixelScale.x, position.y + pixelScale.y);
-	default:
-		throwFS("Could not recognize alignPosition: " + std::to_string(alignPosition));
-	}
-}
-
-vec2 RenderText::GetPixelScale(const vec2& surfaceSize) const
-{
-	Transform* transform = GetComponent<Transform>();
-	return vec2(transform->GetScale().x * surfaceSize.x, transform->GetScale().y * surfaceSize.y);
-}
-#pragma endregion
-
-#pragma region Public Setters
-void RenderText::SetPixelScale(const vec2& pixelScaleFactor)
-{
-	this->pixelScaleFactor = pixelScaleFactor;
-	SetTransformFromSurfaceSize(surfaceSize);
-}
-
-void RenderText::SetPixelScale(float pixelScaleFactor)
-{
-	this->pixelScaleFactor = vec2(pixelScaleFactor, pixelScaleFactor);
-	SetTransformFromSurfaceSize(surfaceSize);
-}
-
-void RenderText::SetPixelPosition(const vec2& pixelPosition)
-{
-	this->pixelPosition = pixelPosition;
-	SetTransformFromSurfaceSize(surfaceSize);
-}
-
-void RenderText::SetScreenAnchorPoint(AnchorPosition anchorPoint)
-{
-	this->anchorPosition = anchorPoint;
-	SetTransformFromSurfaceSize(surfaceSize);
-}
-
-void RenderText::SetTextAlignment(AnchorPosition alignPosition)
-{
-	this->alignPosition = alignPosition;
-	SetTransformFromSurfaceSize(surfaceSize);
-}
-#pragma endregion
-
-json RenderText::GetJson() const
-{
-	json j = GameObject::GetJson();
-
-	j["ScreenAnchorPoint"] = anchorPosition;
-	j["TextAlignment"] = alignPosition;
-	j["PixelPosition"] = json { pixelPosition.x, pixelPosition.y };
-	j["PixelScale"] = json { pixelScaleFactor.x, pixelScaleFactor.y };
-
-	return j;
-}
-
-void RenderText::SetFromJson(const json& j)
-{
-	GameObject::SetFromJson(j);
-
-	SetScreenAnchorPoint((AnchorPosition)j["ScreenAnchorPoint"].get<int>());
-	SetTextAlignment((AnchorPosition)j["TextAlignment"].get<int>());
-	SetPixelPosition(vec2(j["PixelPosition"][0], j["PixelPosition"][1]));
-	SetPixelScale(vec2(j["PixelScale"][0], j["PixelScale"][1]));
+	GetComponent<Transform2D>("Transform")->SetTransform(surfaceSize, GetComponent<FontTexture>("Texture")->GetSurfaceSize());
 }
 
 string RenderText::GetGameObjectType() const

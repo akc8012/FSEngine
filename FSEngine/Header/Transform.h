@@ -60,6 +60,6 @@ public:
 	mat3 CalculateNormalMatrix() const;
 	const mat4& GetMatrix() const;
 
-	json GetJson() const override;
-	void SetFromJson(const json& j) override;
+	virtual json GetJson() const override;
+	virtual void SetFromJson(const json& j) override;
 };

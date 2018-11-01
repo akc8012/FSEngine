@@ -122,4 +122,24 @@ void Transform2D::SetTextAlignment(AnchorPosition alignPosition)
 }
 #pragma endregion
 
+json Transform2D::GetJson() const
+{
+	json j = Component::GetJson();
 
+	j["ScreenAnchorPoint"] = anchorPosition;
+	j["TextAlignment"] = alignPosition;
+	j["PixelPosition"] = json { pixelPosition.x, pixelPosition.y };
+	j["PixelScale"] = json { pixelScaleFactor.x, pixelScaleFactor.y };
+
+	return j;
+}
+
+void Transform2D::SetFromJson(const json& j)
+{
+	Component::SetFromJson(j);
+
+	SetScreenAnchorPoint((AnchorPosition)j["ScreenAnchorPoint"].get<int>());
+	SetTextAlignment((AnchorPosition)j["TextAlignment"].get<int>());
+	SetPixelPosition(vec2(j["PixelPosition"][0], j["PixelPosition"][1]));
+	SetPixelScale(vec2(j["PixelScale"][0], j["PixelScale"][1]));
+}

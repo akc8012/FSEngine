@@ -72,9 +72,22 @@
           "EnableDepthTest": 0,
           "RenderPerspective": 0
         },
-        "Text": "Testing text test",
+        "Text": "Waddup boooooiiiii",
         "TextureType": 0,
         "type": "FontTexture"
+      },
+      "Transform": {
+        "PixelPosition": [
+          5.0,
+          -5.0
+        ],
+        "PixelScale": [
+          26.0,
+          26.0
+        ],
+        "ScreenAnchorPoint": 1,
+        "TextAlignment": 1,
+        "type": "Transform2D"
       }
     },
     "ParameterCollection": {
@@ -83,16 +96,6 @@
       "DoLateUpdate": 0,
       "DoUpdate": 1
     },
-    "PixelPosition": [
-      5.0,
-      -5.0
-    ],
-    "PixelScale": [
-      26.0,
-      26.0
-    ],
-    "ScreenAnchorPoint": 1,
-    "TextAlignment": 1,
     "type": "RenderText"
   },
   "Green": {
