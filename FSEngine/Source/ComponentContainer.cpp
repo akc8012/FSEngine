@@ -13,6 +13,9 @@ namespace ComponentFactory
 		else if (type == Types::ComponentTypeString[Texture::ComponentTypeId])
 			return make_shared<Texture>();
 
+		else if (type == Types::ComponentTypeString[FontTexture::ComponentTypeId])
+			return make_shared<FontTexture>();
+
 		else if (type == Types::ComponentTypeString[Transform::ComponentTypeId])
 			return make_shared<Transform>();
 

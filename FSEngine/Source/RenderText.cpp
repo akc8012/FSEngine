@@ -2,7 +2,7 @@
 
 void RenderText::Start()
 {
-	AddComponent(make_shared<FontTexture>())->LoadFont("consola.ttf");
+	AddComponent(make_shared<FontTexture>(), "Texture")->LoadFont("consola.ttf");
 	AddComponent(make_shared<Transform>())->SetSerializable(false);
 	AddComponent(make_shared<QuadMesh>());
 
@@ -18,10 +18,10 @@ void RenderText::Update()
 
 void RenderText::SetText(const string& text)
 {
-	if (GetComponent<FontTexture>()->GetText() == text)
+	if (GetComponent<FontTexture>("Texture")->GetText() == text)
 		return;
 
-	GetComponent<FontTexture>()->GenerateFontTexture(text);
+	GetComponent<FontTexture>("Texture")->GenerateFontTexture(text);
 	SetTransformFromSurfaceSize(surfaceSize);
 }
 
@@ -43,7 +43,7 @@ void RenderText::SetTransformFromSurfaceSize(const vec2& surfaceSize)
 
 void RenderText::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 {
-	const auto aspectRatio = CalculateAspectRatio(GetComponent<FontTexture>()->GetSurfaceSize());
+	const auto aspectRatio = CalculateAspectRatio(GetComponent<FontTexture>("Texture")->GetSurfaceSize());
 	float width = (aspectRatio.x * (1 / aspectRatio.y)) / surfaceSize.x;
 	float height = 1 / surfaceSize.y;
 

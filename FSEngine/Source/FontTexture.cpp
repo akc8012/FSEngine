@@ -8,6 +8,11 @@ FontTexture::FontTexture()
 
 void FontTexture::LoadFont(const string& fontName)
 {
+	this->fontName = fontName;
+
+	if (font != nullptr)
+		TTF_CloseFont(font);
+
 	const int FontSize = 32;
 	font = TTF_OpenFont(((string)"Resource/Font/" + fontName).c_str(), FontSize);
 	if (font == nullptr)
@@ -33,6 +38,7 @@ const string& FontTexture::GetText() const
 json FontTexture::GetJson() const
 {
 	json j = Texture::GetJson();
+	j["FontName"] = fontName;
 	j["Text"] = text;
 
 	return j;
@@ -42,9 +48,21 @@ void FontTexture::SetFromJson(const json& j)
 {
 	Texture::SetFromJson(j);
 
+	string jsonFontName = j["FontName"].get<string>();
 	string jsonText = j["Text"].get<string>();
-	if (jsonText != text)
+
+	if (jsonFontName != fontName)
+	{
+		LoadFont(jsonFontName);
 		GenerateFontTexture(jsonText);
+	}
+	else if (jsonText != text)
+		GenerateFontTexture(jsonText);
+}
+
+Types::ComponentType FontTexture::GetComponentTypeId() const
+{
+	return ComponentTypeId;
 }
 
 FontTexture::~FontTexture()

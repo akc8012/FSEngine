@@ -88,7 +88,7 @@ void GameObject::SetFromJson(const json& j)
 		string name = componentJson.key();
 		string type = componentJson.value()["type"];
 
-		auto component = TryGetComponentOfType(type, name);
+		Component* component = TryGetComponentOfType(type, name);
 		if (component == nullptr)
 			component = AddComponent(ComponentFactory::MakeComponent(type), name);
 

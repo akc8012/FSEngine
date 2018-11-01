@@ -66,6 +66,7 @@
     "Components": {
       "Texture": {
         "Filepath": "",
+        "FontName": "consola.ttf",
         "ParameterCollection": {
           "Blend": 1,
           "EnableDepthTest": 0,
@@ -73,7 +74,7 @@
         },
         "Text": "Testing text test",
         "TextureType": 0,
-        "type": "Texture"
+        "type": "FontTexture"
       }
     },
     "ParameterCollection": {

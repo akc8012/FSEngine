@@ -56,6 +56,7 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 		return reinterpret_cast<ComponentCollection<T>*>(color.get());
 
 	case Texture::ComponentTypeId:
+	case FontTexture::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(texture.get());
 
 	case Transform::ComponentTypeId:

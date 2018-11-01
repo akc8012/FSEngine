@@ -33,7 +33,7 @@ protected:
 
 public:
 	static const Types::ComponentType ComponentTypeId = Types::Texture;
-	Types::ComponentType GetComponentTypeId() const override;
+	virtual Types::ComponentType GetComponentTypeId() const override;
 
 	Texture();
 	Texture(const string& filepath);

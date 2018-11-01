@@ -27,7 +27,7 @@ void Scene::LoadScene()
 		string name = gameObjectJson.key();
 		string type = gameObjectJson.value()["type"];
 
-		auto gameObject = gameObjectContainer->TryGetGameObject(name);
+		IGameObject* gameObject = gameObjectContainer->TryGetGameObject(name);
 		if (gameObject == nullptr)
 			gameObject = gameObjectContainer->AddGameObject(name, GameObjectFactory::MakeGameObject(type));
 

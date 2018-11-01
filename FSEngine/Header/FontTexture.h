@@ -8,9 +8,13 @@ class FontTexture : public Texture
 {
 private:
 	TTF_Font* font = nullptr;
+	string fontName;
 	string text;
 
 public:
+	static const Types::ComponentType ComponentTypeId = Types::FontTexture;
+	Types::ComponentType GetComponentTypeId() const override;
+
 	FontTexture();
 	~FontTexture();
 
