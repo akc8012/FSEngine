@@ -1,6 +1,7 @@
 #pragma once
 #include "ComponentType.h"
 #include "FSDebug.h"
+#include "FSException.h"
 
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;
