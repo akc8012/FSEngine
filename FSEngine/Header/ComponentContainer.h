@@ -7,6 +7,7 @@
 #include "Model.h"
 #include "QuadMesh.h"
 #include "FontTexture.h"
+#include "Transform2D.h"
 
 using std::make_shared;
 
@@ -60,6 +61,7 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 		return reinterpret_cast<ComponentCollection<T>*>(texture.get());
 
 	case Transform::ComponentTypeId:
+	case Transform2D::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(transform.get());
 
 	case Model::ComponentTypeId:

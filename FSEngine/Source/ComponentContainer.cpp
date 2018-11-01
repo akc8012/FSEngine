@@ -19,6 +19,9 @@ namespace ComponentFactory
 		else if (type == Types::ComponentTypeString[Transform::ComponentTypeId])
 			return make_shared<Transform>();
 
+		else if (type == Types::ComponentTypeString[Transform2D::ComponentTypeId])
+			return make_shared<Transform2D>();
+
 		else if (type == Types::ComponentTypeString[Model::ComponentTypeId])
 			return make_shared<Model>();
 
