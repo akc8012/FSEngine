@@ -20,6 +20,8 @@ void Scene::AddGameObjects()
 
 void Scene::LoadScene()
 {
+	systems->eventSystem->SendEvent("BeforeSceneLoad", nullptr, false);
+
 	json sceneJson = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
 
 	for (const auto gameObjectJson : sceneJson.items())
@@ -33,6 +35,8 @@ void Scene::LoadScene()
 
 		gameObject->SetFromJson(gameObjectJson.value());
 	}
+
+	systems->eventSystem->SendEvent("AfterSceneLoad", nullptr, false);
 }
 
 void Scene::SaveScene() const
