@@ -10,6 +10,9 @@ namespace ComponentFactory
 		if (type == Types::ComponentTypeString[QuadMesh::ComponentTypeId])
 			return make_shared<QuadMesh>();
 
+		if (type == Types::ComponentTypeString[CubeMesh::ComponentTypeId])
+			return make_shared<CubeMesh>();
+
 		else if (type == Types::ComponentTypeString[Color::ComponentTypeId])
 			return make_shared<Color>();
 

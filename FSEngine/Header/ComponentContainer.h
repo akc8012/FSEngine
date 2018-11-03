@@ -6,6 +6,7 @@
 #include "Transform.h"
 #include "Model.h"
 #include "QuadMesh.h"
+#include "CubeMesh.h"
 #include "FontTexture.h"
 #include "Transform2D.h"
 
@@ -51,6 +52,7 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 	{
 	case Mesh::ComponentTypeId:
 	case QuadMesh::ComponentTypeId:
+	case CubeMesh::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
 	
 	case Shading::ComponentTypeId:
