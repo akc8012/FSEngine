@@ -1,7 +1,7 @@
 {
   "Blue": {
     "Components": {
-      "Color": {
+      "Shading": {
         "Color": [
           0.0,
           0.0,
@@ -64,7 +64,7 @@
   },
   "DebugText": {
     "Components": {
-      "Texture": {
+      "Shading": {
         "Filepath": "",
         "FontName": "consola.ttf",
         "ParameterCollection": {
@@ -100,7 +100,7 @@
   },
   "Green": {
     "Components": {
-      "Color": {
+      "Shading": {
         "Color": [
           0.0,
           0.800000011920929,
@@ -143,7 +143,7 @@
   },
   "GreenCube": {
     "Components": {
-      "Color": {
+      "Shading": {
         "Color": [
           0.10000000149011612,
           0.6000000238418579,
@@ -186,7 +186,7 @@
   },
   "MemeFaceCube": {
     "Components": {
-      "Texture": {
+      "Shading": {
         "Filepath": "Resource/Image/awesomeface.png",
         "ParameterCollection": {
           "Blend": 1,
@@ -258,7 +258,7 @@
   },
   "Quad": {
     "Components": {
-      "Color": {
+      "Shading": {
         "Color": [
           1.0,
           0.0,
@@ -301,7 +301,7 @@
   },
   "Red": {
     "Components": {
-      "Color": {
+      "Shading": {
         "Color": [
           0.800000011920929,
           0.0,
@@ -344,7 +344,7 @@
   },
   "Yellow": {
     "Components": {
-      "Color": {
+      "Shading": {
         "Color": [
           0.6000000238418579,
           0.6000000238418579,

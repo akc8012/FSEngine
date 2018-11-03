@@ -20,8 +20,7 @@ class ComponentContainer
 {
 private:
 	unique_ptr<ComponentCollection<Mesh>> mesh;
-	unique_ptr<ComponentCollection<Color>> color;
-	unique_ptr<ComponentCollection<Texture>> texture;
+	unique_ptr<ComponentCollection<Shading>> shading;
 	unique_ptr<ComponentCollection<Transform>> transform;
 	unique_ptr<ComponentCollection<Model>> model;
 
@@ -52,13 +51,12 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 	{
 	case Mesh::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
-
+	
+	case Shading::ComponentTypeId:
 	case Color::ComponentTypeId:
-		return reinterpret_cast<ComponentCollection<T>*>(color.get());
-
 	case Texture::ComponentTypeId:
 	case FontTexture::ComponentTypeId:
-		return reinterpret_cast<ComponentCollection<T>*>(texture.get());
+		return reinterpret_cast<ComponentCollection<T>*>(shading.get());
 
 	case Transform::ComponentTypeId:
 	case Transform2D::ComponentTypeId:

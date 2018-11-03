@@ -26,6 +26,9 @@ private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 public:
+	static const Types::ComponentType ComponentTypeId = Types::Shading;
+	virtual Types::ComponentType GetComponentTypeId() const override;
+
 	Shading();
 	virtual ~Shading();
 

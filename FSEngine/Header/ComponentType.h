@@ -5,8 +5,8 @@ using std::string;
 
 namespace Types
 {
-	enum ComponentType { Component, Mesh, Color, Transform, Transform2D, Texture, FontTexture, Model, ComponentsLength };
-	static const char*  ComponentTypeString[] = { "Component", "Mesh", "Color", "Transform", "Transform2D", "Texture", "FontTexture", "Model" };
+	enum ComponentType                          {  Component ,  Mesh ,  Shading ,  Color ,  Texture ,  FontTexture ,  Transform ,  Transform2D ,  Model ,  ComponentsLength };
+	static const char*  ComponentTypeString[] = { "Component", "Mesh", "Shading", "Color", "Texture", "FontTexture", "Transform", "Transform2D", "Model" };
 
 	ComponentType StringToComponentType(const string& componentString);
 }

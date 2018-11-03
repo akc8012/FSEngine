@@ -32,8 +32,7 @@ namespace ComponentFactory
 ComponentContainer::ComponentContainer()
 {
 	mesh = make_unique<ComponentCollection<Mesh>>();
-	color = make_unique<ComponentCollection<Color>>();
-	texture = make_unique<ComponentCollection<Texture>>();
+	shading = make_unique<ComponentCollection<Shading>>();
 	transform = make_unique<ComponentCollection<Transform>>();
 	model = make_unique<ComponentCollection<Model>>();
 }
@@ -45,11 +44,8 @@ vector<Component*> ComponentContainer::GetAllComponents() const
 	auto meshComponents = mesh->GetComponents();
 	components.insert(components.end(), meshComponents.begin(), meshComponents.end());
 
-	auto colorComponents = color->GetComponents();
-	components.insert(components.end(), colorComponents.begin(), colorComponents.end());
-
-	auto textureComponents = texture->GetComponents();
-	components.insert(components.end(), textureComponents.begin(), textureComponents.end());
+	auto shadingComponents = shading->GetComponents();
+	components.insert(components.end(), shadingComponents.begin(), shadingComponents.end());
 
 	auto transformComponents = transform->GetComponents();
 	components.insert(components.end(), transformComponents.begin(), transformComponents.end());

@@ -38,6 +38,11 @@ ParameterCollection<Shading::Parameters, Shading::ParametersLength>* Shading::Ge
 	return parameterCollection.get();
 }
 
+Types::ComponentType Shading::GetComponentTypeId() const
+{
+	return ComponentTypeId;
+}
+
 Shading::~Shading()
 {
 
