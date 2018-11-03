@@ -21,13 +21,18 @@ private:
 	}
 
 public:
+	void ReInitializeParameters()
+	{
+		for (auto& parameter : parameters)
+			parameter = -1;
+	}
+
 	ParameterCollection(string parameterNames[CollectionLength])
 	{
 		for (int i = 0; i < CollectionLength; i++)
 			this->parameterNames[i] = parameterNames[i];
 
-		for (auto& parameter : parameters)
-			parameter = -1;
+		ReInitializeParameters();
 	}
 
 	void SetParameter(Parameters parameter, bool value)

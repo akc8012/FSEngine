@@ -11,7 +11,6 @@ void Engine::Initialize()
 	InitializeGlew();
 
 	systems->input = make_unique<Input>();
-	systems->shaderProgram = make_unique<ShaderProgram>();
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
 
@@ -142,8 +141,8 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 	case SDLK_x:
 		try
 		{
-			systems->shaderProgram->CompileShaders();
-			printFS("Rebuilt shader program\n");
+			renderer->ReCompileShaders();
+			printFS("Rebuilt shader program");
 		}
 		catch (string errorMessage)
 		{
@@ -206,7 +205,7 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		}
 
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
-			systems->shaderProgram->CompileShaders();
+			renderer->ReCompileShaders();
 
 		break;
 	}

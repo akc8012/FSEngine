@@ -1,4 +1,5 @@
 #pragma once
+#include "ShaderProgram.h"
 #include "Systems.h"
 #include "Window.h"
 #include "GameObject.h"
@@ -22,6 +23,7 @@ private:
 
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
+	unique_ptr<ShaderProgram> shaderProgram;
 	Systems* systems = nullptr;
 	IGameObject* camera = nullptr;
 
@@ -49,6 +51,8 @@ private:
 public:
 	Renderer(Systems* systems, IGameObject* camera);
 	~Renderer();
+
+	void ReCompileShaders();
 
 	void StartRender();
 	void RenderGameObject(IGameObject* gameObject);

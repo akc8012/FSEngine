@@ -3,8 +3,16 @@
 Renderer::Renderer(Systems* systems, IGameObject* camera)
  : systems(systems), camera(camera)
 {
+	shaderProgram = make_unique<ShaderProgram>();
+
 	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "CalculateLighting", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
+}
+
+void Renderer::ReCompileShaders()
+{
+	shaderProgram->CompileShaders();
+	parameterCollection->ReInitializeParameters();
 }
 
 #pragma region StartRender
@@ -29,8 +37,8 @@ void Renderer::ClearScreen()
 
 void Renderer::SetViewMatrices(Transform* viewTransform)
 {
-	systems->shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
-	systems->shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
+	shaderProgram->SetMatrixUniform("viewMatrix", viewTransform->GetMatrix());
+	shaderProgram->SetVectorUniform("viewPosition", viewTransform->GetPosition());
 }
 
 // https://www.opengl.org/discussion_boards/showthread.php/181622-OpenGL-Drawing-Grid-%28help%29
@@ -58,15 +66,15 @@ void Renderer::DrawGrid()
 
 void Renderer::SetRenderParametersForGrid()
 {
-	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
-	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
+	shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
+	shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
 
 	SetDepthTest(true);
 	SetRenderPerspective(true);
 	SetCalculateLighting(false);
 	SetBlend(true);
 
-	systems->shaderProgram->SetVectorUniform("flatColor", vec4(0.8f, 0.8f, 0.4f, 1));
+	shaderProgram->SetVectorUniform("flatColor", vec4(0.8f, 0.8f, 0.4f, 1));
 }
 #pragma endregion
 
@@ -91,8 +99,8 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 
 void Renderer::SetTransformMatrices(Transform* transform)
 {
-	systems->shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
-	systems->shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
+	shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
+	shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
 }
 
 Shading* Renderer::FindShading(const Model* model, const vector<string>& textureNames) const
@@ -125,9 +133,9 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 		return;
 
 	Transform* projectionTransform = camera->GetComponent<Transform>(renderPerspective ? "Perspective" : "Orthographic");
-	systems->shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
+	shaderProgram->SetMatrixUniform("projectionMatrix", projectionTransform->GetMatrix());
 
-	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
+	shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
 	parameterCollection->SetParameter(RenderPerspective, renderPerspective);
 }
 
@@ -136,7 +144,7 @@ void Renderer::SetCalculateLighting(bool calculateLighting)
 	if (parameterCollection->IsInitializedAndEqualTo(CalculateLighting, calculateLighting))
 		return;
 
-	systems->shaderProgram->SetBoolUniform("calculateLighting", calculateLighting);
+	shaderProgram->SetBoolUniform("calculateLighting", calculateLighting);
 	parameterCollection->SetParameter(CalculateLighting, calculateLighting);
 }
 
@@ -151,7 +159,7 @@ void Renderer::SetBlend(bool blend)
 
 void Renderer::ApplyShading(Shading* shading)
 {
-	systems->shaderProgram->SetVectorUniform("flatColor", shading->GetColor());
+	shaderProgram->SetVectorUniform("flatColor", shading->GetColor());
 	shading->BindTexture();
 }
 
