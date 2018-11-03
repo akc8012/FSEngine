@@ -17,15 +17,7 @@ public:
 	virtual void Start() = 0;
 	virtual void Update() = 0;
 
-	enum Parameters
-	{
-		DoUpdate,
-		DoDraw,
-		DoLateUpdate,
-		DoLateDraw,
-
-		ParametersLength
-	};
+	enum Parameters { DoUpdate, DoDraw, DoLateUpdate, DoLateDraw, ParametersLength };
 	virtual ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const = 0;
 
 	virtual const string& GetName() const = 0;
