@@ -13,15 +13,7 @@ using glm::vec3;
 class Shading : public Component
 {
 public:
-	enum Parameters
-	{
-		EnableDepthTest,
-		RenderPerspective,
-		CalculateLighting,
-		Blend,
-
-		ParametersLength
-	};
+	enum Parameters { EnableDepthTest, RenderPerspective, CalculateLighting, Blend, ParametersLength };
 
 private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;

@@ -13,13 +13,7 @@ using std::vector;
 class Mesh : public Component
 {
 public:
-	enum Parameters
-	{
-		RenderBackfaces,
-		DrawElements,
-
-		ParametersLength
-	};
+	enum Parameters { RenderBackfaces, DrawElements, ParametersLength };
 
 protected:
 	vector<vertex> ConvertRawVertices(const vector<float>& rawVertices, int stride) const;

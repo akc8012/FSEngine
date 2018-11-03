@@ -11,16 +11,7 @@
 class Renderer
 {
 private:
-	enum Parameters
-	{
-		EnableDepthTest,
-		RenderPerspective,
-		CalculateLighting,
-		Blend,
-
-		ParametersLength
-	};
-
+	enum Parameters { EnableDepthTest, RenderPerspective, CalculateLighting, Blend, ParametersLength };
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	unique_ptr<ShaderProgram> shaderProgram;
