@@ -1,6 +1,7 @@
 #pragma once
 #include "IEventListener.h"
 #include "FSDebug.h"
+#include "FSException.h"
 
 #include <map>
 #include <vector>
@@ -19,5 +20,7 @@ private:
 
 public:
 	void AddListener(const string& key, IEventListener* listener);
+	void RemoveListener(const string& key, IEventListener* listener);
+
 	void SendEvent(const string& key, const json& event = nullptr, bool showListenerWarning = true);
 };

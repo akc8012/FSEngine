@@ -20,7 +20,13 @@ private:
 	Systems* systems = nullptr;
 	Window* window = nullptr;
 
+	vector<string> LoadGameObjectsFromJson(const json& j);
+
+	void RemoveUnloadedGameObjects(const vector<string>& loadedGameObjectNames);
+	bool GameObjectIsLoaded(const string& name, const vector<string>& loadedGameObjectNames);
+
 	void AddGameObjects();
+
 	string GetFileName() const;
 
 public:

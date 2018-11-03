@@ -7,6 +7,8 @@ private:
 	vec2 surfaceSize;
 
 public:
+	~RenderText();
+
 	void Start() override;
 	void Update() override;
 	void ReceiveEvent(const string& key, const json& event) override;

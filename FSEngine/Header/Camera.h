@@ -43,6 +43,8 @@ private:
 	float GetFrameAdjustedSpeed() const;
 
 public:
+	~Camera();
+
 	void Start() override;
 	void Update() override;
 

@@ -45,3 +45,9 @@ string RenderText::GetGameObjectType() const
 {
 	return "RenderText";
 }
+
+RenderText::~RenderText()
+{
+	systems->eventSystem->RemoveListener("SurfaceSizeChanged", this);
+	systems->eventSystem->RemoveListener("AfterSceneLoad", this);
+}
