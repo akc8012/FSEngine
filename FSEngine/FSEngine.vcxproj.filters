@@ -38,6 +38,7 @@
     <ClCompile Include="Source\FontTexture.cpp" />
     <ClCompile Include="Source\Transform2D.cpp" />
     <ClCompile Include="Source\CubeMesh.cpp" />
+    <ClCompile Include="Source\CameraFacingQuad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -82,6 +83,7 @@
     <ClInclude Include="Header\FontTexture.h" />
     <ClInclude Include="Header\Transform2D.h" />
     <ClInclude Include="Header\CubeMesh.h" />
+    <ClInclude Include="Header\CameraFacingQuad.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

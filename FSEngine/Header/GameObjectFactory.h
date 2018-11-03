@@ -5,6 +5,7 @@
 #include "RenderText.h"
 #include "PlayerShip.h"
 #include "QuadPrimitive.h"
+#include "CameraFacingQuad.h"
 
 #include <string>
 #include <memory>
