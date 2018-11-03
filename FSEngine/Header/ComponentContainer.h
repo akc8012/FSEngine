@@ -50,6 +50,7 @@ ComponentCollection<T>* ComponentContainer::GetCollectionOfType(Types::Component
 	switch (type)
 	{
 	case Mesh::ComponentTypeId:
+	case QuadMesh::ComponentTypeId:
 		return reinterpret_cast<ComponentCollection<T>*>(mesh.get());
 	
 	case Shading::ComponentTypeId:

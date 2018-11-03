@@ -25,3 +25,8 @@ QuadMesh::QuadMesh()
 	GetParameterCollection()->SetParameter(Mesh::DrawElements, false);
 	GetParameterCollection()->SetParameter(Mesh::RenderBackfaces, true);
 }
+
+Types::ComponentType QuadMesh::GetComponentTypeId() const
+{
+	return ComponentTypeId;
+}

@@ -2,7 +2,7 @@
 
 void QuadPrimitive::Start()
 {
-	AddComponent(make_shared<QuadMesh>());
+	AddComponent(make_shared<QuadMesh>(), "Mesh");
 	AddComponent(make_shared<Transform>());
 }
 
