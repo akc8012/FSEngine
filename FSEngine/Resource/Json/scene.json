@@ -10,6 +10,7 @@
         ],
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
@@ -62,6 +63,48 @@
     ],
     "type": "Camera"
   },
+  "CameraFacingQuad": {
+    "Components": {
+      "Shading": {
+        "Filepath": "",
+        "FontName": "consola.ttf",
+        "ParameterCollection": {
+          "Blend": 1,
+          "CalculateLighting": 0,
+          "EnableDepthTest": 0,
+          "RenderPerspective": 1
+        },
+        "Text": "ayyyyyy ravioli",
+        "TextureType": 0,
+        "type": "FontTexture"
+      },
+      "Transform": {
+        "EulerAngles": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "Position": [
+          1.7999999523162842,
+          0.0,
+          1.0
+        ],
+        "Scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "type": "Transform"
+      }
+    },
+    "ParameterCollection": {
+      "DoDraw": 1,
+      "DoLateDraw": 1,
+      "DoLateUpdate": 0,
+      "DoUpdate": 1
+    },
+    "type": "CameraFacingQuad"
+  },
   "DebugText": {
     "Components": {
       "Shading": {
@@ -69,6 +112,7 @@
         "FontName": "consola.ttf",
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 0,
           "EnableDepthTest": 0,
           "RenderPerspective": 0
         },
@@ -109,6 +153,7 @@
         ],
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
@@ -152,6 +197,7 @@
         ],
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
@@ -190,6 +236,7 @@
         "Filepath": "Resource/Image/awesomeface.png",
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
@@ -267,6 +314,7 @@
         ],
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
@@ -310,6 +358,7 @@
         ],
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
@@ -353,6 +402,7 @@
         ],
         "ParameterCollection": {
           "Blend": 1,
+          "CalculateLighting": 1,
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },

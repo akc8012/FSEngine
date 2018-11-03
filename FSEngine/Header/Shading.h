@@ -17,6 +17,7 @@ public:
 	{
 		EnableDepthTest,
 		RenderPerspective,
+		CalculateLighting,
 		Blend,
 
 		ParametersLength

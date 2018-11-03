@@ -3,7 +3,7 @@
 Renderer::Renderer(Systems* systems, IGameObject* camera)
  : systems(systems), camera(camera)
 {
-	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
+	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "CalculateLighting", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 }
 
@@ -58,15 +58,15 @@ void Renderer::DrawGrid()
 
 void Renderer::SetRenderParametersForGrid()
 {
-	SetDepthTest(true);
-	SetRenderPerspective(true);
-	SetBlend(true);
-
 	systems->shaderProgram->SetMatrixUniform("modelMatrix", FSMath::IdentityMatrix);
 	systems->shaderProgram->SetMatrixUniform("normalMatrix", FSMath::IdentityMatrix);
-	systems->shaderProgram->SetVectorUniform("flatColor", vec4(1, 1, 0.6f, 1));
-	systems->shaderProgram->SetMatrixUniform("projectionMatrix", camera->GetComponent<Transform>("Perspective")->GetMatrix());
-	systems->shaderProgram->SetBoolUniform("renderPerspective", true);
+
+	SetDepthTest(true);
+	SetRenderPerspective(true);
+	SetCalculateLighting(false);
+	SetBlend(true);
+
+	systems->shaderProgram->SetVectorUniform("flatColor", vec4(0.8f, 0.8f, 0.4f, 1));
 }
 #pragma endregion
 
@@ -106,6 +106,7 @@ void Renderer::SetShadingParameters(const Shading* shading)
 
 	SetDepthTest(shadingParameters->GetParameter(Shading::EnableDepthTest));
 	SetRenderPerspective(shadingParameters->GetParameter(Shading::RenderPerspective));
+	SetCalculateLighting(shadingParameters->GetParameter(Shading::CalculateLighting));
 	SetBlend(shadingParameters->GetParameter(Shading::Blend));
 }
 
@@ -128,6 +129,15 @@ void Renderer::SetRenderPerspective(bool renderPerspective)
 
 	systems->shaderProgram->SetBoolUniform("renderPerspective", renderPerspective);
 	parameterCollection->SetParameter(RenderPerspective, renderPerspective);
+}
+
+void Renderer::SetCalculateLighting(bool calculateLighting)
+{
+	if (parameterCollection->IsInitializedAndEqualTo(CalculateLighting, calculateLighting))
+		return;
+
+	systems->shaderProgram->SetBoolUniform("calculateLighting", calculateLighting);
+	parameterCollection->SetParameter(CalculateLighting, calculateLighting);
 }
 
 void Renderer::SetBlend(bool blend)

@@ -2,8 +2,8 @@
 
 FontTexture::FontTexture()
 {
-	GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
 	GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+	GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
 }
 
 void FontTexture::LoadFont(const string& fontName)

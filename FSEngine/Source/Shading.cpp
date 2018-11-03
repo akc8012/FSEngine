@@ -2,11 +2,12 @@
 
 Shading::Shading()
 {
-	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "Blend" };
+	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "CalculateLighting", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 
 	parameterCollection->SetParameter(EnableDepthTest, true);
 	parameterCollection->SetParameter(RenderPerspective, true);
+	parameterCollection->SetParameter(CalculateLighting, true);
 	parameterCollection->SetParameter(Blend, true);
 }
 

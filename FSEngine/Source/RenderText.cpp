@@ -2,7 +2,10 @@
 
 void RenderText::Start()
 {
-	AddComponent(make_shared<FontTexture>(), "Shading")->LoadFont("consola.ttf");
+	auto fontTexture = AddComponent(make_shared<FontTexture>(), "Shading");
+	fontTexture->LoadFont("consola.ttf");
+	fontTexture->GetParameterCollection()->SetParameter(Shading::RenderPerspective, false);
+
 	AddComponent(make_shared<Transform2D>(), "Transform");
 	AddComponent(make_shared<QuadMesh>());
 

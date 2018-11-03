@@ -18,7 +18,7 @@ void ShaderProgram::CompileShaders()
 
 void ShaderProgram::MapUniformValues()
 {
-	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition" };
+	string uniformNames[] = { "modelMatrix", "viewMatrix", "projectionMatrix", "normalMatrix", "renderPerspective", "diffuseTexture", "flatColor", "viewPosition", "calculateLighting" };
 	for (const auto& uniformName : uniformNames)
 		uniformLocations[uniformName] = GetUniformLocationFromGl(uniformName.c_str());
 }

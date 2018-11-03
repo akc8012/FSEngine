@@ -14,6 +14,7 @@ private:
 	{
 		EnableDepthTest,
 		RenderPerspective,
+		CalculateLighting,
 		Blend,
 
 		ParametersLength
@@ -38,6 +39,7 @@ private:
 
 	void SetDepthTest(bool enableDepthTest);
 	void SetRenderPerspective(bool enableDepthTest);
+	void SetCalculateLighting(bool calculateLighting);
 	void SetBlend(bool blend);
 
 	void DrawMesh(Mesh* mesh);

@@ -1,35 +1,40 @@
 #version 330 core
 
-in vec3 Normal;
-in vec2 TexureCoord;
-in vec3 FragmentPosition;
-
 uniform sampler2D diffuseTexture;
 uniform vec4 flatColor;
 uniform vec3 viewPosition;
-uniform bool renderPerspective;
+uniform bool calculateLighting;
+
+in vec3 FragmentPosition;
+in vec3 Normal;
+in vec2 TexureCoord;
 
 out vec4 FragmentColor;
 
 
-vec3 CalcLighting();
+vec4 GetFragmentColor();
+vec4 CalcLighting();
 vec3 CalcAmbient(vec3 lightColor);
 vec3 CalcDiffuse(vec3 normal, vec3 lightDirection, vec3 lightColor);
 vec3 CalcSpecular(vec3 normal, vec3 lightDirection, vec3 lightColor);
 
 void main()
 {
-	vec4 fragmentColor = flatColor != vec4(0) ? flatColor : texture(diffuseTexture, TexureCoord);
-	if (!renderPerspective)
-	{
-		FragmentColor = fragmentColor;
-		return;
-	}
+	vec4 fragmentColor = GetFragmentColor();
 
-	FragmentColor = vec4(CalcLighting() * vec3(fragmentColor), 1);
+	if (calculateLighting)
+		FragmentColor = CalcLighting() * fragmentColor;
+	else
+		FragmentColor = fragmentColor;
 }
 
-vec3 CalcLighting()
+vec4 GetFragmentColor()
+{
+	bool hasFlatColor = flatColor != vec4(0);
+	return hasFlatColor ? flatColor : texture(diffuseTexture, TexureCoord);
+}
+
+vec4 CalcLighting()
 {
 	vec3 normal = normalize(Normal);
 	vec3 lightColor = vec3(1, 1, 1);
@@ -41,7 +46,7 @@ vec3 CalcLighting()
 	vec3 diffuse = CalcDiffuse(normal, lightDirection, lightColor);
 	vec3 specular = CalcSpecular(normal, lightDirection, lightColor);
 
-	return ambient + diffuse + specular;
+	return vec4(ambient + diffuse + specular, 1);
 }
 
 vec3 CalcAmbient(vec3 lightColor)

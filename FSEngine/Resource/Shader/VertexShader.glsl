@@ -1,14 +1,14 @@
 #version 330 core
 
-layout(location = 0) in vec3 positionVector;
-layout(location = 1) in vec3 normalVector;
-layout(location = 2) in vec2 textureCoordVector;
-
 uniform mat4 modelMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 uniform mat3 normalMatrix;
 uniform bool renderPerspective;
+
+layout(location = 0) in vec3 positionVector;
+layout(location = 1) in vec3 normalVector;
+layout(location = 2) in vec2 textureCoordVector;
 
 out vec3 FragmentPosition;
 out vec3 Normal;
