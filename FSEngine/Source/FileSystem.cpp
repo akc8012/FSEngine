@@ -8,7 +8,18 @@ FileSystem::FileSystem()
 void FileSystem::LoadSettingsFile()
 {
 	string file = LoadTextFromFile("Resource/Json/settings.json");
-	settingsJson = json::parse(file);
+
+	try
+	{
+		settingsJson = json::parse(file);
+	}
+	catch (const parse_error& e)
+	{
+		if (settingsJson != nullptr)
+			printFS("Error: Json parse_error thrown while parsing settings, using existing settingsJson: " + string(e.what()));
+		else
+			throw e;
+	}
 }
 
 json FileSystem::GetSettingsValue(const string& key) const

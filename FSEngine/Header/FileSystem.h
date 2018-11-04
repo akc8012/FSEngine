@@ -11,6 +11,7 @@ using std::ofstream;
 
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;
+using nlohmann::detail::parse_error;
 
 class FileSystem
 {
