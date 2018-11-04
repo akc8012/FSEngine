@@ -32,6 +32,11 @@ void GameObject::Start()
 
 }
 
+void GameObject::SceneLoaded()
+{
+
+}
+
 void GameObject::Update()
 {
 

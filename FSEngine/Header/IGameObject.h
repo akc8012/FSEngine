@@ -15,6 +15,7 @@ public:
 	}
 
 	virtual void Start() = 0;
+	virtual void SceneLoaded() = 0;
 	virtual void Update() = 0;
 
 	enum Parameters { DoUpdate, DoDraw, DoLateUpdate, DoLateDraw, ParametersLength };

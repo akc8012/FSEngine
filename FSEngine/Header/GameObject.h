@@ -35,6 +35,7 @@ public:
 	void SetReferences(Systems* systems, IGameObjectContainer* gameObjectContainer);
 
 	virtual void Start() override;
+	virtual void SceneLoaded() override;
 	virtual void Update() override;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const override;

@@ -27,7 +27,9 @@ void Scene::LoadScene()
 	vector<string> loadedGameObjectNames = LoadGameObjectsFromJson(sceneJson);
 	RemoveUnloadedGameObjects(loadedGameObjectNames);
 
-	systems->eventSystem->SendEvent("AfterSceneLoad", nullptr, false);
+	systems->eventSystem->SendEvent("SceneLoaded", nullptr, false);
+	for (auto gameObject : gameObjectContainer->GetGameObjects())
+		gameObject->SceneLoaded();
 }
 
 vector<string> Scene::LoadGameObjectsFromJson(const json& j)
