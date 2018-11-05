@@ -63,3 +63,8 @@ vector<IGameObject*> GameObjectContainer::GetGameObjects() const
 
 	return gameObjectVector;
 }
+
+int GameObjectContainer::GetGameObjectCount() const
+{
+	return (int)gameObjects.size();
+}

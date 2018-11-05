@@ -13,7 +13,7 @@ void FileSystem::LoadSettingsFile()
 	{
 		settingsJson = json::parse(file);
 	}
-	catch (const parse_error& e)
+	catch (const nlohmann::detail::parse_error& e)
 	{
 		if (settingsJson != nullptr)
 			printFS("Error: Json parse_error thrown while parsing settings, using existing settingsJson: " + string(e.what()));

@@ -26,4 +26,5 @@ public:
 	IGameObject* TryGetGameObject(const string& name) const override;
 
 	vector<IGameObject*> GetGameObjects() const override;
+	int GetGameObjectCount() const override;
 };

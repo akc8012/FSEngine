@@ -16,6 +16,7 @@ public:
 	virtual IGameObject* TryGetGameObject(const string& name) const = 0;
 
 	virtual vector<IGameObject*> GetGameObjects() const = 0;
+	virtual int GetGameObjectCount() const = 0;
 
 	template <typename T>
 	T* GetGameObjectAs(const string& name) const;

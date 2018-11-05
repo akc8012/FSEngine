@@ -22,14 +22,37 @@ void Scene::LoadScene()
 {
 	systems->eventSystem->SendEvent("BeforeSceneLoad", nullptr, false);
 
-	json sceneJson = json::parse(FileSystem::LoadTextFromFile(GetFileName()));
+	json sceneJson = TryParseSceneJson();
+	if (sceneJson == nullptr)
+		return;
 
 	vector<string> loadedGameObjectNames = LoadGameObjectsFromJson(sceneJson);
 	RemoveUnloadedGameObjects(loadedGameObjectNames);
 
-	systems->eventSystem->SendEvent("SceneLoaded", nullptr, false);
-	for (auto gameObject : gameObjectContainer->GetGameObjects())
-		gameObject->SceneLoaded();
+	SendSceneLoadedEvents();
+}
+
+json Scene::TryParseSceneJson() const
+{
+	try
+	{
+		return json::parse(FileSystem::LoadTextFromFile(GetFileName()));
+	}
+	catch (const nlohmann::detail::parse_error& e)
+	{
+		if (SceneLoaded())
+		{
+			printFS("Error: Json parse_error thrown while parsing scene, reverting to loaded scene: " + string(e.what()));
+			return nullptr;
+		}
+
+		throw e;
+	}
+}
+
+bool Scene::SceneLoaded() const
+{
+	return gameObjectContainer->GetGameObjectCount() != 0;
 }
 
 vector<string> Scene::LoadGameObjectsFromJson(const json& j)
@@ -69,6 +92,13 @@ void Scene::RemoveUnloadedGameObjects(const vector<string>& loadedGameObjectName
 bool Scene::GameObjectIsLoaded(const string& name, const vector<string>& loadedGameObjectNames)
 {
 	return std::find(loadedGameObjectNames.begin(), loadedGameObjectNames.end(), name) != loadedGameObjectNames.end();
+}
+
+void Scene::SendSceneLoadedEvents()
+{
+	systems->eventSystem->SendEvent("SceneLoaded", nullptr, false);
+	for (auto gameObject : gameObjectContainer->GetGameObjects())
+		gameObject->SceneLoaded();
 }
 
 void Scene::SaveScene() const
