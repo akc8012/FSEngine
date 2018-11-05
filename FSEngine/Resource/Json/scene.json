@@ -66,17 +66,19 @@
   "CameraFacingQuad": {
     "Components": {
       "Shading": {
-        "Filepath": "",
-        "FontName": "consola.ttf",
+        "Color": [
+          0.20000000298023224,
+          0.4000000059604645,
+          0.6000000238418579,
+          1.0
+        ],
         "ParameterCollection": {
           "Blend": 1,
-          "CalculateLighting": 0,
-          "EnableDepthTest": 0,
+          "CalculateLighting": 1,
+          "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "Text": "ayyyyyy ravioli",
-        "TextureType": 0,
-        "type": "FontTexture"
+        "type": "Color"
       },
       "Transform": {
         "EulerAngles": [
