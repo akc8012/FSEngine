@@ -13,7 +13,7 @@ out vec4 FragmentColor;
 
 
 vec4 GetFragmentColor();
-vec4 CalcLighting();
+vec3 CalcLighting();
 vec3 CalcAmbient(vec3 lightColor);
 vec3 CalcDiffuse(vec3 normal, vec3 lightDirection, vec3 lightColor);
 vec3 CalcSpecular(vec3 normal, vec3 lightDirection, vec3 lightColor);
@@ -23,7 +23,7 @@ void main()
 	vec4 fragmentColor = GetFragmentColor();
 
 	if (calculateLighting)
-		FragmentColor = CalcLighting() * fragmentColor;
+		FragmentColor = vec4(CalcLighting() * vec3(fragmentColor), 1);	// do not try to simplify this!
 	else
 		FragmentColor = fragmentColor;
 }
@@ -34,7 +34,7 @@ vec4 GetFragmentColor()
 	return hasFlatColor ? flatColor : texture(diffuseTexture, TexureCoord);
 }
 
-vec4 CalcLighting()
+vec3 CalcLighting()
 {
 	vec3 normal = normalize(Normal);
 	vec3 lightColor = vec3(1, 1, 1);
@@ -46,7 +46,7 @@ vec4 CalcLighting()
 	vec3 diffuse = CalcDiffuse(normal, lightDirection, lightColor);
 	vec3 specular = CalcSpecular(normal, lightDirection, lightColor);
 
-	return vec4(ambient + diffuse + specular, 1);
+	return ambient + diffuse + specular;
 }
 
 vec3 CalcAmbient(vec3 lightColor)

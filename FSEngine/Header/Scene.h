@@ -1,15 +1,8 @@
 #pragma once
 #include "IEventListener.h"
-#include "GameObject.h"
-#include "Renderer.h"
-#include "CubePrimitive.h"
-#include "QuadPrimitive.h"
-#include "RenderText.h"
-#include "Model.h"
-#include "PlayerShip.h"
-#include "Camera.h"
-#include "GameObjectContainer.h"
 #include "GameObjectFactory.h"
+#include "GameObjectContainer.h"
+#include "Renderer.h"
 
 class Scene : public IEventListener
 {
