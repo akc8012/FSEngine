@@ -6,6 +6,7 @@ void CameraFacingQuad::Start()
 	AddComponent(make_shared<Transform>());
 
 	GetParameterCollection()->SetParameter(DoLateDraw, true);
+	GetParameterCollection()->SetParameter(DoLateUpdate, true);
 }
 
 void CameraFacingQuad::SceneLoaded()

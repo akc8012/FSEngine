@@ -102,7 +102,7 @@
     "ParameterCollection": {
       "DoDraw": 1,
       "DoLateDraw": 1,
-      "DoLateUpdate": 0,
+      "DoLateUpdate": 1,
       "DoUpdate": 1
     },
     "type": "CameraFacingQuad"
