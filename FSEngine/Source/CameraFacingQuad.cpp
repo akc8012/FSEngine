@@ -17,11 +17,8 @@ void CameraFacingQuad::SceneLoaded()
 
 void CameraFacingQuad::Update()
 {
-	mat4 viewMatrix = camera->GetComponent<Transform>("View")->GetMatrix();
-	vec3 cameraUp(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1]);
-
 	vec3 direction = camera->GetPosition() - transform->GetPosition();
-	transform->SetOrientation(FSMath::LookAt(direction, cameraUp));
+	transform->SetOrientation(FSMath::LookAt(direction, camera->GetUp()));
 }
 
 string CameraFacingQuad::GetGameObjectType() const

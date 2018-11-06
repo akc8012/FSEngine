@@ -233,6 +233,7 @@ float Camera::GetRayIntersectFloorDistance(const ray& ray) const
 }
 #pragma endregion
 
+#pragma region Public Accessors
 void Camera::SetPosition(const vec3& position)
 {
 	this->position = position;
@@ -241,6 +242,24 @@ void Camera::SetPosition(const vec3& position)
 vec3 Camera::GetPosition() const
 {
 	return position;
+}
+
+vec3 Camera::GetForward() const
+{
+	mat4 viewMatrix = GetComponent<Transform>("View")->GetMatrix();
+	return vec3(viewMatrix[0][2], -viewMatrix[1][2], -viewMatrix[2][2]);
+}
+
+vec3 Camera::GetUp() const
+{
+	mat4 viewMatrix = GetComponent<Transform>("View")->GetMatrix();
+	return vec3(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1]);
+}
+
+vec3 Camera::GetRight() const
+{
+	mat4 viewMatrix = GetComponent<Transform>("View")->GetMatrix();
+	return vec3(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0]);
 }
 
 void Camera::SetOrientation(const vec3& direction)
@@ -252,6 +271,7 @@ vec3 Camera::GetOrientation() const
 {
 	return direction;
 }
+#pragma endregion
 
 json Camera::GetJson() const
 {
