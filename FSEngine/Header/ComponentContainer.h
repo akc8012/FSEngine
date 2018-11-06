@@ -33,6 +33,8 @@ public:
 
 	template <typename T>
 	T* AddComponent(shared_ptr<T> component, const string& name = "");
+	template <typename T>
+	void RemoveComponent(const string& name = "");
 
 	template <typename T>
 	T* GetComponent(const string& name = "") const;
@@ -77,6 +79,12 @@ template <typename T>
 T* ComponentContainer::AddComponent(shared_ptr<T> component, const string& name)
 {
 	return GetCollectionOfType<T>(component->GetComponentTypeId())->Add(component, name);
+}
+
+template <typename T>
+void ComponentContainer::RemoveComponent(const string& name)
+{
+	GetCollectionOfType<T>(T::ComponentTypeId)->Remove(name);
 }
 
 template <typename T>
