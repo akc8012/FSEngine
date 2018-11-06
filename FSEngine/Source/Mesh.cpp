@@ -14,6 +14,8 @@ Mesh::Mesh(const vector<float>& rawVertices, int stride, const vector<Uint32>& i
 
 Mesh::Mesh()
 {
+	SetSerializable(false);
+
 	string parameterNames[] = { "RenderBackfaces", "DrawElements" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 	parameterCollection->SetParameter(RenderBackfaces, false);
