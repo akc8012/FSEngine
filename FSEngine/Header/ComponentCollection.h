@@ -82,7 +82,7 @@ void ComponentCollection<T>::Clear()
 template <typename T>
 string ComponentCollection<T>::GetName(const string& name) const
 {
-	return name == "" ? Types::ComponentTypeString[T::ComponentTypeId] : name;
+	return name == "" ? Types::ComponentTypeToString(T::ComponentTypeId) : name;
 }
 
 template <typename T>

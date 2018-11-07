@@ -4,31 +4,31 @@ namespace ComponentFactory
 {
 	shared_ptr<Component> MakeComponent(const string& type)
 	{
-		if (type == Types::ComponentTypeString[Mesh::ComponentTypeId])
+		if (type == Types::ComponentTypeToString(Mesh::ComponentTypeId))
 			return make_shared<Mesh>();
 
-		if (type == Types::ComponentTypeString[QuadMesh::ComponentTypeId])
+		if (type == Types::ComponentTypeToString(QuadMesh::ComponentTypeId))
 			return make_shared<QuadMesh>();
 
-		if (type == Types::ComponentTypeString[CubeMesh::ComponentTypeId])
+		if (type == Types::ComponentTypeToString(CubeMesh::ComponentTypeId))
 			return make_shared<CubeMesh>();
 
-		else if (type == Types::ComponentTypeString[Color::ComponentTypeId])
+		else if (type == Types::ComponentTypeToString(Color::ComponentTypeId))
 			return make_shared<Color>();
 
-		else if (type == Types::ComponentTypeString[Texture::ComponentTypeId])
+		else if (type == Types::ComponentTypeToString(Texture::ComponentTypeId))
 			return make_shared<Texture>();
 
-		else if (type == Types::ComponentTypeString[FontTexture::ComponentTypeId])
+		else if (type == Types::ComponentTypeToString(FontTexture::ComponentTypeId))
 			return make_shared<FontTexture>();
 
-		else if (type == Types::ComponentTypeString[Transform::ComponentTypeId])
+		else if (type == Types::ComponentTypeToString(Transform::ComponentTypeId))
 			return make_shared<Transform>();
 
-		else if (type == Types::ComponentTypeString[Transform2D::ComponentTypeId])
+		else if (type == Types::ComponentTypeToString(Transform2D::ComponentTypeId))
 			return make_shared<Transform2D>();
 
-		else if (type == Types::ComponentTypeString[Model::ComponentTypeId])
+		else if (type == Types::ComponentTypeToString(Model::ComponentTypeId))
 			return make_shared<Model>();
 
 		throwFS("Cannot make Component of unrecognized type: " + type);

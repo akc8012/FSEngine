@@ -23,7 +23,7 @@ void Component::SetName(const string& name)
 json Component::GetJson() const
 {
 	json j;
-	j["type"] = Types::ComponentTypeString[GetComponentTypeId()];
+	j["type"] = Types::ComponentTypeToString(GetComponentTypeId());
 
 	return j;
 }
