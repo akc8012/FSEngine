@@ -13,14 +13,13 @@ private:
 	Systems* systems = nullptr;
 	Window* window = nullptr;
 
-	vector<string> LoadGameObjectsFromJson(const json& j);
 	json TryParseSceneJson() const;
 	bool SceneLoaded() const;
 
-	void RemoveUnloadedGameObjects(const vector<string>& loadedGameObjectNames);
-	bool GameObjectIsLoaded(const string& name, const vector<string>& loadedGameObjectNames);
-	void SendSceneLoadedEvents();
+	void RemoveUnloadedGameObjects(const json& sceneJson);
+	void LoadGameObjectsFromJson(const json& j);
 
+	void SendSceneLoadedEvents();
 	void AddGameObjects();
 
 	string GetFileName() const;
