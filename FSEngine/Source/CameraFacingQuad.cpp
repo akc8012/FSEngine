@@ -17,8 +17,10 @@ void CameraFacingQuad::SceneLoaded()
 
 void CameraFacingQuad::Update()
 {
-	vec3 direction = camera->GetPosition() - transform->GetPosition();
-	transform->SetOrientation(FSMath::LookAt(direction, camera->GetUp()));
+	vec3 cameraForward = camera->GetForward();
+	vec3 lookDirection(cameraForward.x, -cameraForward.y, -cameraForward.z);
+
+	transform->SetOrientation(FSMath::LookAt(lookDirection, camera->GetUp()));
 }
 
 string CameraFacingQuad::GetGameObjectType() const
