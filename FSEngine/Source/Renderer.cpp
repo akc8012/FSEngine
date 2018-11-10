@@ -28,10 +28,10 @@ void Renderer::StartRender()
 
 void Renderer::ClearScreen()
 {
-	vec3 color = vec3(61, 54, 71);
-	color /= 255;
+	json backgroundSetting = systems->fileSystem->GetSettingsValue("BackgroundColor");
+	vec3 backgroundColor = vec3(backgroundSetting[0], backgroundSetting[1], backgroundSetting[2]) / 255.f;
 
-	glClearColor(color.x, color.y, color.z, 1.0f);
+	glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 

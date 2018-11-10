@@ -1,21 +1,22 @@
 {
   "LoadSettingsOnFocus": true,
   "ContinualSettingsReload": false,
-
   "LoadShadersOnFocus": true,
-  "ShowWindowOnTop": false,
-  "WindowAllowResize": true,
-
-  "SwapInterval": 0,
-  "PolygonLineMode": false,
-  "DrawGrid": true,
 
   "SurfaceSize": [960, 600],
   "Fullscreen": false,
+  "SwapInterval": 0,
+  "WindowAllowResize": true,
+  "ShowWindowOnTop": false,
+
+  "PolygonLineMode": false,
+  "DrawGrid": true,
+  "BackgroundColor": [61, 54, 71],
 
   "EditorMode": true,
-  "ShipSpeed": 1,
 
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15
+  "CameraScrollSpeed": 0.15,
+
+  "ShipSpeed": 1
 }
