@@ -1,4 +1,5 @@
 #pragma once
+#include "IEventListener.h"
 #include "ShaderProgram.h"
 #include "Systems.h"
 #include "Window.h"
@@ -8,7 +9,7 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
-class Renderer
+class Renderer : public IEventListener
 {
 private:
 	enum Parameters { EnableDepthTest, RenderPerspective, CalculateLighting, Blend, ParametersLength };
@@ -44,6 +45,7 @@ public:
 	~Renderer();
 
 	void ReCompileShaders();
+	void ReceiveEvent(const string& key, const json& event) override;
 
 	void StartRender();
 	void RenderGameObject(IGameObject* gameObject);
