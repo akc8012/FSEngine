@@ -205,6 +205,5 @@ void Renderer::EndRender(Window* window)
 
 Renderer::~Renderer()
 {
-	systems->eventSystem->RemoveListener("SurfaceSizeChanged", this);
-	systems->eventSystem->RemoveListener("WindowFocusGained", this);
+	systems->eventSystem->RemoveListener(this);
 }

@@ -136,9 +136,5 @@ GameObjectContainer* Scene::GetGameObjectContainer() const
 
 Scene::~Scene()
 {
-	systems->eventSystem->RemoveListener("SaveKeyPressed", this);
-	systems->eventSystem->RemoveListener("LoadKeyPressed", this);
-	systems->eventSystem->RemoveListener("GameStopped", this);
-	systems->eventSystem->RemoveListener("WindowFocusGained", this);
-	systems->eventSystem->RemoveListener("WindowFocusLost", this);
+	systems->eventSystem->RemoveListener(this);
 }
