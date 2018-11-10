@@ -26,6 +26,7 @@ private:
 
 public:
 	Scene(const string& name, Systems* systems);
+	~Scene();
 
 	void LoadScene();
 	void SaveScene() const;

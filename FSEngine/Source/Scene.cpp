@@ -11,6 +11,8 @@ Scene::Scene(const string& name, Systems* systems)
 	systems->eventSystem->AddListener("SaveKeyPressed", this);
 	systems->eventSystem->AddListener("LoadKeyPressed", this);
 	systems->eventSystem->AddListener("GameStopped", this);
+	systems->eventSystem->AddListener("WindowFocusGained", this);
+	systems->eventSystem->AddListener("WindowFocusLost", this);
 }
 
 void Scene::AddGameObjects()
@@ -109,13 +111,16 @@ void Scene::SaveScene() const
 
 void Scene::ReceiveEvent(const string& key, const json& event)
 {
-	if (key == "SaveKeyPressed")
+	if (key == "SaveKeyPressed" || key == "GameStopped")
 		SaveScene();
 
-	else if (key == "LoadKeyPressed")
+	if (key == "LoadKeyPressed")
 		LoadScene();
 
-	else if (key == "GameStopped")
+	if (key == "WindowFocusGained" && systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus"))
+		LoadScene();
+
+	if (key == "WindowFocusLost" && systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus"))
 		SaveScene();
 }
 
@@ -127,4 +132,9 @@ string Scene::GetFileName() const
 GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
+}
+
+Scene::~Scene()
+{
+	systems->eventSystem->RemoveListener(this);
 }

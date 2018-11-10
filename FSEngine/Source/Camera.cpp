@@ -297,5 +297,5 @@ string Camera::GetGameObjectType() const
 
 Camera::~Camera()
 {
-	systems->eventSystem->RemoveListener("SurfaceSizeChanged", this);
+	systems->eventSystem->RemoveListener(this);
 }

@@ -20,6 +20,7 @@ private:
 
 public:
 	void AddListener(const string& key, IEventListener* listener);
+	void RemoveListener(IEventListener* listener);
 	void RemoveListener(const string& key, IEventListener* listener);
 
 	void SendEvent(const string& key, const json& event = nullptr, bool showListenerWarning = true);

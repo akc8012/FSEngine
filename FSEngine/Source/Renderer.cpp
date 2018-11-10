@@ -9,19 +9,21 @@ Renderer::Renderer(Systems* systems, IGameObject* camera)
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
+	systems->eventSystem->AddListener("WindowFocusGained", this);
+}
+
+void Renderer::ReceiveEvent(const string& key, const json& event)
+{
+	if (key == "SurfaceSizeChanged")
+		parameterCollection->ReInitializeParameters();
+
+	if (key == "WindowFocusGained" && systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
+		ReCompileShaders();
 }
 
 void Renderer::ReCompileShaders()
 {
 	shaderProgram->CompileShaders();
-	parameterCollection->ReInitializeParameters();
-}
-
-void Renderer::ReceiveEvent(const string& key, const json& event)
-{
-	if (key != "SurfaceSizeChanged")
-		return;
-
 	parameterCollection->ReInitializeParameters();
 }
 
@@ -203,5 +205,5 @@ void Renderer::EndRender(Window* window)
 
 Renderer::~Renderer()
 {
-
+	systems->eventSystem->RemoveListener(this);
 }

@@ -53,6 +53,5 @@ string RenderText::GetGameObjectType() const
 
 RenderText::~RenderText()
 {
-	systems->eventSystem->RemoveListener("SurfaceSizeChanged", this);
-	systems->eventSystem->RemoveListener("SceneLoaded", this);
+	systems->eventSystem->RemoveListener(this);
 }

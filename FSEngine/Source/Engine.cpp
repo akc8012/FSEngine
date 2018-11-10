@@ -204,9 +204,11 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 			SetOpenGlParameters();
 		}
 
-		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
-			renderer->ReCompileShaders();
+		systems->eventSystem->SendEvent("WindowFocusGained");
+		break;
 
+	case SDL_WINDOWEVENT_FOCUS_LOST:
+		systems->eventSystem->SendEvent("WindowFocusLost");
 		break;
 	}
 }

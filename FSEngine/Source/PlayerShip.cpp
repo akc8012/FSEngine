@@ -27,7 +27,7 @@ void PlayerShip::Update()
 		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
 			ResetValues();
 
-		ControlShip();
+		//ControlShip();
 		//SetCamera();
 	}
 }

@@ -1,5 +1,6 @@
 {
   "LoadSettingsOnFocus": true,
+  "LoadSceneOnFocus": false,
   "ContinualSettingsReload": false,
   "LoadShadersOnFocus": true,
 
@@ -16,7 +17,5 @@
   "EditorMode": true,
 
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15,
-
-  "ShipSpeed": 1
+  "CameraScrollSpeed": 0.15
 }

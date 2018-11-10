@@ -5,6 +5,18 @@ void EventSystem::AddListener(const string& key, IEventListener* listener)
 	listeners.emplace(key, listener);
 }
 
+void EventSystem::RemoveListener(IEventListener* listener)
+{
+	auto it = listeners.begin();
+	while (it != listeners.end())
+	{
+		if (it->second == listener)
+			it = listeners.erase(it);
+		else
+			it++;
+	}
+}
+
 void EventSystem::RemoveListener(const string& key, IEventListener* listener)
 {
 	auto listenersOnKey = listeners.equal_range(key);
@@ -27,7 +39,7 @@ void EventSystem::SendEvent(const string& key, const json& event, bool showListe
 	if (listenersOnKey.first == listenersOnKey.second)
 	{
 		if (showListenerWarning)
-			printFS("Warning: Event sent with key \"" + key + "\" has no listeners");
+			printFS("Warning: Event sent with this key has no listeners: " + key);
 
 		return;
 	}
