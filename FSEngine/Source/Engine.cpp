@@ -207,6 +207,15 @@ void Engine::HandleWindowEvent(const SDL_WindowEvent& windowEvent)
 		if (systems->fileSystem->GetSettingsValue<bool>("LoadShadersOnFocus"))
 			renderer->ReCompileShaders();
 
+		if (systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus"))
+			sceneManager->GetCurrentScene()->LoadScene();
+
+		break;
+
+	case SDL_WINDOWEVENT_FOCUS_LOST:
+		if (systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus"))
+			sceneManager->GetCurrentScene()->SaveScene();
+
 		break;
 	}
 }
