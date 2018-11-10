@@ -40,6 +40,11 @@ public:
 		SetParameter(parameter, (short)value);
 	}
 
+	void UninitializeParameter(Parameters parameter)
+	{
+		SetParameter(parameter, (short)-1);
+	}
+
 	bool GetParameter(Parameters parameter) const
 	{
 		if (!IsParameterInitialized(parameter))

@@ -7,11 +7,21 @@ Renderer::Renderer(Systems* systems, IGameObject* camera)
 
 	string parameterNames[] = { "EnableDepthTest", "RenderPerspective", "CalculateLighting", "Blend" };
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
+
+	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
 }
 
 void Renderer::ReCompileShaders()
 {
 	shaderProgram->CompileShaders();
+	parameterCollection->ReInitializeParameters();
+}
+
+void Renderer::ReceiveEvent(const string& key, const json& event)
+{
+	if (key != "SurfaceSizeChanged")
+		return;
+
 	parameterCollection->ReInitializeParameters();
 }
 
