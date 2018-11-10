@@ -26,8 +26,8 @@ void Scene::LoadScene()
 	if (sceneJson == nullptr)
 		return;
 
-	vector<string> loadedGameObjectNames = LoadGameObjectsFromJson(sceneJson);
-	RemoveUnloadedGameObjects(loadedGameObjectNames);
+	RemoveUnloadedGameObjects(sceneJson);
+	LoadGameObjectsFromJson(sceneJson);
 
 	SendSceneLoadedEvents();
 }
@@ -55,14 +55,25 @@ bool Scene::SceneLoaded() const
 	return gameObjectContainer->GetGameObjectCount() != 0;
 }
 
-vector<string> Scene::LoadGameObjectsFromJson(const json& j)
+void Scene::RemoveUnloadedGameObjects(const json& sceneJson)
 {
-	vector<string> loadedGameObjectNames;
+	for (const IGameObject* gameObject : gameObjectContainer->GetGameObjects())
+	{
+		string name = gameObject->GetName();
 
+		auto foundGameObject = sceneJson.find(name);
+		if (foundGameObject != sceneJson.end())
+			continue;
+
+		gameObjectContainer->RemoveGameObject(name);
+	}
+}
+
+void Scene::LoadGameObjectsFromJson(const json& j)
+{
 	for (const auto gameObjectJson : j.items())
 	{
 		string name = gameObjectJson.key();
-		loadedGameObjectNames.push_back(name);
 
 		IGameObject* gameObject = gameObjectContainer->TryGetGameObject(name);
 		if (gameObject == nullptr)
@@ -73,25 +84,6 @@ vector<string> Scene::LoadGameObjectsFromJson(const json& j)
 
 		gameObject->SetFromJson(gameObjectJson.value());
 	}
-
-	return loadedGameObjectNames;
-}
-
-void Scene::RemoveUnloadedGameObjects(const vector<string>& loadedGameObjectNames)
-{
-	for (const IGameObject* gameObject : gameObjectContainer->GetGameObjects())
-	{
-		string name = gameObject->GetName();
-		if (GameObjectIsLoaded(name, loadedGameObjectNames))
-			continue;
-
-		gameObjectContainer->RemoveGameObject(name);
-	}
-}
-
-bool Scene::GameObjectIsLoaded(const string& name, const vector<string>& loadedGameObjectNames)
-{
-	return std::find(loadedGameObjectNames.begin(), loadedGameObjectNames.end(), name) != loadedGameObjectNames.end();
 }
 
 void Scene::SendSceneLoadedEvents()

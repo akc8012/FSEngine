@@ -22,6 +22,10 @@ private:
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
 
 	void SetDefaultParameters();
+
+	void RemoveUnloadedComponents(const json& componentObjects);
+	bool ComponentMatchesType(const json& foundComponent, const Component* loadedComponent) const;
+
 	Component* TryGetComponentOfType(const string& type, const string& name);
 
 protected:

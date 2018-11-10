@@ -9,4 +9,5 @@ namespace Types
 	static const char*  ComponentTypeString[] = { "Component", "Mesh", "QuadMesh", "CubeMesh", "Shading", "Color", "Texture", "FontTexture", "Transform", "Transform2D", "Model" };
 
 	ComponentType StringToComponentType(const string& componentString);
+	string ComponentTypeToString(ComponentType componentType);
 }

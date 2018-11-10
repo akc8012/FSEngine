@@ -6,4 +6,9 @@ namespace Types
 	{
 		return (ComponentType)std::distance(ComponentTypeString, std::find(ComponentTypeString, ComponentTypeString + ComponentsLength, componentString));
 	}
+
+	string ComponentTypeToString(ComponentType componentType)
+	{
+		return ComponentTypeString[componentType];
+	}
 }

@@ -21,7 +21,7 @@ private:
 
 public:
 	T* Add(shared_ptr<T> component, const string& name);
-	// Remove();
+	void Remove(const string& name);
 
 	T* Get(const string& name) const;
 	T* TryGet(const string& name) const;
@@ -41,6 +41,16 @@ T* ComponentCollection<T>::Add(shared_ptr<T> component, const string& name)
 	auto emplacedComponent = result.first->second.get();
 	emplacedComponent->SetName(GetName(name));
 	return emplacedComponent;
+}
+
+template<typename T>
+void ComponentCollection<T>::Remove(const string& name)
+{
+	auto component = TryGet(GetName(name));
+	if (component == nullptr)
+		throwFS("Could not find Component to remove with name: " + name);
+
+	components.erase(GetName(name));
 }
 
 template <typename T>
@@ -72,7 +82,7 @@ void ComponentCollection<T>::Clear()
 template <typename T>
 string ComponentCollection<T>::GetName(const string& name) const
 {
-	return name == "" ? Types::ComponentTypeString[T::ComponentTypeId] : name;
+	return name == "" ? Types::ComponentTypeToString(T::ComponentTypeId) : name;
 }
 
 template <typename T>

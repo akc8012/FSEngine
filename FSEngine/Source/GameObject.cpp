@@ -88,6 +88,8 @@ void GameObject::SetFromJson(const json& j)
 {
 	json componentObjects = j["Components"];
 
+	RemoveUnloadedComponents(componentObjects);
+
 	for (const auto componentJson : componentObjects.items())
 	{
 		string name = componentJson.key();
@@ -101,6 +103,29 @@ void GameObject::SetFromJson(const json& j)
 	}
 
 	parameterCollection->SetFromJson(j["ParameterCollection"]);
+}
+
+void GameObject::RemoveUnloadedComponents(const json& componentObjects)
+{
+	for (const Component* component : components->GetAllComponents())
+	{
+		if (!component->GetSerializable())
+			continue;
+
+		auto foundComponent = componentObjects.find(component->GetName());
+		if (foundComponent != componentObjects.end() && ComponentMatchesType(*foundComponent, component))
+			continue;
+
+		components->RemoveComponent(component);
+	}
+}
+
+bool GameObject::ComponentMatchesType(const json& foundComponent, const Component* loadedComponent) const
+{
+	string foundType = foundComponent["type"].get<string>();
+	string loadedType = Types::ComponentTypeToString(loadedComponent->GetComponentTypeId());
+
+	return foundType == loadedType;
 }
 
 void GameObject::SetSerializable(bool serializable)
