@@ -19,8 +19,8 @@ namespace GameObjectFactory
 		else if (type == "RenderText")
 			return make_unique<RenderText>();
 
-		else if (type == "CameraFacingQuad")
-			return make_unique<CameraFacingQuad>();
+		else if (type == "ClickLabel")
+			return make_unique<ClickLabel>();
 
 		throwFS("Cannot make GameObject of unrecognized type: " + type);
 	}

@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Camera.h"
 
-class CameraFacingQuad : public GameObject
+class ClickLabel : public GameObject
 {
 private:
 	struct corners

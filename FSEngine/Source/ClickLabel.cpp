@@ -1,6 +1,6 @@
-#include "../Header/CameraFacingQuad.h"
+#include "../Header/ClickLabel.h"
 
-void CameraFacingQuad::Start()
+void ClickLabel::Start()
 {
 	AddComponent(make_shared<QuadMesh>(), "Mesh");
 	AddComponent(make_shared<Transform>());
@@ -9,20 +9,20 @@ void CameraFacingQuad::Start()
 	GetParameterCollection()->SetParameter(DoLateUpdate, true);
 }
 
-void CameraFacingQuad::SceneLoaded()
+void ClickLabel::SceneLoaded()
 {
 	transform = GetComponent<Transform>();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 }
 
-void CameraFacingQuad::Update()
+void ClickLabel::Update()
 {
 	transform->SetOrientation(GetCameraLookAtOrientation());
 
 	printcFS(CursorIntersectsQuad());
 }
 
-quat CameraFacingQuad::GetCameraLookAtOrientation() const
+quat ClickLabel::GetCameraLookAtOrientation() const
 {
 	vec3 cameraForward = camera->GetForward();
 	vec3 lookDirection(cameraForward.x, -cameraForward.y, -cameraForward.z);
@@ -31,7 +31,7 @@ quat CameraFacingQuad::GetCameraLookAtOrientation() const
 }
 
 // https://stackoverflow.com/questions/21114796/3d-ray-quad-intersection-test-in-java
-bool CameraFacingQuad::CursorIntersectsQuad() const
+bool ClickLabel::CursorIntersectsQuad() const
 {
 	corners corners = GetQuadCorners();
 	vec3 cursorPlaneIntersectPosition = GetCursorPlaneIntersectPosition();
@@ -40,7 +40,7 @@ bool CameraFacingQuad::CursorIntersectsQuad() const
 	return Projected2DIntersectWithinCorners(projected2DIntersect, corners);
 }
 
-CameraFacingQuad::corners CameraFacingQuad::GetQuadCorners() const
+ClickLabel::corners ClickLabel::GetQuadCorners() const
 {
 	vec3 horizontalOffset = transform->GetRight() * (transform->GetScale().x / 2);
 	vec3 verticalOffset = transform->GetUp() * (transform->GetScale().y / 2);
@@ -53,7 +53,7 @@ CameraFacingQuad::corners CameraFacingQuad::GetQuadCorners() const
 	return corners;
 }
 
-vec3 CameraFacingQuad::GetCursorPlaneIntersectPosition() const
+vec3 ClickLabel::GetCursorPlaneIntersectPosition() const
 {
 	ray cursorRay = camera->GetCursorRay();
 	plane plane(transform->GetPosition(), transform->GetForward());
@@ -62,7 +62,7 @@ vec3 CameraFacingQuad::GetCursorPlaneIntersectPosition() const
 	return cursorRay.origin + (cursorRay.direction * intersectDistance);
 }
 
-vec2 CameraFacingQuad::GetProjected2DIntersect(const vec3& cursorPlaneIntersectPosition, const corners& corners) const
+vec2 ClickLabel::GetProjected2DIntersect(const vec3& cursorPlaneIntersectPosition, const corners& corners) const
 {
 	vec2 projected2DPosition;
 	projected2DPosition.x = glm::dot(cursorPlaneIntersectPosition - corners.topLeft, corners.topRight - corners.topLeft);
@@ -71,7 +71,7 @@ vec2 CameraFacingQuad::GetProjected2DIntersect(const vec3& cursorPlaneIntersectP
 	return projected2DPosition;
 }
 
-bool CameraFacingQuad::Projected2DIntersectWithinCorners(const vec2& projected2DIntersect, const corners& corners) const
+bool ClickLabel::Projected2DIntersectWithinCorners(const vec2& projected2DIntersect, const corners& corners) const
 {
 	float quadCornersHorizontal2D = glm::dot(corners.topRight - corners.topLeft, corners.topRight - corners.topLeft);
 	float quadCornersVertical2D = glm::dot(corners.bottomLeft - corners.topLeft, corners.bottomLeft - corners.topLeft);
@@ -82,7 +82,7 @@ bool CameraFacingQuad::Projected2DIntersectWithinCorners(const vec2& projected2D
 	return withinX && withinY;
 }
 
-string CameraFacingQuad::GetGameObjectType() const
+string ClickLabel::GetGameObjectType() const
 {
-	return "CameraFacingQuad";
+	return "ClickLabel";
 }

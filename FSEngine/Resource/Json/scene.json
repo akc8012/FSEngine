@@ -19,7 +19,7 @@
     ],
     "type": "Camera"
   },
-  "CameraFacingQuad": {
+  "ClickLabel": {
     "Components": {
       "Shading": {
         "Color": [
@@ -61,6 +61,6 @@
       "DoLateUpdate": 1,
       "DoUpdate": 1
     },
-    "type": "CameraFacingQuad"
+    "type": "ClickLabel"
   }
 }
