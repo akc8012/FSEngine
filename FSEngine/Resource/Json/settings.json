@@ -1,6 +1,6 @@
 {
   "LoadSettingsOnFocus": true,
-  "LoadSceneOnFocus": true,
+  "LoadSceneOnFocus": false,
   "ContinualSettingsReload": false,
   "LoadShadersOnFocus": true,
 
