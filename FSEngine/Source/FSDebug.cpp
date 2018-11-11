@@ -41,7 +41,7 @@ void FSDebug::Print(const string& message, const string& label)
 	string labelText = (label != "") ? (label + ": ") : ("");
 
 	printf("%s\n", (labelText + message).c_str());
-	OutputDebugString((labelText + message + "\n").c_str());
+	//OutputDebugString((labelText + message + "\n").c_str());
 }
 #pragma endregion
 

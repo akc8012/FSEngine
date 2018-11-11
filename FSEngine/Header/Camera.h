@@ -50,10 +50,13 @@ public:
 	void SetPosition(const vec3& position);
 	void SetOrientation(const vec3& orientation);
 	vec3 GetPosition() const;
+	vec3 GetOrientation() const;
+
 	vec3 GetForward() const;
 	vec3 GetUp() const;
 	vec3 GetRight() const;
-	vec3 GetOrientation() const;
+
+	const ray& GetCursorRay() const;
 
 	void ReceiveEvent(const string& key, const json& event) override;
 

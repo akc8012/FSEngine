@@ -2,8 +2,8 @@
   "Camera": {
     "Components": null,
     "Direction": [
-      -20.098318099975586,
-      -45.99813461303711,
+      -14.36452579498291,
+      76.49971771240234,
       0.0
     ],
     "ParameterCollection": {
@@ -13,9 +13,9 @@
       "DoUpdate": 1
     },
     "Position": [
-      -5.076792240142822,
-      2.020479202270508,
-      6.9370269775390625
+      -1.1360578536987305,
+      1.789597749710083,
+      -3.196760416030884
     ],
     "type": "Camera"
   },
@@ -38,9 +38,9 @@
       },
       "Transform": {
         "EulerAngles": [
-          -20.098323822021484,
-          -44.001869201660156,
-          -1.8592581909615546e-06
+          165.63548278808594,
+          -13.500228881835938,
+          -179.99993896484375
         ],
         "Position": [
           0.0,
@@ -48,107 +48,19 @@
           0.0
         ],
         "Scale": [
-          1.0,
-          1.0,
+          2.0,
+          0.5,
           1.0
         ],
         "type": "Transform"
       }
     },
     "ParameterCollection": {
-      "DoDraw": 0,
+      "DoDraw": 1,
       "DoLateDraw": 1,
       "DoLateUpdate": 1,
       "DoUpdate": 1
     },
     "type": "CameraFacingQuad"
-  },
-  "Plane": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.5,
-          0.5,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          -12.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          0.0,
-          0.0,
-          3.0
-        ],
-        "Scale": [
-          5.0,
-          5.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "QuadPrimitive"
-  },
-  "Point": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.0,
-          0.800000011920929,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          1.1136431694030762,
-          -1.1029880046844482,
-          3.234447717666626
-        ],
-        "Scale": [
-          0.10000000149011612,
-          0.10000000149011612,
-          0.10000000149011612
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
   }
 }

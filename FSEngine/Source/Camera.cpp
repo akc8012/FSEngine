@@ -255,6 +255,11 @@ vec3 Camera::GetRight() const
 	return vec3(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0]);
 }
 
+const ray& Camera::GetCursorRay() const
+{
+	return cursorRay;
+}
+
 void Camera::SetOrientation(const vec3& direction)
 {
 	this->direction = direction;
