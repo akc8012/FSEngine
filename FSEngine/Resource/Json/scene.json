@@ -46,8 +46,8 @@
   "Camera": {
     "Components": null,
     "Direction": [
-      -34.4178581237793,
-      -44.39257049560547,
+      -17.0,
+      -59.63317108154297,
       0.0
     ],
     "ParameterCollection": {
@@ -57,55 +57,11 @@
       "DoUpdate": 1
     },
     "Position": [
-      -3.3643922805786133,
-      3.392000198364258,
-      1.8678877353668213
+      -1.9296460151672363,
+      1.71600341796875,
+      4.276515960693359
     ],
     "type": "Camera"
-  },
-  "ClickLabel": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.20000000298023224,
-          0.4000000059604645,
-          0.6000000238418579,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 0,
-          "EnableDepthTest": 0,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          -34.4178581237793,
-          -45.60743713378906,
-          -2.5359327082696836e-06
-        ],
-        "Position": [
-          0.0,
-          0.5,
-          0.0
-        ],
-        "Scale": [
-          2.0,
-          0.5,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 1,
-      "DoLateUpdate": 1,
-      "DoUpdate": 1
-    },
-    "type": "ClickLabel"
   },
   "ClickLabelManager": {
     "Components": null,
@@ -314,50 +270,6 @@
       "DoUpdate": 1
     },
     "type": "PlayerShip"
-  },
-  "Quad": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          1.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          1.5,
-          2.0,
-          -2.5
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "QuadPrimitive"
   },
   "Red": {
     "Components": {

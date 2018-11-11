@@ -4,7 +4,12 @@ void ClickLabel::Start()
 {
 	AddComponent(make_shared<QuadMesh>(), "Mesh");
 	AddComponent(make_shared<Transform>());
+	
+	auto shading = AddComponent(make_shared<Color>(vec3(0.2f, 0.4f, 0.6f)), "Shading");
+	shading->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
+	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 
+	SetSerializable(false);
 	GetParameterCollection()->SetParameter(DoLateDraw, true);
 	GetParameterCollection()->SetParameter(DoLateUpdate, true);
 }
@@ -20,7 +25,7 @@ void ClickLabel::Update()
 	transform->SetOrientation(GetCameraLookAtOrientation());
 
 	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT) && CursorIntersectsQuad())
-		printFS("CLICKED");
+		printFS(GetName());
 }
 
 quat ClickLabel::GetCameraLookAtOrientation() const

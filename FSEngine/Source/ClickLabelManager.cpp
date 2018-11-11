@@ -9,18 +9,17 @@ void ClickLabelManager::SceneLoaded()
 {
 	for (const auto gameObject : gameObjectContainer->GetGameObjects())
 	{
-		if (gameObject->TryGetComponent<Transform>() == nullptr)
+		auto gameObjectTransform = gameObject->TryGetComponent<Transform>();
+		if (gameObjectTransform == nullptr || gameObjectTransform->GetComponentTypeId() != Types::Transform)
 			continue;
 
-		auto clickLabel = gameObjectContainer->AddGameObject(gameObject->GetName() + "Label", make_unique<ClickLabel>());
-		clickLabel->SetSerializable(false);
-		clickLabel->AddComponent(make_shared<Color>(vec3(0.2f, 0.2f, 0.5f)), "Shading");
-		clickLabel->GetComponent<Transform>()->SetPosition(gameObject->GetComponent<Transform>()->GetPosition() + FSMath::Up);
+		auto clickLabel = gameObjectContainer->AddGameObject(gameObject->GetName() + " - Label", make_unique<ClickLabel>());
+		clickLabel->SceneLoaded(); // TODO: make this less bad
 
-		clickLabel->SceneLoaded();
+		auto transform = clickLabel->GetComponent<Transform>();
+		transform->SetPosition(gameObjectTransform->GetPosition() + (FSMath::Up * 0.5f));
+		transform->SetScale(vec3(1.f, 0.25f, 1.f));
 	}
-
-	printFS("click label manager loaded");
 }
 
 string ClickLabelManager::GetGameObjectType() const
