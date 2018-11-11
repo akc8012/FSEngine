@@ -1,53 +1,9 @@
 {
-  "Blue": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.0,
-          0.0,
-          0.800000011920929,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          -0.800000011920929,
-          0.0,
-          -2.0
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
   "Camera": {
     "Components": null,
     "Direction": [
-      -17.0,
-      -90.0,
+      -20.098318099975586,
+      -45.99813461303711,
       0.0
     ],
     "ParameterCollection": {
@@ -57,9 +13,9 @@
       "DoUpdate": 1
     },
     "Position": [
-      0.0,
-      1.5,
-      5.0
+      -5.076792240142822,
+      2.020479202270508,
+      6.9370269775390625
     ],
     "type": "Camera"
   },
@@ -82,9 +38,9 @@
       },
       "Transform": {
         "EulerAngles": [
-          -17.000003814697266,
-          2.504478970877244e-06,
-          6.540011181265307e-14
+          -20.098323822021484,
+          -44.001869201660156,
+          -1.8592581909615546e-06
         ],
         "Position": [
           0.0,
@@ -100,209 +56,44 @@
       }
     },
     "ParameterCollection": {
-      "DoDraw": 1,
+      "DoDraw": 0,
       "DoLateDraw": 1,
       "DoLateUpdate": 1,
       "DoUpdate": 1
     },
     "type": "CameraFacingQuad"
   },
-  "DebugText": {
+  "Plane": {
     "Components": {
       "Shading": {
-        "Filepath": "",
-        "FontName": "consola.ttf",
+        "Color": [
+          0.5,
+          0.5,
+          0.0,
+          1.0
+        ],
         "ParameterCollection": {
           "Blend": 1,
-          "CalculateLighting": 0,
-          "EnableDepthTest": 0,
-          "RenderPerspective": 0
+          "CalculateLighting": 1,
+          "EnableDepthTest": 1,
+          "RenderPerspective": 1
         },
-        "Text": "Waddup boooooiiiii",
-        "TextureType": 0,
-        "type": "FontTexture"
+        "type": "Color"
       },
       "Transform": {
-        "PixelPosition": [
+        "EulerAngles": [
+          -12.0,
+          -0.0,
+          0.0
+        ],
+        "Position": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "Scale": [
           5.0,
-          -5.0
-        ],
-        "PixelScale": [
-          26.0,
-          26.0
-        ],
-        "ScreenAnchorPoint": 1,
-        "TextAlignment": 1,
-        "type": "Transform2D"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 1,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "RenderText"
-  },
-  "Green": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.0,
-          0.800000011920929,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          1.0,
-          -1.0,
-          -1.0
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "GreenCube": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.10000000149011612,
-          0.6000000238418579,
-          0.30000001192092896,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          6.0,
-          -0.20000000298023224,
-          0.10000000149011612
-        ],
-        "Scale": [
-          2.0,
-          0.800000011920929,
-          2.799999952316284
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "MemeFaceCube": {
-    "Components": {
-      "Shading": {
-        "Filepath": "Resource/Image/awesomeface.png",
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "TextureType": 0,
-        "type": "Texture"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          4.5,
-          0.20000000298023224,
-          0.0
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "Quad": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          1.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          1.5,
-          2.0,
-          -2.5
-        ],
-        "Scale": [
-          1.0,
-          1.0,
+          5.0,
           1.0
         ],
         "type": "Transform"
@@ -316,13 +107,13 @@
     },
     "type": "QuadPrimitive"
   },
-  "Red": {
+  "Point": {
     "Components": {
       "Shading": {
         "Color": [
+          0.0,
           0.800000011920929,
           0.0,
-          0.0,
           1.0
         ],
         "ParameterCollection": {
@@ -340,58 +131,14 @@
           0.0
         ],
         "Position": [
-          1.5,
-          1.0,
-          -3.0
+          1.1136431694030762,
+          -1.1029880046844482,
+          3.234447717666626
         ],
         "Scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "type": "Transform"
-      }
-    },
-    "ParameterCollection": {
-      "DoDraw": 1,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "CubePrimitive"
-  },
-  "Yellow": {
-    "Components": {
-      "Shading": {
-        "Color": [
-          0.6000000238418579,
-          0.6000000238418579,
-          0.0,
-          1.0
-        ],
-        "ParameterCollection": {
-          "Blend": 1,
-          "CalculateLighting": 1,
-          "EnableDepthTest": 1,
-          "RenderPerspective": 1
-        },
-        "type": "Color"
-      },
-      "Transform": {
-        "EulerAngles": [
-          0.0,
-          -0.0,
-          0.0
-        ],
-        "Position": [
-          -2.0,
-          -1.0,
-          0.0
-        ],
-        "Scale": [
-          1.0,
-          1.0,
-          1.0
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
         ],
         "type": "Transform"
       }

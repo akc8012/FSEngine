@@ -1,6 +1,6 @@
 {
   "LoadSettingsOnFocus": true,
-  "LoadSceneOnFocus": false,
+  "LoadSceneOnFocus": true,
   "ContinualSettingsReload": false,
   "LoadShadersOnFocus": true,
 
@@ -12,7 +12,7 @@
 
   "PolygonLineMode": false,
   "DrawGrid": true,
-  "BackgroundColor": [61, 54, 71],
+  "BackgroundColor": [0, 45, 60],
 
   "EditorMode": true,
 

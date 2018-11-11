@@ -86,3 +86,12 @@ quat FSMath::LookAt(vec3 direction, vec3 desiredUp)
 	// Apply them
 	return rot2 * rot1; // remember, in reverse order.
 }
+
+float FSMath::RayIntersectPlaneDistance(const plane& plane, const ray& ray)
+{
+	// assuming vectors are all normalized
+	vec3 originDifference = plane.origin - ray.origin;
+	float denominator = glm::dot(plane.normal, ray.direction);
+
+	return glm::dot(originDifference, plane.normal) / denominator;
+}

@@ -147,7 +147,10 @@ vec3 Camera::GetPositionKeyInput(const vec3& right, const vec3& forward) const
 
 vec3 Camera::GetCursorPositionAtRayIntersect() const
 {
-	return cursorRay.origin + (cursorRay.direction * GetRayIntersectFloorDistance(cursorRay));
+	plane floorPlane(FSMath::Zero, FSMath::Up);
+	float intersectDistance = FSMath::RayIntersectPlaneDistance(floorPlane, cursorRay);
+
+	return cursorRay.origin + (cursorRay.direction * intersectDistance);
 }
 
 vec3 Camera::GetZoomInput(const vec3& forward) const
@@ -220,16 +223,6 @@ vec2 Camera::GetDeviceNormalizedCursorPosition(const tvec2<int>& cursorPosition)
 	cursorCoordinates.y = -cursorCoordinates.y;
 
 	return cursorCoordinates;
-}
-
-// http://antongerdelan.net/opengl/raycasting.html
-float Camera::GetRayIntersectFloorDistance(const ray& ray) const
-{
-	plane floorPlane(FSMath::Zero, glm::abs(FSMath::Up));
-	vec3 vector = -( ((ray.origin * floorPlane.normal) - floorPlane.origin) / (ray.direction * floorPlane.normal) );
-	vector = FSMath::NanToZero(vector);
-
-	return glm::dot(floorPlane.normal, vector);
 }
 #pragma endregion
 

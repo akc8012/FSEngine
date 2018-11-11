@@ -13,26 +13,6 @@ using glm::vec2;
 using glm::quat;
 using glm::tquat;
 
-namespace FSMath
-{
-	const mat4 IdentityMatrix = mat4(1);
-	const quat IdentityQuaternion = quat(1, 0, 0, 0);
-	const vec3 Forward = vec3(0, 0, -1);
-	const vec3 Up = vec3(0, 1, 0);
-	const vec3 Right = vec3(1, 0, 0);
-	const vec3 Zero = vec3(0, 0, 0);
-	const vec3 One = vec3(1, 1, 1);
-
-	using dquat = tquat<double>;
-
-	vec3 EulerAngleToDirectionVector(const vec3& angle);
-	vec3 NanToZero(vec3 vector);
-
-	// https://github.com/opengl-tutorials/ogl/blob/master/common/quaternion_utils.cpp
-	quat RotationBetweenVectors(vec3 start, vec3 dest);
-	quat LookAt(vec3 direction, vec3 desiredUp);
-}
-
 struct vertex
 {
 	vertex() { }
@@ -75,3 +55,26 @@ struct plane
 	vec3 origin;
 	vec3 normal;
 };
+
+namespace FSMath
+{
+	const mat4 IdentityMatrix = mat4(1);
+	const quat IdentityQuaternion = quat(1, 0, 0, 0);
+	const vec3 Forward = vec3(0, 0, -1);
+	const vec3 Up = vec3(0, 1, 0);
+	const vec3 Right = vec3(1, 0, 0);
+	const vec3 Zero = vec3(0, 0, 0);
+	const vec3 One = vec3(1, 1, 1);
+
+	using dquat = tquat<double>;
+
+	vec3 EulerAngleToDirectionVector(const vec3& angle);
+	vec3 NanToZero(vec3 vector);
+
+	// https://github.com/opengl-tutorials/ogl/blob/master/common/quaternion_utils.cpp
+	quat RotationBetweenVectors(vec3 start, vec3 dest);
+	quat LookAt(vec3 direction, vec3 desiredUp);
+
+	// https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection
+	float RayIntersectPlaneDistance(const plane& plane, const ray& ray);
+}

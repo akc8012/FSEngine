@@ -38,7 +38,6 @@ private:
 
 	vec3 ProjectCursorPositionToWorldDirection() const;
 	vec2 GetDeviceNormalizedCursorPosition(const tvec2<int>& cursorPosition) const;
-	float GetRayIntersectFloorDistance(const ray& ray) const;
 
 	float GetFrameAdjustedSpeed() const;
 
