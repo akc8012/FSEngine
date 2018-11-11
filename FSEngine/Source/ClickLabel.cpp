@@ -19,7 +19,8 @@ void ClickLabel::Update()
 {
 	transform->SetOrientation(GetCameraLookAtOrientation());
 
-	printcFS(CursorIntersectsQuad());
+	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT) && CursorIntersectsQuad())
+		printFS("CLICKED");
 }
 
 quat ClickLabel::GetCameraLookAtOrientation() const

@@ -6,6 +6,7 @@
 #include "PlayerShip.h"
 #include "QuadPrimitive.h"
 #include "ClickLabel.h"
+#include "ClickLabelManager.h"
 
 #include <string>
 #include <memory>

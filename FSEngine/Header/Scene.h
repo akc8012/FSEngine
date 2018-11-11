@@ -18,9 +18,7 @@ private:
 
 	void RemoveUnloadedGameObjects(const json& sceneJson);
 	void LoadGameObjectsFromJson(const json& j);
-
 	void SendSceneLoadedEvents();
-	void AddGameObjects();
 
 	string GetFileName() const;
 

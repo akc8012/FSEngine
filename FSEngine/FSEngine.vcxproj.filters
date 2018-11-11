@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Transform2D.cpp" />
     <ClCompile Include="Source\CubeMesh.cpp" />
     <ClCompile Include="Source\ClickLabel.cpp" />
+    <ClCompile Include="Source\ClickLabelManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -84,6 +85,7 @@
     <ClInclude Include="Header\Transform2D.h" />
     <ClInclude Include="Header\CubeMesh.h" />
     <ClInclude Include="Header\ClickLabel.h" />
+    <ClInclude Include="Header\ClickLabelManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

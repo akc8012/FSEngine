@@ -62,5 +62,15 @@
       "DoUpdate": 1
     },
     "type": "ClickLabel"
+  },
+  "ClickLabelManager": {
+    "Components": null,
+    "ParameterCollection": {
+      "DoDraw": 0,
+      "DoLateDraw": 0,
+      "DoLateUpdate": 0,
+      "DoUpdate": 1
+    },
+    "type": "ClickLabelManager"
   }
 }

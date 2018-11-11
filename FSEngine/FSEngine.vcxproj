@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\ClickLabel.cpp" />
+    <ClCompile Include="Source\ClickLabelManager.cpp" />
     <ClCompile Include="Source\ComponentContainer.cpp" />
     <ClCompile Include="Source\ComponentType.cpp" />
     <ClCompile Include="Source\CubeMesh.cpp" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\ClickLabel.h" />
+    <ClInclude Include="Header\ClickLabelManager.h" />
     <ClInclude Include="Header\ComponentCollection.h" />
     <ClInclude Include="Header\ComponentContainer.h" />
     <ClInclude Include="Header\ComponentType.h" />

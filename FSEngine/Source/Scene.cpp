@@ -4,8 +4,6 @@ Scene::Scene(const string& name, Systems* systems)
  : name(name), systems(systems)
 {
 	gameObjectContainer = make_unique<GameObjectContainer>(systems);
-
-	AddGameObjects();
 	LoadScene();
 
 	systems->eventSystem->AddListener("SaveKeyPressed", this);
@@ -13,11 +11,6 @@ Scene::Scene(const string& name, Systems* systems)
 	systems->eventSystem->AddListener("GameStopped", this);
 	systems->eventSystem->AddListener("WindowFocusGained", this);
 	systems->eventSystem->AddListener("WindowFocusLost", this);
-}
-
-void Scene::AddGameObjects()
-{
-
 }
 
 void Scene::LoadScene()

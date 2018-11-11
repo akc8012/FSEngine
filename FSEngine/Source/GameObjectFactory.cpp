@@ -22,6 +22,9 @@ namespace GameObjectFactory
 		else if (type == "ClickLabel")
 			return make_unique<ClickLabel>();
 
+		else if (type == "ClickLabelManager")
+			return make_unique<ClickLabelManager>();
+
 		throwFS("Cannot make GameObject of unrecognized type: " + type);
 	}
 }
