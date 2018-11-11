@@ -119,9 +119,6 @@ void Engine::PollEvents()
 
 		case SDL_KEYDOWN:
 			HandleKeyboardEvent(sdlEvent.key);
-
-			if (sdlEvent.key.keysym.sym == SDLK_ESCAPE)
-				Stop();
 			break;
 
 		case SDL_WINDOWEVENT:
@@ -130,6 +127,15 @@ void Engine::PollEvents()
 
 		case SDL_MOUSEWHEEL:
 			systems->input->SetMouseWheelScroll(sdlEvent.wheel.y);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+			systems->input->SetMouseButtonPress(sdlEvent.button.button);
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			systems->input->SetMouseButtonRelease(sdlEvent.button.button);
+			break;
 		}
 	}
 }
@@ -138,6 +144,10 @@ void Engine::HandleKeyboardEvent(const SDL_KeyboardEvent& keyboardEvent)
 {
 	switch (keyboardEvent.keysym.sym)
 	{
+	case SDLK_ESCAPE:
+		Stop();
+		break;
+
 	case SDLK_x:
 		try
 		{

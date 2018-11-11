@@ -15,6 +15,8 @@ void Input::Update()
 
 	UpdateLastCursorPosition();
 
+	UpdateLastMouseButtonState();
+
 	ResetMouseWheelScroll();
 }
 
@@ -29,6 +31,12 @@ void Input::UpdateLastKeyboardState()
 void Input::UpdateLastCursorPosition()
 {
 	lastCursorPosition = GetCursorPosition();
+}
+
+void Input::UpdateLastMouseButtonState()
+{
+	for (int i = 0; i < 3; i++)
+		lastMouseButtonState[i] = mouseButtonState[i];
 }
 
 void Input::ResetMouseWheelScroll()
@@ -89,6 +97,18 @@ int Input::GetMouseWheelScroll() const
 	return mouseWheelScroll;
 }
 
+void Input::SetMouseButtonPress(int button)
+{
+	const int SdlButtonEnumOffset = 1;
+	mouseButtonState[button - SdlButtonEnumOffset] = true;
+}
+
+void Input::SetMouseButtonRelease(int button)
+{
+	const int SdlButtonEnumOffset = 1;
+	mouseButtonState[button - SdlButtonEnumOffset] = false;
+}
+
 tvec2<int> Input::GetCursorDelta() const
 {
 	return GetCursorPosition() - lastCursorPosition;
@@ -120,6 +140,18 @@ bool Input::IsButtonReleased(const SDL_Scancode& button) const
 bool Input::IsButtonHeld(const SDL_Scancode& button) const
 {
 	return keyboardState[button];
+}
+
+bool Input::IsButtonPressed(int button) const
+{
+	const int SdlButtonEnumOffset = 1;
+	return !lastMouseButtonState[button - SdlButtonEnumOffset] && mouseButtonState[button - SdlButtonEnumOffset];
+}
+
+bool Input::IsButtonReleased(int button) const
+{
+	const int SdlButtonEnumOffset = 1;
+	return lastMouseButtonState[button - SdlButtonEnumOffset] && !mouseButtonState[button - SdlButtonEnumOffset];
 }
 
 bool Input::IsButtonHeld(int button) const
