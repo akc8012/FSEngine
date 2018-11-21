@@ -23,8 +23,9 @@ private:
 
 public:
 	void Start() override;
-	void SceneLoaded() override;
 	void Update() override;
+
+	void InitializeClickLabel(const string& gameObjectName);
 
 	string GetGameObjectType() const override;
 };

@@ -5,7 +5,8 @@ void ClickLabel::Start()
 	AddComponent(make_shared<QuadMesh>(), "Mesh");
 	AddComponent(make_shared<Transform>());
 	
-	auto shading = AddComponent(make_shared<Color>(vec3(0.2f, 0.4f, 0.6f)), "Shading");
+	auto shading = AddComponent(make_shared<FontTexture>(), "Shading");
+	shading->LoadFont("consola.ttf");
 	shading->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
 	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 
@@ -14,10 +15,12 @@ void ClickLabel::Start()
 	GetParameterCollection()->SetParameter(DoLateUpdate, true);
 }
 
-void ClickLabel::SceneLoaded()
+void ClickLabel::InitializeClickLabel(const string& gameObjectName)
 {
 	transform = GetComponent<Transform>();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
+
+	GetComponent<FontTexture>("Shading")->GenerateFontTexture(gameObjectName);
 }
 
 void ClickLabel::Update()
