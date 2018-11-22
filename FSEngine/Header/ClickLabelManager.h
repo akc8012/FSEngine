@@ -20,4 +20,5 @@ public:
 
 	void CreateClickLabels();
 	void Update() override;
+	IGameObject* GetActiveGameObject() const;
 };

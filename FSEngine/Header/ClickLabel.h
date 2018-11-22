@@ -10,6 +10,9 @@ private:
 		vec3 topLeft, topRight, bottomLeft;
 	};
 
+	const vec3 DeselectedColor = vec3(0.2f, 0.2f, 0.7f);
+	const vec3 SelectedColor = vec3(0.7f, 0.7f, 0.2f);
+
 	IGameObject* attachedGameObject = nullptr;
 	Transform* transform = nullptr;
 	Camera* camera = nullptr;
@@ -29,6 +32,9 @@ public:
 	void InitializeClickLabel(IGameObject* attachedGameObject);
 	bool CursorIntersectsQuad() const;
 	IGameObject* GetAttachedGameObject() const;
+
+	void Select();
+	void Deselect();
 
 	string GetGameObjectType() const override;
 };

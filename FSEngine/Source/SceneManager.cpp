@@ -28,6 +28,8 @@ void SceneManager::ReceiveEvent(const string& key, const json& event)
 
 void SceneManager::Update()
 {
+	sceneEditor->Update();
+
 	UpdateGameObjects(false);
 	UpdateGameObjects(true);
 }

@@ -37,7 +37,15 @@ ClickLabel* ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameOb
 void ClickLabelManager::Update()
 {
 	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
+	{
+		if (activeClickLabel != nullptr)
+			activeClickLabel->Deselect();
+
 		activeClickLabel = GetCursorIntersectingClickLabel();
+
+		if (activeClickLabel != nullptr)
+			activeClickLabel->Select();
+	}
 }
 
 ClickLabel* ClickLabelManager::GetCursorIntersectingClickLabel() const
@@ -49,4 +57,9 @@ ClickLabel* ClickLabelManager::GetCursorIntersectingClickLabel() const
 	}
 
 	return nullptr;
+}
+
+IGameObject * ClickLabelManager::GetActiveGameObject() const
+{
+	return activeClickLabel == nullptr ? nullptr : activeClickLabel->GetAttachedGameObject();
 }

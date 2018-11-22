@@ -1,7 +1,7 @@
 #include "../Header/SceneEditor.h"
 
 SceneEditor::SceneEditor(Scene* scene, Systems* systems)
- : scene(scene)
+ : scene(scene), systems(systems)
 {
 	clickLabelManager = make_unique<ClickLabelManager>(scene, systems);
 	InitializeEditor();
@@ -15,4 +15,5 @@ void SceneEditor::InitializeEditor()
 void SceneEditor::Update()
 {
 	clickLabelManager->Update();
+	activeGameObject = clickLabelManager->GetActiveGameObject();
 }

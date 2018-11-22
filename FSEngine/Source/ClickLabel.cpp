@@ -9,7 +9,7 @@ void ClickLabel::Start()
 	fontTexture->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
 	fontTexture->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 
-	auto backingColor = AddComponent(make_shared<Color>(vec3(0.2f, 0.2f, 0.7f)), "BackingColor");
+	auto backingColor = AddComponent(make_shared<Color>(DeselectedColor), "BackingColor");
 	backingColor->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
 	backingColor->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
 
@@ -111,6 +111,16 @@ bool ClickLabel::Projected2DIntersectWithinCorners(const vec2& projected2DInters
 IGameObject* ClickLabel::GetAttachedGameObject() const
 {
 	return attachedGameObject;
+}
+
+void ClickLabel::Select()
+{
+	GetComponent<Color>("BackingColor")->SetColor(SelectedColor);
+}
+
+void ClickLabel::Deselect()
+{
+	GetComponent<Color>("BackingColor")->SetColor(DeselectedColor);
 }
 
 string ClickLabel::GetGameObjectType() const

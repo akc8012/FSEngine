@@ -7,6 +7,9 @@ class SceneEditor : public IUpdatable
 {
 private:
 	Scene* scene = nullptr;
+	Systems* systems = nullptr;
+
+	IGameObject* activeGameObject = nullptr;
 	unique_ptr<ClickLabelManager> clickLabelManager;
 
 public:
