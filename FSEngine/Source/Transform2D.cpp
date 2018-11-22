@@ -11,16 +11,8 @@ void Transform2D::SetTransform(const vec2& windowSurfaceSize, const vec2& target
 	this->surfaceSize = windowSurfaceSize;
 	this->targetSurfaceSize = targetSurfaceSize;
 
-	SetScaleFromSurfaceSize(surfaceSize, CalculateAspectRatio(targetSurfaceSize));
+	SetScaleFromSurfaceSize(surfaceSize, FSMath::CalculateAspectRatio(targetSurfaceSize));
 	SetPositionFromSurfaceSize(surfaceSize);
-}
-
-vec2 Transform2D::CalculateAspectRatio(const vec2& surfaceSize) const
-{
-	float width = std::max((float)surfaceSize.x / (float)surfaceSize.y, 1.f);
-	float height = std::max((float)surfaceSize.y / (float)surfaceSize.x, 1.f);
-
-	return vec2(width, height);
 }
 
 void Transform2D::SetScaleFromSurfaceSize(const vec2& surfaceSize, const vec2& aspectRatio)
@@ -115,7 +107,7 @@ void Transform2D::SetScreenAnchorPoint(AnchorPosition anchorPoint)
 	SetTransform(surfaceSize, targetSurfaceSize);
 }
 
-void Transform2D::SetTextAlignment(AnchorPosition alignPosition)
+void Transform2D::SetAlignmentPoint(AnchorPosition alignPosition)
 {
 	this->alignPosition = alignPosition;
 	SetTransform(surfaceSize, targetSurfaceSize);
@@ -127,7 +119,7 @@ json Transform2D::GetJson() const
 	json j = Component::GetJson();
 
 	j["ScreenAnchorPoint"] = anchorPosition;
-	j["TextAlignment"] = alignPosition;
+	j["AlignmentPoint"] = alignPosition;
 	j["PixelPosition"] = json { pixelPosition.x, pixelPosition.y };
 	j["PixelScale"] = json { pixelScaleFactor.x, pixelScaleFactor.y };
 
@@ -139,7 +131,7 @@ void Transform2D::SetFromJson(const json& j)
 	Component::SetFromJson(j);
 
 	SetScreenAnchorPoint((AnchorPosition)j["ScreenAnchorPoint"].get<int>());
-	SetTextAlignment((AnchorPosition)j["TextAlignment"].get<int>());
+	SetAlignmentPoint((AnchorPosition)j["AlignmentPoint"].get<int>());
 	SetPixelPosition(vec2(j["PixelPosition"][0], j["PixelPosition"][1]));
 	SetPixelScale(vec2(j["PixelScale"][0], j["PixelScale"][1]));
 }

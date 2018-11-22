@@ -18,7 +18,6 @@ private:
 	void SetScaleFromSurfaceSize(const vec2& surfaceSize, const vec2& targetSurfaceSize);
 	void SetPositionFromSurfaceSize(const vec2& surfaceSize);
 
-	vec2 CalculateAspectRatio(const vec2& surfaceSize) const;
 	vec2 GetPixelAnchoredPosition(const vec2& surfaceSize) const;
 	vec2 GetPixelAlignPosition(const vec2& position, const vec2& surfaceSize) const;
 	vec2 GetPixelScale(const vec2& surfaceSize) const;
@@ -33,7 +32,7 @@ public:
 	void SetPixelScale(float pixelScaleFactor);
 	void SetPixelPosition(const vec2& pixelPosition);
 	void SetScreenAnchorPoint(AnchorPosition anchorPoint);
-	void SetTextAlignment(AnchorPosition alignPosition);
+	void SetAlignmentPoint(AnchorPosition alignPosition);
 
 	json GetJson() const override;
 	void SetFromJson(const json& j) override;
