@@ -40,9 +40,6 @@ public:
 
 	virtual void SetSerializable(bool serializable) = 0;
 	virtual bool GetSerializable() const = 0;
-
-	virtual ComponentCollection<Mesh>* GetMeshCollection() const override = 0;
-	virtual ComponentCollection<Texture>* GetTextureCollection() const override = 0;
 };
 
 template <typename T>
