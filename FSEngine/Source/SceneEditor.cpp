@@ -4,6 +4,7 @@ SceneEditor::SceneEditor(Scene* scene, Systems* systems)
  : scene(scene)
 {
 	clickLabelManager = make_unique<ClickLabelManager>(scene, systems);
+	InitializeEditor();
 }
 
 void SceneEditor::InitializeEditor()

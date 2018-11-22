@@ -5,7 +5,6 @@ SceneManager::SceneManager(Systems* systems)
 {
 	currentScene = make_unique<Scene>("scene", systems);
 	sceneEditor = make_unique<SceneEditor>(currentScene.get(), systems);
-	sceneEditor->InitializeEditor();
 
 	systems->eventSystem->AddListener("SaveKeyPressed", this);
 	systems->eventSystem->AddListener("LoadKeyPressed", this);
