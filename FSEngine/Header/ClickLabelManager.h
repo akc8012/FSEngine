@@ -5,7 +5,9 @@
 class ClickLabelManager : public GameObject
 {
 private:
-	void CreateClickLabelForGameObject(IGameObject* gameObject);
+	vector<ClickLabel*> clickLabels;
+
+	ClickLabel* CreateClickLabelForGameObject(IGameObject* gameObject);
 
 public:
 	void Start() override;
