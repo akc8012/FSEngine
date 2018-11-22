@@ -32,7 +32,7 @@ private:
 	int verticeCount;
 	int indiceCount;
 	unique_ptr<ParameterCollection<Parameters, ParametersLength>> parameterCollection;
-	vector<string> associatedTextureNames;
+	string shadingName;
 	Uint32 vertexArrayId = NULL;
 
 	void SendVertices(Uint32 vertexBufferId, const vector<vertex>& vertices);
@@ -58,8 +58,8 @@ public:
 
 	void BindVertexArray();
 
-	void AddAssociatedTextureName(const string& textureName);
-	const vector<string>& GetAssociatedTextureNames() const;
+	void SetShadingName(const string& shadingName);
+	const string& GetShadingName() const;
 
 	ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const;
 

@@ -27,7 +27,6 @@ private:
 
 	void SetTransformMatrices(Transform* transform);
 
-	Shading* FindShading(const Model* model, const vector<string>& textureNames) const;
 	void SetShadingParameters(const Shading* shading);
 	void ApplyShading(Shading* shading);
 

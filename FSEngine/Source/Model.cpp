@@ -111,11 +111,11 @@ void Model::AddTextureComponent(Mesh* meshComponent, const string& textureName)
 	unique_ptr<string> loadedTextureName(TryGetLoadedTextureName(textureName));
 	if (loadedTextureName == nullptr)
 	{
-		meshComponent->AddAssociatedTextureName(textureName);
+		meshComponent->SetShadingName(textureName);
 		textureComponents->Add(make_shared<Texture>(GetDirectory() + textureName), textureName);
 	}
 	else
-		meshComponent->AddAssociatedTextureName(*loadedTextureName);
+		meshComponent->SetShadingName(*loadedTextureName);
 }
 
 string* Model::TryGetLoadedTextureName(const string& textureName) const

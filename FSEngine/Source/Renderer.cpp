@@ -100,7 +100,7 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 
 	for (auto mesh : hasModel ? model->GetMeshCollection()->GetComponents() : gameObject->GetComponentContainer()->GetComponents<Mesh>())
 	{
-		auto shading = hasModel ? FindShading(model, mesh->GetAssociatedTextureNames()) : gameObject->GetComponent<Shading>();
+		auto shading = hasModel ? model->GetTextureCollection()->Get(mesh->GetShadingName()) : gameObject->GetComponent<Shading>(mesh->GetShadingName());
 
 		SetShadingParameters(shading);
 		ApplyShading(shading);
@@ -113,11 +113,6 @@ void Renderer::SetTransformMatrices(Transform* transform)
 {
 	shaderProgram->SetMatrixUniform("modelMatrix", transform->GetMatrix());
 	shaderProgram->SetMatrixUniform("normalMatrix", transform->CalculateNormalMatrix());
-}
-
-Shading* Renderer::FindShading(const Model* model, const vector<string>& textureNames) const
-{
-	return model->GetTextureCollection()->Get(textureNames.front());
 }
 
 void Renderer::SetShadingParameters(const Shading* shading)
