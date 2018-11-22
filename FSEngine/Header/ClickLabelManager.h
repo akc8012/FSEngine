@@ -1,8 +1,9 @@
 #pragma once
+#include "IUpdatable.h"
 #include "Scene.h"
 #include "ClickLabel.h"
 
-class ClickLabelManager
+class ClickLabelManager : public IUpdatable
 {
 private:
 	Scene* scene = nullptr;
@@ -18,5 +19,5 @@ public:
 	ClickLabelManager(Scene* scene, Systems* systems);
 
 	void CreateClickLabels();
-	void Update();
+	void Update() override;
 };

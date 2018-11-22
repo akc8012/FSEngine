@@ -5,8 +5,9 @@
 #include "IRenderable.h"
 #include "INameable.h"
 #include "ISerializable.h"
+#include "IUpdatable.h"
 
-class IGameObject : public IRenderable, public INameable, public ISerializable
+class IGameObject : public IRenderable, public INameable, public ISerializable, public IUpdatable
 {
 public:
 	virtual ~IGameObject()
@@ -16,7 +17,6 @@ public:
 
 	virtual void Start() = 0;
 	virtual void SceneLoaded() = 0;
-	virtual void Update() = 0;
 
 	enum Parameters { DoUpdate, DoDraw, DoLateUpdate, DoLateDraw, ParametersLength };
 	virtual ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const = 0;

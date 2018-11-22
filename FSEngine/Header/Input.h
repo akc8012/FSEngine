@@ -1,4 +1,6 @@
 #pragma once
+#include "IUpdatable.h"
+
 #include <SDL.h>
 
 #include <glm\glm.hpp>
@@ -6,7 +8,7 @@ using glm::tvec2;
 
 #include <algorithm>
 
-class Input
+class Input : public IUpdatable
 {
 private:
 	int numberOfKeys;
@@ -35,7 +37,7 @@ public:
 	Input();
 	~Input();
 
-	void Update();
+	void Update() override;
 
 	float GetHorizontalAxis() const;
 	float GetVerticalAxis() const;

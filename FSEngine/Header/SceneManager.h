@@ -1,11 +1,12 @@
 #pragma once
 #include "IEventListener.h"
+#include "IUpdatable.h"
 #include "GameObject.h"
 #include "Renderer.h"
 #include "Scene.h"
 #include "SceneEditor.h"
 
-class SceneManager : public IEventListener
+class SceneManager : public IEventListener, public IUpdatable
 {
 private:
 	Systems* systems = nullptr;
@@ -20,7 +21,7 @@ public:
 	SceneManager(Systems* systems);
 	~SceneManager();
 
-	void Update();
+	void Update() override;
 	void Draw(Renderer* renderer);
 
 	void ReceiveEvent(const string& key, const json& event) override;

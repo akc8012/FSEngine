@@ -1,7 +1,8 @@
 #pragma once
+#include "IUpdatable.h"
 #include "Timer.h"
 
-class GameTimer : public Timer
+class GameTimer : public Timer, public IUpdatable
 {
 private:
 	int frames = 0;
@@ -13,7 +14,7 @@ private:
 public:
 	GameTimer();
 
-	void Update();
+	void Update() override;
 	float GetDeltaTime() const;
 	int GetFrames() const;
 };
