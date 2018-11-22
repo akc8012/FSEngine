@@ -75,7 +75,6 @@
           "RenderPerspective": 1
         },
         "Text": "ayyyyyy ravioli",
-        "TextureType": 0,
         "type": "FontTexture"
       },
       "Transform": {
@@ -117,7 +116,6 @@
           "RenderPerspective": 0
         },
         "Text": "Waddup boooooiiiii",
-        "TextureType": 0,
         "type": "FontTexture"
       },
       "Transform": {
@@ -240,7 +238,6 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "TextureType": 0,
         "type": "Texture"
       },
       "Transform": {
