@@ -6,6 +6,8 @@ ClickLabelManager::ClickLabelManager(Scene* scene, Systems* systems)
 
 }
 
+// note: this will not work for GameObjects added to the scene at runtime!! (unless the scene reloads)
+// TODO: make this work for GameObjects added at runtime
 void ClickLabelManager::CreateClickLabels()
 {
 	activeClickLabel = nullptr;

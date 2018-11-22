@@ -17,7 +17,7 @@ void SceneEditor::Update()
 {
 	clickLabelManager->Update();
 
-	if (systems->input->IsButtonHeld(SDL_SCANCODE_LSHIFT))
+	if (systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
 		TranslateActiveGameObject(clickLabelManager->GetActiveGameObject());
 }
 
@@ -33,5 +33,8 @@ void SceneEditor::TranslateActiveGameObject(IGameObject* activeGameObject)
 	auto distance = FSMath::RayIntersectPlaneDistance(floorPlane, cursorRay);
 	auto position = vec3(cursorRay.origin + (cursorRay.direction * distance));
 
-	transform->SetPosition(position);
+	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
+		cursorOffset = position - transform->GetPosition();
+
+	transform->SetPosition(position - cursorOffset);
 }
