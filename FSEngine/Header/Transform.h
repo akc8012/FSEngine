@@ -39,6 +39,7 @@ public:
 	void SetPosition(const vec3& position);
 	const vec3& GetPosition() const;
 
+	void Scale(float scale);
 	void Scale(const vec2& scale);
 	void Scale(const vec3& scale);
 	void SetScale(float x, float y, float z);

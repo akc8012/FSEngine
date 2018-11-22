@@ -23,8 +23,8 @@ void ClickLabelManager::CreateClickLabelForGameObject(const IGameObject* gameObj
 	static_cast<ClickLabel*>(clickLabel)->InitializeClickLabel(gameObject->GetName());
 
 	Transform* transform = clickLabel->GetComponent<Transform>();
-	transform->SetPosition(gameObjectTransform->GetPosition() + (FSMath::Up * 0.5f));
-	transform->SetScale(vec3(1.f, 0.25f, 1.f));
+	const float UpOffset = 0.5f;
+	transform->SetPosition(gameObjectTransform->GetPosition() + (FSMath::Up * UpOffset));
 }
 
 string ClickLabelManager::GetGameObjectType() const

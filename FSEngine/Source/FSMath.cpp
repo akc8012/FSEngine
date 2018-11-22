@@ -23,6 +23,14 @@ vec3 FSMath::NanToZero(vec3 vector)
 	return vector;
 }
 
+vec2 FSMath::CalculateAspectRatio(const vec2& size)
+{
+	float width = std::max((float)size.x / (float)size.y, 1.f);
+	float height = std::max((float)size.y / (float)size.x, 1.f);
+
+	return vec2(width, height);
+}
+
 // Returns a quaternion such that q*start = dest
 quat FSMath::RotationBetweenVectors(vec3 start, vec3 dest)
 {

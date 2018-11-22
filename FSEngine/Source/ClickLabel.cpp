@@ -20,7 +20,19 @@ void ClickLabel::InitializeClickLabel(const string& gameObjectName)
 	transform = GetComponent<Transform>();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
-	GetComponent<FontTexture>("Shading")->GenerateFontTexture(gameObjectName);
+	auto fontTexture = GetComponent<FontTexture>("Shading");
+	fontTexture->GenerateFontTexture(gameObjectName);
+
+	SetScaleFromSurfaceSize(fontTexture->GetSurfaceSize());
+}
+
+void ClickLabel::SetScaleFromSurfaceSize(const vec2& surfaceSize)
+{
+	vec2 aspectRatio = FSMath::CalculateAspectRatio(surfaceSize);
+	transform->SetScale(vec2(aspectRatio.x, aspectRatio.y));
+
+	const float ScaleAdjustment = 0.25f;
+	transform->Scale(ScaleAdjustment);
 }
 
 void ClickLabel::Update()

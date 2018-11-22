@@ -13,6 +13,7 @@ private:
 	Transform* transform = nullptr;
 	Camera* camera = nullptr;
 
+	void SetScaleFromSurfaceSize(const vec2& surfaceSize);
 	quat GetCameraLookAtOrientation() const;
 
 	bool CursorIntersectsQuad() const;

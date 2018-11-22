@@ -29,9 +29,14 @@ const vec3& Transform::GetPosition() const
 #pragma endregion
 
 #pragma region Scale
+void Transform::Scale(float scale)
+{
+	Scale(vec3(scale, scale, scale));
+}
+
 void Transform::Scale(const vec2& scale)
 {
-	SetScale(this->scale * vec3(scale.x, scale.y, 1));
+	Scale(vec3(scale.x, scale.y, 1));
 }
 
 void Transform::Scale(const vec3& scale)

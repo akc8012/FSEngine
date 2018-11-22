@@ -7,6 +7,8 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/norm.hpp>
 
+#include <algorithm>
+
 using glm::mat4;
 using glm::vec3;
 using glm::vec2;
@@ -70,6 +72,7 @@ namespace FSMath
 
 	vec3 EulerAngleToDirectionVector(const vec3& angle);
 	vec3 NanToZero(vec3 vector);
+	vec2 CalculateAspectRatio(const vec2& size);
 
 	// https://github.com/opengl-tutorials/ogl/blob/master/common/quaternion_utils.cpp
 	quat RotationBetweenVectors(vec3 start, vec3 dest);
