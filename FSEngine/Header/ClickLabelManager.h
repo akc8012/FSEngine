@@ -5,9 +5,11 @@
 class ClickLabelManager : public GameObject
 {
 private:
+	ClickLabel* activeClickLabel = nullptr;
 	vector<ClickLabel*> clickLabels;
 
 	ClickLabel* CreateClickLabelForGameObject(IGameObject* gameObject);
+	ClickLabel* GetCursorIntersectingClickLabel() const;
 
 public:
 	void Start() override;

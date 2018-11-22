@@ -37,14 +37,19 @@ ClickLabel* ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameOb
 
 void ClickLabelManager::Update()
 {
-	if (!systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
-		return;
+	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
+		activeClickLabel = GetCursorIntersectingClickLabel();
+}
 
+ClickLabel* ClickLabelManager::GetCursorIntersectingClickLabel() const
+{
 	for (const auto clickLabel : clickLabels)
 	{
 		if (clickLabel->CursorIntersectsQuad())
-			printFS(clickLabel->GetAttachedGameObject()->GetName());
+			return clickLabel;
 	}
+
+	return nullptr;
 }
 
 string ClickLabelManager::GetGameObjectType() const
