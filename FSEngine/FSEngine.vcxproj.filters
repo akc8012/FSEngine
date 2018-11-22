@@ -86,6 +86,9 @@
     <ClInclude Include="Header\CubeMesh.h" />
     <ClInclude Include="Header\ClickLabel.h" />
     <ClInclude Include="Header\ClickLabelManager.h" />
+    <ClInclude Include="Header\IRenderable.h" />
+    <ClInclude Include="Header\INameable.h" />
+    <ClInclude Include="Header\ISerializable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

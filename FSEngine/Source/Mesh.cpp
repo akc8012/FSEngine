@@ -20,6 +20,8 @@ Mesh::Mesh()
 	parameterCollection = make_unique<ParameterCollection<Parameters, ParametersLength>>(parameterNames);
 	parameterCollection->SetParameter(RenderBackfaces, false);
 	parameterCollection->SetParameter(DrawElements, true);
+
+	shadingName = Types::ComponentTypeToString(Types::Shading);
 }
 
 vector<vertex> Mesh::ConvertRawVertices(const vector<float>& rawVertices, int stride) const
@@ -141,14 +143,14 @@ void Mesh::BindVertexArray()
 	glBindVertexArray(vertexArrayId);
 }
 
-void Mesh::AddAssociatedTextureName(const string& textureName)
+void Mesh::SetShadingName(const string& shadingName)
 {
-	associatedTextureNames.push_back(textureName);
+	this->shadingName = shadingName;
 }
 
-const vector<string>& Mesh::GetAssociatedTextureNames() const
+const string& Mesh::GetShadingName() const
 {
-	return associatedTextureNames;
+	return shadingName;
 }
 
 ParameterCollection<Mesh::Parameters, Mesh::ParametersLength>* Mesh::GetParameterCollection() const

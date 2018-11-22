@@ -85,7 +85,6 @@
           "RenderPerspective": 0
         },
         "Text": "Waddup boooooiiiii",
-        "TextureType": 0,
         "type": "FontTexture"
       },
       "Transform": {
@@ -208,7 +207,6 @@
           "EnableDepthTest": 1,
           "RenderPerspective": 1
         },
-        "TextureType": 0,
         "type": "Texture"
       },
       "Transform": {
@@ -246,9 +244,9 @@
       },
       "Transform": {
         "EulerAngles": [
-          -180.0,
+          180.0,
           -5.008956122765085e-06,
-          -180.0
+          180.0
         ],
         "Position": [
           0.0,

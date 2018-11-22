@@ -19,6 +19,8 @@ public:
 
 	void Start() override;
 	void Update() override;
+	ComponentCollection<Mesh>* GetMeshCollection() const override;
+	ComponentCollection<Texture>* GetTextureCollection() const override;
 
 	string GetGameObjectType() const override;
 };

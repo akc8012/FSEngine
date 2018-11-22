@@ -55,5 +55,8 @@ public:
 	void SetSerializable(bool serializable) override;
 	bool GetSerializable() const override;
 
+	virtual ComponentCollection<Mesh>* GetMeshCollection() const override;
+	virtual ComponentCollection<Texture>* GetTextureCollection() const override;
+
 	void ReceiveEvent(const string& key, const json& event) override;
 };

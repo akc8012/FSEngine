@@ -13,14 +13,10 @@ using glm::tvec2;
 
 class Texture : public Shading
 {
-public:
-	enum TextureType { Diffuse, Specular };
-
 private:
 	string filepath;
 	Uint32 textureId = NULL;
 	tvec2<int> surfaceSize;
-	TextureType textureType = Diffuse;
 
 	GLenum GetTextureFormat(Uint32 colors, Uint32 rmask) const;
 	void FlipSurface(SDL_Surface* surface);
@@ -42,7 +38,6 @@ public:
 	void Load(const string& filepath);
 	void BindTexture() override;
 
-	TextureType GetTextureType() const;
 	const tvec2<int>& GetSurfaceSize() const;
 
 	virtual json GetJson() const override;

@@ -197,6 +197,9 @@
     <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
     <ClInclude Include="Header\GameTimer.h" />
+    <ClInclude Include="Header\INameable.h" />
+    <ClInclude Include="Header\IRenderable.h" />
+    <ClInclude Include="Header\ISerializable.h" />
     <ClInclude Include="Header\Shading.h" />
     <ClInclude Include="Header\IEventListener.h" />
     <ClInclude Include="Header\IGameObject.h" />

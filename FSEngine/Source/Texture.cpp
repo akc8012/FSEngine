@@ -93,11 +93,6 @@ void Texture::BindTexture()
 	glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-Texture::TextureType Texture::GetTextureType() const
-{
-	return textureType;
-}
-
 const tvec2<int>& Texture::GetSurfaceSize() const
 {
 	return surfaceSize;
@@ -107,7 +102,6 @@ json Texture::GetJson() const
 {
 	json j = Shading::GetJson();
 	j["Filepath"] = filepath;
-	j["TextureType"] = textureType;
 
 	return j;
 }
@@ -115,8 +109,6 @@ json Texture::GetJson() const
 void Texture::SetFromJson(const json& j)
 {
 	Shading::SetFromJson(j);
-
-	textureType = (TextureType)j["TextureType"].get<int>();
 
 	string jsonFilepath = j["Filepath"].get<string>();
 	if (jsonFilepath != filepath)
