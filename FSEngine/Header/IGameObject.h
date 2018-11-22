@@ -4,11 +4,9 @@
 #include "ParameterCollection.h"
 #include "IRenderable.h"
 #include "INameable.h"
+#include "ISerializable.h"
 
-#include <string>
-using std::string;
-
-class IGameObject : public IRenderable, public INameable
+class IGameObject : public IRenderable, public INameable, public ISerializable
 {
 public:
 	virtual ~IGameObject()
@@ -24,11 +22,7 @@ public:
 	virtual ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const = 0;
 
 	virtual string GetGameObjectType() const = 0;
-
 	virtual ComponentContainer* GetComponentContainer() const = 0;
-
-	virtual json GetJson() const = 0;
-	virtual void SetFromJson(const json& j) = 0;
 
 	template <typename T>
 	T* AddComponent(shared_ptr<T> component, const string& name = "");
@@ -36,9 +30,6 @@ public:
 	T* GetComponent(const string& name = "") const;
 	template <typename T>
 	T* TryGetComponent(const string& name = "") const;
-
-	virtual void SetSerializable(bool serializable) = 0;
-	virtual bool GetSerializable() const = 0;
 };
 
 template <typename T>

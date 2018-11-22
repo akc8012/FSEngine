@@ -1,15 +1,13 @@
 #pragma once
+#include "ISerializable.h"
 #include "FSException.h"
-
-#include <nlohmann\json.hpp>
-using json = nlohmann::json;
 
 #include <string>
 #include <algorithm>
 using std::string;
 
 template <typename Parameters, int CollectionLength>
-class ParameterCollection
+class ParameterCollection : public ISerializable
 {
 private:
 	short parameters[CollectionLength];
@@ -63,7 +61,7 @@ public:
 		return parameters[parameter] != (short)-1;
 	}
 
-	json GetJson() const
+	json GetJson() const override
 	{
 		json j;
 		for (int i = 0; i < CollectionLength; i++)
@@ -72,7 +70,7 @@ public:
 		return j;
 	}
 
-	void SetFromJson(const json& j)
+	void SetFromJson(const json& j) override
 	{
 		for (int i = 0; i < CollectionLength; i++)
 		{
@@ -81,5 +79,15 @@ public:
 
 			parameters[index] = j[name];
 		}
+	}
+
+	void SetSerializable(bool serializable) override
+	{
+
+	}
+
+	bool GetSerializable() const override
+	{
+		return true;
 	}
 };
