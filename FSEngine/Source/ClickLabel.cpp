@@ -2,13 +2,19 @@
 
 void ClickLabel::Start()
 {
-	AddComponent(make_shared<QuadMesh>(), "Mesh");
 	AddComponent(make_shared<Transform>());
 	
-	auto shading = AddComponent(make_shared<FontTexture>(), "Shading");
-	shading->LoadFont("consola.ttf");
-	shading->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
-	shading->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+	auto fontTexture = AddComponent(make_shared<FontTexture>(), "FontTextureShading");
+	fontTexture->LoadFont("consola.ttf");
+	fontTexture->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
+	fontTexture->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+
+	auto backingColor = AddComponent(make_shared<Color>(vec3(0.2f, 0.2f, 0.7f)), "BackingColor");
+	backingColor->GetParameterCollection()->SetParameter(Shading::CalculateLighting, false);
+	backingColor->GetParameterCollection()->SetParameter(Shading::EnableDepthTest, false);
+
+	AddComponent(make_shared<QuadMesh>(), "FontTextureMesh")->SetShadingName("FontTextureShading");
+	AddComponent(make_shared<QuadMesh>(), "BackingMesh")->SetShadingName("BackingColor");
 
 	SetSerializable(false);
 	GetParameterCollection()->SetParameter(DoLateDraw, true);
@@ -20,7 +26,7 @@ void ClickLabel::InitializeClickLabel(const string& gameObjectName)
 	transform = GetComponent<Transform>();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
-	auto fontTexture = GetComponent<FontTexture>("Shading");
+	auto fontTexture = GetComponent<FontTexture>("FontTextureShading");
 	fontTexture->GenerateFontTexture(gameObjectName);
 
 	SetScaleFromSurfaceSize(fontTexture->GetSurfaceSize());
