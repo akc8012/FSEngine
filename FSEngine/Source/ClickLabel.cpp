@@ -32,7 +32,7 @@ void ClickLabel::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 	transform->SetScale(vec2(aspectRatio.x, aspectRatio.y));
 
 	const float ScaleAdjustment = 0.25f;
-	transform->Scale(ScaleAdjustment);
+	transform->Scale(vec2(ScaleAdjustment, ScaleAdjustment));
 }
 
 void ClickLabel::Update()
