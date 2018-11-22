@@ -17,7 +17,6 @@ private:
 	void SetScaleFromSurfaceSize(const vec2& surfaceSize);
 	quat GetCameraLookAtOrientation() const;
 
-	bool CursorIntersectsQuad() const;
 	corners GetQuadCorners() const;
 	vec3 GetCursorPlaneIntersectPosition() const;
 	vec2 GetProjected2DIntersect(const vec3& cursorPlaneIntersectPosition, const corners& corners) const;
@@ -28,6 +27,8 @@ public:
 	void Update() override;
 
 	void InitializeClickLabel(IGameObject* attachedGameObject);
+	bool CursorIntersectsQuad() const;
+	IGameObject* GetAttachedGameObject() const;
 
 	string GetGameObjectType() const override;
 };

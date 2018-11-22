@@ -12,6 +12,7 @@ private:
 public:
 	void Start() override;
 	void SceneLoaded() override;
+	void Update() override;
 
 	string GetGameObjectType() const override;
 };

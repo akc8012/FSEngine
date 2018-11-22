@@ -46,9 +46,6 @@ void ClickLabel::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 void ClickLabel::Update()
 {
 	transform->SetOrientation(GetCameraLookAtOrientation());
-
-	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT) && CursorIntersectsQuad())
-		printFS(attachedGameObject->GetName());
 }
 
 quat ClickLabel::GetCameraLookAtOrientation() const
@@ -109,6 +106,11 @@ bool ClickLabel::Projected2DIntersectWithinCorners(const vec2& projected2DInters
 	bool withinY = projected2DIntersect.y >= 0 && projected2DIntersect.y <= quadCornersVertical2D;
 
 	return withinX && withinY;
+}
+
+IGameObject* ClickLabel::GetAttachedGameObject() const
+{
+	return attachedGameObject;
 }
 
 string ClickLabel::GetGameObjectType() const
