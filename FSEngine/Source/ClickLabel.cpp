@@ -21,13 +21,15 @@ void ClickLabel::Start()
 	GetParameterCollection()->SetParameter(DoLateUpdate, true);
 }
 
-void ClickLabel::InitializeClickLabel(const string& gameObjectName)
+void ClickLabel::InitializeClickLabel(IGameObject* attachedGameObject)
 {
+	this->attachedGameObject = attachedGameObject;
+
 	transform = GetComponent<Transform>();
 	camera = gameObjectContainer->GetGameObjectAs<Camera>("Camera");
 
 	auto fontTexture = GetComponent<FontTexture>("FontTextureShading");
-	fontTexture->GenerateFontTexture(gameObjectName);
+	fontTexture->GenerateFontTexture(attachedGameObject->GetName());
 
 	SetScaleFromSurfaceSize(fontTexture->GetSurfaceSize());
 }
@@ -46,7 +48,7 @@ void ClickLabel::Update()
 	transform->SetOrientation(GetCameraLookAtOrientation());
 
 	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT) && CursorIntersectsQuad())
-		printFS(GetName());
+		printFS(attachedGameObject->GetName());
 }
 
 quat ClickLabel::GetCameraLookAtOrientation() const

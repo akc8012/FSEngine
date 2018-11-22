@@ -10,6 +10,7 @@ private:
 		vec3 topLeft, topRight, bottomLeft;
 	};
 
+	IGameObject* attachedGameObject = nullptr;
 	Transform* transform = nullptr;
 	Camera* camera = nullptr;
 
@@ -26,7 +27,7 @@ public:
 	void Start() override;
 	void Update() override;
 
-	void InitializeClickLabel(const string& gameObjectName);
+	void InitializeClickLabel(IGameObject* attachedGameObject);
 
 	string GetGameObjectType() const override;
 };

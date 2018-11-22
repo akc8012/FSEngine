@@ -13,14 +13,14 @@ void ClickLabelManager::SceneLoaded()
 		CreateClickLabelForGameObject(gameObject);
 }
 
-void ClickLabelManager::CreateClickLabelForGameObject(const IGameObject* gameObject)
+void ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameObject)
 {
 	Transform* gameObjectTransform = gameObject->TryGetComponent<Transform>();
 	if (gameObjectTransform == nullptr || gameObjectTransform->GetComponentTypeId() != Types::Transform)
 		return;
 
 	IGameObject* clickLabel = gameObjectContainer->AddGameObject(gameObject->GetName() + " - Label", make_unique<ClickLabel>());
-	static_cast<ClickLabel*>(clickLabel)->InitializeClickLabel(gameObject->GetName());
+	static_cast<ClickLabel*>(clickLabel)->InitializeClickLabel(gameObject);
 
 	Transform* transform = clickLabel->GetComponent<Transform>();
 	const float UpOffset = 0.5f;
