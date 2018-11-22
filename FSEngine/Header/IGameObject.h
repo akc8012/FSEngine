@@ -3,11 +3,12 @@
 #include "ComponentContainer.h"
 #include "ParameterCollection.h"
 #include "IRenderable.h"
+#include "INameable.h"
 
 #include <string>
 using std::string;
 
-class IGameObject : public IRenderable
+class IGameObject : public IRenderable, public INameable
 {
 public:
 	virtual ~IGameObject()
@@ -22,8 +23,6 @@ public:
 	enum Parameters { DoUpdate, DoDraw, DoLateUpdate, DoLateDraw, ParametersLength };
 	virtual ParameterCollection<Parameters, ParametersLength>* GetParameterCollection() const = 0;
 
-	virtual const string& GetName() const = 0;
-	virtual void SetName(const string& name) = 0;
 	virtual string GetGameObjectType() const = 0;
 
 	virtual ComponentContainer* GetComponentContainer() const = 0;

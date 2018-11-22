@@ -2,6 +2,7 @@
 #include "ComponentType.h"
 #include "FSDebug.h"
 #include "FSException.h"
+#include "INameable.h"
 
 #include <nlohmann\json.hpp>
 using json = nlohmann::json;
@@ -13,7 +14,7 @@ using std::to_string;
 using std::unique_ptr;
 using std::make_unique;
 
-class Component
+class Component : public INameable
 {
 private:
 	string name;
@@ -25,8 +26,8 @@ public:
 	static const Types::ComponentType ComponentTypeId = Types::Component;
 	virtual Types::ComponentType GetComponentTypeId() const;
 
-	const string& GetName() const;
-	void SetName(const string& name);
+	const string& GetName() const override;
+	void SetName(const string& name) override;
 
 	virtual json GetJson() const;
 	virtual void SetFromJson(const json& j);
