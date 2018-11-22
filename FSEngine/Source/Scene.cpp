@@ -5,12 +5,6 @@ Scene::Scene(const string& name, Systems* systems)
 {
 	gameObjectContainer = make_unique<GameObjectContainer>(systems);
 	LoadScene();
-
-	systems->eventSystem->AddListener("SaveKeyPressed", this);
-	systems->eventSystem->AddListener("LoadKeyPressed", this);
-	systems->eventSystem->AddListener("GameStopped", this);
-	systems->eventSystem->AddListener("WindowFocusGained", this);
-	systems->eventSystem->AddListener("WindowFocusLost", this);
 }
 
 void Scene::LoadScene()
@@ -102,21 +96,6 @@ void Scene::SaveScene() const
 	FileSystem::WriteTextToFile(sceneJson.dump(2), GetFileName());
 }
 
-void Scene::ReceiveEvent(const string& key, const json& event)
-{
-	if (key == "SaveKeyPressed" || key == "GameStopped")
-		SaveScene();
-
-	if (key == "LoadKeyPressed")
-		LoadScene();
-
-	if (key == "WindowFocusGained" && systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus"))
-		LoadScene();
-
-	if (key == "WindowFocusLost" && systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus"))
-		SaveScene();
-}
-
 string Scene::GetFileName() const
 {
 	return "Resource/Json/" + name + ".json";
@@ -125,9 +104,4 @@ string Scene::GetFileName() const
 GameObjectContainer* Scene::GetGameObjectContainer() const
 {
 	return gameObjectContainer.get();
-}
-
-Scene::~Scene()
-{
-	systems->eventSystem->RemoveListener(this);
 }

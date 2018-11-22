@@ -1,8 +1,30 @@
 #include "../Header/SceneManager.h"
 
 SceneManager::SceneManager(Systems* systems)
+ : systems(systems)
 {
 	currentScene = make_unique<Scene>("scene", systems);
+	sceneEditor = make_unique<SceneEditor>(currentScene.get(), systems);
+	sceneEditor->InitializeEditor();
+
+	systems->eventSystem->AddListener("SaveKeyPressed", this);
+	systems->eventSystem->AddListener("LoadKeyPressed", this);
+	systems->eventSystem->AddListener("GameStopped", this);
+	systems->eventSystem->AddListener("WindowFocusGained", this);
+	systems->eventSystem->AddListener("WindowFocusLost", this);
+}
+
+void SceneManager::ReceiveEvent(const string& key, const json& event)
+{
+	if (key == "SaveKeyPressed" || key == "GameStopped" ||
+		(key == "WindowFocusLost" && systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus")))
+		currentScene->SaveScene();
+
+	if (key == "LoadKeyPressed" || (key == "WindowFocusGained" && systems->fileSystem->GetSettingsValue<bool>("LoadSceneOnFocus")))
+	{
+		currentScene->LoadScene();
+		sceneEditor->InitializeEditor();
+	}
 }
 
 void SceneManager::Update()
@@ -38,4 +60,9 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 Scene* SceneManager::GetCurrentScene() const
 {
 	return currentScene.get();
+}
+
+SceneManager::~SceneManager()
+{
+	systems->eventSystem->RemoveListener(this);
 }

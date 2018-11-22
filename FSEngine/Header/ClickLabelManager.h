@@ -1,10 +1,13 @@
 #pragma once
-#include "GameObject.h"
+#include "Scene.h"
 #include "ClickLabel.h"
 
-class ClickLabelManager : public GameObject
+class ClickLabelManager
 {
 private:
+	Scene* scene = nullptr;
+	Systems* systems = nullptr;
+
 	ClickLabel* activeClickLabel = nullptr;
 	vector<ClickLabel*> clickLabels;
 
@@ -12,9 +15,8 @@ private:
 	ClickLabel* GetCursorIntersectingClickLabel() const;
 
 public:
-	void Start() override;
-	void SceneLoaded() override;
-	void Update() override;
+	ClickLabelManager(Scene* scene, Systems* systems);
 
-	string GetGameObjectType() const override;
+	void CreateClickLabels();
+	void Update();
 };

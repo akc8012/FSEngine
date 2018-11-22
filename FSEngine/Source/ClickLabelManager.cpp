@@ -1,17 +1,16 @@
 #include "../Header/ClickLabelManager.h"
 
-void ClickLabelManager::Start()
+ClickLabelManager::ClickLabelManager(Scene* scene, Systems* systems)
+ : scene(scene), systems(systems)
 {
-	GetParameterCollection()->SetParameter(DoDraw, false);
+
 }
 
-void ClickLabelManager::SceneLoaded()
+void ClickLabelManager::CreateClickLabels()
 {
 	clickLabels.clear();
 
-	// note: this will not work for GameObjects added to the scene at runtime!! (unless the scene reloads)
-	// TODO: make this work for GameObjects added at runtime
-	for (const auto gameObject : gameObjectContainer->GetGameObjects())
+	for (const auto gameObject : scene->GetGameObjectContainer()->GetGameObjects())
 	{
 		auto clickLabel = CreateClickLabelForGameObject(gameObject);
 		if (clickLabel != nullptr)
@@ -25,7 +24,7 @@ ClickLabel* ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameOb
 	if (gameObjectTransform == nullptr || gameObjectTransform->GetComponentTypeId() != Types::Transform)
 		return nullptr;
 
-	auto clickLabel = static_cast<ClickLabel*>(gameObjectContainer->AddGameObject(gameObject->GetName() + " - Label", make_unique<ClickLabel>()));
+	auto clickLabel = static_cast<ClickLabel*>(scene->GetGameObjectContainer()->AddGameObject(gameObject->GetName() + " - Label", make_unique<ClickLabel>()));
 	clickLabel->InitializeClickLabel(gameObject);
 
 	Transform* transform = clickLabel->GetComponent<Transform>();
@@ -50,9 +49,4 @@ ClickLabel* ClickLabelManager::GetCursorIntersectingClickLabel() const
 	}
 
 	return nullptr;
-}
-
-string ClickLabelManager::GetGameObjectType() const
-{
-	return "ClickLabelManager";
 }

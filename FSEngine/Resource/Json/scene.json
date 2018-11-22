@@ -63,16 +63,6 @@
     ],
     "type": "Camera"
   },
-  "ClickLabelManager": {
-    "Components": null,
-    "ParameterCollection": {
-      "DoDraw": 0,
-      "DoLateDraw": 0,
-      "DoLateUpdate": 0,
-      "DoUpdate": 1
-    },
-    "type": "ClickLabelManager"
-  },
   "DebugText": {
     "Components": {
       "Shading": {

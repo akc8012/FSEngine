@@ -40,6 +40,7 @@
     <ClCompile Include="Source\CubeMesh.cpp" />
     <ClCompile Include="Source\ClickLabel.cpp" />
     <ClCompile Include="Source\ClickLabelManager.cpp" />
+    <ClCompile Include="Source\SceneEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Header\IRenderable.h" />
     <ClInclude Include="Header\INameable.h" />
     <ClInclude Include="Header\ISerializable.h" />
+    <ClInclude Include="Header\SceneEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

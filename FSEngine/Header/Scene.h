@@ -1,10 +1,9 @@
 #pragma once
-#include "IEventListener.h"
 #include "GameObjectFactory.h"
 #include "GameObjectContainer.h"
 #include "Renderer.h"
 
-class Scene : public IEventListener
+class Scene
 {
 private:
 	string name;
@@ -24,12 +23,9 @@ private:
 
 public:
 	Scene(const string& name, Systems* systems);
-	~Scene();
 
 	void LoadScene();
 	void SaveScene() const;
-	
-	void ReceiveEvent(const string& key, const json& event) override;
 
 	GameObjectContainer* GetGameObjectContainer() const;
 };

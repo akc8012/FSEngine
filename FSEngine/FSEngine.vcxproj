@@ -151,6 +151,7 @@
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
     <ClCompile Include="Source\GameTimer.cpp" />
+    <ClCompile Include="Source\SceneEditor.cpp" />
     <ClCompile Include="Source\Shading.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Model.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Header\INameable.h" />
     <ClInclude Include="Header\IRenderable.h" />
     <ClInclude Include="Header\ISerializable.h" />
+    <ClInclude Include="Header\SceneEditor.h" />
     <ClInclude Include="Header\Shading.h" />
     <ClInclude Include="Header\IEventListener.h" />
     <ClInclude Include="Header\IGameObject.h" />
