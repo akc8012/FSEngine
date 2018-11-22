@@ -84,6 +84,7 @@
     <ClInclude Include="Header\Transform2D.h" />
     <ClInclude Include="Header\CubeMesh.h" />
     <ClInclude Include="Header\CameraFacingQuad.h" />
+    <ClInclude Include="Header\IRenderable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

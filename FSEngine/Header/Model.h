@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "ComponentCollection.h"
+#include "IRenderable.h"
 #include "Mesh.h"
 #include "Texture.h"
 #include "FSDebug.h"
@@ -19,7 +19,7 @@ using std::unique_ptr;
 using std::shared_ptr;
 using std::make_shared;
 
-class Model : public Component
+class Model : public Component, public IRenderable
 {
 private:
 	string filepath;
@@ -50,8 +50,8 @@ public:
 
 	void Load(const string& filepath);
 
-	ComponentCollection<Mesh>* GetMeshCollection() const;
-	ComponentCollection<Texture>* GetTextureCollection() const;
+	ComponentCollection<Mesh>* GetMeshCollection() const override;
+	ComponentCollection<Texture>* GetTextureCollection() const override;
 
 	json GetJson() const override;
 	void SetFromJson(const json& j) override;

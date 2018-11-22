@@ -2,11 +2,12 @@
 #include "Systems.h"
 #include "ComponentContainer.h"
 #include "ParameterCollection.h"
+#include "IRenderable.h"
 
 #include <string>
 using std::string;
 
-class IGameObject
+class IGameObject : public IRenderable
 {
 public:
 	virtual ~IGameObject()
@@ -39,6 +40,9 @@ public:
 
 	virtual void SetSerializable(bool serializable) = 0;
 	virtual bool GetSerializable() const = 0;
+
+	virtual ComponentCollection<Mesh>* GetMeshCollection() const override = 0;
+	virtual ComponentCollection<Texture>* GetTextureCollection() const override = 0;
 };
 
 template <typename T>

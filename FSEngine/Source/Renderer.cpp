@@ -95,12 +95,9 @@ void Renderer::RenderGameObject(IGameObject* gameObject)
 {
 	SetTransformMatrices(gameObject->GetComponent<Transform>());
 
-	Model* model = gameObject->TryGetComponent<Model>();
-	bool hasModel = model != nullptr;
-
-	for (auto mesh : hasModel ? model->GetMeshCollection()->GetComponents() : gameObject->GetComponentContainer()->GetComponents<Mesh>())
+	for (Mesh* mesh : gameObject->GetMeshCollection()->GetComponents())
 	{
-		auto shading = hasModel ? model->GetTextureCollection()->Get(mesh->GetShadingName()) : gameObject->GetComponent<Shading>(mesh->GetShadingName());
+		Shading* shading = gameObject->GetTextureCollection()->Get(mesh->GetShadingName());
 
 		SetShadingParameters(shading);
 		ApplyShading(shading);

@@ -138,6 +138,16 @@ bool GameObject::GetSerializable() const
 	return serializable;
 }
 
+ComponentCollection<Mesh>* GameObject::GetMeshCollection() const
+{
+	return components->GetCollectionOfType<Mesh>(Types::Mesh);
+}
+
+ComponentCollection<Texture>* GameObject::GetTextureCollection() const
+{
+	return components->GetCollectionOfType<Texture>(Types::Texture);
+}
+
 Component* GameObject::TryGetComponentOfType(const string& type, const string& name)
 {
 	return GetComponentContainer()->GetCollectionOfType<Component>(Types::StringToComponentType(type))->TryGet(name);

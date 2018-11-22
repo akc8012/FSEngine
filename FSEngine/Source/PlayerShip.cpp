@@ -20,6 +20,16 @@ void PlayerShip::ResetValues()
 	direction = vec3(0, 0, 180);
 }
 
+ComponentCollection<Mesh>* PlayerShip::GetMeshCollection() const
+{
+	return GetComponent<Model>()->GetMeshCollection();
+}
+
+ComponentCollection<Texture>* PlayerShip::GetTextureCollection() const
+{
+	return GetComponent<Model>()->GetTextureCollection();
+}
+
 void PlayerShip::Update()
 {
 	if (!systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
