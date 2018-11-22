@@ -8,6 +8,7 @@ ClickLabelManager::ClickLabelManager(Scene* scene, Systems* systems)
 
 void ClickLabelManager::CreateClickLabels()
 {
+	activeClickLabel = nullptr;
 	clickLabels.clear();
 
 	for (const auto gameObject : scene->GetGameObjectContainer()->GetGameObjects())
@@ -26,10 +27,6 @@ ClickLabel* ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameOb
 
 	auto clickLabel = static_cast<ClickLabel*>(scene->GetGameObjectContainer()->AddGameObject(gameObject->GetName() + " - Label", make_unique<ClickLabel>()));
 	clickLabel->InitializeClickLabel(gameObject);
-
-	Transform* transform = clickLabel->GetComponent<Transform>();
-	const float UpOffset = 0.5f;
-	transform->SetPosition(gameObjectTransform->GetPosition() + (FSMath::Up * UpOffset));
 
 	return clickLabel;
 }

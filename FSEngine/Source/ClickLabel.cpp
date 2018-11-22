@@ -46,6 +46,7 @@ void ClickLabel::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 void ClickLabel::Update()
 {
 	transform->SetOrientation(GetCameraLookAtOrientation());
+	transform->SetPosition(attachedGameObject->GetComponent<Transform>()->GetPosition());
 }
 
 quat ClickLabel::GetCameraLookAtOrientation() const
