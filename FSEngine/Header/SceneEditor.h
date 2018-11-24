@@ -16,6 +16,13 @@ private:
 
 	void TranslateActiveGameObject(IGameObject* activeGameObject);
 
+	plane GetFloorPlane(const vec3& objectPosition) const;
+	plane GetVerticalPlane(const vec3& objectPosition) const;
+
+	vec3 CalculatePositionAlongPlane(const plane& plane) const;
+	vec3 CalculateVerticalPositionAlongPlane(const plane& plane) const;
+	bool ShouldResetCursorOffset() const;
+
 public:
 	SceneEditor(Scene* scene, Systems* systems);
 	void InitializeEditor();

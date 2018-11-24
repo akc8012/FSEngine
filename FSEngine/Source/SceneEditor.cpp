@@ -27,14 +27,47 @@ void SceneEditor::TranslateActiveGameObject(IGameObject* activeGameObject)
 		return;
 
 	auto transform = activeGameObject->GetComponent<Transform>();
-	auto floorPlane = plane(vec3(0, transform->GetPosition().y, 0), FSMath::Up);
+	
+	vec3 targetPosition;
+	if (!systems->input->IsButtonHeld(SDL_SCANCODE_LSHIFT))
+		targetPosition = CalculatePositionAlongPlane(GetFloorPlane(transform->GetPosition()));
+	else
+		targetPosition = CalculateVerticalPositionAlongPlane(GetVerticalPlane(transform->GetPosition()));
+
+	if (ShouldResetCursorOffset())
+		cursorOffset = targetPosition - transform->GetPosition();
+
+	transform->SetPosition(targetPosition - cursorOffset);
+}
+
+plane SceneEditor::GetFloorPlane(const vec3& objectPosition) const
+{
+	return plane(vec3(0, objectPosition.y, 0), FSMath::Up);
+}
+
+plane SceneEditor::GetVerticalPlane(const vec3& objectPosition) const
+{
+	auto cameraDirection = vec3(camera->GetForward().x, 0, -camera->GetForward().z);
+	return plane(objectPosition, cameraDirection);
+}
+
+vec3 SceneEditor::CalculatePositionAlongPlane(const plane& plane) const
+{
 	auto cursorRay = camera->GetCursorRay();
 
-	auto distance = FSMath::RayIntersectPlaneDistance(floorPlane, cursorRay);
-	auto position = vec3(cursorRay.origin + (cursorRay.direction * distance));
+	auto distance = FSMath::RayIntersectPlaneDistance(plane, cursorRay);
+	return vec3(cursorRay.origin + (cursorRay.direction * distance));
+}
 
-	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
-		cursorOffset = position - transform->GetPosition();
+vec3 SceneEditor::CalculateVerticalPositionAlongPlane(const plane& plane) const
+{
+	auto position = CalculatePositionAlongPlane(plane);
+	return vec3(0, position.y, 0);
+}
 
-	transform->SetPosition(position - cursorOffset);
+bool SceneEditor::ShouldResetCursorOffset() const
+{
+	return  systems->input->IsButtonPressed(SDL_BUTTON_LEFT) ||
+			systems->input->IsButtonPressed(SDL_SCANCODE_LSHIFT) ||
+			systems->input->IsButtonReleased(SDL_SCANCODE_LSHIFT);
 }
