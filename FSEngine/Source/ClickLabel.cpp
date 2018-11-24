@@ -1,5 +1,6 @@
 #include "../Header/ClickLabel.h"
 
+#pragma region Initialize
 void ClickLabel::Start()
 {
 	AddComponent(make_shared<Transform>());
@@ -17,8 +18,16 @@ void ClickLabel::Start()
 	AddComponent(make_shared<QuadMesh>(), "BackingMesh")->SetShadingName("BackingColor");
 
 	SetSerializable(false);
+
+	bool editorMode = systems->fileSystem->GetSettingsValue<bool>("EditorMode");
+	GetParameterCollection()->SetParameter(DoUpdate, editorMode);
+	GetParameterCollection()->SetParameter(DoDraw, editorMode);
+
 	GetParameterCollection()->SetParameter(DoLateDraw, true);
 	GetParameterCollection()->SetParameter(DoLateUpdate, true);
+
+	systems->eventSystem->AddListener("EditorModeEnabled", this);
+	systems->eventSystem->AddListener("EditorModeDisabled", this);
 }
 
 void ClickLabel::InitializeClickLabel(IGameObject* attachedGameObject)
@@ -41,6 +50,15 @@ void ClickLabel::SetScaleFromSurfaceSize(const vec2& surfaceSize)
 
 	const float ScaleAdjustment = 0.25f;
 	transform->Scale(vec2(ScaleAdjustment, ScaleAdjustment));
+}
+#pragma endregion
+
+void ClickLabel::ReceiveEvent(const string& key, const json& event)
+{
+	bool editorMode = key == "EditorModeEnabled";
+
+	GetParameterCollection()->SetParameter(DoUpdate, editorMode);
+	GetParameterCollection()->SetParameter(DoDraw, editorMode);
 }
 
 void ClickLabel::Update()
@@ -127,4 +145,9 @@ void ClickLabel::Deselect()
 string ClickLabel::GetGameObjectType() const
 {
 	return "ClickLabel";
+}
+
+ClickLabel::~ClickLabel()
+{
+	systems->eventSystem->RemoveListener(this);
 }

@@ -9,16 +9,34 @@ SceneEditor::SceneEditor(Scene* scene, Systems* systems)
 
 void SceneEditor::InitializeEditor()
 {
+	UpdateEditorMode();
+
 	clickLabelManager->CreateClickLabels();
 	camera = scene->GetGameObjectContainer()->GetGameObjectAs<Camera>("Camera");
 }
 
 void SceneEditor::Update()
 {
-	clickLabelManager->Update();
+	UpdateEditorMode();
 
-	if (systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
-		TranslateActiveGameObject(clickLabelManager->GetActiveGameObject());
+	if (editorMode)
+	{
+		clickLabelManager->Update();
+
+		if (systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
+			TranslateActiveGameObject(clickLabelManager->GetActiveGameObject());
+	}
+}
+
+void SceneEditor::UpdateEditorMode()
+{
+	bool editorModeSetting = systems->fileSystem->GetSettingsValue<bool>("EditorMode");
+	if (editorMode && !editorModeSetting)
+		systems->eventSystem->SendEvent("EditorModeDisabled", nullptr, false);
+	else if (!editorMode && editorModeSetting)
+		systems->eventSystem->SendEvent("EditorModeEnabled", nullptr, false);
+
+	editorMode = editorModeSetting;
 }
 
 void SceneEditor::TranslateActiveGameObject(IGameObject* activeGameObject)

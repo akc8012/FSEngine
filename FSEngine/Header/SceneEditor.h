@@ -11,8 +11,11 @@ private:
 	Systems* systems = nullptr;
 	Camera* camera = nullptr;
 
+	bool editorMode;
 	vec3 cursorOffset;
 	unique_ptr<ClickLabelManager> clickLabelManager;
+
+	void UpdateEditorMode();
 
 	void TranslateActiveGameObject(IGameObject* activeGameObject);
 
