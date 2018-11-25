@@ -60,20 +60,26 @@ void SceneEditor::UpdateActiveGameObject(IGameObject* activeGameObject)
 		gameObjectTranslator->TranslateGameObject();
 
 	if (gameObjectTranslator->ShouldEndTranslate())
+	{
 		actionHistory.push(gameObjectTranslator->GetHistoryAction());
+		gameObjectTranslator->SetGameObject(nullptr);
+	}
 }
 
 void SceneEditor::ReceiveEvent(const string& key, const json& event)
 {
 	if (key == "UndoKeyPressed" && editorMode && actionHistory.size() > 0)
-	{
-		json action = actionHistory.top();
-		actionHistory.pop();
+		DoUndoAction();
+}
 
-		auto affectedGameObject = scene->GetGameObjectContainer()->GetGameObject(action["AffectedGameObject"].get<string>());
-		vec3 moveDelta = vec3(action["MoveDelta"][0], action["MoveDelta"][1], action["MoveDelta"][2]);
-		affectedGameObject->GetComponent<Transform>()->Translate(-moveDelta);
-	}
+void SceneEditor::DoUndoAction()
+{
+	json action = actionHistory.top();
+	actionHistory.pop();
+
+	auto gameObject = scene->GetGameObjectContainer()->GetGameObject(action["GameObject"].get<string>());
+	// TODO: checks here for other action types
+	gameObjectTranslator->DoUndoAction(action, gameObject);
 }
 
 SceneEditor::~SceneEditor()

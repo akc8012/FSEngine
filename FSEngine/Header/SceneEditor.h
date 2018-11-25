@@ -27,6 +27,8 @@ private:
 
 	void UpdateActiveGameObject(IGameObject* activeGameObject);
 
+	void DoUndoAction();
+
 public:
 	SceneEditor(Scene* scene, Systems* systems);
 	~SceneEditor();

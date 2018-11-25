@@ -30,6 +30,7 @@ public:
 	void SetGameObject(IGameObject* gameObject);
 	void TranslateGameObject();
 	json GetHistoryAction() const;
+	void DoUndoAction(const json& action, IGameObject* gameObject);
 
 	bool ShouldStartTranslate() const;
 	bool ShouldTranslate() const;

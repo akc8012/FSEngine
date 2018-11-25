@@ -9,7 +9,9 @@ GameObjectTranslator::GameObjectTranslator(Input* input, Camera* camera)
 void GameObjectTranslator::SetGameObject(IGameObject* gameObject)
 {
 	this->gameObject = gameObject;
-	originalPosition = gameObject->GetComponent<Transform>()->GetPosition();
+
+	if (gameObject != nullptr)
+		originalPosition = gameObject->GetComponent<Transform>()->GetPosition();
 }
 
 void GameObjectTranslator::TranslateGameObject()
@@ -66,12 +68,18 @@ bool GameObjectTranslator::ShouldResetCursorOffset() const
 json GameObjectTranslator::GetHistoryAction() const
 {
 	json action;
-	action["AffectedGameObject"] = gameObject->GetName();
+	action["GameObject"] = gameObject->GetName();
 
 	vec3 moveDelta = gameObject->GetComponent<Transform>()->GetPosition() - originalPosition;
 	action["MoveDelta"] = { moveDelta.x, moveDelta.y, moveDelta.z };
 
 	return action;
+}
+
+void GameObjectTranslator::DoUndoAction(const json& action, IGameObject* gameObject)
+{
+	vec3 moveDelta = vec3(action["MoveDelta"][0], action["MoveDelta"][1], action["MoveDelta"][2]);
+	gameObject->GetComponent<Transform>()->Translate(-moveDelta);
 }
 
 bool GameObjectTranslator::ShouldStartTranslate() const
