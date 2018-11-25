@@ -5,6 +5,9 @@
 #include "ClickLabelManager.h"
 #include "EditorAction.h"
 
+#include <stack>
+using std::stack;
+
 class SceneEditor : public IUpdatable
 {
 private:
@@ -12,8 +15,11 @@ private:
 	Systems* systems = nullptr;
 	Camera* camera = nullptr;
 
+	stack<json> actionHistory;
+
 	bool editorMode;
 	vec3 cursorOffset;
+	vec3 originalPosition;
 	unique_ptr<ClickLabelManager> clickLabelManager;
 
 	void UpdateEditorMode();

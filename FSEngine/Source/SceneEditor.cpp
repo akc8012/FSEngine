@@ -21,10 +21,43 @@ void SceneEditor::Update()
 
 	if (editorMode)
 	{
-		clickLabelManager->Update();
+		{
+			if (systems->input->IsButtonHeld(SDL_SCANCODE_LCTRL) && systems->input->IsButtonPressed(SDL_SCANCODE_Z) &&
+				actionHistory.size() > 0)
+			{
+				json action = actionHistory.top();
+				actionHistory.pop();
 
-		if (systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
-			TranslateActiveGameObject(clickLabelManager->GetActiveGameObject());
+				auto affectedGameObject = scene->GetGameObjectContainer()->GetGameObject(action["AffectedGameObject"].get<string>());
+				vec3 moveDelta = vec3(action["MoveDelta"][0], action["MoveDelta"][1], action["MoveDelta"][2]);
+				affectedGameObject->GetComponent<Transform>()->Translate(-moveDelta);
+			}
+		}
+
+
+		{
+			clickLabelManager->Update();
+			auto activeGameObject = clickLabelManager->GetActiveGameObject();
+			if (activeGameObject == nullptr)
+				return;
+
+			if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
+				originalPosition = activeGameObject->GetComponent<Transform>()->GetPosition();
+
+			if (systems->input->IsButtonHeld(SDL_BUTTON_LEFT))
+				TranslateActiveGameObject(activeGameObject);
+
+			if (systems->input->IsButtonReleased(SDL_BUTTON_LEFT))
+			{
+				json action;
+				action["AffectedGameObject"] = activeGameObject->GetName();
+
+				vec3 moveDelta = activeGameObject->GetComponent<Transform>()->GetPosition() - originalPosition;
+				action["MoveDelta"] = { moveDelta.x, moveDelta.y, moveDelta.z };
+
+				actionHistory.push(action);
+			}
+		}
 	}
 }
 
