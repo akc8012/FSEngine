@@ -41,6 +41,7 @@
     <ClCompile Include="Source\ClickLabel.cpp" />
     <ClCompile Include="Source\ClickLabelManager.cpp" />
     <ClCompile Include="Source\SceneEditor.cpp" />
+    <ClCompile Include="Source\GameObjectTranslator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Engine.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Header\SceneEditor.h" />
     <ClInclude Include="Header\IUpdatable.h" />
     <ClInclude Include="Header\EditorAction.h" />
+    <ClInclude Include="Header\GameObjectTranslator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />

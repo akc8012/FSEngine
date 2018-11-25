@@ -150,6 +150,7 @@
     <ClCompile Include="Source\FSMath.cpp" />
     <ClCompile Include="Source\GameObjectContainer.cpp" />
     <ClCompile Include="Source\GameObjectFactory.cpp" />
+    <ClCompile Include="Source\GameObjectTranslator.cpp" />
     <ClCompile Include="Source\GameTimer.cpp" />
     <ClCompile Include="Source\SceneEditor.cpp" />
     <ClCompile Include="Source\Shading.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="Header\GameObject.h" />
     <ClInclude Include="Header\GameObjectContainer.h" />
     <ClInclude Include="Header\GameObjectFactory.h" />
+    <ClInclude Include="Header\GameObjectTranslator.h" />
     <ClInclude Include="Header\GameTimer.h" />
     <ClInclude Include="Header\INameable.h" />
     <ClInclude Include="Header\IRenderable.h" />
