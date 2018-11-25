@@ -25,7 +25,7 @@ void GameObjectTranslator::TranslateGameObject()
 
 vec3 GameObjectTranslator::CalculateTargetPosition(const vec3& objectPosition) const
 {
-	if (!input->IsButtonHeld(SDL_SCANCODE_LSHIFT))
+	if (!input->IsButtonHeld(VerticalButton))
 		return CalculatePositionAlongPlane(GetFloorPlane(objectPosition));
 	else
 		return CalculateVerticalPositionAlongPlane(GetVerticalPlane(objectPosition));
@@ -59,8 +59,8 @@ vec3 GameObjectTranslator::CalculateVerticalPositionAlongPlane(const plane& plan
 bool GameObjectTranslator::ShouldResetCursorOffset() const
 {
 	return  input->IsButtonPressed(TranslateButton) ||
-			input->IsButtonPressed(SDL_SCANCODE_LSHIFT) ||
-			input->IsButtonReleased(SDL_SCANCODE_LSHIFT);
+			input->IsButtonPressed(VerticalButton) ||
+			input->IsButtonReleased(VerticalButton);
 }
 
 json GameObjectTranslator::GetHistoryAction() const

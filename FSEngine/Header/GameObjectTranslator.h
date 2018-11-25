@@ -6,6 +6,7 @@ class GameObjectTranslator
 {
 private:
 	const int TranslateButton = SDL_BUTTON_LEFT;
+	const SDL_Scancode VerticalButton = SDL_SCANCODE_LSHIFT;
 
 	Input* input = nullptr;
 	Camera* camera = nullptr;

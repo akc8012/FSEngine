@@ -232,6 +232,9 @@ void Engine::HandleKeyboardShortcuts()
 
 		if (systems->input->IsButtonPressed(SDL_SCANCODE_O))
 			systems->eventSystem->SendEvent("LoadKeyPressed");
+
+		if (systems->input->IsButtonPressed(SDL_SCANCODE_Z))
+			systems->eventSystem->SendEvent("UndoKeyPressed");
 	}
 }
 #pragma endregion
