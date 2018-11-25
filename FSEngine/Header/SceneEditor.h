@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "ClickLabelManager.h"
+#include "EditorAction.h"
 
 class SceneEditor : public IUpdatable
 {

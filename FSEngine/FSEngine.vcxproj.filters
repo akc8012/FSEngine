@@ -92,6 +92,7 @@
     <ClInclude Include="Header\ISerializable.h" />
     <ClInclude Include="Header\SceneEditor.h" />
     <ClInclude Include="Header\IUpdatable.h" />
+    <ClInclude Include="Header\EditorAction.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Json\settings.json" />
