@@ -64,6 +64,9 @@ void SceneEditor::UpdateActiveGameObject(IGameObject* activeGameObject)
 		actionHistory.push(gameObjectTranslator->GetHistoryAction());
 		gameObjectTranslator->SetGameObject(nullptr);
 	}
+
+	if (systems->input->IsButtonPressed(SDL_SCANCODE_DELETE))
+		scene->GetGameObjectContainer()->RemoveGameObject(activeGameObject->GetName());
 }
 
 void SceneEditor::ReceiveEvent(const string& key, const json& event)

@@ -24,13 +24,14 @@ void GameObjectContainer::InitializeGameObject(GameObject* gameObject, const str
 	gameObject->Start();
 }
 
-void GameObjectContainer::RemoveGameObject(const string& name)
+void GameObjectContainer::RemoveGameObject(string name)
 {
 	IGameObject* gameObject = TryGetGameObject(name);
 	if (gameObject == nullptr)
 		throwFS("Could not find GameObject to remove with name: " + name);
 
 	gameObjects.erase(name);
+	systems->eventSystem->SendEvent("GameObjectRemoved", name);
 }
 
 IGameObject* GameObjectContainer::GetGameObject(const string& name) const

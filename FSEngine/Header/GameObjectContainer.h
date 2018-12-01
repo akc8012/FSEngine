@@ -20,7 +20,7 @@ public:
 	GameObjectContainer(Systems* systems);
 
 	IGameObject* AddGameObject(const string& name, unique_ptr<IGameObject> gameObject);
-	void RemoveGameObject(const string& name) override;
+	void RemoveGameObject(string name) override;
 
 	IGameObject* GetGameObject(const string& name) const override;
 	IGameObject* TryGetGameObject(const string& name) const override;

@@ -10,7 +10,7 @@ public:
 	}
 
 	virtual IGameObject* AddGameObject(const string& name, unique_ptr<IGameObject> gameObject) = 0;
-	virtual void RemoveGameObject(const string& name) = 0;
+	virtual void RemoveGameObject(string name) = 0;
 
 	virtual IGameObject* GetGameObject(const string& name) const = 0;
 	virtual IGameObject* TryGetGameObject(const string& name) const = 0;

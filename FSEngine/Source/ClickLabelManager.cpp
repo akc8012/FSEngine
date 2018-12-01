@@ -3,7 +3,7 @@
 ClickLabelManager::ClickLabelManager(Scene* scene, Systems* systems)
  : scene(scene), systems(systems)
 {
-
+	systems->eventSystem->AddListener("GameObjectRemoved", this);
 }
 
 // note: this will not work for GameObjects added to the scene at runtime!! (unless the scene reloads)
@@ -27,7 +27,7 @@ ClickLabel* ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameOb
 	if (gameObjectTransform == nullptr || gameObjectTransform->GetComponentTypeId() != Types::Transform)
 		return nullptr;
 
-	auto clickLabel = static_cast<ClickLabel*>(scene->GetGameObjectContainer()->AddGameObject(gameObject->GetName() + " - Label", make_unique<ClickLabel>()));
+	auto clickLabel = static_cast<ClickLabel*>(scene->GetGameObjectContainer()->AddGameObject(gameObject->GetName() + LabelSuffix, make_unique<ClickLabel>()));
 	clickLabel->InitializeClickLabel(gameObject);
 
 	return clickLabel;
@@ -58,7 +58,32 @@ ClickLabel* ClickLabelManager::GetCursorIntersectingClickLabel() const
 	return nullptr;
 }
 
-IGameObject * ClickLabelManager::GetActiveGameObject() const
+void ClickLabelManager::ReceiveEvent(const string& key, const json& event)
+{
+	if (key == "GameObjectRemoved")
+		RemoveClickLabel(event.get<string>());
+}
+
+void ClickLabelManager::RemoveClickLabel(const string& gameObjectName)
+{
+	if (gameObjectName.find(LabelSuffix) != string::npos)
+		return;
+
+	string clickLabelName = gameObjectName + LabelSuffix;
+
+	auto clickLabelToRemove = scene->GetGameObjectContainer()->GetGameObject(clickLabelName);
+	clickLabels.erase(std::find(clickLabels.begin(), clickLabels.end(), clickLabelToRemove));
+	activeClickLabel = nullptr;
+
+	scene->GetGameObjectContainer()->RemoveGameObject(clickLabelName);
+}
+
+IGameObject* ClickLabelManager::GetActiveGameObject() const
 {
 	return activeClickLabel == nullptr ? nullptr : activeClickLabel->GetAttachedGameObject();
+}
+
+ClickLabelManager::~ClickLabelManager()
+{
+	systems->eventSystem->RemoveListener(this);
 }
