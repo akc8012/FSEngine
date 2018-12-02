@@ -14,16 +14,21 @@ private:
 	ClickLabel* activeClickLabel = nullptr;
 	vector<ClickLabel*> clickLabels;
 
-	ClickLabel* CreateClickLabelForGameObject(IGameObject* gameObject);
+	void RemoveAllClickLabels();
+
+	void CreateClickLabelForGameObject(IGameObject* gameObject);
+	bool ShouldCreateClickLabel(const IGameObject* gameObject) const;
+
 	ClickLabel* GetCursorIntersectingClickLabel() const;
 
 	void RemoveClickLabel(const string& gameObjectName);
+	bool GameObjectNameIsClickLabel(const string& gameObjectName) const;
 
 public:
 	ClickLabelManager(Scene* scene, Systems* systems);
 	~ClickLabelManager();
 
-	void CreateClickLabels();
+	void InitializeClickLabels();
 
 	void Update() override;
 	void ReceiveEvent(const string& key, const json& event) override;

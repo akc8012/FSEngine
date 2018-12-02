@@ -13,7 +13,7 @@ void SceneEditor::InitializeEditor()
 {
 	UpdateEditorMode();
 
-	clickLabelManager->CreateClickLabels();
+	clickLabelManager->InitializeClickLabels();
 
 	camera = scene->GetGameObjectContainer()->GetGameObjectAs<Camera>("Camera");
 	gameObjectTranslator = make_unique<GameObjectTranslator>(systems->input.get(), camera);
@@ -66,7 +66,20 @@ void SceneEditor::UpdateActiveGameObject(IGameObject* activeGameObject)
 	}
 
 	if (systems->input->IsButtonPressed(SDL_SCANCODE_DELETE))
+	{
+		actionHistory.push(CreateDeleteAction(activeGameObject));
 		scene->GetGameObjectContainer()->RemoveGameObject(activeGameObject->GetName());
+	}
+}
+
+json SceneEditor::CreateDeleteAction(const IGameObject* activeGameObject) const
+{
+	json action;
+	action["ActionType"] = "Delete";
+	action["GameObject"] = activeGameObject->GetName();
+	action["GameObjectJson"] = activeGameObject->GetJson();
+
+	return action;
 }
 
 void SceneEditor::ReceiveEvent(const string& key, const json& event)
@@ -80,9 +93,16 @@ void SceneEditor::DoUndoAction()
 	json action = actionHistory.top();
 	actionHistory.pop();
 
-	auto gameObject = scene->GetGameObjectContainer()->GetGameObject(action["GameObject"].get<string>());
-	// TODO: checks here for other action types
-	gameObjectTranslator->DoUndoAction(action, gameObject);
+	string gameObjectName = action["GameObject"].get<string>();
+
+	if (action["ActionType"] == "Delete")
+		scene->LoadGameObjectFromJson(gameObjectName, action["GameObjectJson"]);
+	else
+	{
+		auto gameObject = scene->GetGameObjectContainer()->GetGameObject(gameObjectName);
+		// TODO: checks here for other action types
+		gameObjectTranslator->DoUndoAction(action, gameObject);
+	}
 }
 
 SceneEditor::~SceneEditor()

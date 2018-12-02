@@ -14,6 +14,8 @@ IGameObject* GameObjectContainer::AddGameObject(const string& name, unique_ptr<I
 
 	IGameObject* emplacedGameObject = result.first->second.get();
 	InitializeGameObject(static_cast<GameObject*>(emplacedGameObject), name);
+	systems->eventSystem->SendEvent("GameObjectAdded", name, false);
+
 	return emplacedGameObject;
 }
 

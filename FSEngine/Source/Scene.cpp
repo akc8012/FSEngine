@@ -63,16 +63,20 @@ void Scene::LoadGameObjectsFromJson(const json& j)
 	for (const auto gameObjectJson : j.items())
 	{
 		string name = gameObjectJson.key();
-
-		IGameObject* gameObject = gameObjectContainer->TryGetGameObject(name);
-		if (gameObject == nullptr)
-		{
-			string type = gameObjectJson.value()["type"];
-			gameObject = gameObjectContainer->AddGameObject(name, GameObjectFactory::MakeGameObject(type));
-		}
-
-		gameObject->SetFromJson(gameObjectJson.value());
+		LoadGameObjectFromJson(name, gameObjectJson.value());
 	}
+}
+
+void Scene::LoadGameObjectFromJson(const string& name, const json& j)
+{
+	IGameObject* gameObject = gameObjectContainer->TryGetGameObject(name);
+	if (gameObject == nullptr)
+	{
+		string type = j["type"];
+		gameObject = gameObjectContainer->AddGameObject(name, GameObjectFactory::MakeGameObject(type));
+	}
+
+	gameObject->SetFromJson(j);
 }
 
 void Scene::SendSceneLoadedEvents()

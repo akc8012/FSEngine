@@ -27,5 +27,7 @@ public:
 	void LoadScene();
 	void SaveScene() const;
 
+	void LoadGameObjectFromJson(const string& name, const json& j);
+
 	GameObjectContainer* GetGameObjectContainer() const;
 };

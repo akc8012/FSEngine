@@ -28,6 +28,7 @@ private:
 	void UpdateActiveGameObject(IGameObject* activeGameObject);
 
 	void DoUndoAction();
+	json CreateDeleteAction(const IGameObject* activeGameObject) const;
 
 public:
 	SceneEditor(Scene* scene, Systems* systems);

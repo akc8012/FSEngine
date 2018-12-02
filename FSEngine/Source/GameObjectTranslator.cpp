@@ -68,6 +68,7 @@ bool GameObjectTranslator::ShouldResetCursorOffset() const
 json GameObjectTranslator::GetHistoryAction() const
 {
 	json action;
+	action["ActionType"] = "Translate";
 	action["GameObject"] = gameObject->GetName();
 
 	vec3 moveDelta = gameObject->GetComponent<Transform>()->GetPosition() - originalPosition;

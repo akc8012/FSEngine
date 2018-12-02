@@ -3,34 +3,48 @@
 ClickLabelManager::ClickLabelManager(Scene* scene, Systems* systems)
  : scene(scene), systems(systems)
 {
+	systems->eventSystem->AddListener("GameObjectAdded", this);
 	systems->eventSystem->AddListener("GameObjectRemoved", this);
 }
 
-// note: this will not work for GameObjects added to the scene at runtime!! (unless the scene reloads)
-// TODO: make this work for GameObjects added at runtime
-void ClickLabelManager::CreateClickLabels()
+void ClickLabelManager::InitializeClickLabels()
 {
 	activeClickLabel = nullptr;
-	clickLabels.clear();
+	RemoveAllClickLabels();
 
 	for (const auto gameObject : scene->GetGameObjectContainer()->GetGameObjects())
-	{
-		auto clickLabel = CreateClickLabelForGameObject(gameObject);
-		if (clickLabel != nullptr)
-			clickLabels.push_back(clickLabel);
-	}
+		CreateClickLabelForGameObject(gameObject);
 }
 
-ClickLabel* ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameObject)
+void ClickLabelManager::RemoveAllClickLabels()
 {
-	Transform* gameObjectTransform = gameObject->TryGetComponent<Transform>();
-	if (gameObjectTransform == nullptr || gameObjectTransform->GetComponentTypeId() != Types::Transform)
-		return nullptr;
+	for (const auto gameObject : scene->GetGameObjectContainer()->GetGameObjects())
+	{
+		if (GameObjectNameIsClickLabel(gameObject->GetName()))
+			scene->GetGameObjectContainer()->RemoveGameObject(gameObject->GetName());
+	}
+
+	clickLabels.clear();
+}
+
+void ClickLabelManager::CreateClickLabelForGameObject(IGameObject* gameObject)
+{
+	if (!ShouldCreateClickLabel(gameObject))
+		return;
 
 	auto clickLabel = static_cast<ClickLabel*>(scene->GetGameObjectContainer()->AddGameObject(gameObject->GetName() + LabelSuffix, make_unique<ClickLabel>()));
 	clickLabel->InitializeClickLabel(gameObject);
 
-	return clickLabel;
+	clickLabels.push_back(clickLabel);
+}
+
+bool ClickLabelManager::ShouldCreateClickLabel(const IGameObject* gameObject) const
+{
+	Transform* gameObjectTransform = gameObject->TryGetComponent<Transform>();
+
+	return gameObjectTransform != nullptr && gameObjectTransform->GetComponentTypeId() == Types::Transform &&
+		!GameObjectNameIsClickLabel(gameObject->GetName()) &&
+		scene->GetGameObjectContainer()->TryGetGameObject(gameObject->GetName() + LabelSuffix) == nullptr;
 }
 
 void ClickLabelManager::Update()
@@ -60,13 +74,16 @@ ClickLabel* ClickLabelManager::GetCursorIntersectingClickLabel() const
 
 void ClickLabelManager::ReceiveEvent(const string& key, const json& event)
 {
+	if (key == "GameObjectAdded")
+		CreateClickLabelForGameObject(scene->GetGameObjectContainer()->GetGameObject(event.get<string>()));
+
 	if (key == "GameObjectRemoved")
 		RemoveClickLabel(event.get<string>());
 }
 
 void ClickLabelManager::RemoveClickLabel(const string& gameObjectName)
 {
-	if (gameObjectName.find(LabelSuffix) != string::npos)
+	if (GameObjectNameIsClickLabel(gameObjectName))
 		return;
 
 	string clickLabelName = gameObjectName + LabelSuffix;
@@ -76,6 +93,11 @@ void ClickLabelManager::RemoveClickLabel(const string& gameObjectName)
 	activeClickLabel = nullptr;
 
 	scene->GetGameObjectContainer()->RemoveGameObject(clickLabelName);
+}
+
+bool ClickLabelManager::GameObjectNameIsClickLabel(const string& gameObjectName) const
+{
+	return gameObjectName.find(LabelSuffix) != string::npos;
 }
 
 IGameObject* ClickLabelManager::GetActiveGameObject() const
