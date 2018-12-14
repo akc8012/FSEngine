@@ -13,6 +13,9 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
+#define SOL_CHECK_ARGUMENTS 1
+#include <sol.hpp>
+
 class Engine
 {
 private:

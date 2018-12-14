@@ -74,8 +74,8 @@
     <LibraryPath>C:\sdl2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;C:\opengl\glm;C:\sdl2\json;C:\sdl2\assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\sdl2\lib\x64;C:\sdl2\image\lib\x64;C:\sdl2\mixer\lib\x64;C:\sdl2\ttf\lib\x64;C:\opengl\lib\Release\x64;C:\sdl2\assimp\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;C:\opengl\glm;C:\sdl2\json;C:\sdl2\assimp\include;C:\sdl2\lua\lang\include;C:\sdl2\lua\sol\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\sdl2\lib\x64;C:\sdl2\image\lib\x64;C:\sdl2\mixer\lib\x64;C:\sdl2\ttf\lib\x64;C:\opengl\lib\Release\x64;C:\sdl2\assimp\lib;C:\sdl2\lua\lang\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\sdl2\include;C:\sdl2\image\include;C:\sdl2\mixer\include;C:\sdl2\ttf\include;C:\opengl\include;C:\opengl\glm;C:\sdl2\json;C:\sdl2\assimp\include;$(IncludePath)</IncludePath>
@@ -102,7 +102,7 @@
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;OpenGL32.lib;glew32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;OpenGL32.lib;glew32.lib;assimp-vc140-mt.lib;lua.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
