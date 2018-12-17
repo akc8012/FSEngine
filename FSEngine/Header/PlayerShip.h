@@ -1,10 +1,14 @@
 #pragma once
 #include "GameObject.h"
 
+#define SOL_CHECK_ARGUMENTS 1
+#include <sol.hpp>
+
 class PlayerShip : public GameObject
 {
 private:
 	Transform* transform = nullptr;
+	sol::state lua;
 
 	vec3 direction;
 

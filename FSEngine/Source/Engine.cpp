@@ -20,10 +20,6 @@ void Engine::Initialize()
 	sceneManager = make_unique<SceneManager>(systems.get());
 	renderer = make_unique<Renderer>(systems.get(), sceneManager->GetCurrentScene()->GetGameObjectContainer()->GetGameObject("Camera"));
 
-	sol::state lua;
-	lua.open_libraries(sol::lib::base);
-	lua.script("print('lua script!')");
-
 	printFS("Success");
 	running = true;
 }

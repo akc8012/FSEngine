@@ -4,6 +4,9 @@ PlayerShip::PlayerShip()
 {
 	AddComponent(make_shared<Model>("C:/Model/Arwing/arwing.dae"));
 	transform = AddComponent(make_shared<Transform>());
+
+	lua.open_libraries(sol::lib::base);
+	lua.script_file("Resource/Script/script.lua");
 }
 
 void PlayerShip::Start()
@@ -32,14 +35,7 @@ ComponentCollection<Texture>* PlayerShip::GetTextureCollection() const
 
 void PlayerShip::Update()
 {
-	if (!systems->fileSystem->GetSettingsValue<bool>("EditorMode"))
-	{
-		if (systems->input->IsButtonPressed(SDL_SCANCODE_P))
-			ResetValues();
-
-		//ControlShip();
-		//SetCamera();
-	}
+	lua["Update"]();
 }
 
 void PlayerShip::ControlShip()

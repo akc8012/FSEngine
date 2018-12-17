@@ -101,6 +101,7 @@
     <None Include="Resource\Shader\FragmentPhongShader.glsl" />
     <None Include="Resource\Shader\VertexShader.glsl" />
     <None Include="Resource\Json\scene.json" />
+    <None Include="Resource\Script\script.lua" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resource\Image\wall.png" />

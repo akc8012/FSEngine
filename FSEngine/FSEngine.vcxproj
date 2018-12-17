@@ -236,6 +236,7 @@
   <ItemGroup>
     <None Include="Resource\Json\scene.json" />
     <None Include="Resource\Json\settings.json" />
+    <None Include="Resource\Script\script.lua" />
     <None Include="Resource\Shader\FragmentPhongShader.glsl" />
     <None Include="Resource\Shader\VertexShader.glsl" />
   </ItemGroup>
