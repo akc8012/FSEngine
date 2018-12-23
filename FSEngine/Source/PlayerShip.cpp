@@ -26,10 +26,11 @@ PlayerShip::PlayerShip()
 		"y", &vec3::y,
 		"z", &vec3::z,
 
-		"myAdd", sol::overload(MyAdd<int>, MyAdd<float>, MyAdd<string>)
+		sol::meta_function::addition,    sol::resolve<vec3(const vec3&, const vec3&)>(glm::operator+<float, glm::packed_highp>),
+		sol::meta_function::subtraction, sol::resolve<vec3(const vec3&, const vec3&)>(glm::operator-<float, glm::packed_highp>)
 	);
 
-	lua["update"]();
+	lua["run"]();
 }
 
 void PlayerShip::Start()

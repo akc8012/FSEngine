@@ -6,11 +6,12 @@ end
 
 
 
-function update()
-    vec = vec3.new(1, 2, 3)
-    -- print(vec.z)
+function run()
+    a = vec3.new(8, 4, 2)
+    b = vec3.new(1, 2, 1)
+    result = a - b
 
-    print(vec3.myAdd(3, 3))
+    print(result.x, result.y, result.z)
 end
 
 
