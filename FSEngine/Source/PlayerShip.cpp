@@ -1,12 +1,35 @@
 #include "../Header/PlayerShip.h"
 
+void MyFunction()
+{
+	printFS("my function");
+}
+
+template <typename T>
+T MyAdd(T a, T b)
+{
+	return a + b;
+}
+
 PlayerShip::PlayerShip()
 {
 	AddComponent(make_shared<Model>("C:/Model/Arwing/arwing.dae"));
 	transform = AddComponent(make_shared<Transform>());
 
 	lua.open_libraries(sol::lib::base);
-	lua.script_file("Resource/Script/script.lua");
+	lua.script_file("Resource/Script/script1.lua");
+	lua.script_file("Resource/Script/script2.lua");
+
+	lua.new_usertype<vec3>("vec3",
+		sol::constructors<vec3(), vec3(float, float, float)>(),
+		"x", &vec3::x,
+		"y", &vec3::y,
+		"z", &vec3::z,
+
+		"myAdd", sol::overload(MyAdd<int>, MyAdd<float>, MyAdd<string>)
+	);
+
+	lua["update"]();
 }
 
 void PlayerShip::Start()
@@ -35,7 +58,7 @@ ComponentCollection<Texture>* PlayerShip::GetTextureCollection() const
 
 void PlayerShip::Update()
 {
-	lua["Update"]();
+
 }
 
 void PlayerShip::ControlShip()

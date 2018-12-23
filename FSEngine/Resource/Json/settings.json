@@ -4,7 +4,7 @@
   "ContinualSettingsReload": false,
   "LoadShadersOnFocus": true,
 
-  "SurfaceSize":  [1280, 800],
+  "SurfaceSize": [960, 600],
   "Fullscreen": false,
   "SwapInterval": 0,
   "WindowAllowResize": true,
