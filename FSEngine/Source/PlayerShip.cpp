@@ -15,7 +15,15 @@ PlayerShip::PlayerShip()
 {
 	AddComponent(make_shared<Model>("C:/Model/Arwing/arwing.dae"));
 	transform = AddComponent(make_shared<Transform>());
+}
 
+void PlayerShip::Start()
+{
+	ResetValues();
+}
+
+void PlayerShip::SceneLoaded()
+{
 	lua.open_libraries(sol::lib::base);
 	lua.script_file("Resource/Script/script1.lua");
 	lua.script_file("Resource/Script/script2.lua");
@@ -29,13 +37,17 @@ PlayerShip::PlayerShip()
 		sol::meta_function::addition,    sol::resolve<vec3(const vec3&, const vec3&)>(glm::operator+<float, glm::packed_highp>),
 		sol::meta_function::subtraction, sol::resolve<vec3(const vec3&, const vec3&)>(glm::operator-<float, glm::packed_highp>)
 	);
+	// TODO: vec4 and vec2
+
+	lua.new_usertype<Transform>("transform",
+		"position", sol::property(&Transform::GetPosition, sol::resolve<void(const vec3&)>(&Transform::SetPosition)),
+		"scale",    sol::property(&Transform::GetScale,    sol::resolve<void(const vec3&)>(&Transform::SetScale))
+	);
+
+	transform->SetPosition(5, 4, 3);
+	lua["playerTransform"] = transform;
 
 	lua["run"]();
-}
-
-void PlayerShip::Start()
-{
-	ResetValues();
 }
 
 void PlayerShip::ResetValues()

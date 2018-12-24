@@ -22,7 +22,9 @@ public:
 	PlayerShip();
 
 	void Start() override;
+	void SceneLoaded() override;
 	void Update() override;
+
 	ComponentCollection<Mesh>* GetMeshCollection() const override;
 	ComponentCollection<Texture>* GetTextureCollection() const override;
 
