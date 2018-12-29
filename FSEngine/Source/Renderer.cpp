@@ -191,6 +191,9 @@ void Renderer::DrawTriangleArrays(const Mesh* mesh)
 #pragma region EndRender
 void Renderer::EndRender(Window* window)
 {
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 	window->SwapWindow();
 }
 #pragma endregion

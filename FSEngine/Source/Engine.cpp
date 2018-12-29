@@ -10,6 +10,20 @@ void Engine::Initialize()
 	InitializeOpenGl();
 	InitializeGlew();
 
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+
+	// Setup Platform/Renderer bindings
+	ImGui_ImplSDL2_InitForOpenGL(window->GetSDLWindow(), openGlContext);
+	ImGui_ImplOpenGL3_Init("#version 330");
+
+	// Setup Style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
+
 	systems->input = make_unique<Input>();
 	systems->gameTimer = make_unique<GameTimer>();
 	systems->random = make_unique<Random>();
@@ -137,6 +151,8 @@ void Engine::PollEvents()
 			systems->input->SetMouseButtonRelease(sdlEvent.button.button);
 			break;
 		}
+
+		ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
 	}
 }
 
@@ -256,6 +272,13 @@ void Engine::Update()
 
 void Engine::Draw()
 {
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame(window->GetSDLWindow());
+	ImGui::NewFrame();
+
+	bool show = true;
+	ImGui::ShowDemoWindow(&show);
+
 	renderer->StartRender();
 
 	sceneManager->Draw(renderer.get());
@@ -271,6 +294,10 @@ SDL_Window* Engine::GetSDLWindow() const
 Engine::~Engine()
 {
 	sceneManager.reset();
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
 
 	SDL_GL_DeleteContext(openGlContext);
 	TTF_Quit();

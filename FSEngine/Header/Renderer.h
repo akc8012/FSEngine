@@ -9,6 +9,10 @@
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
+#include "../imgui/imgui.h"
+#include "../imgui/imgui_impl_sdl.h"
+#include "../imgui/imgui_impl_opengl3.h"
+
 class Renderer : public IEventListener
 {
 private:
