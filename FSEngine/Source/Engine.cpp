@@ -9,20 +9,7 @@ void Engine::Initialize()
 	InitializeSDL();
 	InitializeOpenGl();
 	InitializeGlew();
-
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-
-	// Setup Platform/Renderer bindings
-	ImGui_ImplSDL2_InitForOpenGL(window->GetSDLWindow(), openGlContext);
-	ImGui_ImplOpenGL3_Init("#version 330");
-
-	// Setup Style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
+	InitializeImGui();
 
 	systems->input = make_unique<Input>();
 	systems->gameTimer = make_unique<GameTimer>();
@@ -92,6 +79,20 @@ void Engine::InitializeGlew()
 	Uint32 glewError = glewInit();
 	if (glewError != GLEW_OK)
 		throwFS((string)"Error initializing GLEW! " + (const char*)glewGetErrorString(glewError));
+}
+
+void Engine::InitializeImGui()
+{
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+
+	ImGui_ImplSDL2_InitForOpenGL(window->GetSDLWindow(), openGlContext);
+	ImGui_ImplOpenGL3_Init("#version 330");
+
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
 }
 
 bool Engine::IsRunning() const
@@ -272,14 +273,7 @@ void Engine::Update()
 
 void Engine::Draw()
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(window->GetSDLWindow());
-	ImGui::NewFrame();
-
-	bool show = true;
-	ImGui::ShowDemoWindow(&show);
-
-	renderer->StartRender();
+	renderer->StartRender(window.get());
 
 	sceneManager->Draw(renderer.get());
 

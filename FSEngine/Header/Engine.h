@@ -31,6 +31,7 @@ private:
 	void SetOpenGlParameters();
 
 	void InitializeGlew();
+	void InitializeImGui();
 
 	void ToggleSwapInterval();
 	void SetSwapInterval(int interval);
