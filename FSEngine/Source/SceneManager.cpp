@@ -47,6 +47,8 @@ void SceneManager::Draw(Renderer* renderer)
 {
 	DrawGameObjects(renderer, false);
 	DrawGameObjects(renderer, true);
+
+	DrawImGuiGameObjectsWindow();
 }
 
 void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
@@ -56,6 +58,32 @@ void SceneManager::DrawGameObjects(Renderer* renderer, bool doLateDraw)
 		if (gameObject->GetParameterCollection()->GetParameter(GameObject::DoDraw) && gameObject->GetParameterCollection()->GetParameter(GameObject::DoLateDraw) == doLateDraw)
 			renderer->RenderGameObject(gameObject);
 	}
+}
+
+void SceneManager::DrawImGuiGameObjectsWindow() const
+{
+	const int ListBoxHeight = 20;
+	const int ListBoxFullSizeWidth = -1;
+
+	static int currentItemIndex = 0;
+	auto nameList = GetGameObjectNameList();
+
+	ImGui::Begin("GameObjects", NULL, ImGuiWindowFlags_None);
+
+		ImGui::PushItemWidth(ListBoxFullSizeWidth);
+		ImGui::ListBox("##GameObjects", &currentItemIndex, nameList.data(), (int)nameList.size(), ListBoxHeight);
+		ImGui::PopItemWidth();
+
+	ImGui::End();
+}
+
+vector<const char*> SceneManager::GetGameObjectNameList() const
+{
+	vector<const char*> nameList;
+	for (const auto gameObject : currentScene->GetGameObjectContainer()->GetGameObjects())
+		nameList.push_back(gameObject->GetName().c_str());
+
+	return nameList;
 }
 
 Scene* SceneManager::GetCurrentScene() const
