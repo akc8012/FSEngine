@@ -165,6 +165,9 @@ float Camera::GetHeightKeyboardInput() const
 
 float Camera::GetHeightMouseInput() const
 {
+	if (ImGui::GetIO().WantCaptureMouse)
+		return 0.f;
+
 	return (float)systems->input->GetMouseWheelScroll();
 }
 

@@ -52,12 +52,18 @@ void ClickLabelManager::Update()
 	if (systems->input->IsButtonPressed(SDL_BUTTON_LEFT))
 	{
 		if (activeClickLabel != nullptr)
+		{
 			activeClickLabel->Deselect();
+			activeClickLabel = nullptr;
+		}
 
-		activeClickLabel = GetCursorIntersectingClickLabel();
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			activeClickLabel = GetCursorIntersectingClickLabel();
 
-		if (activeClickLabel != nullptr)
-			activeClickLabel->Select();
+			if (activeClickLabel != nullptr)
+				activeClickLabel->Select();
+		}
 	}
 }
 

@@ -10,6 +10,10 @@
 #include "ParameterCollection.h"
 #include "IEventListener.h"
 
+#include <imgui.h>
+#include <imgui_impl_sdl.h>
+#include <imgui_impl_opengl3.h>
+
 using std::shared_ptr;
 using std::make_shared;
 
