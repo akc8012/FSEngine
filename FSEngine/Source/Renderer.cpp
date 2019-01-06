@@ -54,8 +54,16 @@ void Renderer::StartImGuiFrame(Window* window)
 	ImGui_ImplSDL2_NewFrame(window->GetSDLWindow());
 	ImGui::NewFrame();
 
-	bool show = true;
-	ImGui::ShowDemoWindow(&show);
+	ImGui::Begin("GameObjects", NULL, ImGuiWindowFlags_None);
+
+	const char* listbox_items[] = { "Apple", "Banana", "Cherry", "Kiwi", "Mango", "Orange", "Pineapple", "Strawberry", "Watermelon" };
+	static int listbox_item_current = 0;
+
+	ImGui::PushItemWidth(-1);
+	ImGui::ListBox("##GameObjects", &listbox_item_current, listbox_items, IM_ARRAYSIZE(listbox_items), 6);
+	ImGui::PopItemWidth();
+
+	ImGui::End();
 }
 
 void Renderer::SetViewMatrices(Transform* viewTransform)
