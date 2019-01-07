@@ -25,6 +25,9 @@ private:
 	void UpdateEditorMode();
 	void ClearActionHistory();
 
+	void DrawImGuiGameObjectsWindow() const;
+	vector<const char*> GetGameObjectNameList() const;
+
 	void UpdateActiveGameObject(IGameObject* activeGameObject);
 
 	void DoUndoAction();

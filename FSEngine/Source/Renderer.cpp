@@ -27,11 +27,17 @@ void Renderer::ReCompileShaders()
 	parameterCollection->ReInitializeParameters();
 }
 
+void Renderer::StartImGuiFrame(Window* window)
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame(window->GetSDLWindow());
+	ImGui::NewFrame();
+}
+
 #pragma region StartRender
 void Renderer::StartRender(Window* window)
 {
 	ClearScreen();
-	StartImGuiFrame(window);
 
 	SetViewMatrices(camera->GetComponent<Transform>("View"));
 
@@ -46,13 +52,6 @@ void Renderer::ClearScreen()
 
 	glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void Renderer::StartImGuiFrame(Window* window)
-{
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(window->GetSDLWindow());
-	ImGui::NewFrame();
 }
 
 void Renderer::SetViewMatrices(Transform* viewTransform)

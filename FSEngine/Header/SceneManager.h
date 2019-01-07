@@ -17,9 +17,6 @@ private:
 	void UpdateGameObjects(bool doLateUpdate);
 	void DrawGameObjects(Renderer* renderer, bool doLateDraw);
 
-	void DrawImGuiGameObjectsWindow() const;
-	vector<const char*> GetGameObjectNameList() const;
-
 public:
 	SceneManager(Systems* systems);
 	~SceneManager();

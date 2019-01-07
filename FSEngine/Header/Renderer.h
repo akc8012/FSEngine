@@ -20,7 +20,6 @@ private:
 	IGameObject* camera = nullptr;
 
 	void ClearScreen();
-	void StartImGuiFrame(Window* window);
 	void SetViewMatrices(Transform* viewTransform);
 
 	void DrawGrid();
@@ -47,6 +46,7 @@ public:
 	void ReCompileShaders();
 	void ReceiveEvent(const string& key, const json& event) override;
 
+	void StartImGuiFrame(Window* window);
 	void StartRender(Window* window);
 	void RenderGameObject(IGameObject* gameObject);
 	void EndRender(Window* window);

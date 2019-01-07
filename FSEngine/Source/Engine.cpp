@@ -264,6 +264,8 @@ void Engine::Update()
 	if (window->ContinuallyReloadSurfaceSizeSetting())
 		window->SetSurfaceSizeSizeFromSettingsValue();
 
+	renderer->StartImGuiFrame(window.get());
+
 	systems->gameTimer->Update();
 
 	sceneManager->Update();
