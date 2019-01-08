@@ -23,5 +23,5 @@ void main()
 	Normal = normalMatrix * normalVector;
 	TexureCoord = textureCoordVector;
 
-	gl_Position = projectionMatrix * (renderPerspective ? viewMatrix : mat4(1))  * fragmentPositionVector;
+	gl_Position = projectionMatrix * (renderPerspective ? viewMatrix : mat4(1)) * fragmentPositionVector;
 }
