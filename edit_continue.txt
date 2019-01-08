@@ -1,0 +1,10 @@
+new failing:  WindowAllowResize settings option                                 11 Oct
+last working: Window changed all references of windowSize to surfaceSize        11 Oct
+
+
+Failing on:
+  Window is a IEventListener, receive surface size changed event from Engine
+    Commenting out this line fixes it
+      Line 189: json { windowEvent.data1, windowEvent.data2 }
+
+
