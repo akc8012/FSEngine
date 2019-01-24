@@ -27,6 +27,7 @@ private:
 
 	void DrawImGuiGameObjectsWindow() const;
 	vector<const char*> GetGameObjectNameList() const;
+	void DrawClickBox(const string& name) const;
 
 	void UpdateActiveGameObject(IGameObject* activeGameObject);
 

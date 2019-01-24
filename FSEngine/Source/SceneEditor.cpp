@@ -54,15 +54,20 @@ void SceneEditor::Update()
 
 void SceneEditor::DrawImGuiGameObjectsWindow() const
 {
-	const int ListBoxHeight = 20;
-	const int ListBoxFullSizeWidth = -1;
+	ImGui::ShowDemoWindow(NULL);
 
 	static int currentItemIndex = 0;
 	auto nameList = GetGameObjectNameList();
 
+	for (auto name : nameList)
+		DrawClickBox(name);
+
 	ImGui::Begin("GameObjects", NULL, ImGuiWindowFlags_None);
 
-		ImGui::PushItemWidth(ListBoxFullSizeWidth);
+		const int ListBoxHeight = 20;
+		const int FullSizeWidth = -1;
+		
+		ImGui::PushItemWidth(FullSizeWidth);
 		ImGui::ListBox("##GameObjects", &currentItemIndex, nameList.data(), (int)nameList.size(), ListBoxHeight);
 		ImGui::PopItemWidth();
 
@@ -73,15 +78,34 @@ vector<const char*> SceneEditor::GetGameObjectNameList() const
 {
 	vector<const char*> nameList;
 	for (const auto gameObject : scene->GetGameObjectContainer()->GetGameObjects())
-		nameList.push_back(gameObject->GetName().c_str());
+	{
+		auto& name = gameObject->GetName();
+		if (name.find("- Label") == string::npos) // TEMPORARY
+			nameList.push_back(name.c_str());
+	}
 
 	return nameList;
 }
 
+void SceneEditor::DrawClickBox(const string& name) const
+{
+	ImGui::Begin(("##" + name).c_str(), NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize);
+
+		const int FullSizeWidth = -1;
+		ImGui::PushItemWidth(FullSizeWidth);
+
+		auto white = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		auto yellow = ImVec4(1.0f, 1.0f, 0.0f, 1.0f);
+
+		ImGui::TextColored(ImGui::IsWindowFocused() ? yellow : white, name.c_str());
+		ImGui::PopItemWidth();
+
+	ImGui::End();
+}
+
 void SceneEditor::UpdateActiveGameObject(IGameObject* activeGameObject)
 {
-	if (gameObjectTranslator->ShouldStartTranslate())
-		gameObjectTranslator->SetGameObject(activeGameObject);
+	gameObjectTranslator->SetGameObject(activeGameObject);
 
 	if (gameObjectTranslator->ShouldTranslate())
 		gameObjectTranslator->TranslateGameObject();
