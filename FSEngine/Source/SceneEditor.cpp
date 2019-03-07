@@ -52,6 +52,7 @@ void SceneEditor::Update()
 		UpdateActiveGameObject(activeGameObject);
 }
 
+#pragma region ImGui
 void SceneEditor::DrawImGuiGameObjectsWindow() const
 {
 	ImGui::ShowDemoWindow(NULL);
@@ -102,6 +103,7 @@ void SceneEditor::DrawClickBox(const string& name) const
 
 	ImGui::End();
 }
+#pragma endregion
 
 void SceneEditor::UpdateActiveGameObject(IGameObject* activeGameObject)
 {
