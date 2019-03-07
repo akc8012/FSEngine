@@ -55,13 +55,13 @@ void SceneEditor::Update()
 #pragma region ImGui
 void SceneEditor::DrawImGuiGameObjectsWindow() const
 {
-	//ImGui::ShowDemoWindow(NULL);
+	ImGui::ShowDemoWindow(NULL);
 
 	static int currentItemIndex = 0;
 	auto nameList = GetGameObjectNameList();
 
-	//for (auto name : nameList)
-	//	DrawClickBox(name);
+	for (auto name : nameList)
+		DrawClickBox(name);
 
 	ImGui::Begin("GameObjects", NULL, ImGuiWindowFlags_None);
 
