@@ -17,5 +17,6 @@
   "EditorMode": true,
 
   "CameraMoveSpeed": 2,
-  "CameraScrollSpeed": 0.15
+  "CameraScrollSpeed": 0.15,
+  "CameraFarPlane": 1000
 }

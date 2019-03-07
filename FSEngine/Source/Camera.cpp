@@ -13,6 +13,7 @@ void Camera::Start()
 
 	cursorRay.origin = position;
 	systems->eventSystem->AddListener("SurfaceSizeChanged", this);
+	systems->eventSystem->AddListener("WindowFocusGained", this);
 }
 
 void Camera::ResetViewTransform()
@@ -45,10 +46,9 @@ void Camera::Update()
 
 void Camera::ReceiveEvent(const string& key, const json& event)
 {
-	if (key != "SurfaceSizeChanged")
-		return;
+	if (key == "SurfaceSizeChanged")
+		surfaceSize = tvec2<int> { event[0], event[1] };
 
-	surfaceSize = tvec2<int> { event[0], event[1] };
 	mat4 perspectiveMatrix = CalculateProjectionMatrixPerspective(surfaceSize);
 	GetComponent<Transform>("Perspective")->SetMatrix(perspectiveMatrix);
 }
@@ -188,9 +188,9 @@ mat4 Camera::CalculateProjectionMatrixPerspective(const tvec2<int>& surfaceSize)
 	const float FieldOfView = glm::radians(45.0f);
 	const float AspectRatio = (float)surfaceSize.x / (float)surfaceSize.y;
 	const float NearPlane = 0.1f;
-	const float FarPlane = 100.0f;
+	float farPlane = systems->fileSystem->GetSettingsValue<float>("CameraFarPlane");
 
-	return glm::perspective(FieldOfView, AspectRatio, NearPlane, FarPlane);
+	return glm::perspective(FieldOfView, AspectRatio, NearPlane, farPlane);
 }
 
 mat4 Camera::CalculateProjectionMatrixOrthographic() const
