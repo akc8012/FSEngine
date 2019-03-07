@@ -107,7 +107,8 @@ void SceneEditor::DrawClickBox(const string& name) const
 
 void SceneEditor::UpdateActiveGameObject(IGameObject* activeGameObject)
 {
-	gameObjectTranslator->SetGameObject(activeGameObject);
+	if (gameObjectTranslator->ShouldStartTranslate())
+		gameObjectTranslator->SetGameObject(activeGameObject);
 
 	if (gameObjectTranslator->ShouldTranslate())
 		gameObjectTranslator->TranslateGameObject();
