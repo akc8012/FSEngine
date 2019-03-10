@@ -55,22 +55,16 @@ void SceneEditor::Update()
 #pragma region ImGui
 void SceneEditor::DrawImGuiGameObjectsWindow() const
 {
-	//ImGui::ShowDemoWindow(NULL);
-
-	static int currentItemIndex = 0;
-	auto nameList = GetGameObjectNameList();
-
-	//for (auto name : nameList)
-	//	DrawClickBox(name);
+	vector<const char*> nameList = GetGameObjectNameList();
 
 	ImGui::Begin("GameObjects", NULL, ImGuiWindowFlags_None);
 
-		const int ListBoxHeight = 20;
-		const int FullSizeWidth = -1;
-		
-		ImGui::PushItemWidth(FullSizeWidth);
-		ImGui::ListBox("##GameObjects", &currentItemIndex, nameList.data(), (int)nameList.size(), ListBoxHeight);
-		ImGui::PopItemWidth();
+		static int currentItemIndex = -1;
+		for (int i = 0; i < nameList.size(); i++)
+		{
+			if (ImGui::Selectable(nameList[i], currentItemIndex == i))
+				currentItemIndex = i;
+		}
 
 	ImGui::End();
 }
