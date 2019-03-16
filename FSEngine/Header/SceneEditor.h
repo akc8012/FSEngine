@@ -25,7 +25,7 @@ private:
 	void UpdateEditorMode();
 	void ClearActionHistory();
 
-	void DrawImGuiGameObjectsWindow() const;
+	void DrawImGuiGameObjectsWindow(const string& activeGameObjectName) const;
 	vector<const char*> GetGameObjectNameList() const;
 	void DrawClickBox(const string& name) const;
 

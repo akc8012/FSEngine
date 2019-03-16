@@ -44,26 +44,30 @@ void SceneEditor::Update()
 	if (!editorMode)
 		return;
 
-	DrawImGuiGameObjectsWindow();
 	clickLabelManager->Update();
 
 	auto activeGameObject = clickLabelManager->GetActiveGameObject();
 	if (activeGameObject != nullptr)
 		UpdateActiveGameObject(activeGameObject);
+
+	DrawImGuiGameObjectsWindow(activeGameObject != nullptr ? activeGameObject->GetName() : "");
 }
 
 #pragma region ImGui
-void SceneEditor::DrawImGuiGameObjectsWindow() const
+void SceneEditor::DrawImGuiGameObjectsWindow(const string& activeGameObjectName) const
 {
 	vector<const char*> nameList = GetGameObjectNameList();
 
+	static int selection = -1;
 	ImGui::Begin("GameObjects", NULL, ImGuiWindowFlags_None);
 
-		static int currentItemIndex = -1;
 		for (int i = 0; i < nameList.size(); i++)
 		{
-			if (ImGui::Selectable(nameList[i], currentItemIndex == i))
-				currentItemIndex = i;
+			if (activeGameObjectName == nameList[i])
+				selection = i;
+
+			if (ImGui::Selectable(nameList[i], selection == i))
+				selection = i;
 		}
 
 	ImGui::End();
@@ -75,7 +79,7 @@ vector<const char*> SceneEditor::GetGameObjectNameList() const
 	for (const auto gameObject : scene->GetGameObjectContainer()->GetGameObjects())
 	{
 		auto& name = gameObject->GetName();
-		if (name.find("- Label") == string::npos) // TEMPORARY
+		if (!ClickLabelManager::GameObjectNameIsClickLabel(name))
 			nameList.push_back(name.c_str());
 	}
 

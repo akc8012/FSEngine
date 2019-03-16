@@ -1,10 +1,17 @@
 #include "../Header/ClickLabelManager.h"
 
+const string ClickLabelManager::LabelSuffix = " - Label";
+
 ClickLabelManager::ClickLabelManager(Scene* scene, Systems* systems)
  : scene(scene), systems(systems)
 {
 	systems->eventSystem->AddListener("GameObjectAdded", this);
 	systems->eventSystem->AddListener("GameObjectRemoved", this);
+}
+
+bool ClickLabelManager::GameObjectNameIsClickLabel(const string& gameObjectName)
+{
+	return gameObjectName.find(LabelSuffix) != string::npos;
 }
 
 void ClickLabelManager::InitializeClickLabels()
@@ -99,11 +106,6 @@ void ClickLabelManager::RemoveClickLabel(const string& gameObjectName)
 	activeClickLabel = nullptr;
 
 	scene->GetGameObjectContainer()->RemoveGameObject(clickLabelName);
-}
-
-bool ClickLabelManager::GameObjectNameIsClickLabel(const string& gameObjectName) const
-{
-	return gameObjectName.find(LabelSuffix) != string::npos;
 }
 
 IGameObject* ClickLabelManager::GetActiveGameObject() const

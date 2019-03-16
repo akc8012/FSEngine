@@ -6,7 +6,7 @@
 class ClickLabelManager : public IUpdatable, public IEventListener
 {
 private:
-	const string LabelSuffix = " - Label";
+	const static string LabelSuffix;
 
 	Scene* scene = nullptr;
 	Systems* systems = nullptr;
@@ -22,11 +22,12 @@ private:
 	ClickLabel* GetCursorIntersectingClickLabel() const;
 
 	void RemoveClickLabel(const string& gameObjectName);
-	bool GameObjectNameIsClickLabel(const string& gameObjectName) const;
 
 public:
 	ClickLabelManager(Scene* scene, Systems* systems);
 	~ClickLabelManager();
+
+	static bool GameObjectNameIsClickLabel(const string& gameObjectName);
 
 	void InitializeClickLabels();
 
