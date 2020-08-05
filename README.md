@@ -8,7 +8,7 @@ Greetings. This is my unfinished and unsupported game engine. It is built with C
 Here's a spaceman suit dude from Crysis, apparently. I didn't make this. 
 
 ![fs-ship](screenshots/fs-ship.png)
-A spaceship from **Nintendo Game** with some colored cube primitives that **I made**.
+A spaceship from *Nintendo Game* with some colored cube primitives that **I made**.
 
 ## Camera demos
 Cameras are hard, but the FSEngine camera *"just works."*
